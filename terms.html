@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Use — Timeless Hadith</title>
+  <meta name="description" content="Terms of Use for Timeless Hadith. Read our terms governing access and use of timelesshadith.com." />
+  <link rel="canonical" href="https://timelesshadith.com/terms.html" />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --font: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      --bg: #ffffff; --surface: #f5f5f7; --border: #e0e0e0;
+      --ink: #1d1d1f; --muted: #6e6e73; --accent: #0071e3;
+      --nav-bg: rgba(255,255,255,0.85);
+    }
+    [data-theme="dark"] {
+      --bg: #000000; --surface: #1c1c1e; --border: #3a3a3c;
+      --ink: #f5f5f7; --muted: #98989d; --accent: #2997ff;
+      --nav-bg: rgba(0,0,0,0.85);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font); background: var(--bg); color: var(--ink);
+      -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s;
+    }
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 64px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .nav-logo { display: inline-flex; align-items: center; text-decoration: none; }
+    .nav-logo img { height: 24px; width: auto; filter: brightness(0); transition: filter 0.3s; }
+    [data-theme="dark"] .nav-logo img { filter: brightness(0) invert(1); }
+    .nav-back {
+      font-size: 14px; color: var(--accent); text-decoration: none;
+      display: flex; align-items: center; gap: 4px; transition: opacity 0.2s;
+    }
+    .nav-back:hover { opacity: 0.75; }
+    .nav-back svg { width: 14px; height: 14px; stroke: var(--accent); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .theme-toggle {
+      width: 44px; height: 26px; background: var(--surface);
+      border-radius: 100px; border: 1px solid var(--border);
+      cursor: pointer; position: relative; transition: background 0.3s;
+    }
+    .theme-toggle::after {
+      content: ""; position: absolute; top: 2px; left: 2px;
+      width: 20px; height: 20px; background: var(--ink);
+      border-radius: 50%; transition: left 0.25s ease, background 0.3s;
+    }
+    [data-theme="dark"] .theme-toggle::after { left: 20px; }
+
+    .page-wrap { max-width: 720px; margin: 0 auto; padding: 56px 40px 80px; }
+    .page-eyebrow {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.5px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+    }
+    h1 {
+      font-size: clamp(26px, 3.5vw, 38px); font-weight: 700;
+      letter-spacing: -0.04em; color: var(--ink); margin-bottom: 8px;
+    }
+    .effective-date { font-size: 13px; color: var(--muted); margin-bottom: 40px; }
+
+    .toc {
+      background: var(--surface); border-radius: 16px;
+      padding: 20px 24px; margin-bottom: 40px;
+      border: 1px solid var(--border); transition: background 0.3s, border-color 0.3s;
+    }
+    .toc-title {
+      font-size: 13px; font-weight: 600; color: var(--muted);
+      letter-spacing: 0.3px; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .toc ol { list-style: none; counter-reset: toc; display: flex; flex-direction: column; gap: 8px; }
+    .toc ol li { counter-increment: toc; }
+    .toc ol li::before { content: counter(toc) ". "; color: var(--muted); font-size: 13px; }
+    .toc ol li a { font-size: 14px; color: var(--accent); text-decoration: none; }
+    .toc ol li a:hover { text-decoration: underline; }
+
+    section.policy-section { margin-bottom: 48px; }
+    h2 {
+      font-size: 20px; font-weight: 600; letter-spacing: -0.03em;
+      color: var(--ink); margin-bottom: 16px; padding-top: 8px;
+    }
+    h3 { font-size: 15px; font-weight: 600; color: var(--ink); margin: 20px 0 8px; }
+    p { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 14px; }
+    p a { color: var(--accent); text-decoration: none; }
+    p a:hover { text-decoration: underline; }
+    ul, ol { padding-left: 20px; margin-bottom: 14px; }
+    li { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 6px; }
+    .highlight-box {
+      background: var(--surface); border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0;
+      transition: background 0.3s;
+    }
+    .highlight-box p { margin-bottom: 0; }
+    hr { border: none; height: 1px; background: var(--border); margin: 40px 0; transition: background 0.3s; }
+    .contact-box {
+      background: var(--surface); border-radius: 20px;
+      padding: 28px; border: 1px solid var(--border);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .contact-box h3 { margin-top: 0; font-size: 16px; }
+    .contact-box p { margin-bottom: 8px; }
+    footer {
+      border-top: 1px solid var(--border); padding: 32px 40px;
+      text-align: center; transition: border-color 0.3s;
+    }
+    .footer-links { display: flex; gap: 24px; justify-content: center; list-style: none; margin-bottom: 12px; }
+    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--ink); }
+    .footer-copy { font-size: 12px; color: var(--muted); }
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      .page-wrap { padding: 40px 20px 60px; }
+      footer { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="nav-back">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Timeless Hadith
+    </a>
+    <a href="index.html" class="nav-logo">
+      <img src="timelesshadith-logo.png" alt="Timeless Hadith" width="130" height="26" />
+    </a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+  </nav>
+
+  <main>
+    <div class="page-wrap">
+
+      <p class="page-eyebrow">Legal</p>
+      <h1>Terms of Use</h1>
+      <p class="effective-date">Effective date: 27 March 2026 &nbsp;·&nbsp; Last updated: 27 March 2026</p>
+
+      <div class="highlight-box">
+        <p>By accessing or using timelesshadith.com, you agree to these Terms of Use. If you do not agree, please do not use the site.</p>
+      </div>
+
+      <div class="toc">
+        <p class="toc-title">Table of Contents</p>
+        <ol>
+          <li><a href="#acceptance">Acceptance of Terms</a></li>
+          <li><a href="#description">Description of Service</a></li>
+          <li><a href="#content">Content &amp; Intellectual Property</a></li>
+          <li><a href="#sharing">Sharing &amp; Fair Use</a></li>
+          <li><a href="#prohibited">Prohibited Uses</a></li>
+          <li><a href="#accuracy">Content Accuracy</a></li>
+          <li><a href="#links">External Links</a></li>
+          <li><a href="#disclaimer">Disclaimer of Warranties</a></li>
+          <li><a href="#liability">Limitation of Liability</a></li>
+          <li><a href="#governing-law">Governing Law</a></li>
+          <li><a href="#changes">Changes to Terms</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ol>
+      </div>
+
+      <!-- 1 -->
+      <section class="policy-section" id="acceptance">
+        <h2>1. Acceptance of Terms</h2>
+        <p>These Terms of Use ("Terms") govern your access to and use of the website timelesshadith.com (the "Site") operated by Timeless Hadith ("we", "us", or "our"). By visiting, browsing, or using the Site, you confirm that you have read, understood, and agree to be bound by these Terms. These Terms apply to all visitors and users.</p>
+      </section>
+
+      <!-- 2 -->
+      <section class="policy-section" id="description">
+        <h2>2. Description of Service</h2>
+        <p>Timeless Hadith is a free, non-commercial, educational website providing access to authenticated hadiths (Prophetic traditions) of the Prophet Muhammad ﷺ, organised by topic for ease of reference. The site is provided as a public service and is free to access without registration.</p>
+      </section>
+
+      <!-- 3 -->
+      <section class="policy-section" id="content">
+        <h2>3. Content &amp; Intellectual Property</h2>
+        <h3>3.1 Hadith texts</h3>
+        <p>The hadith texts are part of the Islamic scholarly heritage and are not subject to copyright. They have been reproduced from canonical collections (Sahih al-Bukhari, Sahih Muslim, and others) for educational purposes. We make no claim of copyright over the hadith texts themselves.</p>
+        <h3>3.2 Site design and code</h3>
+        <p>The website design, user interface, CSS, HTML, and JavaScript code are the intellectual property of Timeless Hadith and are licensed under the <a href="LICENSE">MIT License</a>. You may reuse and adapt the code in accordance with that licence.</p>
+        <h3>3.3 Logo and branding</h3>
+        <p>The Timeless Hadith name, logo, and associated branding are proprietary. You may not use them without our prior written consent.</p>
+      </section>
+
+      <!-- 4 -->
+      <section class="policy-section" id="sharing">
+        <h2>4. Sharing &amp; Fair Use</h2>
+        <p>We encourage the respectful sharing of hadith content for educational, spiritual, and non-commercial purposes. When sharing content from this site, you are requested to:</p>
+        <ul>
+          <li>Attribute the hadith to its authentic source (e.g., "Sahih al-Bukhari 1")</li>
+          <li>Not misrepresent or decontextualise hadith meanings</li>
+          <li>Not use content for commercial purposes without permission</li>
+          <li>Credit Timeless Hadith when sharing generated images or significant excerpts</li>
+        </ul>
+        <p>The <strong>Share as Image</strong> and <strong>Share as Text</strong> features are provided for personal, non-commercial sharing only.</p>
+      </section>
+
+      <!-- 5 -->
+      <section class="policy-section" id="prohibited">
+        <h2>5. Prohibited Uses</h2>
+        <p>You agree not to use the Site to:</p>
+        <ul>
+          <li>Misrepresent, fabricate, or falsely attribute hadith content</li>
+          <li>Engage in any activity that violates applicable laws or regulations, including the laws of the Kingdom of Saudi Arabia</li>
+          <li>Scrape, crawl, or systematically download site content for commercial redistribution</li>
+          <li>Attempt to disrupt, hack, or interfere with the Site's security or operation</li>
+          <li>Use the site to spread disinformation, extremist content, or content that incites hatred</li>
+          <li>Impersonate Timeless Hadith or claim affiliation with us without authorisation</li>
+        </ul>
+      </section>
+
+      <!-- 6 -->
+      <section class="policy-section" id="accuracy">
+        <h2>6. Content Accuracy</h2>
+        <p>We make every effort to ensure that hadith content is authentic and accurately sourced. However, we are not Islamic scholars and users are encouraged to verify hadiths through qualified scholars and established databases (such as <a href="https://sunnah.com" rel="noopener noreferrer">sunnah.com</a>).</p>
+        <p>No hadith should be acted upon without proper scholarly understanding of its context, chain of narration (isnad), and applicable ruling (hukm). If you identify an error or misattribution, please contact us so we can correct it.</p>
+      </section>
+
+      <!-- 7 -->
+      <section class="policy-section" id="links">
+        <h2>7. External Links</h2>
+        <p>The Site may contain links to external websites for reference purposes. We are not responsible for the content, privacy practices, or accuracy of any external site. The inclusion of a link does not constitute endorsement.</p>
+      </section>
+
+      <!-- 8 -->
+      <section class="policy-section" id="disclaimer">
+        <h2>8. Disclaimer of Warranties</h2>
+        <p>The Site and its content are provided on an <strong>"as is"</strong> and <strong>"as available"</strong> basis without warranties of any kind, either express or implied. We do not warrant that:</p>
+        <ul>
+          <li>The site will be uninterrupted, error-free, or secure</li>
+          <li>Content is complete, accurate, or up to date</li>
+          <li>The site is free of viruses or other harmful components</li>
+        </ul>
+        <p>Your use of the Site is at your own risk.</p>
+      </section>
+
+      <!-- 9 -->
+      <section class="policy-section" id="liability">
+        <h2>9. Limitation of Liability</h2>
+        <p>To the fullest extent permitted by applicable law, Timeless Hadith shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your access to or use of, or inability to use, the Site or its content — even if we have been advised of the possibility of such damages.</p>
+        <p>Our total liability for any claim arising out of or related to these Terms shall not exceed SAR 0, as the Site is provided free of charge.</p>
+      </section>
+
+      <!-- 10 -->
+      <section class="policy-section" id="governing-law">
+        <h2>10. Governing Law</h2>
+        <p>These Terms shall be governed by and construed in accordance with the laws of the <strong>Kingdom of Saudi Arabia</strong>, including the Personal Data Protection Law (PDPL). Any dispute arising from these Terms shall be subject to the exclusive jurisdiction of the competent courts of the Kingdom of Saudi Arabia.</p>
+        <p>These Terms are drafted in English. In the event of any conflict or ambiguity with a translated version, the English version shall prevail.</p>
+      </section>
+
+      <!-- 11 -->
+      <section class="policy-section" id="changes">
+        <h2>11. Changes to These Terms</h2>
+        <p>We reserve the right to update these Terms at any time. Changes will be effective upon posting to this page, with the "Last updated" date revised accordingly. Your continued use of the Site after changes constitutes acceptance of the revised Terms.</p>
+        <p>We encourage you to review these Terms periodically.</p>
+      </section>
+
+      <!-- 12 -->
+      <section class="policy-section" id="contact">
+        <h2>12. Contact</h2>
+        <div class="contact-box">
+          <h3>Questions about these Terms?</h3>
+          <p>If you have any questions about these Terms of Use, please contact us:</p>
+          <p>📧 <a href="mailto:legal@timelesshadith.com">legal@timelesshadith.com</a></p>
+          <p>🌐 <a href="https://timelesshadith.com">timelesshadith.com</a></p>
+        </div>
+      </section>
+
+      <hr />
+
+      <p style="font-size:13px;color:var(--muted);text-align:center;">
+        Last updated: 27 March 2026<br />
+        <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="index.html">Homepage</a>
+      </p>
+
+    </div>
+  </main>
+
+  <footer>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="terms.html">Terms of Use</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Timeless Hadith. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const html  = document.documentElement;
+    const store = {
+      get(k)    { try { return localStorage.getItem(k); }    catch(e) { return null; } },
+      set(k, v) { try { localStorage.setItem(k, v); }        catch(e) {} }
+    };
+    const saved = store.get('theme');
+    if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      store.set('theme', next);
+    });
+  </script>
+</body>
+</html>

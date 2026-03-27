@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── Primary Meta (dynamically updated by JS) ── -->
+  <title>Hadiths — Timeless Hadith</title>
+  <meta name="description" content="Explore authentic hadiths from Prophet Muhammad (PBUH) by topic." />
+  <link rel="canonical" href="https://timelesshadith.com/category.html" id="canonicalTag" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+
+  <!-- ── Open Graph (updated by JS) ── -->
+  <meta property="og:type"        content="article" />
+  <meta property="og:url"         content="https://timelesshadith.com/category.html" id="ogUrl" />
+  <meta property="og:title"       content="Hadiths — Timeless Hadith" id="ogTitle" />
+  <meta property="og:description" content="Explore authentic hadiths from Prophet Muhammad (PBUH) by topic." id="ogDesc" />
+  <meta property="og:image"       content="https://timelesshadith.com/og-image.png" />
+  <meta property="og:site_name"   content="Timeless Hadith" />
+
+  <!-- ── Twitter / X Card ── -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Hadiths — Timeless Hadith" id="twTitle" />
+  <meta name="twitter:description" content="Explore authentic hadiths from Prophet Muhammad (PBUH) by topic." id="twDesc" />
+  <meta name="twitter:image"       content="https://timelesshadith.com/og-image.png" />
+
+  <!-- ── Favicon & Icons ── -->
+  <link rel="icon"             type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon"             type="image/png" sizes="16x16" href="favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180"              href="apple-touch-icon.png" />
+  <link rel="manifest"         href="manifest.json" />
+
+  <!-- ── Security ── -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none';" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- ── Schema.org (updated by JS) ── -->
+  <script type="application/ld+json" id="schemaScript">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Hadiths — Timeless Hadith",
+    "url": "https://timelesshadith.com/category.html",
+    "isPartOf": { "@type": "WebSite", "url": "https://timelesshadith.com/" }
+  }
+  </script>
+
+  <style>
+    /* ── Accessibility ── */
+    .skip-link {
+      position: absolute; top: -100px; left: 16px;
+      background: #0a0a0a; color: #fff; padding: 8px 16px;
+      border-radius: 0 0 8px 8px; font-size: 14px; font-weight: 600;
+      z-index: 9999; text-decoration: none; transition: top 0.2s ease;
+    }
+    .skip-link:focus { top: 0; }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --font: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      --bg:       #ffffff;
+      --surface:  #f5f5f5;
+      --border:   #e8e8e8;
+      --ink:      #0a0a0a;
+      --muted:    #6b6b6b;
+      --nav-bg:   rgba(255,255,255,0.85);
+      --toggle-bg:   #e8e8e8;
+      --toggle-knob: #0a0a0a;
+      --toggle-icon: #6b6b6b;
+      --cobalt:   #1B5BE8;        /* cobalt blue for category page only */
+      --cobalt-dk: #3D74F5;       /* cobalt in dark mode */
+    }
+
+    [data-theme="dark"] {
+      --bg:       #0a0a0a;
+      --surface:  #161616;
+      --border:   #242424;
+      --ink:      #f0f0f0;
+      --muted:    #999999;
+      --nav-bg:   rgba(10,10,10,0.85);
+      --toggle-bg:   #242424;
+      --toggle-knob: #f0f0f0;
+      --toggle-icon: #999999;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .nav-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 26px;
+      width: auto;
+      filter: brightness(0);
+      transition: filter 0.3s ease;
+    }
+
+    [data-theme="dark"] .nav-logo img {
+      filter: brightness(0) invert(1);
+    }
+
+    .nav-links {
+      display: flex; align-items: center;
+      gap: 32px; list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px; font-weight: 400;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s ease; letter-spacing: -0.1px;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-cta {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 9px 20px;
+      background: var(--ink); color: var(--bg);
+      border-radius: 100px; font-size: 14px; font-weight: 500;
+      text-decoration: none;
+      transition: opacity 0.2s ease, background 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-cta:hover { opacity: 0.7; }
+    html[data-lang="tr"] .lang-btn[data-lang="tr"],
+    html[data-lang="en"] .lang-btn[data-lang="en"] { }
+
+    /* ── Theme Toggle ── */
+    .theme-toggle {
+      width: 44px; height: 26px;
+      background: var(--toggle-bg);
+      border-radius: 100px; border: none;
+      cursor: pointer; position: relative;
+      flex-shrink: 0;
+      transition: background 0.3s ease; outline: none;
+    }
+
+    .theme-toggle:focus-visible { box-shadow: 0 0 0 2px var(--ink); }
+
+    .theme-toggle .icon-sun,
+    .theme-toggle .icon-moon {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 13px; height: 13px;
+      transition: opacity 0.25s ease;
+      stroke: var(--toggle-icon); fill: none; stroke-width: 1.8;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    .theme-toggle .icon-sun  { left: 6px; }
+    .theme-toggle .icon-moon { right: 5px; }
+
+    [data-theme="light"] .theme-toggle .icon-moon { opacity: 0; }
+    [data-theme="light"] .theme-toggle .icon-sun  { opacity: 1; }
+    [data-theme="dark"]  .theme-toggle .icon-sun  { opacity: 0; }
+    [data-theme="dark"]  .theme-toggle .icon-moon { opacity: 1; }
+
+    .theme-toggle::after {
+      content: ""; position: absolute; top: 3px;
+      width: 20px; height: 20px;
+      background: var(--toggle-knob); border-radius: 50%;
+      transition: left 0.28s cubic-bezier(0.4,0,0.2,1), background 0.3s ease;
+    }
+
+    [data-theme="light"] .theme-toggle::after { left: 3px; }
+    [data-theme="dark"]  .theme-toggle::after { left: 21px; }
+
+    /* ── Hamburger ── */
+    .nav-hamburger {
+      display: none; flex-direction: column;
+      justify-content: center; gap: 5px;
+      width: 40px; height: 40px;
+      background: none; border: none;
+      cursor: pointer; padding: 8px; border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .nav-hamburger:hover { background: var(--surface); }
+
+    .nav-hamburger span {
+      display: block; width: 100%; height: 1.5px;
+      background: var(--ink); border-radius: 2px;
+      transition: background 0.3s ease;
+    }
+
+    .nav-drawer {
+      display: none; position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px 24px;
+      z-index: 99; flex-direction: column; gap: 4px;
+      transition: background 0.3s ease;
+    }
+
+    .nav-drawer.open { display: flex; }
+
+    .nav-drawer a {
+      font-size: 16px; color: var(--muted);
+      text-decoration: none; padding: 12px 4px;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s ease;
+    }
+
+    .nav-drawer a:hover { color: var(--ink); }
+    .nav-drawer a:last-of-type { border-bottom: none; }
+
+    .nav-drawer .drawer-cta {
+      margin-top: 8px; padding: 14px;
+      background: var(--ink); color: var(--bg);
+      border-radius: 12px; text-align: center;
+      font-weight: 500; border-bottom: none !important;
+      transition: opacity 0.2s ease, background 0.3s ease, color 0.3s ease;
+    }
+
+    .drawer-controls {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 16px 4px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+    }
+
+    /* ── Hero ── */
+    .cat-hero {
+      padding: 104px 40px 56px;
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 400;
+      color: var(--muted); text-decoration: none;
+      margin-bottom: 32px;
+      transition: color 0.2s ease; letter-spacing: -0.1px;
+    }
+
+    .back-link:hover { color: var(--ink); }
+
+    .back-link svg {
+      width: 14px; height: 14px; stroke: currentColor;
+      fill: none; stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    .cat-label {
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 12px;
+    }
+
+    .cat-title {
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 700; letter-spacing: -0.04em;
+      line-height: 1.1; color: var(--ink);
+      margin-bottom: 16px; max-width: 700px;
+    }
+
+    .cat-desc {
+      font-size: 16px; color: var(--muted);
+      line-height: 1.6; max-width: 560px; letter-spacing: -0.1px;
+    }
+
+    /* ── Section ── */
+    .section-divider {
+      width: 100%; max-width: 1100px;
+      margin: 0 auto; height: 1px;
+      background: var(--border); transition: background 0.3s ease;
+    }
+
+    .hadiths-section {
+      padding: 56px 40px 100px;
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    /* ── Hadith Cards Grid ── */
+    .hadiths-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .hadith-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 28px 28px 28px;
+      display: flex; flex-direction: column; gap: 14px;
+      transition: box-shadow 0.25s ease, transform 0.25s ease, background 0.3s ease;
+    }
+
+    .hadith-card:hover {
+      box-shadow: 0 12px 48px rgba(0,0,0,0.09);
+      transform: translateY(-2px);
+    }
+
+    [data-theme="dark"] .hadith-card:hover {
+      box-shadow: 0 12px 48px rgba(255,255,255,0.05);
+    }
+
+    /* ── Card Top Row: round number (left) + individual lang toggle (right) ── */
+    .card-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hadith-number {
+      width: 30px; height: 30px;
+      background: var(--ink); color: var(--bg);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; flex-shrink: 0;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* ── Hadith Text — regular weight, no italic ── */
+    .hadith-text {
+      font-size: 15px; font-weight: 400;
+      color: var(--ink); line-height: 1.7;
+      letter-spacing: -0.1px;
+      font-style: normal;          /* explicitly normal — no italic */
+      transition: color 0.3s ease;
+    }
+
+    .hadith-text::before { content: "\201C"; }
+    .hadith-text::after  { content: "\201D"; }
+
+    .hadith-footer {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-top: auto; padding-top: 14px;
+      border-top: 1px solid var(--border);
+      transition: border-color 0.3s ease;
+    }
+
+    .hadith-ref {
+      font-size: 12px; font-weight: 500;
+      color: var(--muted); letter-spacing: -0.1px;
+      transition: color 0.3s ease;
+    }
+
+    .hadith-id {
+      font-size: 11px; color: var(--muted);
+      letter-spacing: 0.2px; transition: color 0.3s ease;
+    }
+
+    /* ── 404 ── */
+    .not-found {
+      text-align: center; padding: 120px 40px;
+    }
+
+    .not-found h2 {
+      font-size: 28px; font-weight: 600;
+      color: var(--ink); margin-bottom: 12px;
+    }
+
+    .not-found p {
+      color: var(--muted); font-size: 15px; margin-bottom: 32px;
+    }
+
+    .btn-home {
+      display: inline-flex; align-items: center;
+      padding: 12px 28px; background: var(--ink); color: var(--bg);
+      border-radius: 100px; font-size: 14px; font-weight: 500;
+      text-decoration: none; transition: opacity 0.2s ease;
+    }
+
+    .btn-home:hover { opacity: 0.75; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      transition: border-color 0.3s ease;
+    }
+
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .footer-logo img {
+      height: 16px;
+      width: auto;
+      filter: brightness(0);
+      transition: filter 0.3s ease;
+    }
+
+    [data-theme="dark"] .footer-logo img {
+      filter: brightness(0) invert(1);
+    }
+
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+
+    .footer-links a {
+      font-size: 13px; color: var(--muted);
+      text-decoration: none; transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover { color: var(--ink); }
+
+    .footer-copy {
+      font-size: 12px; color: var(--muted); letter-spacing: -0.1px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .hadiths-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .cat-hero { padding: 84px 20px 40px; }
+      .hadiths-section { padding: 40px 20px 80px; }
+      footer { padding: 32px 20px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skip Navigation -->
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- ── Nav ── -->
+  <nav aria-label="Main navigation">
+    <a href="index.html" class="nav-logo">
+      <img src="timelesshadith-logo.png" alt="Timeless Hadith" width="130" height="26" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Browse</a></li>
+      <li><a href="index.html">Topics</a></li>
+      <li><a href="index.html">About</a></li>
+      <li>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </li>
+      <li><a href="#" class="nav-cta">Get in touch</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <nav class="nav-drawer" id="navDrawer">
+    <a href="index.html">Browse</a>
+    <a href="index.html">Topics</a>
+    <a href="index.html">About</a>
+    <a href="#" class="drawer-cta">Get in touch</a>
+    <div class="drawer-controls">
+      <button class="theme-toggle" id="themeToggleDrawer" aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Page content injected by JS -->
+  <main id="main-content">
+    <div id="pageContent"></div>
+  </main>
+
+  <noscript>
+    <div style="text-align:center;padding:60px 20px;font-family:sans-serif;max-width:600px;margin:0 auto;">
+      <h1 style="margin-bottom:16px;">JavaScript Required</h1>
+      <p style="margin-bottom:24px;color:#666;">Please enable JavaScript to view this page, or browse all categories from the homepage.</p>
+      <a href="index.html" style="background:#0a0a0a;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;">Go to Homepage</a>
+    </div>
+  </noscript>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">
+        <img src="timelesshadith-logo.png" alt="Timeless Hadith" width="100" height="20" loading="lazy" />
+      </a>
+      <ul class="footer-links">
+        <li><a href="index.html">Browse</a></li>
+        <li><a href="#">Topics</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Get in touch</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 Haith. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script defer>
+    /* ── Safe localStorage helper ── */
+    const store = {
+      get(k)    { try { return localStorage.getItem(k); }  catch(e) { return null; } },
+      set(k, v) { try { localStorage.setItem(k, v); }      catch(e) {} },
+    };
+
+    /* ── Theme ── */
+    const html   = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const saved  = store.get('theme');
+    if (saved === 'light' || saved === 'dark') html.setAttribute('data-theme', saved);
+
+    function applyTheme() {
+      const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      store.set('theme', next);
+    }
+    toggle.addEventListener('click', applyTheme);
+    const toggleDrawer = document.getElementById('themeToggleDrawer');
+    if (toggleDrawer) toggleDrawer.addEventListener('click', applyTheme);
+
+    /* ── Mobile menu ── */
+    const burger = document.getElementById('hamburger');
+    const drawer = document.getElementById('navDrawer');
+
+    burger.addEventListener('click', () => drawer.classList.toggle('open'));
+    document.addEventListener('click', e => {
+      if (!e.target.closest('nav') && !e.target.closest('.nav-drawer'))
+        drawer.classList.remove('open');
+    });
+
+    /* ── Category Data ── */
+    const CATS = {
+      'faith-belief': {
+        name: 'Faith & Belief',
+        desc: 'Hadiths on the pillars of faith, sincerity of intention, and building a strong relationship with Allah.',
+        hadiths: [
+          { n: 1,
+            en: 'Islam is built upon five pillars: testifying that there is no god but Allah and that Muhammad is the Messenger of Allah, establishing prayer, paying Zakat, performing Hajj, and fasting in Ramadan.',
+            ref: 'Sahih al-Bukhari 8; Sahih Muslim 16' },
+          { n: 2,
+            en: 'Iman has over seventy branches — the highest of which is to say "La ilaha illallah," and the least of which is to remove a harmful thing from the road.'Lā ilāha illallāh,' wa adnāhā imāṭatu al-adhā ʿan al-ṭarīq.',
+            ref: 'Sahih al-Bukhari 9; Sahih Muslim 35' },
+          { n: 3,
+            en: 'None of you truly believes until he loves for his brother what he loves for himself.',
+            ref: 'Sahih al-Bukhari 13; Sahih Muslim 45' },
+          { n: 4,
+            en: 'The most beloved deeds to Allah are those done consistently, even if they are few.',
+            ref: 'Sahih al-Bukhari 6465; Sahih Muslim 783' },
+        ]
+      },
+      'character-conduct': {
+        name: 'Character & Conduct',
+        desc: 'Prophetic guidance on manners, kindness, honesty, and treating others with dignity and compassion.',
+        hadiths: [
+          { n: 1, en: 'I was sent only to perfect good character.', ref: 'Musnad Ahmad 8952; al-Bayhaqi' },
+          { n: 2, en: 'The heaviest thing placed on the scale of a believer on the Day of Resurrection will be good character. Allah hates those who are obscene and foul-mouthed.', ref: 'Sunan Abu Dawud 4799; Jami al-Tirmidhi 2002' },
+          { n: 3, en: 'The best of you are those who have the best manners and character.', ref: 'Sahih al-Bukhari 3559' },
+          { n: 4, en: 'Whoever believes in Allah and the Last Day should speak a good word or remain silent.', ref: 'Sahih al-Bukhari 6018; Sahih Muslim 47' },
+        ]
+      },
+      'prayer-worship': {
+        name: 'Prayer & Worship',
+        desc: 'Guidance on Salah, dhikr, and drawing closer to Allah through consistent acts of worship.',
+        hadiths: [
+          { n: 1, en: 'The first matter that the slave will be brought to account for on the Day of Judgement is the prayer. If it is sound, then the rest of his deeds will be sound. And if it is corrupt, then the rest of his deeds will be corrupt.', ref: 'al-Tabarani; graded Sahih by al-Albani' },
+          { n: 2, en: 'Pray as you have seen me praying.', ref: 'Sahih al-Bukhari 631' },
+          { n: 3, en: 'The closest a servant is to his Lord is when he is in prostration, so make plenty of supplication in it.', ref: 'Sahih Muslim 482' },
+          { n: 4, en: 'Make things easy, do not make them difficult. Give glad tidings and do not repel people.', ref: 'Sahih al-Bukhari 69; Sahih Muslim 1734' },
+        ]
+      },
+      'family-relations': {
+        name: 'Family & Relations',
+        desc: 'Prophetic wisdom on marriage, parenting, honouring parents, and maintaining family ties.',
+        hadiths: [
+          { n: 1, en: 'The best of you are those who are best to their wives.', ref: 'Jami al-Tirmidhi 3895; Ibn Majah 1977' },
+          { n: 2, en: "A man's provision of food for his family is an act of charity.", ref: 'Sahih al-Bukhari 55; Sahih Muslim 1002' },
+          { n: 3, en: "Heaven lies beneath the feet of mothers.", ref: "Sunan al-Nasa'i 3104; Ibn Majah 2781" },
+          { n: 4, en: 'Maintain ties with those who cut you off, give to those who withhold from you, and pardon those who wrong you.', ref: 'Musnad Ahmad 17452; al-Tabarani' },
+        ]
+      },
+      'knowledge-learning': {
+        name: 'Knowledge & Learning',
+        desc: 'Hadiths on the virtue of seeking knowledge, teaching others, and the pursuit of wisdom in Islam.',
+        hadiths: [
+          { n: 1, en: 'Seeking knowledge is an obligation upon every Muslim.', ref: 'Sunan Ibn Majah 224; graded Hasan by al-Albani' },
+          { n: 2, en: 'Whoever follows a path in pursuit of knowledge, Allah will make easy for him a path to Paradise.', ref: 'Sahih Muslim 2699' },
+          { n: 3, en: 'The best of you are those who learn the Quran and teach it.', ref: 'Sahih al-Bukhari 5027' },
+          { n: 4, en: 'When a person dies, all their deeds end except three: a continuing charity, knowledge others benefit from, and a righteous child who prays for them.', ref: 'Sahih Muslim 1631' },
+        ]
+      },
+      'patience-gratitude': {
+        name: 'Patience & Gratitude',
+        desc: "Guidance on bearing hardship with grace, counting blessings, and trusting in Allah's plan.",
+        hadiths: [
+          { n: 1, en: 'Wondrous is the affair of the believer, for there is good in all his affairs. If prosperity comes to him, he is grateful, and that is good for him. And if adversity comes to him, he is patient, and that is good for him.', ref: 'Sahih Muslim 2999' },
+          { n: 2, en: 'No fatigue, illness, anxiety, grief, harm, or sadness afflicts a Muslim — even a thorn that pricks him — except that Allah expiates some of his sins because of it.', ref: 'Sahih al-Bukhari 5641; Sahih Muslim 2573' },
+          { n: 3, en: 'Patience is a light.', ref: 'Sahih Muslim 223' },
+          { n: 4, en: 'Look at those who are below you in worldly matters and do not look at those who are above you, for it is more likely to prevent you from belittling the blessings of Allah upon you.', ref: 'Sahih Muslim 2963' },
+        ]
+      },
+      'charity-generosity': {
+        name: 'Charity & Generosity',
+        desc: 'Prophetic teachings on Sadaqah, Zakat, and the immense reward of giving for the sake of Allah.',
+        hadiths: [
+          { n: 1, en: 'Charity does not decrease wealth. No one forgives another except that Allah increases his honour, and no one humbles himself for the sake of Allah except that Allah raises his status.', ref: 'Sahih Muslim 2588' },
+          { n: 2, en: 'Every day two angels descend and one says, "O Allah, compensate the one who spends." The other says, "O Allah, destroy the wealth of the one who withholds."', ref: 'Sahih al-Bukhari 1442; Sahih Muslim 1010' },
+          { n: 3, en: 'Protect yourself from the Hellfire even with half a date in charity.', ref: 'Sahih al-Bukhari 1417; Sahih Muslim 1016' },
+          { n: 4, en: 'The upper hand is better than the lower hand. The upper hand is the one that gives, and the lower hand is the one that takes.', ref: 'Sahih al-Bukhari 1429; Sahih Muslim 1033' },
+        ]
+      },
+      'honesty-truthfulness': {
+        name: 'Honesty & Truthfulness',
+        desc: 'Hadiths on the virtue of speaking truth, avoiding falsehood, and the trust that honesty builds.',
+        hadiths: [
+          { n: 1, en: 'Truthfulness leads to righteousness, and righteousness leads to Paradise. A man keeps speaking the truth until he is recorded with Allah as a truthful person. Lying leads to wickedness, and wickedness leads to the Hellfire.', ref: 'Sahih al-Bukhari 6094; Sahih Muslim 2607' },
+          { n: 2, en: 'There are four characteristics of a hypocrite: when he speaks, he lies; when he makes a promise, he breaks it; when he makes a covenant, he betrays it; and when he argues, he is obscene.', ref: 'Sahih al-Bukhari 34; Sahih Muslim 58' },
+          { n: 3, en: 'Be honest, for honesty leads to righteousness, and righteousness leads to Paradise.', ref: 'Sahih al-Bukhari 6094' },
+          { n: 4, en: 'It is obligatory for you to tell the truth, for truth leads to virtue and virtue leads to Paradise.', ref: 'Sahih Muslim 2607' },
+        ]
+      },
+      'repentance-forgiveness': {
+        name: 'Repentance & Forgiveness',
+        desc: "Guidance on seeking Tawbah, Allah's infinite mercy, and the liberating power of sincere repentance.",
+        hadiths: [
+          { n: 1, en: 'O son of Adam, as long as you call upon Me and put your hope in Me, I have forgiven you for what you have done and I do not mind. O son of Adam, if your sins were to reach the clouds of the sky and then you asked for My forgiveness, I would forgive you.', ref: 'Jami al-Tirmidhi 3540; graded Hasan by al-Albani' },
+          { n: 2, en: 'Every son of Adam makes mistakes, and the best of those who make mistakes are those who repent.', ref: 'Sunan Ibn Majah 4251; graded Hasan by al-Albani' },
+          { n: 3, en: 'Allah stretches out His hand during the night to accept the repentance of the one who sinned during the day, and He stretches out His hand during the day to accept the repentance of the one who sinned during the night.', ref: 'Sahih Muslim 2759' },
+          { n: 4, en: 'Verily, when a servant commits a sin, a black spot appears on his heart. If he repents, refrains, and seeks forgiveness, his heart is polished clean.', ref: 'Jami al-Tirmidhi 3334; Sunan Ibn Majah 4244' },
+        ]
+      },
+      'health-body': {
+        name: 'Health & Body',
+        desc: 'Prophetic wisdom on sleep, food, cleanliness, and caring for the body as an Amanah from Allah.',
+        hadiths: [
+          { n: 1, en: 'Your body has a right over you, your eyes have a right over you, and your wife has a right over you.', ref: 'Sahih al-Bukhari 1975' },
+          { n: 2, en: 'A human being does not fill any vessel worse than his stomach. It is sufficient for the son of Adam to eat a few mouthfuls to keep him upright. But if he must eat more, then one third for food, one third for drink, and one third for air.', ref: 'Sunan Ibn Majah 3349; graded Sahih by al-Albani' },
+          { n: 3, en: 'There are two blessings which many people do not make the most of: good health and free time.', ref: 'Sahih al-Bukhari 6412' },
+          { n: 4, en: 'Make use of five before five: your youth before your old age, your health before your illness, your wealth before your poverty, your free time before your preoccupation, and your life before your death.', ref: "Shu'ab al-Iman; al-Bayhaqi; graded Sahih by al-Albani" },
+        ]
+      },
+      'neighbours-community': {
+        name: 'Neighbours & Community',
+        desc: 'Hadiths on the rights of neighbours, community responsibility, and building bonds of brotherhood.',
+        hadiths: [
+          { n: 1, en: 'Jibril kept advising me to treat neighbours well until I thought he would make them heirs.', ref: 'Sahih al-Bukhari 6014; Sahih Muslim 2625' },
+          { n: 2, en: 'He is not a believer whose stomach is full while his neighbour goes to bed hungry.', ref: 'al-Adab al-Mufrad 112; graded Sahih by al-Albani' },
+          { n: 3, en: 'The parable of the believers in their mutual kindness, compassion and sympathy is that of one body. When one of the limbs suffers, the whole body responds to it with wakefulness and fever.', ref: 'Sahih al-Bukhari 6011; Sahih Muslim 2586' },
+          { n: 4, en: "Whoever relieves a believer's distress in this world, Allah will relieve his distress on the Day of Resurrection.", ref: 'Sahih Muslim 2699' },
+        ]
+      },
+      'death-afterlife': {
+        name: 'Death & Afterlife',
+        desc: 'Prophetic reminders on the reality of death, the grave, and the eternal life that awaits every soul.',
+        hadiths: [
+          { n: 1, en: 'Remember often the destroyer of pleasures — death.', ref: 'Jami al-Tirmidhi 2307; Sunan Ibn Majah 4258; graded Hasan by al-Albani' },
+          { n: 2, en: 'Be in this world as though you were a stranger or a traveller.', ref: 'Sahih al-Bukhari 6416' },
+          { n: 3, en: 'The grave is the first stage of the Hereafter; whoever is saved from it, what comes after is easier for him. And whoever is not saved from it, what comes after is worse.', ref: 'Jami al-Tirmidhi 2308; Sunan Ibn Majah 4267' },
+          { n: 4, en: 'No one who enters Paradise will want to return to the world even if he were given everything in it, except the martyr who will wish to return and be killed ten times because of the honour he receives.', ref: 'Sahih al-Bukhari 2817; Sahih Muslim 1877' },
+        ]
+      },
+      'remembrance-allah': {
+        name: 'Remembrance of Allah',
+        desc: 'Hadiths on the power of remembering Allah, morning and evening adhkar, and tranquility of the heart.',
+        hadiths: [
+          { n: 1, en: 'There is no deed more beloved to Allah than one done constantly, even if it is small.', ref: 'Sahih al-Bukhari 6465; Sahih Muslim 783' },
+          { n: 2, en: 'Whoever says "SubhanAllah wa bihamdihi" one hundred times a day will have his sins forgiven even if they are like the foam of the sea.'SubḥānAllāhi wa biḥamdih' miʾata marratin fī yawmin, ḥuṭṭat khaṭāyāhu wa in kānat mithla zabadi al-baḥr.', ref: 'Sahih al-Bukhari 6405; Sahih Muslim 2691' },
+          { n: 3, en: 'The example of the one who remembers Allah and the one who does not is like the living and the dead.', ref: 'Sahih al-Bukhari 6407; Sahih Muslim 779' },
+          { n: 4, en: 'Keep your tongue moist with the remembrance of Allah.', ref: 'Jami al-Tirmidhi 3375; graded Hasan Sahih' },
+        ]
+      },
+      'wealth-livelihood': {
+        name: 'Wealth & Livelihood',
+        desc: 'Guidance on halal earnings, avoiding greed, the dangers of excessive wealth, and contentment.',
+        hadiths: [
+          { n: 1, en: 'Richness is not having many possessions, but richness is the richness of the soul.', ref: 'Sahih al-Bukhari 6446; Sahih Muslim 1051' },
+          { n: 2, en: 'No one eats better food than what he earns through the work of his own hands.', ref: 'Sahih al-Bukhari 2072' },
+          { n: 3, en: "If the son of Adam had a valley of gold, he would desire a second. Nothing fills his mouth but dust. And Allah accepts the repentance of whoever repents.", ref: 'Sahih al-Bukhari 6437; Sahih Muslim 1048' },
+          { n: 4, en: 'True wealth is the contentment of the soul.', ref: 'Sahih al-Bukhari 6446' },
+        ]
+      },
+      'justice-fairness': {
+        name: 'Justice & Fairness',
+        desc: 'Prophetic teachings on upholding justice, protecting the oppressed, and leading with equity.',
+        hadiths: [
+          { n: 1, en: 'Beware of oppression, for oppression will be darkness on the Day of Resurrection.', ref: 'Sahih Muslim 2578' },
+          { n: 2, en: 'Help your brother whether he is an oppressor or is being oppressed. Someone asked: "How do I help an oppressor?" He said: "Stop him from wrongdoing — that is helping him."', ref: 'Sahih al-Bukhari 2443' },
+          { n: 3, en: 'Those who are just and fair will be with Allah on thrones of light — those who are just in their rulings, with their families, and in all that they are responsible for.', ref: 'Sahih Muslim 1827' },
+          { n: 4, en: 'Whoever takes even a hand-span of land unjustly will have seven earths placed around his neck on the Day of Resurrection.', ref: 'Sahih al-Bukhari 3196; Sahih Muslim 1610' },
+        ]
+      },
+      'intentions-actions': {
+        name: 'Intentions & Actions',
+        desc: 'The foundational hadith on niyyah and how sincerity transforms every deed into worship.',
+        hadiths: [
+          { n: 1, en: 'Actions are but by intention, and every person shall have but what he intended.', ref: 'Sahih al-Bukhari 1; Sahih Muslim 1907' },
+          { n: 2, en: 'Verily Allah does not look at your appearance or wealth, but rather He looks at your hearts and actions.', ref: 'Sahih Muslim 2564' },
+          { n: 3, en: 'The halal is clear and the haram is clear, and between the two of them are doubtful matters. So whoever guards against doubtful matters has protected his religion and his honour.', ref: 'Sahih al-Bukhari 52; Sahih Muslim 1599' },
+          { n: 4, en: 'The reward of deeds depends upon the intentions, and a person will get the reward according to what he has intended.', ref: 'Sahih al-Bukhari 1' },
+        ]
+      },
+      'fasting-ramadan': {
+        name: 'Fasting & Ramadan',
+        desc: 'Hadiths on the blessings of Ramadan, the etiquette of fasting, and the night of Laylatul Qadr.',
+        hadiths: [
+          { n: 1, en: 'When the month of Ramadan starts, the gates of Paradise are opened and the gates of Hell are closed, and the devils are chained.', ref: 'Sahih al-Bukhari 1899; Sahih Muslim 1079' },
+          { n: 2, en: 'Fasting is a shield. When one of you is fasting, he should not use foul or foolish talk. If someone fights him or insults him, let him say: "I am fasting."', ref: 'Sahih al-Bukhari 1904; Sahih Muslim 1151' },
+          { n: 3, en: 'Whoever fasts Ramadan out of faith and seeking reward, his past sins will be forgiven.', ref: 'Sahih al-Bukhari 38; Sahih Muslim 760' },
+          { n: 4, en: 'Seek out Laylatul Qadr in the odd nights of the last ten nights of Ramadan.', ref: 'Sahih al-Bukhari 2017; Sahih Muslim 1169' },
+        ]
+      },
+      'humility-pride': {
+        name: 'Humility & Pride',
+        desc: "Prophetic warnings against arrogance and the elevation that comes from lowering oneself before Allah.",
+        hadiths: [
+          { n: 1, en: "No one who has an atom's weight of arrogance in his heart will enter Paradise.", ref: 'Sahih Muslim 91' },
+          { n: 2, en: 'Whoever humbles himself before Allah, Allah will raise him in status.', ref: 'Sahih Muslim 2588' },
+          { n: 3, en: 'Arrogance is rejecting the truth and looking down on people.', ref: 'Sahih Muslim 91' },
+          { n: 4, en: 'Allah has revealed to me that you must be humble, so that no one boasts over another, and no one oppresses another.', ref: 'Sahih Muslim 2865' },
+        ]
+      },
+      'love-brotherhood': {
+        name: 'Love & Brotherhood',
+        desc: "Hadiths on loving for the sake of Allah, the bonds of brotherhood, and spreading peace with Salam.",
+        hadiths: [
+          { n: 1, en: 'You will not enter Paradise until you believe, and you will not believe until you love one another. Shall I tell you of something that, if you do it, you will love one another? Spread peace among yourselves.', ref: 'Sahih Muslim 54' },
+          { n: 2, en: 'A person will be with those whom he loves.', ref: 'Sahih al-Bukhari 6170; Sahih Muslim 2640' },
+          { n: 3, en: "Among the people who will receive the shade of Allah on the Day of Resurrection are two people who love one another for Allah's sake — they meet because of it and part because of it.", ref: 'Sahih al-Bukhari 660; Sahih Muslim 1031' },
+          { n: 4, en: 'If you love your brother, tell him.', ref: 'Sunan Abu Dawud 5124; Jami al-Tirmidhi 2392; graded Sahih by al-Albani' },
+        ]
+      },
+      'supplication-dua': {
+        name: 'Supplication & Dua',
+        desc: "Prophetic guidance on the etiquette of dua, the best times to supplicate, and Allah's promise to respond.",
+        hadiths: [
+          { n: 1, en: 'Dua is worship.', ref: 'Sunan Abu Dawud 1479; Jami al-Tirmidhi 3247; graded Sahih' },
+          { n: 2, en: 'Your Lord is shy and generous. He would be shy, if His servant were to raise his hands to Him, to turn them away empty.', ref: 'Sunan Abu Dawud 1488; Jami al-Tirmidhi 3556' },
+          { n: 3, en: 'Call upon Allah while being certain of receiving an answer, and know that Allah does not answer a supplication from a heedless, inattentive heart.', ref: 'Jami al-Tirmidhi 3479; graded Hasan by al-Albani' },
+          { n: 4, en: 'The closest a servant is to his Lord is in the last portion of the night, so if you are able to be among those who remember Allah in that hour, then do so.', ref: 'Jami al-Tirmidhi 3579; graded Hasan by al-Albani' },
+        ]
+      },
+      'trust-allah': {
+        name: 'Trust & Reliance on Allah',
+        desc: "Hadiths on tawakkul, taking means while relying on Allah, and finding peace in His perfect plan.",
+        hadiths: [
+          { n: 1, en: 'If you were to rely upon Allah with reliance due to Him, He would provide for you just as He provides for the birds — they go out in the morning hungry and return in the evening full.', ref: 'Jami al-Tirmidhi 2344; Sunan Ibn Majah 4164; graded Sahih by al-Albani' },
+          { n: 2, en: 'Tie your camel, then put your trust in Allah.', ref: 'Jami al-Tirmidhi 2517; graded Hasan by al-Albani' },
+          { n: 3, en: 'Know that if the nation were to gather together to benefit you with something, they would not benefit you except with something that Allah has already written for you. And if they gather to harm you, they cannot harm you except with something that Allah has already written against you.', ref: 'Jami al-Tirmidhi 2516; graded Sahih by al-Albani' },
+          { n: 4, en: 'Amazing is the affair of the believer — everything that happens to him is good. If good times come his way, he is grateful; if hardship comes his way, he endures patiently. Both are good for him.', ref: 'Sahih Muslim 2999' },
+        ]
+      }
+    };
+
+    /* ── Helpers ── */
+    // Safely set text content (avoids XSS from any data source)
+    function setText(el, text) { if (el) el.textContent = text; }
+    function setAttr(id, attr, val) {
+      const el = document.getElementById(id) || document.querySelector(attr ? `[${attr}]` : `#${id}`);
+      if (el) el.setAttribute(attr || 'content', val);
+    }
+    // Update all dynamic meta tags for SEO/social
+    function updateMeta(title, desc, url) {
+      document.title = title;
+      document.querySelector('meta[name="description"]')  && (document.querySelector('meta[name="description"]').content  = desc);
+      document.getElementById('canonicalTag')             && (document.getElementById('canonicalTag').href              = url);
+      document.getElementById('ogTitle')                  && (document.getElementById('ogTitle').content                = title);
+      document.getElementById('ogDesc')                   && (document.getElementById('ogDesc').content                 = desc);
+      document.getElementById('ogUrl')                    && (document.getElementById('ogUrl').content                  = url);
+      document.getElementById('twTitle')                  && (document.getElementById('twTitle').content                = title);
+      document.getElementById('twDesc')                   && (document.getElementById('twDesc').content                 = desc);
+      // Update Schema.org
+      const schema = document.getElementById('schemaScript');
+      if (schema) {
+        schema.textContent = JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": title,
+          "description": desc,
+          "url": url,
+          "isPartOf": { "@type": "WebSite", "url": "https://timelesshadith.com/" }
+        });
+      }
+    }
+
+    /* ── Render Page ── */
+    const params  = new URLSearchParams(window.location.search);
+    const catSlug = params.get('cat') || '';
+    const cat     = CATS[catSlug];
+    const content = document.getElementById('pageContent');
+
+    if (!cat) {
+      // Not found — use DOM API (no innerHTML with dynamic data)
+      const wrap = document.createElement('div');
+      wrap.className = 'not-found';
+      const h2 = document.createElement('h2');
+      h2.textContent = 'Category not found';
+      const p = document.createElement('p');
+      p.textContent = "The category you're looking for doesn't exist yet.";
+      const a = document.createElement('a');
+      a.href = 'index.html';
+      a.className = 'btn-home';
+      a.textContent = '← Back to Home';
+      wrap.append(h2, p, a);
+      content.appendChild(wrap);
+    } else {
+      // Update all SEO meta tags dynamically
+      const pageTitle = `${cat.name} Hadiths — Timeless Hadith`;
+      const pageDesc  = cat.desc.length > 155 ? cat.desc.slice(0, 152) + '…' : cat.desc;
+      const pageUrl   = `https://timelesshadith.com/category.html?cat=${catSlug}`;
+      updateMeta(pageTitle, pageDesc, pageUrl);
+
+      // Build the page using DOM API for text nodes (XSS-safe)
+      // Static HTML structure (no user data injected)
+      const hero = document.createElement('div');
+      hero.className = 'cat-hero';
+      hero.innerHTML = `
+        <a href="index.html" class="back-link">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          All Categories
+        </a>
+        <p class="cat-label">Category</p>
+        <h1 class="cat-title"></h1>
+        <p class="cat-desc"></p>`;
+      // Safely set text from data (not injected as HTML)
+      hero.querySelector('.cat-title').textContent = cat.name;
+      hero.querySelector('.cat-desc').textContent  = cat.desc;
+
+      const divider = document.createElement('div');
+      divider.className = 'section-divider';
+
+      const section = document.createElement('section');
+      section.className = 'hadiths-section';
+      section.setAttribute('aria-label', `${cat.name} hadiths`);
+      const grid = document.createElement('div');
+      grid.className = 'hadiths-grid';
+
+      cat.hadiths.forEach(h => {
+        const card = document.createElement('div');
+        card.className = 'hadith-card';
+        card.innerHTML = `
+          <div class="card-top-row">
+            <div class="hadith-number"></div>
+          </div>
+          <p class="hadith-text"></p>
+          <div class="hadith-footer">
+            <span class="hadith-ref"></span>
+            <span class="hadith-id"></span>
+          </div>`;
+        // Set all text safely via textContent
+        card.querySelector('.hadith-number').textContent = h.n;
+        card.querySelector('.hadith-text').textContent   = h.en;
+        card.querySelector('.hadith-ref').textContent    = h.ref;
+        card.querySelector('.hadith-id').textContent     = `Hadith #${h.n}`;
+        grid.appendChild(card);
+      });
+
+      section.appendChild(grid);
+      content.append(hero, divider, section);
+    }
+  </script>
+
+
+</body>
+</html>

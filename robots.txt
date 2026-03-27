@@ -1,0 +1,9 @@
+# Timeless Hadith — robots.txt
+# https://timelesshadith.com/robots.txt
+
+User-agent: *
+Allow: /
+
+Disallow: /404.html
+
+Sitemap: https://timelesshadith.com/sitemap.xml
