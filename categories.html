@@ -375,9 +375,6 @@
       box-shadow: var(--card-shadow-hover);
       transform: translateY(-4px) scale(1.005);
     }
-    .card-emoji {
-      font-size: 28px; margin-bottom: 14px; display: block; line-height: 1;
-    }
     .card-category {
       font-size: 13px; font-weight: 500; color: var(--accent);
       letter-spacing: -0.1px; margin-bottom: 8px;
@@ -486,18 +483,6 @@
     [data-theme="dark"] .cookie-banner { box-shadow: 0 16px 48px rgba(0,0,0,0.5); }
     .cookie-banner.show { transform: translateY(0); opacity: 1; pointer-events: all; }
     .cookie-banner-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-    .cookie-emoji { font-size: 26px; line-height: 1; flex-shrink: 0; }
-    .cookie-banner-title { font-size: 14px; font-weight: 600; color: var(--ink); letter-spacing: -0.2px; }
-    .cookie-banner p { font-size: 12px; color: var(--muted); line-height: 1.6; letter-spacing: -0.05px; margin-bottom: 14px; }
-    .cookie-banner p a { color: var(--accent); text-decoration: none; font-weight: 500; }
-    .cookie-banner p a:hover { text-decoration: underline; }
-    .cookie-banner-btns { display: flex; gap: 8px; }
-    .cookie-btn {
-      flex: 1; padding: 9px 10px; border-radius: 100px;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: var(--font); border: 1px solid var(--border);
-      transition: all 0.2s ease; letter-spacing: -0.1px;
-    }
     .cookie-btn.accept { background: var(--ink); color: var(--bg); border-color: var(--ink); }
     .cookie-btn.accept:hover { opacity: 0.8; }
     .cookie-btn.decline { background: transparent; color: var(--muted); }
@@ -664,7 +649,6 @@
   <!-- ══ COOKIE BANNER ══ -->
   <aside class="cookie-banner" id="cookieBanner" role="complementary" aria-label="Cookie consent">
     <div class="cookie-banner-header">
-      <span class="cookie-emoji" aria-hidden="true">🍪</span>
       <p class="cookie-banner-title">We use cookies</p>
     </div>
     <p>We use cookies to improve your experience in accordance with Saudi Arabia's <strong>Personal Data Protection Law (PDPL)</strong>. See our <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms</a>.</p>
@@ -786,7 +770,6 @@
       el.setAttribute('aria-label', cat.title + ' — ' + (cat.count||0) + ' hadiths');
       el.style.animationDelay = delay + 's';
       el.innerHTML =
-        '<span class="card-emoji" aria-hidden="true">' + cat.emoji + '</span>' +
         '<p class="card-category">' + (cat.count||0) + ' Hadiths</p>' +
         '<h3>' + cat.title + '</h3>' +
         '<p class="card-desc">' + cat.desc + '</p>' +
@@ -808,7 +791,7 @@
         if (!slice.length) {
           track.innerHTML =
             '<div class="no-results" role="status">' +
-              '<div class="no-results-icon">🔍</div>' +
+              '<div class="no-results-icon"></div>' +
               '<h3>No topics found</h3>' +
               '<p>Try a different search term.</p>' +
             '</div>';

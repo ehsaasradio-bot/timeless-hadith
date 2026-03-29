@@ -439,7 +439,7 @@
       font-size: clamp(15px, 1.5vw, 18px);
       font-weight: 400; color: var(--ink);
       line-height: 1.65; letter-spacing: -0.01em;
-      margin-bottom: 16px; font-style: italic;
+      margin-bottom: 16px; font-style: normal;
     }
     .featured-hadith-meta {
       font-size: 13px; color: var(--muted);
@@ -522,9 +522,6 @@
     .card:hover {
       box-shadow: var(--card-shadow-hover);
       transform: translateY(-4px) scale(1.005);
-    }
-    .card-emoji {
-      font-size: 28px; margin-bottom: 14px; display: block; line-height: 1;
     }
     .card-category {
       font-size: 13px; font-weight: 500; color: var(--accent);
@@ -640,7 +637,7 @@
       margin-bottom: 12px;
     }
     .modal-hadith-text {
-      font-size: 14px; color: var(--ink); line-height: 1.65; font-style: italic;
+      font-size: 14px; color: var(--ink); line-height: 1.65; font-style: normal;
       margin-bottom: 8px;
     }
     .modal-hadith-meta {
@@ -679,9 +676,6 @@
     .cookie-banner.show { transform: translateY(0); opacity: 1; pointer-events: all; }
     .cookie-banner-header {
       display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
-    }
-    .cookie-emoji {
-      font-size: 26px; line-height: 1; flex-shrink: 0;
     }
     .cookie-banner-title {
       font-size: 14px; font-weight: 600; color: var(--ink); letter-spacing: -0.2px;
@@ -833,7 +827,6 @@
   <!-- ── Cookie Banner (PDPL-Compliant) ── -->
   <aside class="cookie-banner" id="cookieBanner" role="complementary" aria-label="Cookie consent">
     <div class="cookie-banner-header">
-      <span class="cookie-emoji" aria-hidden="true">🍪</span>
       <p class="cookie-banner-title">We use cookies</p>
     </div>
     <p>
@@ -985,7 +978,6 @@
 
         <!-- Card 1 -->
         <div class="card">
-          <span class="card-emoji">🌟</span>
           <p class="card-category" data-en="Faith & Belief">Faith &amp; Belief</p>
           <h3>Strengthen your connection with Allah.</h3>
           <p class="card-desc">Hadiths on the pillars of faith, sincerity of intention, and a deep relationship with Allah.</p>
@@ -1002,7 +994,6 @@
 
         <!-- Card 2 -->
         <div class="card">
-          <span class="card-emoji">🤝</span>
           <p class="card-category" data-en="Character & Conduct">Character &amp; Conduct</p>
           <h3>Live with purpose and good character.</h3>
           <p class="card-desc">Prophetic guidance on manners, kindness, honesty, and treating others with dignity.</p>
@@ -1019,7 +1010,6 @@
 
         <!-- Card 3 -->
         <div class="card">
-          <span class="card-emoji">🕌</span>
           <p class="card-category" data-en="Prayer & Worship">Prayer &amp; Worship</p>
           <h3>Deepen your devotion through prayer.</h3>
           <p class="card-desc">Guidance on Salah, dhikr, and drawing closer to Allah through consistent worship.</p>
@@ -1036,7 +1026,6 @@
 
         <!-- Card 4 -->
         <div class="card">
-          <span class="card-emoji">👨‍👩‍👧</span>
           <p class="card-category" data-en="Family & Relations">Family &amp; Relations</p>
           <h3>Build a home rooted in mercy.</h3>
           <p class="card-desc">Prophetic wisdom on marriage, parenting, honouring parents, and maintaining family ties.</p>
@@ -1053,7 +1042,6 @@
 
         <!-- Card 5 -->
         <div class="card">
-          <span class="card-emoji">📚</span>
           <p class="card-category" data-en="Knowledge & Learning">Knowledge &amp; Learning</p>
           <h3>Seek knowledge from the cradle to the grave.</h3>
           <p class="card-desc">Hadiths on the virtue of seeking knowledge, teaching others, and the pursuit of wisdom.</p>
@@ -1070,7 +1058,6 @@
 
         <!-- Card 6 -->
         <div class="card">
-          <span class="card-emoji">🌿</span>
           <p class="card-category" data-en="Patience & Gratitude">Patience &amp; Gratitude</p>
           <h3>Find strength in patience and thankfulness.</h3>
           <p class="card-desc">Guidance on bearing hardship with grace, counting blessings, and trusting Allah's plan.</p>
@@ -1087,7 +1074,6 @@
 
         <!-- Card 7 -->
         <div class="card">
-          <span class="card-emoji">💝</span>
           <p class="card-category" data-en="Charity & Generosity">Charity &amp; Generosity</p>
           <h3>Give freely and watch blessings grow.</h3>
           <p class="card-desc">Prophetic teachings on Sadaqah, Zakat, and the immense reward of giving for Allah's sake.</p>
@@ -1104,7 +1090,6 @@
 
         <!-- Card 8 -->
         <div class="card">
-          <span class="card-emoji">✅</span>
           <p class="card-category" data-en="Honesty & Truthfulness">Honesty &amp; Truthfulness</p>
           <h3>Let your word be your bond.</h3>
           <p class="card-desc">Hadiths on the virtue of speaking truth, avoiding falsehood, and the trust that honesty builds.</p>
@@ -1121,7 +1106,6 @@
 
         <!-- Card 9 -->
         <div class="card">
-          <span class="card-emoji">🌅</span>
           <p class="card-category" data-en="Repentance & Forgiveness">Repentance &amp; Forgiveness</p>
           <h3>Turn back to Allah at any moment.</h3>
           <p class="card-desc">Guidance on seeking Tawbah, Allah's infinite mercy, and the liberating power of repentance.</p>
@@ -1138,7 +1122,6 @@
 
         <!-- Card 10 -->
         <div class="card">
-          <span class="card-emoji">🌿</span>
           <p class="card-category" data-en="Health & Body">Health &amp; Body</p>
           <h3>Your body has rights over you.</h3>
           <p class="card-desc">Prophetic wisdom on sleep, food, cleanliness, and caring for the body as an Amanah.</p>
@@ -1155,7 +1138,6 @@
 
         <!-- Card 11 -->
         <div class="card">
-          <span class="card-emoji">🏡</span>
           <p class="card-category" data-en="Neighbours & Community">Neighbours &amp; Community</p>
           <h3>Be the best neighbour on your street.</h3>
           <p class="card-desc">Hadiths on the rights of neighbours, community responsibility, and building brotherhood.</p>
@@ -1171,7 +1153,6 @@
 
         <!-- Card 12 -->
         <div class="card">
-          <span class="card-emoji">🌙</span>
           <p class="card-category" data-en="Death & Afterlife">Death &amp; Afterlife</p>
           <h3>Prepare today for what comes after.</h3>
           <p class="card-desc">Prophetic reminders on the reality of death, the grave, and the eternal life ahead.</p>
@@ -1188,7 +1169,6 @@
 
         <!-- Card 13 -->
         <div class="card">
-          <span class="card-emoji">📿</span>
           <p class="card-category" data-en="Remembrance of Allah">Remembrance of Allah</p>
           <h3>Keep your tongue moist with dhikr.</h3>
           <p class="card-desc">Hadiths on remembering Allah, morning and evening adhkar, and tranquility of the heart.</p>
@@ -1205,7 +1185,6 @@
 
         <!-- Card 14 -->
         <div class="card">
-          <span class="card-emoji">💰</span>
           <p class="card-category" data-en="Wealth & Livelihood">Wealth &amp; Livelihood</p>
           <h3>Earn lawfully and spend wisely.</h3>
           <p class="card-desc">Guidance on halal earnings, avoiding greed, the dangers of excessive wealth, and contentment.</p>
@@ -1222,7 +1201,6 @@
 
         <!-- Card 15 -->
         <div class="card">
-          <span class="card-emoji">⚖️</span>
           <p class="card-category" data-en="Justice & Fairness">Justice &amp; Fairness</p>
           <h3>Stand firmly for what is right.</h3>
           <p class="card-desc">Prophetic teachings on upholding justice, protecting the oppressed, and leading with equity.</p>
@@ -1239,7 +1217,6 @@
 
         <!-- Card 16 -->
         <div class="card">
-          <span class="card-emoji">🎯</span>
           <p class="card-category" data-en="Intentions & Actions">Intentions &amp; Actions</p>
           <h3>Actions are judged by intentions.</h3>
           <p class="card-desc">The foundational hadith on niyyah and how sincerity of purpose transforms every deed into worship.</p>
@@ -1256,7 +1233,6 @@
 
         <!-- Card 17 -->
         <div class="card">
-          <span class="card-emoji">🌙</span>
           <p class="card-category" data-en="Fasting & Ramadan">Fasting &amp; Ramadan</p>
           <h3>Fast with your whole being.</h3>
           <p class="card-desc">Hadiths on the blessings of Ramadan, the etiquette of fasting, and the night of Laylatul Qadr.</p>
@@ -1273,7 +1249,6 @@
 
         <!-- Card 18 -->
         <div class="card">
-          <span class="card-emoji">🕊️</span>
           <p class="card-category" data-en="Humility & Pride">Humility &amp; Pride</p>
           <h3>True greatness lies in humility.</h3>
           <p class="card-desc">Prophetic warnings against arrogance and the elevation that comes from lowering oneself before Allah.</p>
@@ -1289,7 +1264,6 @@
 
         <!-- Card 19 -->
         <div class="card">
-          <span class="card-emoji">❤️</span>
           <p class="card-category" data-en="Love & Brotherhood">Love &amp; Brotherhood</p>
           <h3>You are not a believer until you love for others.</h3>
           <p class="card-desc">Hadiths on loving for the sake of Allah, the bonds of brotherhood, and spreading Salam.</p>
@@ -1306,7 +1280,6 @@
 
         <!-- Card 20 -->
         <div class="card">
-          <span class="card-emoji">🤲</span>
           <p class="card-category" data-en="Supplication & Dua">Supplication &amp; Dua</p>
           <h3>Call upon Allah — He is always listening.</h3>
           <p class="card-desc">Prophetic guidance on the etiquette of dua, the best times to supplicate, and Allah's promise to respond.</p>
@@ -1322,7 +1295,6 @@
 
         <!-- Card 21 -->
         <div class="card">
-          <span class="card-emoji">🌊</span>
           <p class="card-category" data-en="Trust & Reliance on Allah">Trust &amp; Reliance on Allah</p>
           <h3>Tie your camel, then put your trust in Allah.</h3>
           <p class="card-desc">Hadiths on tawakkul, taking means while relying on Allah, and finding peace in His perfect plan.</p>
@@ -1776,9 +1748,9 @@
 
       // English text
       ctx.fillStyle = isDark ? '#e0e0e0' : '#3d3d3f';
-      ctx.font      = 'italic 24px -apple-system, Helvetica, Arial, sans-serif';
+      ctx.font      = 'normal 24px -apple-system, Helvetica, Arial, sans-serif';
       ctx.textAlign = 'left';
-      const textLines = wrapText(ctx, hadith.text, W - 128, 'italic 24px -apple-system, Helvetica, Arial, sans-serif');
+      const textLines = wrapText(ctx, hadith.text, W - 128, 'normal 24px -apple-system, Helvetica, Arial, sans-serif');
       const startY    = 160 + arabicLines.length * 50 + 40;
       textLines.forEach((line, i) => {
         ctx.fillText(line, 64, startY + i * 40);

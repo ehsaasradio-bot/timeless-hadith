@@ -9,7 +9,7 @@
 //
 //  (Replace the existing Google Identity Services line on each page:)
 //    ❌  <script src="https://accounts.google.com/gsi/client" async defer></script>
-//    ✅  <script type="module" src="js/firebase-auth.js"></script>
+//      <script type="module" src="js/firebase-auth.js"></script>
 // ═══════════════════════════════════════════════════════════════════════════════
 
 // ───────────────────────────────────────────────────────────────────────────────

@@ -798,7 +798,7 @@ const TH_SHARE = (() => {
 const TH_SHARE_TEXT = (() => {
   async function share(hadith, catTitle) {
     const text = [
-      catTitle ? `📖 ${catTitle}` : '',
+      catTitle ? `${catTitle}` : '',
       hadith.arabic ? hadith.arabic : '',
       `"${hadith.english}"`,
       hadith.narrator  ? `— ${hadith.narrator}`  : '',
