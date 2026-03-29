@@ -30,17 +30,14 @@ const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
 
 const TH_THEME = (() => {
   function get() {
-    return localStorage.getItem(APP_KEY.THEME) ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    // Always default to light; only honour an explicit saved preference
+    return localStorage.getItem(APP_KEY.THEME) || 'light';
   }
 
   function apply(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem(APP_KEY.THEME, theme);
-    // Update all toggle icons on the page
-    document.querySelectorAll('.theme-icon').forEach(el => {
-      el.textContent = theme === 'dark' ? '☀️' : '🌙';
-    });
+    // SVG toggles handle their own state via CSS; no emoji fallback needed
   }
 
   function toggle() {
