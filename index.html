@@ -161,6 +161,17 @@
     }
     .nav-links a:hover { color: var(--ink); }
 
+    /* Bookmark badge */
+    .bm-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 18px; height: 18px; padding: 0 5px;
+      background: var(--accent); color: #fff;
+      border-radius: 100px; font-size: 10px; font-weight: 700;
+      line-height: 1; margin-left: 5px; vertical-align: middle;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .bm-badge[data-count="0"] { opacity: 0; transform: scale(0.6); }
+
     .nav-cta {
       display: inline-flex; align-items: center;
       justify-content: center; padding: 9px 20px;
@@ -779,7 +790,7 @@
     <ul class="nav-links">
       <li><a href="categories.html">Browse</a></li>
       <li><a href="categories.html">Topics</a></li>
-      <li><a href="bookmarks.html">Bookmarks</a></li>
+      <li><a href="bookmarks.html">Bookmarks<span class="bm-badge" id="nav-bm-badge" data-count="0" aria-label="bookmarks count"></span></a></li>
       <li><a href="about.html">About</a></li>
       <li>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">

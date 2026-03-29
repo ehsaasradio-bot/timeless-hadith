@@ -429,9 +429,22 @@ const TH_BOOKMARKS = (() => {
     document.addEventListener('th:login',  syncPage);
     document.addEventListener('th:logout', syncPage);
     syncPage();
+    // Initial badge render + update on every bookmark change
+    updateBadge();
+    document.addEventListener('th:bookmark', updateBadge);
   }
 
-  return { getAll, has, add, remove, toggle, updateBtnState, syncPage, init };
+  /** Update the nav bookmark count badge on all matching elements */
+  function updateBadge() {
+    const count = getAll().length;
+    document.querySelectorAll('#nav-bm-badge, .bm-count-badge').forEach(el => {
+      el.textContent = count > 0 ? (count > 99 ? '99+' : count) : '';
+      el.dataset.count = count;
+      el.setAttribute('aria-label', count + ' bookmarks');
+    });
+  }
+
+  return { getAll, has, add, remove, toggle, updateBtnState, syncPage, updateBadge, init };
 })();
 
 /* ═══════════════════════════════════════════════════════════════════
