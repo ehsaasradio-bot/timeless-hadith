@@ -475,9 +475,19 @@
     .share-btn.as-image:hover { opacity: 0.8; }
     [data-theme="dark"] .share-btn.as-image { background: var(--ink); color: var(--bg); }
 
-    .featured-nav-dots {
-      display: flex; gap: 6px; margin-top: 20px; justify-content: center;
+    .featured-nav-row {
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; margin-top: 20px;
     }
+    .featured-nav-dots { display: flex; gap: 6px; }
+    .featured-nav-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1px solid var(--border); background: var(--bg);
+      color: var(--muted); cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .featured-nav-btn:hover { border-color: var(--ink); color: var(--ink); background: var(--surface); }
     .f-dot {
       width: 6px; height: 6px; border-radius: 50%;
       background: var(--border); cursor: pointer;
@@ -972,7 +982,15 @@
           Share as Image
         </button>
       </div>
-      <div class="featured-nav-dots" id="featuredDots"></div>
+      <div class="featured-nav-row">
+        <button class="featured-nav-btn" id="featuredPrev" aria-label="Previous hadith">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="featured-nav-dots" id="featuredDots"></div>
+        <button class="featured-nav-btn" id="featuredNext" aria-label="Next hadith">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
     </div>
   </section>
 
@@ -1466,6 +1484,32 @@
 
     buildFeaturedDots();
     renderFeatured(0);
+
+    // Prev / Next buttons
+    document.getElementById('featuredPrev').addEventListener('click', () => {
+      currentFeatured = (currentFeatured - 1 + FEATURED.length) % FEATURED.length;
+      renderFeatured(currentFeatured);
+    });
+    document.getElementById('featuredNext').addEventListener('click', () => {
+      currentFeatured = (currentFeatured + 1) % FEATURED.length;
+      renderFeatured(currentFeatured);
+    });
+
+    // Touch swipe support for mobile
+    (function() {
+      const card = document.getElementById('featuredCard');
+      let startX = 0;
+      card.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      card.addEventListener('touchend', e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) {
+          currentFeatured = diff > 0
+            ? (currentFeatured + 1) % FEATURED.length
+            : (currentFeatured - 1 + FEATURED.length) % FEATURED.length;
+          renderFeatured(currentFeatured);
+        }
+      }, { passive: true });
+    })();
 
     // Auto-rotate featured
     setInterval(() => {
