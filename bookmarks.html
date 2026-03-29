@@ -167,7 +167,7 @@
         sub.textContent='Sign in to save hadiths';
         area.innerHTML=
           '<div class="state-box" role="status">'+
-            '<div class="state-icon">🔒</div>'+
+            '<div class="state-icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>'+
             '<p class="state-title">Sign in to see your bookmarks</p>'+
             '<p class="state-body">Your saved hadiths are linked to your account. Sign in to access them anywhere.</p>'+
             '<button class="btn-primary" onclick="TH_AUTH&&TH_AUTH.showLoginModal(\'Sign in to view your bookmarks.\')">Sign in</button>'+
@@ -184,9 +184,9 @@
         sub.textContent='No saved hadiths yet';
         area.innerHTML=
           '<div class="state-box" role="status">'+
-            '<div class="state-icon">📭</div>'+
+            '<div class="state-icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>'+
             '<p class="state-title">No bookmarks yet</p>'+
-            '<p class="state-body">Tap the 🔖 icon on any hadith to save it here. Your collection will grow over time.</p>'+
+            '<p class="state-body">Tap the bookmark icon on any hadith to save it here. Your collection will grow over time.</p>'+
             '<a href="categories.html" class="btn-primary">Browse hadiths</a>'+
           '</div>';
         return;

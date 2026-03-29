@@ -192,8 +192,8 @@ const TH_AUTH = (() => {
     el.setAttribute('aria-label', 'Sign in');
     el.innerHTML = `
       <div class="th-modal-box login-modal-box" role="document">
-        <button class="th-modal-close" aria-label="Close" onclick="TH_AUTH.closeLoginModal()">✕</button>
-        <div class="login-modal-logo">☪️</div>
+        <button class="th-modal-close" aria-label="Close" onclick="TH_AUTH.closeLoginModal()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <div class="login-modal-logo"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
         <h2 class="login-modal-title">Sign in to Timeless Hadith</h2>
         <p class="login-modal-reason"></p>
         <div id="google-signin-btn-modal" class="gis-btn-wrap"></div>
@@ -394,7 +394,7 @@ const TH_BOOKMARKS = (() => {
     btn.setAttribute('aria-label', isSaved ? 'Remove bookmark' : 'Bookmark this hadith');
     btn.classList.toggle('bookmarked', isSaved);
     const icon = btn.querySelector('.bm-icon');
-    if (icon) icon.textContent = isSaved ? '🔖' : '🔖';
+    // icon SVG fill is handled via CSS .bookmarked class
     // Visual fill
     btn.style.color = isSaved ? 'var(--accent, #0071e3)' : 'var(--text-secondary, #888)';
   }
@@ -536,7 +536,7 @@ const TH_SHARE = (() => {
     ctx.font = 'bold 36px -apple-system, SF Pro Display, Helvetica Neue, sans-serif';
     ctx.textAlign = 'center';
     ctx.direction = 'ltr';
-    ctx.fillText('☪️  Timeless Hadith', W / 2, y);
+    ctx.fillText('Timeless Hadith', W / 2, y);
     y += 52;
 
     // ── Category badge ──
@@ -607,7 +607,7 @@ const TH_SHARE = (() => {
       const authColor = auth === 'Sahih' ? '#30d158' : auth === 'Hasan' ? '#ffd60a' : TEXT2;
       ctx.font = '500 22px -apple-system, SF Pro Display, Helvetica Neue, sans-serif';
       ctx.fillStyle = authColor;
-      ctx.fillText(`✓ ${auth}`, W / 2, y);
+      ctx.fillText(auth, W / 2, y);
       y += 36;
     }
 
@@ -721,7 +721,7 @@ const TH_SHARE = (() => {
     el.setAttribute('aria-label', 'Share as Image');
     el.innerHTML = `
       <div class="th-modal-box share-modal-box" role="document">
-        <button class="th-modal-close" aria-label="Close" onclick="TH_SHARE.closeModal()">✕</button>
+        <button class="th-modal-close" aria-label="Close" onclick="TH_SHARE.closeModal()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
         <h2 class="share-modal-title">Share as Image</h2>
         <div id="share-img-loading" class="share-modal-loading" aria-live="polite">
           <div class="share-spinner"></div>
@@ -732,10 +732,10 @@ const TH_SHARE = (() => {
         </div>
         <div class="share-modal-actions">
           <button id="share-img-download" class="share-btn share-btn-primary">
-            ⬇ Download PNG
+            Download PNG
           </button>
           <button id="share-img-gmail" class="share-btn share-btn-gmail">
-            ✉ Share via Gmail
+            Share via Gmail
           </button>
         </div>
         <p class="share-modal-note">Image downloaded · Gmail compose opens in a new tab</p>

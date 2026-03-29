@@ -710,7 +710,7 @@
         '</div>'+
         '<div class="card-meta">'+
           (h.subcategory?'<span class="card-subcat">'+h.subcategory+'</span>':'')+
-          (h.authenticity&&authCls(h.authenticity)?'<span class="card-auth '+authCls(h.authenticity)+'">✓ '+h.authenticity+'</span>':'')+
+          (h.authenticity&&authCls(h.authenticity)?'<span class="card-auth '+authCls(h.authenticity)+'">'+h.authenticity+'</span>':'')+
         '</div>'+
         '<p class="arabic-text" lang="ar" dir="rtl">'+(h.arabic||'')+'</p>'+
         '<p class="english-text">&#8220;'+(h.english||'')+'&#8221;</p>'+
