@@ -157,7 +157,7 @@
     .nav-cta {
       display: inline-flex; align-items: center;
       justify-content: center; padding: 9px 20px;
-      background: var(--ink); color: var(--bg);
+      background: var(--accent); color: #fff;
       border-radius: 100px; font-size: 14px; font-weight: 500;
       letter-spacing: -0.1px; text-decoration: none;
       border: none; cursor: pointer; font-family: var(--font);
@@ -169,7 +169,7 @@
     #nav-auth-item { display: flex; align-items: center; gap: 8px; }
     #btn-login {
       display: inline-flex; align-items: center;
-      padding: 9px 20px; background: var(--ink); color: var(--bg);
+      padding: 9px 20px; background: var(--accent); color: #fff;
       border-radius: 100px; font-size: 14px; font-weight: 500;
       border: none; cursor: pointer; font-family: var(--font);
       letter-spacing: -0.1px;
@@ -319,7 +319,7 @@
     .search-input::placeholder { color: var(--muted); }
     .search-btn {
       flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px;
-      padding: 10px 18px; background: var(--ink); color: var(--bg);
+      padding: 10px 18px; background: var(--accent); color: #fff;
       border: none; border-radius: 100px; font-family: var(--font);
       font-size: 13px; font-weight: 500; cursor: pointer;
       letter-spacing: -0.1px;
@@ -414,13 +414,13 @@
     /* Card arrow button */
     .card-plus {
       position: absolute; bottom: 24px; right: 24px;
-      width: 44px; height: 44px; background: var(--ink);
-      color: var(--bg); border-radius: 50%;
+      width: 44px; height: 44px; background: var(--accent);
+      color: #fff; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.35s ease, color 0.35s ease;
     }
     .card-plus svg {
-      width: 16px; height: 16px; stroke: var(--bg); fill: none;
+      width: 16px; height: 16px; stroke: #fff; fill: none;
       stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
       transition: stroke 0.35s ease, transform 0.2s ease;
     }
@@ -492,7 +492,13 @@
     [data-theme="dark"] .cookie-banner { box-shadow: 0 16px 48px rgba(0,0,0,0.5); }
     .cookie-banner.show { transform: translateY(0); opacity: 1; pointer-events: all; }
     .cookie-banner-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-    .cookie-btn.accept { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .cookie-banner-title { font-size: 14px; font-weight: 600; color: var(--ink); letter-spacing: -0.2px; }
+    .cookie-banner p { font-size: 12px; color: var(--muted); line-height: 1.6; letter-spacing: -0.05px; margin-bottom: 14px; }
+    .cookie-banner p a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .cookie-banner p a:hover { text-decoration: underline; }
+    .cookie-banner-btns { display: flex; gap: 8px; }
+    .cookie-btn { flex: 1; padding: 9px 10px; border-radius: 100px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: var(--font); border: 1px solid var(--border); transition: all 0.2s ease; letter-spacing: -0.1px; }
+    .cookie-btn.accept { background: var(--accent); color: #fff; border-color: var(--accent); }
     .cookie-btn.accept:hover { opacity: 0.8; }
     .cookie-btn.decline { background: transparent; color: var(--muted); }
     .cookie-btn.decline:hover { background: var(--surface); color: var(--ink); }
@@ -858,38 +864,4 @@
             cat.title.toLowerCase().indexOf(q) !== -1 ||
             cat.desc.toLowerCase().indexOf(q)  !== -1 ||
             cat.slug.replace(/-/g,' ').indexOf(q) !== -1 ||
-            (PILLS[cat.slug]||[]).join(' ').toLowerCase().indexOf(q) !== -1
-          );
-        });
-      }
-      renderPage();
-    }
-
-    function changePage(dir) {
-      var pages = Math.ceil(filteredCats.length / PER_PAGE);
-      var next = currentPage + dir;
-      if (next >= 0 && next < pages) {
-        currentPage = next;
-        renderPage();
-        window.scrollTo({top: 0, behavior: 'smooth'});
-      }
-    }
-
-    /* ── Init ── */
-    document.addEventListener('DOMContentLoaded', function() {
-      allCats = TH.categories;
-      filteredCats = allCats.slice();
-      renderPage();
-
-      document.getElementById('cat-search').addEventListener('input', function() {
-        applySearch(this.value);
-      });
-      document.getElementById('cat-search').addEventListener('search', function() {
-        applySearch(this.value);
-      });
-    });
-  })();
-  </script>
-
-</body>
-</html>
+            (PILLS[cat.slug]||[]).join(' ')

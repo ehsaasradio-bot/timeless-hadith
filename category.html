@@ -121,7 +121,7 @@
     #nav-auth-item { display: flex; align-items: center; gap: 8px; }
     #btn-login {
       display: inline-flex; align-items: center; padding: 9px 20px;
-      background: var(--ink); color: var(--bg); border-radius: 100px;
+      background: var(--accent); color: #fff; border-radius: 100px;
       font-size: 14px; font-weight: 500; border: none; cursor: pointer;
       font-family: var(--font); letter-spacing: -0.1px;
       transition: opacity 0.2s ease, background 0.35s ease, color 0.35s ease;
@@ -199,15 +199,6 @@
     .cat-hero {
       max-width: 1100px; margin: 0 auto;
       padding: 24px 40px 40px;
-    }
-    .cat-hero-inner { display: flex; align-items: flex-start; gap: 20px; }
-    .cat-hero-icon {
-      font-size: 36px; flex-shrink: 0;
-      width: 68px; height: 68px;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 18px;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.35s ease;
     }
     .cat-hero-text { flex: 1; }
     .cat-hero-eyebrow {
@@ -333,6 +324,10 @@
     .card-action:hover { background: var(--surface2); border-color: var(--ink); transform: scale(1.1); color: var(--ink); }
     .card-action.bookmarked { color: var(--accent); border-color: var(--accent); background: rgba(0,113,227,0.06); }
     [data-theme="dark"] .card-action.bookmarked { background: rgba(41,151,255,0.1); }
+    .like-btn { gap: 4px; width: auto; padding: 0 10px; border-radius: 100px; }
+    .like-btn .like-count { font-size: 12px; font-weight: 500; letter-spacing: -0.2px; }
+    .like-btn.liked { color: #ff3b30; border-color: #ff3b30; background: rgba(255,59,48,0.06); }
+    [data-theme="dark"] .like-btn.liked { background: rgba(255,59,48,0.12); }
 
     /* Card meta row */
     .card-meta {
@@ -441,6 +436,17 @@
     [data-theme="dark"] .cookie-banner { box-shadow: 0 16px 48px rgba(0,0,0,0.5); }
     .cookie-banner.show { transform: translateY(0); opacity: 1; pointer-events: all; }
     .cookie-banner-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .cookie-banner-title { font-size: 14px; font-weight: 600; color: var(--ink); letter-spacing: -0.2px; }
+    .cookie-banner p { font-size: 12px; color: var(--muted); line-height: 1.6; letter-spacing: -0.05px; margin-bottom: 14px; }
+    .cookie-banner p a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .cookie-banner p a:hover { text-decoration: underline; }
+    .cookie-banner-btns { display: flex; gap: 8px; }
+    .cookie-btn { flex: 1; padding: 9px 10px; border-radius: 100px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: var(--font); border: 1px solid var(--border); transition: all 0.2s ease; letter-spacing: -0.1px; }
+    .cookie-btn.accept { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .cookie-btn.accept:hover { opacity: 0.8; }
+    .cookie-btn.decline { background: transparent; color: var(--muted); }
+    .cookie-btn.decline:hover { background: var(--surface); color: var(--ink); }
+    .cookie-pdpl-note { font-size: 10px; color: var(--muted); text-align: center; margin-top: 10px; opacity: 0.7; }
     @media (max-width: 720px) {
       .hadith-list { grid-template-columns: 1fr; }
     }
@@ -514,7 +520,6 @@
   <header>
     <div class="cat-hero">
       <div class="cat-hero-inner">
-        <div class="cat-hero-icon" id="cat-emoji" aria-hidden="true"></div>
         <div class="cat-hero-text">
           <p class="cat-hero-eyebrow">Topic</p>
           <h1 class="cat-hero-title" id="cat-title">Loading…</h1>
@@ -696,6 +701,8 @@
     }
 
     function authCls(a){ return a==='Sahih'?'auth-sahih':a==='Hasan'?'auth-hasan':''; }
+    /* Helper: get raw hadith object by id (unwrap findHadith wrapper) */
+    function _getH(id){ var r=TH.findHadith(id); return r?r.hadith:null; }
 
     function buildCard(h, i) {
       var card=document.createElement('article');
@@ -703,10 +710,13 @@
       card.style.animationDelay=Math.min(i*0.06,0.5)+'s';
       var isBm=TH_BOOKMARKS&&TH_BOOKMARKS.has(h.id);
       var catTitle=_cat?_cat.title:'';
+      var isLiked=TH_LIKES&&TH_LIKES.isLiked(h.id);
+      var likeCount=TH_LIKES?TH_LIKES.getCount(h.id):0;
       card.innerHTML=
         '<div class="card-actions" role="group" aria-label="Actions">'+
+          '<button class="card-action like-btn'+(isLiked?' liked':'')+'" data-like-id="'+h.id+'" aria-label="Like" aria-pressed="'+isLiked+'" onclick="TH_LIKES&&TH_LIKES.toggle(\''+h.id+'\',this)" title="Like"><svg viewBox="0 0 24 24" width="16" height="16" fill="'+(isLiked?'currentColor':'none')+'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="like-count">'+likeCount+'</span></button>'+
           '<button class="card-action'+(isBm?' bookmarked':'')+'" data-bookmark-id="'+h.id+'" aria-label="'+(isBm?'Remove bookmark':'Bookmark')+'" aria-pressed="'+isBm+'" onclick="TH_BOOKMARKS&&TH_BOOKMARKS.toggle(\''+h.id+'\',this)" title="Bookmark"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>'+
-          '<button class="card-action" aria-label="Share as image" title="Share" onclick="TH_SHARE&&TH_SHARE.showModal(TH.findHadith(\''+h.id+'\'),\''+catTitle.replace(/'/g,"\\'")+'\')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>'+
+          '<button class="card-action" aria-label="Share as image" title="Share" onclick="TH_SHARE&&TH_SHARE.showModal(_getH(\''+h.id+'\'),\''+catTitle.replace(/'/g,"\\'")+'\')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>'+
         '</div>'+
         '<div class="card-meta">'+
           (h.subcategory?'<span class="card-subcat">'+h.subcategory+'</span>':'')+
@@ -718,7 +728,7 @@
           '<span class="card-narrator">'+(h.narrator?'Narrated by <strong>'+h.narrator+'</strong>':''  )+'</span>'+
           '<div class="card-source-pill">'+
             '<span class="card-source">'+(h.source||'')+(h.number?' #'+h.number:'')+'</span>'+
-            '<button class="share-text-btn" onclick="TH_SHARE_TEXT&&TH_SHARE_TEXT.share(TH.findHadith(\''+h.id+'\'),\''+catTitle.replace(/'/g,"\\'")+'\')">↗ Share</button>'+
+            '<button class="share-text-btn" onclick="TH_SHARE_TEXT&&TH_SHARE_TEXT.share(_getH(\''+h.id+'\'),\''+catTitle.replace(/'/g,"\\'")+'\')">↗ Share</button>'+
           '</div>'+
         '</div>';
       return card;
@@ -755,25 +765,4 @@
       for(var i=0;i<pages;i++){
         (function(idx){
           var dot=document.createElement('button');
-          dot.className='p-dot'+(idx===currentPage?' active':'');
-          dot.setAttribute('role','listitem');
-          dot.setAttribute('aria-label','Page '+(idx+1));
-          if(idx===currentPage) dot.setAttribute('aria-current','page');
-          dot.onclick=function(){ if(idx!==currentPage){currentPage=idx;renderPage();} };
-          dots.appendChild(dot);
-        })(i);
-      }
-      document.getElementById('pagination').style.display=(pages<=1)?'none':'flex';
-    }
-
-    function changePage(dir){
-      var pages=Math.ceil(_filtered.length/PER_PAGE), n=currentPage+dir;
-      if(n>=0&&n<pages){ currentPage=n; renderPage(); window.scrollTo({top:0,behavior:'smooth'}); }
-    }
-
-    document.addEventListener('DOMContentLoaded', initPage);
-  })();
-  </script>
-
-</body>
-</html>
+          dot.className='p-dot'+

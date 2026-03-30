@@ -175,7 +175,7 @@
     .nav-cta {
       display: inline-flex; align-items: center;
       justify-content: center; padding: 9px 20px;
-      background: var(--ink); color: var(--bg);
+      background: var(--accent); color: #fff;
       border-radius: 100px; font-size: 14px; font-weight: 500;
       letter-spacing: -0.1px; text-decoration: none;
       transition: opacity 0.2s ease, background 0.35s ease, color 0.35s ease;
@@ -216,7 +216,7 @@
     .nav-drawer a:last-of-type { border-bottom: none; }
     .nav-drawer .drawer-cta {
       margin-top: 8px; padding: 14px;
-      background: var(--ink); color: var(--bg);
+      background: var(--accent); color: #fff;
       border-radius: 12px; text-align: center;
       font-weight: 500; border-bottom: none !important;
       transition: opacity 0.2s ease, background 0.35s ease, color 0.35s ease;
@@ -334,7 +334,7 @@
     .search-input::placeholder { color: var(--muted); }
     .search-btn {
       flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px;
-      padding: 10px 18px; background: var(--ink); color: var(--bg);
+      padding: 10px 18px; background: var(--accent); color: #fff;
       border: none; border-radius: 100px; font-family: var(--font);
       font-size: 13px; font-weight: 500; cursor: pointer;
       letter-spacing: -0.1px; transition: opacity 0.2s ease, background 0.35s ease, color 0.35s ease;
@@ -342,7 +342,7 @@
     }
     .search-btn:hover { opacity: 0.75; }
     .search-btn svg {
-      width: 13px; height: 13px; stroke: var(--bg); fill: none;
+      width: 13px; height: 13px; stroke: #fff; fill: none;
       stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.35s ease;
     }
     /* Search dropdown */
@@ -471,9 +471,9 @@
     }
     .share-btn:hover { background: var(--surface2); border-color: var(--ink); transform: translateY(-1px); }
     .share-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .share-btn.as-image { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .share-btn.as-image { background: var(--accent); color: #fff; border-color: var(--accent); }
     .share-btn.as-image:hover { opacity: 0.8; }
-    [data-theme="dark"] .share-btn.as-image { background: var(--ink); color: var(--bg); }
+    [data-theme="dark"] .share-btn.as-image { background: var(--accent); color: #fff; }
 
     .featured-nav-row {
       display: flex; align-items: center; justify-content: center;
@@ -497,7 +497,7 @@
 
     /* ── Categories Section ── */
     .cards-section {
-      padding: 0 40px 80px;
+      padding: 48px 40px 80px;
       max-width: 1100px; margin: 0 auto;
     }
     .categories-header {
@@ -522,8 +522,9 @@
     .carousel-wrap { position: relative; }
     .cards-track {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px; transition: opacity 0.3s ease;
+      align-items: stretch;
     }
     .cards-track.fading { opacity: 0; }
 
@@ -574,14 +575,14 @@
     /* Card arrow button */
     .card-plus {
       position: absolute; bottom: 24px; right: 24px;
-      width: 44px; height: 44px; background: var(--ink);
-      color: var(--bg); border-radius: 50%;
+      width: 44px; height: 44px; background: var(--accent);
+      color: #fff; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       text-decoration: none;
       transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.35s ease, color 0.35s ease;
     }
     .card-plus svg {
-      width: 16px; height: 16px; stroke: var(--bg); fill: none;
+      width: 16px; height: 16px; stroke: #fff; fill: none;
       stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.35s ease, transform 0.2s ease;
     }
     .card-plus:hover { transform: scale(1.1); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
@@ -719,8 +720,8 @@
       transition: all 0.2s ease; letter-spacing: -0.1px;
     }
     .cookie-btn.accept {
-      background: var(--ink); color: var(--bg);
-      border-color: var(--ink);
+      background: var(--accent); color: #fff;
+      border-color: var(--accent);
     }
     .cookie-btn.accept:hover { opacity: 0.8; }
     .cookie-btn.decline {
@@ -1874,50 +1875,4 @@
     });
 
     // Modal share buttons
-    document.getElementById('shareAsText').addEventListener('click', () => {
-      if (currentHadith) { doShareText(currentHadith); closeShareModal(); }
-    });
-    document.getElementById('shareAsImage').addEventListener('click', () => {
-      if (currentHadith) { doShareImage(currentHadith); closeShareModal(); }
-    });
-
-    // Make featured card also trigger modal on click of arabic text
-    document.getElementById('featuredArabic').addEventListener('click', () => {
-      openShareModal(FEATURED[currentFeatured]);
-    });
-
-    /* ────────────────────────────────────────────
-       COOKIE BANNER (PDPL)
-    ──────────────────────────────────────────── */
-    const cookieBanner  = document.getElementById('cookieBanner');
-    const cookieAccept  = document.getElementById('cookieAccept');
-    const cookieDecline = document.getElementById('cookieDecline');
-
-    const cookieConsent = store.get('cookieConsent');
-
-    if (!cookieConsent) {
-      // Show after 1.5s delay for better UX
-      setTimeout(() => cookieBanner.classList.add('show'), 1500);
-    }
-
-    cookieAccept.addEventListener('click', () => {
-      store.set('cookieConsent', 'accepted');
-      store.set('cookieConsentDate', new Date().toISOString());
-      cookieBanner.classList.remove('show');
-    });
-
-    cookieDecline.addEventListener('click', () => {
-      store.set('cookieConsent', 'declined');
-      store.set('cookieConsentDate', new Date().toISOString());
-      cookieBanner.classList.remove('show');
-    });
-
-  })();
-  </script>
-
-  <!-- ── Shared app modules (auth, bookmarks, share) ── -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
-</body>
-</html>
+    document.getElementById('shareAsText').addEventLi
