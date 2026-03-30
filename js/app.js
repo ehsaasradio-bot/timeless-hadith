@@ -619,7 +619,7 @@ const TH_SHARE = (() => {
     ctx.font = '400 20px -apple-system, SF Pro Display, Helvetica Neue, sans-serif';
     ctx.fillStyle = TEXT2;
     ctx.textAlign = 'center';
-    ctx.fillText('timelesshadith.com  ·  Free to share with attribution', W / 2, footerY);
+    ctx.fillText('ehsaasradio-bot.github.io/timeless-hadith', W / 2, footerY);
 
     _canvas = canvas;
 
@@ -913,6 +913,77 @@ const TH_COOKIE = (() => {
 })();
 
 /* ═══════════════════════════════════════════════════════════════════
+   LIKES (localStorage-based heart/like count per hadith)
+═══════════════════════════════════════════════════════════════════ */
+
+const TH_LIKES = (() => {
+  const STORE_KEY = 'th_likes';
+
+  function _getAll() {
+    try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch(e) { return {}; }
+  }
+  function _save(obj) {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(obj)); } catch(e) {}
+  }
+
+  function isLiked(id) {
+    return !!_getAll()[id];
+  }
+
+  function getCount(id) {
+    /* Simulate a "total likes" count: user's like + a seed based on id hash */
+    const seed = _hashCode(id) % 47 + 3;  // 3–49 base likes
+    return seed + (_getAll()[id] ? 1 : 0);
+  }
+
+  function toggle(id, btnEl) {
+    const all = _getAll();
+    if (all[id]) {
+      delete all[id];
+    } else {
+      all[id] = Date.now();
+    }
+    _save(all);
+    /* Update this button's UI */
+    if (btnEl) _updateBtn(btnEl, id);
+    /* Also update any other like buttons for same id on page */
+    document.querySelectorAll('[data-like-id="' + id + '"]').forEach(el => {
+      if (el !== btnEl) _updateBtn(el, id);
+    });
+  }
+
+  function _updateBtn(btn, id) {
+    const liked = isLiked(id);
+    const count = getCount(id);
+    btn.classList.toggle('liked', liked);
+    btn.setAttribute('aria-pressed', liked);
+    const countEl = btn.querySelector('.like-count');
+    if (countEl) countEl.textContent = count;
+    const svg = btn.querySelector('svg');
+    if (svg) svg.setAttribute('fill', liked ? 'currentColor' : 'none');
+  }
+
+  function syncPage() {
+    document.querySelectorAll('[data-like-id]').forEach(btn => {
+      const id = btn.dataset.likeId;
+      _updateBtn(btn, id);
+    });
+  }
+
+  /* Simple string hash for deterministic seed */
+  function _hashCode(s) {
+    let h = 0;
+    for (let i = 0; i < s.length; i++) {
+      h = ((h << 5) - h) + s.charCodeAt(i);
+      h |= 0;
+    }
+    return Math.abs(h);
+  }
+
+  return { isLiked, getCount, toggle, syncPage };
+})();
+
+/* ═══════════════════════════════════════════════════════════════════
    CARD MICRO-INTERACTIONS
 ═══════════════════════════════════════════════════════════════════ */
 
@@ -948,6 +1019,7 @@ const TH_INTERACTIONS = (() => {
     TH_BOOKMARKS.init();
     TH_COOKIE.init();
     TH_INTERACTIONS.initCards();
+    TH_LIKES.syncPage();
   });
 })();
 
