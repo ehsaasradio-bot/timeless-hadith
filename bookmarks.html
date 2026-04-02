@@ -481,4 +481,18 @@
     }
 
     /* ── Event listeners ── */
-    doc
+
+    document.addEventListener('th:login', renderPage);
+    document.addEventListener('th:logout', renderPage);
+    document.addEventListener('th:bookmark', renderPage);
+
+    /* ── Initial render ── */
+    renderPage();
+  })();
+  </script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+</body>
+</html>
