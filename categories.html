@@ -694,7 +694,7 @@
 
   <!-- ══ SCRIPTS ══ -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="js/data.js"></script>
+  <script src="js/supabase-data.js"></script>
   <script src="js/app.js"></script>
 
   <script>
@@ -872,9 +872,24 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      allCats = TH.categories;
-      filteredCats = allCats.slice();
-      renderPage();
+      /* Show loading state while Supabase initialises */
+      var track = document.getElementById('cards-track');
+      if (track) {
+        track.innerHTML =
+          '<div class="no-results" role="status" aria-live="polite">' +
+            '<h3 style="font-size:17px;font-weight:500;color:var(--ink-tertiary)">Loading categories…</h3>' +
+          '</div>';
+      }
+
+      TH.init().then(function() {
+        allCats = TH.categories;
+        filteredCats = allCats.slice();
+        renderPage();
+      }).catch(function() {
+        if (track) track.innerHTML =
+          '<div class="no-results" role="alert"><h3>Could not load categories</h3>' +
+          '<p>Please check your connection and refresh.</p></div>';
+      });
 
       document.getElementById('cat-search').addEventListener('input', function() {
         applySearch(this.value);

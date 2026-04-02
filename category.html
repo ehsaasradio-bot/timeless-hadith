@@ -612,7 +612,7 @@
 
   <!-- ══ SCRIPTS ══ -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="js/data.js"></script>
+  <script src="js/supabase-data.js"></script>
   <script src="js/app.js"></script>
 
   <script>
@@ -639,20 +639,45 @@
     function initPage() {
       var params = new URLSearchParams(window.location.search);
       _slug = params.get('cat') || '';
-      _cat  = TH.getCat(_slug);
-      if (!_cat) {
-        document.getElementById('cat-title').textContent = 'Category not found';
-        return;
+
+      /* Show loading state */
+      var content = document.getElementById('main-content');
+      if (content) {
+        content.innerHTML =
+          '<div class="no-results" role="status" aria-live="polite" style="padding:60px 0">' +
+            '<h3 style="font-size:17px;font-weight:500;color:var(--ink-tertiary)">Loading hadiths…</h3>' +
+          '</div>';
       }
-      document.title = _cat.title + ' — Timeless Hadith';
-      document.getElementById('cat-title').textContent = _cat.title;
-      document.getElementById('cat-desc').textContent  = _cat.desc;
-      document.getElementById('breadcrumb-cat').textContent = _cat.title;
-      _hadiths = TH.getHadiths(_slug);
-      document.getElementById('cat-count').textContent   = _hadiths.length || _cat.count || '0';
-      document.getElementById('total-count').textContent = _hadiths.length;
-      buildNarratorChips();
-      applyFilters();
+
+      /* Load categories + hadiths async, then render */
+      TH.init().then(function() {
+        _cat = TH.getCat(_slug);
+        if (!_cat) {
+          document.getElementById('cat-title').textContent = 'Category not found';
+          if (content) content.innerHTML =
+            '<div class="no-results" role="alert"><h3>Category not found</h3>' +
+            '<p><a href="categories.html">Browse all categories</a></p></div>';
+          return;
+        }
+        document.title = _cat.title + ' — Timeless Hadith';
+        document.getElementById('cat-title').textContent = _cat.title;
+        document.getElementById('cat-desc').textContent  = _cat.desc;
+        document.getElementById('breadcrumb-cat').textContent = _cat.title;
+
+        return TH.loadHadiths(_slug);
+      }).then(function() {
+        if (!_cat) return;
+        _hadiths = TH.getHadiths(_slug);
+        document.getElementById('cat-count').textContent   = _hadiths.length || _cat.count || '0';
+        document.getElementById('total-count').textContent = _hadiths.length;
+        buildNarratorChips();
+        applyFilters();
+      }).catch(function(err) {
+        console.error('[TH] initPage error:', err);
+        if (content) content.innerHTML =
+          '<div class="no-results" role="alert"><h3>Could not load hadiths</h3>' +
+          '<p>Please check your connection and refresh.</p></div>';
+      });
     }
 
     function buildNarratorChips() {
