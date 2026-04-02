@@ -764,8 +764,30 @@
       dots.innerHTML='';
       for(var i=0;i<pages;i++){
         (function(idx){
-          var dot=document.createElement('button');
-          dot.className='p-dot'+
+          dot.className='p-dot'+(idx===currentPage?' active':'');
+          dot.setAttribute('role','listitem');
+          dot.setAttribute('aria-label','Page '+(idx+1));
+          if(idx===currentPage) dot.setAttribute('aria-current','page');
+          dot.onclick=function(){ if(idx!==currentPage){ currentPage=idx; renderPage(); } };
+          dots.appendChild(dot);
+        })(i);
+      }
+      var pag=document.getElementById('pagination');
+      pag.style.display=(pages<=1&&total<=PER_PAGE)?'none':'flex';
+    }
+
+    function changePage(dir) {
+      var pages=Math.max(1,Math.ceil(_filtered.length/PER_PAGE));
+      var next=currentPage+dir;
+      if(next>=0&&next<pages){ currentPage=next; renderPage(); window.scrollTo({top:0,behavior:'smooth'}); }
+    }
+
+    initPage();
+  })();
+  </script>
+
   <!-- Cloudflare Web Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "REPLACE_WITH_YOUR_CF_ANALYTICS_TOKEN"}'></script>
   <!-- End Cloudflare Web Analytics -->
+</body>
+</html>

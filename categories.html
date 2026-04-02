@@ -854,17 +854,40 @@
     }
 
     function applySearch(q) {
-      q = (q || '').trim().toLowerCase();
-      currentPage = 0;
-      if (!q) {
-        filteredCats = allCats.slice();
-      } else {
-        filteredCats = allCats.filter(function(cat) {
-          return (
-            cat.title.toLowerCase().indexOf(q) !== -1 ||
-            cat.desc.toLowerCase().indexOf(q)  !== -1 ||
-            cat.slug.replace(/-/g,' ').indexOf(q) !== -1 ||
-            (PILLS[cat.slug]||[]).join(' ')
+            (PILLS[cat.slug]||[]).join(' ').toLowerCase().indexOf(q) !== -1
+          );
+        });
+      }
+      renderPage();
+    }
+
+    function changePage(dir) {
+      var pages = Math.ceil(filteredCats.length / PER_PAGE);
+      var next = currentPage + dir;
+      if (next >= 0 && next < pages) {
+        currentPage = next;
+        renderPage();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      allCats = TH.categories;
+      filteredCats = allCats.slice();
+      renderPage();
+
+      document.getElementById('cat-search').addEventListener('input', function() {
+        applySearch(this.value);
+      });
+      document.getElementById('cat-search').addEventListener('search', function() {
+        applySearch(this.value);
+      });
+    });
+  })();
+  </script>
+
   <!-- Cloudflare Web Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "REPLACE_WITH_YOUR_CF_ANALYTICS_TOKEN"}'></script>
   <!-- End Cloudflare Web Analytics -->
+</body>
+</html>

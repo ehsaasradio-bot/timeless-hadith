@@ -654,22 +654,4 @@
       set: function(k,v) { try { localStorage.setItem(k,v); } catch(e) {} }
     };
     if (!store.get('th_cookie_consent')) {
-      setTimeout(function() { banner.classList.add('show'); }, 1500);
-    }
-    accept.addEventListener('click', function() {
-      store.set('th_cookie_consent','accepted');
-      store.set('th_cookie_consent_date', new Date().toISOString());
-      banner.classList.remove('show');
-    });
-    decline.addEventListener('click', function() {
-      store.set('th_cookie_consent','declined');
-      banner.classList.remove('show');
-    });
-  })();
-  </script>
-
-  <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "REPLACE_WITH_YOUR_CF_ANALYTICS_TOKEN"}'></script>
-  <!-- End Cloudflare Web Analytics -->
-</body>
-</html>
+      setTimeout(function() { banner.classList
