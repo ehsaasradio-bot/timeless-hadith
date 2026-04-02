@@ -11,8 +11,9 @@
 - **Live Domain:** [timelesshadith.com](https://timelesshadith.com)
 - **Primary Repository:** https://github.com/ehsaasradio-bot/timeless-hadith
 - **GitHub Account:** https://github.com/ehsaasradio-bot
-- **Current Deployment:** GitHub Pages (via `.github/workflows/pages.yml`)
-- **Target Deployment:** Cloudflare Pages (migration required — see Phase 1 of roadmap)
+- **Current Deployment:** Cloudflare Pages (connected April 2026) — auto-deploys on push to main
+- **Cloudflare Pages URL:** https://timeless-hadith.pages.dev
+- **GitHub Actions:** Updated to CI validation only (no longer deploys to GitHub Pages)
 
 ## Technical Decisions (Confirmed)
 | Decision | Choice | Notes |
