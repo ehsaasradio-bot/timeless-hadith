@@ -193,18 +193,11 @@ const TH_AUTH = (() => {
     el.innerHTML = `
       <div class="th-modal-box login-modal-box" role="document">
         <button class="th-modal-close" aria-label="Close" onclick="TH_AUTH.closeLoginModal()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-        <div class="login-modal-logo"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
+        <div class="login-modal-logo">
+          <img src="timelesshadith-logo.png" alt="Timeless Hadith" class="login-modal-logo-img" onerror="this.style.display='none'" />
+        </div>
         <h2 class="login-modal-title">Sign in to Timeless Hadith</h2>
-        <p class="login-modal-reason"></p>
         <div id="google-signin-btn-modal" class="gis-btn-wrap"></div>
-        <div class="login-modal-divider"><span>or</span></div>
-        <button class="btn-demo-login" onclick="TH_AUTH.demoLogin()">
-          Continue as Guest (Demo)
-        </button>
-        <p class="login-modal-note">
-          We only use your name and profile picture.<br>
-          <a href="privacy.html">Privacy Policy</a>
-        </p>
       </div>`;
     // Close on backdrop click
     el.addEventListener('click', e => { if (e.target === el) closeLoginModal(); });
@@ -265,37 +258,13 @@ const TH_AUTH = (() => {
         transition: background .2s;
       }
       .th-modal-close:hover { background: var(--hover-bg, rgba(0,0,0,.06)); }
-      .login-modal-logo { font-size: 2.5rem; text-align: center; margin-bottom: .5rem; }
+      .login-modal-logo { text-align: center; margin-bottom: 1.25rem; }
+      .login-modal-logo-img { height: 48px; width: auto; object-fit: contain; }
       .login-modal-title {
-        font-size: 1.2rem; font-weight: 700; text-align: center;
-        margin: 0 0 .5rem; color: var(--text-primary, #1d1d1f);
-      }
-      .login-modal-reason {
-        font-size: .875rem; text-align: center; color: var(--text-secondary, #666);
-        margin: 0 0 1.5rem;
+        font-size: 1.15rem; font-weight: 700; text-align: center;
+        margin: 0 0 1.5rem; color: var(--text-primary, #1d1d1f);
       }
       .gis-btn-wrap { display: flex; justify-content: center; }
-      .login-modal-divider {
-        display: flex; align-items: center; gap: .75rem;
-        margin: 1rem 0; color: var(--text-secondary, #999); font-size: .8rem;
-      }
-      .login-modal-divider::before, .login-modal-divider::after {
-        content:''; flex:1; height:1px; background: var(--border, #e5e5e5);
-      }
-      .btn-demo-login {
-        width: 100%; padding: .75rem 1rem;
-        background: var(--bg-secondary, #f5f5f7);
-        border: 1px solid var(--border, #e5e5e5);
-        border-radius: 12px; font-size: .9rem; font-weight: 600;
-        cursor: pointer; color: var(--text-primary, #1d1d1f);
-        transition: background .2s, transform .15s;
-      }
-      .btn-demo-login:hover { background: var(--hover-bg, #eaeaec); transform: translateY(-1px); }
-      .login-modal-note {
-        font-size: .75rem; text-align: center; color: var(--text-secondary, #999);
-        margin: 1rem 0 0;
-      }
-      .login-modal-note a { color: var(--accent, #0071e3); text-decoration: none; }
     `;
     document.head.appendChild(s);
   }

@@ -200,24 +200,7 @@
           '<path fill="#ea4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/>',
         '</svg>',
         'Continue with Google',
-      '</button>',
-
-      /* Divider */
-      '<div class="sb-divider"><span>or</span></div>',
-
-      /* Email magic link */
-      '<div class="sb-email-wrap">',
-        '<input id="sb-email-input" type="email" placeholder="your@email.com"',
-          ' autocomplete="email" aria-label="Email address"',
-          ' onkeydown="if(event.key===\'Enter\'){TH_SB_AUTH.signInWithEmail(this.value)}" />',
-        '<button id="sb-email-btn" class="sb-email-btn"',
-          ' onclick="TH_SB_AUTH.signInWithEmail(document.getElementById(\'sb-email-input\').value)"',
-          ' type="button">Send magic link</button>',
-        '<p id="sb-email-msg" class="sb-msg"></p>',
-      '</div>',
-
-      /* Divider */
-      '<div class="sb-divider"><span>or</span></div>'
+      '</button>'
     ].join('');
   }
 
