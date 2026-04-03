@@ -855,10 +855,17 @@
     }
 
     function applySearch(q) {
-            (PILLS[cat.slug]||[]).join(' ').toLowerCase().indexOf(q) !== -1
-          );
+      q = q.trim().toLowerCase();
+      if (!q) {
+        filteredCats = allCats.slice();
+      } else {
+        filteredCats = allCats.filter(function(cat) {
+          return cat.title.toLowerCase().indexOf(q) !== -1 ||
+                 cat.slug.replace(/-/g,' ').toLowerCase().indexOf(q) !== -1 ||
+                 (PILLS[cat.slug]||[]).join(' ').toLowerCase().indexOf(q) !== -1;
         });
       }
+      currentPage = 0;
       renderPage();
     }
 
@@ -883,7 +890,7 @@
       }
 
       TH.init().then(function() {
-        allCats = TH.categories;
+        allCats = Object.values(TH.categories);
         filteredCats = allCats.slice();
         renderPage();
       }).catch(function() {
