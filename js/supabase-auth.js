@@ -110,7 +110,7 @@
 
   function _applyUser(thUser) {
     if (!thUser) return;
-    if (window.TH_AUTH && typeof TH_AUTH.setUser === 'function') {
+    if (typeof TH_AUTH !== 'undefined' && typeof TH_AUTH.setUser === 'function') {
       TH_AUTH.setUser(thUser);
       TH_AUTH.updateAuthUI();
       document.dispatchEvent(new CustomEvent('th:login', { detail: thUser }));
@@ -176,7 +176,7 @@
         }).catch(function () {});
       }
       _clearSession();
-      if (window.TH_AUTH && typeof TH_AUTH.logout === 'function') {
+      if (typeof TH_AUTH !== 'undefined' && typeof TH_AUTH.logout === 'function') {
         TH_AUTH.logout();
       }
     },
@@ -250,7 +250,9 @@
   }
 
   function _patchLoginModal() {
-    if (!window.TH_AUTH) return;
+    /* TH_AUTH is declared with `const` in app.js so it is NOT on window —
+       use typeof check instead of window.TH_AUTH */
+    if (typeof TH_AUTH === 'undefined') return;
 
     _injectAuthStyles();
 
