@@ -2,7 +2,7 @@
    Timeless Hadith — Supabase Data Layer
    Replaces static data.js — connects to 7,277 hadiths in Supabase
    Same TH API surface: categories, getCat, getHadiths, findHadith
-   Plus async helpers: TH.init(), TH.loadHadiths(slug)
+   Plus async helpers: TH.init(), TH.loadHadiths(slug), TH.getFeatured()
 ───────────────────────────────────────────────────────────── */
 
 (function () {
@@ -12,6 +12,11 @@
   var _SB   = 'https://dwcsledifvnyrunxejzd.supabase.co';
   var _ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3Y3NsZWRpZnZueXJ1bnhlanpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTgwNzgsImV4cCI6MjA5MDUzNDA3OH0.Aww8QcExJF1tPwMPvqP5q0_avc3YJclqsFJcXptlnZo';
   var _HDR  = { 'apikey': _ANON, 'Authorization': 'Bearer ' + _ANON };
+
+  /* Supabase PostgREST caps rows at 1000 by default.
+     We work around this by firing all pages in parallel. */
+  var PAGE_SIZE   = 1000;
+  var TOTAL_ROWS  = 8000; /* slightly above 7,277 — adjust if DB grows */
 
   /* ── Low-level fetch ── */
   function _api(path) {
@@ -48,29 +53,47 @@
     /* ────────────────────────────────────────────────────────
        TH.init()
        Loads all 97 books from Supabase and builds TH.categories.
+       Fires all pages in parallel to bypass the 1,000-row cap.
        Safe to call multiple times — returns the same promise.
     ──────────────────────────────────────────────────────── */
     init: function () {
       if (this._initPromise) return this._initPromise;
 
       var self = this;
-      this._initPromise = _api(
-        'hadiths?select=book_number,book_name_en,book_name_ar&order=book_number.asc&limit=10000'
-      ).then(function (rows) {
 
-        /* Aggregate rows → one entry per book */
+      /* Build array of offsets: 0, 1000, 2000 … up to TOTAL_ROWS */
+      var offsets = [];
+      for (var off = 0; off < TOTAL_ROWS; off += PAGE_SIZE) {
+        offsets.push(off);
+      }
+
+      /* Fire all pages in parallel — each fetches 3 small columns only */
+      this._initPromise = Promise.all(
+        offsets.map(function (offset) {
+          return _api(
+            'hadiths?select=book_number,book_name_en,book_name_ar' +
+            '&order=book_number.asc' +
+            '&limit=' + PAGE_SIZE +
+            '&offset=' + offset
+          ).catch(function () { return []; }); /* one failing page doesn't break the rest */
+        })
+      ).then(function (pages) {
+
+        /* Merge all pages into a book map */
         var bmap = {};
-        rows.forEach(function (h) {
-          var n = h.book_number;
-          if (!bmap[n]) {
-            bmap[n] = {
-              num:   n,
-              en:    h.book_name_en || ('Book ' + n),
-              ar:    h.book_name_ar || '',
-              count: 0
-            };
-          }
-          bmap[n].count++;
+        pages.forEach(function (rows) {
+          rows.forEach(function (h) {
+            var n = h.book_number;
+            if (!bmap[n]) {
+              bmap[n] = {
+                num:   n,
+                en:    h.book_name_en || ('Book ' + n),
+                ar:    h.book_name_ar || '',
+                count: 0
+              };
+            }
+            bmap[n].count++;
+          });
         });
 
         self.categories = Object.values(bmap)
@@ -83,6 +106,10 @@
               count: b.count
             };
           });
+
+        if (self.categories.length === 0) {
+          console.warn('[TH] init: no categories built — check Supabase column names and table permissions.');
+        }
 
       }).catch(function (err) {
         console.error('[TH] init failed:', err);
@@ -124,8 +151,10 @@
 
     /* ────────────────────────────────────────────────────────
        TH.getFeatured(count)
-       Returns a promise with `count` curated or random hadiths
-       for the homepage featured section.
+       Fetches curated well-known hadiths for the homepage.
+       Returns a promise with fully-populated hadith objects.
+       Only returns results with actual text content — never
+       overwrites the static fallback with empty Supabase rows.
     ──────────────────────────────────────────────────────── */
     getFeatured: function (count) {
       /* Curated well-known hadith IDs from Sahih al-Bukhari */
@@ -135,15 +164,19 @@
         'hadiths?id=in.(' + ids + ')' +
         '&select=id,hadith_number,chapter_en,narrator,text_en,text_ar,book_name_en,in_book_ref'
       ).then(function (rows) {
-        return rows.map(function (h) {
+        var mapped = rows.map(function (h) {
           return {
-            arabic:   h.text_ar || '',
-            text:     '\u201c' + (h.text_en || '') + '\u201d',
-            meta:     h.narrator ? 'Narrated by ' + h.narrator + ' \u2014 ' : '',
-            source:   (h.book_name_en || 'Sahih al-Bukhari') + ' ' + (h.hadith_number || ''),
+            arabic:   h.text_ar  || '',
+            text:     h.text_en  ? ('\u201c' + h.text_en + '\u201d') : '',
+            meta:     h.narrator ? ('Narrated by ' + h.narrator + ' \u2014 ') : '',
+            source:   (h.book_name_en || 'Sahih al-Bukhari') + (h.hadith_number ? ' ' + h.hadith_number : ''),
             category: h.chapter_en || ''
           };
         });
+        /* Only return rows that actually have English text.
+           If none pass the check, return [] so the static fallback is kept. */
+        var valid = mapped.filter(function (h) { return h.text && h.text.length > 4; });
+        return valid.length > 0 ? valid : [];
       }).catch(function () { return []; });
     },
 

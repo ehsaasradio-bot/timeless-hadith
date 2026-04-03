@@ -2,8 +2,8 @@
  * Timeless Hadith — app.js
  * Shared application logic: Auth · Bookmarks · Share as Image · Theme
  * ─────────────────────────────────────────────────────────────────────
- * Depends on: js/data.js  (TH object must be loaded first)
- * Usage: <script src="js/data.js"></script>
+ * Depends on: js/supabase-data.js  (TH object must be loaded first)
+ * Usage: <script src="js/supabase-data.js"></script>
  *        <script src="js/app.js"></script>
  */
 

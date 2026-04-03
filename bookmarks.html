@@ -298,7 +298,7 @@
   </footer>
 
   <!-- ══ SCRIPTS ══ -->
-  <script src="js/data.js"></script>
+  <script src="js/supabase-data.js"></script>
   <script src="js/app.js"></script>
   <script src="js/supabase-auth.js"></script>
 
@@ -445,14 +445,17 @@
       sub.textContent = hadiths.length + ' saved hadith' + (hadiths.length === 1 ? '' : 's');
 
       // Group by category slug
+      // Supabase hadiths have numeric IDs — look them up in TH.hadiths cache
+      // which is keyed by book slug (book-1, book-2 …).
       var groups = {}, groupOrder = [];
       hadiths.forEach(function(h){
-        // Derive slug from hadith id prefix
         var matched = null;
-        TH.categories.forEach(function(c){
-          var prefix = c.slug.replace(/-/g,'').slice(0,2);
-          if(h.id && h.id.indexOf(prefix) === 0) matched = c;
-        });
+        // Search loaded hadiths cache for this id to find its book slug
+        var slugs = Object.keys(TH.hadiths);
+        for (var i = 0; i < slugs.length; i++) {
+          var found = TH.hadiths[slugs[i]].find(function(x){ return x.id === h.id; });
+          if (found) { matched = TH.getCat(slugs[i]); break; }
+        }
         var key = matched ? matched.slug : 'other';
         var label = matched ? matched.title : 'Other';
         if(!groups[key]){ groups[key] = {label:label, slug:key, items:[]}; groupOrder.push(key); }
