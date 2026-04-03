@@ -9,5 +9,7 @@ Disallow: /apple-sa-landing.html
 Disallow: /audit-confluence-report.html
 Disallow: /firebase-integration-guide.html
 Disallow: /mac-lineup.html
+Disallow: /admin.html
+Disallow: /admin-backup.html
 
 Sitemap: https://timelesshadith.com/sitemap.xml
