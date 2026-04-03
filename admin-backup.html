@@ -262,14 +262,101 @@
       .page { padding: 24px 16px 60px; }
       .cards-grid { grid-template-columns: 1fr; }
     }
+
+    /* ── Auth overlay ── */
+    #auth-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+    }
+    #auth-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      width: 100%; max-width: 380px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+      text-align: center;
+    }
+    #auth-box .auth-logo {
+      height: 36px; width: auto; max-width: 140px;
+      margin: 0 auto 20px; display: block;
+    }
+    #auth-box h2 {
+      font-size: 20px; font-weight: 700;
+      margin-bottom: 6px; letter-spacing: -0.3px;
+    }
+    #auth-box p {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 24px; line-height: 1.5;
+    }
+    #auth-input {
+      width: 100%; padding: 11px 14px;
+      border-radius: 12px; border: 1px solid var(--border);
+      background: var(--bg); color: var(--ink);
+      font-size: 15px; font-family: var(--font);
+      margin-bottom: 12px; text-align: center;
+      letter-spacing: 0.08em;
+    }
+    #auth-input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+    #auth-error {
+      font-size: 12px; color: var(--red);
+      margin-top: 8px; min-height: 16px;
+    }
+
+    /* ── Toast notification ── */
+    #toast {
+      position: fixed; top: 70px; right: 24px; z-index: 5000;
+      background: var(--ink); color: var(--bg);
+      border-radius: 12px; padding: 12px 18px;
+      font-size: 14px; font-weight: 500;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.22);
+      opacity: 0; pointer-events: none;
+      transform: translateY(-8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      max-width: 320px;
+    }
+    #toast.show {
+      opacity: 1; pointer-events: auto;
+      transform: translateY(0);
+    }
+    #toast .toast-icon { font-size: 18px; flex-shrink: 0; }
+
+    /* ── Nav logo image ── */
+    .admin-nav-logo img {
+      height: 28px; width: auto; max-width: 120px;
+      display: block;
+    }
   </style>
 </head>
 <body>
 
+<!-- ── Auth overlay ── -->
+<div id="auth-overlay">
+  <div id="auth-box">
+    <img class="auth-logo" src="Hadith_Logo.png" alt="Timeless Hadith" onerror="this.style.display='none'" />
+    <h2>Admin Access</h2>
+    <p>Enter the admin password to continue.</p>
+    <input id="auth-input" type="password" placeholder="Password" autocomplete="current-password" />
+    <button class="btn btn-primary" style="width:100%;justify-content:center" id="auth-submit">Unlock</button>
+    <div id="auth-error"></div>
+  </div>
+</div>
+
+<!-- ── Toast ── -->
+<div id="toast">
+  <span class="toast-icon" id="toast-icon">✅</span>
+  <span id="toast-msg">Done</span>
+</div>
+
 <!-- ── Nav ── -->
 <nav class="admin-nav">
   <div class="admin-nav-left">
-    <a class="admin-nav-logo" href="index.html">Timeless Hadith</a>
+    <a class="admin-nav-logo" href="index.html">
+      <img src="Hadith_Logo.png" alt="Timeless Hadith" onerror="this.outerHTML='Timeless Hadith'" />
+    </a>
     <span class="admin-nav-sep">›</span>
     <span class="admin-nav-title">Admin · Backup &amp; Restore</span>
   </div>
@@ -674,6 +761,51 @@
 <script>
 (function() {
 
+  /* ── Auth gate ── */
+  // Password is stored as a btoa-encoded string. Change 'TimelessHadith2024!' to your preferred password.
+  var PASS_ENC = btoa('TimelessHadith2024!');
+  var overlay  = document.getElementById('auth-overlay');
+  var authInput  = document.getElementById('auth-input');
+  var authSubmit = document.getElementById('auth-submit');
+  var authError  = document.getElementById('auth-error');
+
+  function checkAuth() {
+    if (sessionStorage.getItem('th_admin_auth') === '1') {
+      overlay.style.display = 'none';
+    }
+  }
+  checkAuth();
+
+  function attemptLogin() {
+    if (btoa(authInput.value) === PASS_ENC) {
+      sessionStorage.setItem('th_admin_auth', '1');
+      overlay.style.display = 'none';
+      authError.textContent = '';
+    } else {
+      authError.textContent = 'Incorrect password. Try again.';
+      authInput.value = '';
+      authInput.focus();
+    }
+  }
+  authSubmit.addEventListener('click', attemptLogin);
+  authInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') attemptLogin();
+  });
+  authInput.focus();
+
+  /* ── Toast helper ── */
+  var toastEl  = document.getElementById('toast');
+  var toastMsg = document.getElementById('toast-msg');
+  var toastIcon = document.getElementById('toast-icon');
+  var toastTimer;
+  function showToast(msg, icon) {
+    toastMsg.textContent = msg || 'Done';
+    toastIcon.textContent = icon || '✅';
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toastEl.classList.remove('show'); }, 3200);
+  }
+
   /* ── Theme toggle ── */
   var root = document.documentElement;
   var btn  = document.getElementById('themeToggle');
@@ -701,6 +833,7 @@
     log('  cd ~/Projects/Haith', 'info');
     log('  git add -A && git commit -m "chore: manual backup" --allow-empty && git push origin main', 'info');
     log('Copy the commands above and paste into your Terminal.', 'warn');
+    showToast('Git backup commands ready — check Activity Log', '🗂️');
   };
 
   /* ── Git log ── */
@@ -715,6 +848,7 @@
     log('Snapshot command (run in Terminal):', 'info');
     log('  zip -r ~/Backups/hadith-backup-' + d + '.zip ~/Projects/Haith --exclude="*/.git/*"', 'info');
     document.getElementById('local-last').textContent = 'Last snapshot: ' + d + ' (manual)';
+    showToast('Local snapshot command ready — check Activity Log', '💾');
   };
 
   /* ── List snapshots ── */
@@ -732,12 +866,14 @@
       log('    -H "apikey: YOUR_SUPABASE_ANON_KEY" \\', 'info');
       log('    -o ~/Backups/hadiths-' + d + '.json', 'info');
       document.getElementById('sb-last').textContent = 'Last export: ' + d + ' (manual)';
+      showToast('Supabase JSON export command ready — check Activity Log', '🗄️');
     } else {
       log('Export CSV — run in Terminal:', 'info');
       log('  curl "' + url + '" \\', 'info');
       log('    -H "apikey: YOUR_SUPABASE_ANON_KEY" \\', 'info');
       log('    -H "Accept: text/csv" \\', 'info');
       log('    -o ~/Backups/hadiths-' + d + '.csv', 'info');
+      showToast('Supabase CSV export command ready — check Activity Log', '🗄️');
     }
   };
 
@@ -777,6 +913,7 @@
       '<span class="log-ok"># Cloudflare will auto-redeploy within ~60 seconds.</span>';
     document.getElementById('restore-modal').style.display = 'flex';
     log('Restore commands generated for commit: ' + hash, 'ok');
+    showToast('Restore commands generated for ' + hash, '⏪');
   };
 
   /* ── Create Cowork scheduled tasks (UI feedback only — tasks created via Claude) ── */
