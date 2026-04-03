@@ -4,162 +4,132 @@
   <!-- ── Core pages ── -->
   <url>
     <loc>https://timelesshadith.com/</loc>
-    <lastmod>2026-03-27</lastmod>
+    <lastmod>2026-04-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://timelesshadith.com/categories.html</loc>
+    <lastmod>2026-04-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://timelesshadith.com/about.html</loc>
-    <lastmod>2026-03-27</lastmod>
+    <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://timelesshadith.com/privacy.html</loc>
-    <lastmod>2026-03-27</lastmod>
+    <lastmod>2026-04-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://timelesshadith.com/terms.html</loc>
-    <lastmod>2026-03-27</lastmod>
+    <lastmod>2026-04-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
 
-  <url>
-    <loc>https://timelesshadith.com/categories.html</loc>
-    <lastmod>2026-03-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- ── Category pages ── -->
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=faith-belief</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=character-conduct</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=prayer-worship</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=family-relations</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=knowledge-learning</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=patience-gratitude</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=charity-generosity</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=honesty-truthfulness</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=repentance-forgiveness</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=health-body</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=neighbours-community</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=death-afterlife</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=remembrance-allah</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=wealth-livelihood</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=justice-fairness</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=intentions-actions</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=fasting-ramadan</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=humility-pride</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=love-brotherhood</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=supplication-dua</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://timelesshadith.com/category.html?cat=trust-allah</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+  <!-- ── Sahih al-Bukhari — 97 Books ── -->
+  <url><loc>https://timelesshadith.com/category.html?cat=book-1</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-2</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-3</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-4</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-5</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-6</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-7</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-8</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-9</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-10</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-11</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-12</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-13</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-14</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-15</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-16</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-17</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-18</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-19</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-20</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-21</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-22</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-23</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-24</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-25</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-26</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-27</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-28</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-29</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-30</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-31</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-32</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-33</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-34</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-35</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-36</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-37</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-38</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-39</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-40</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-41</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-42</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-43</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-44</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-45</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-46</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-47</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-48</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-49</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-50</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-51</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-52</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-53</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-54</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-55</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-56</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-57</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-58</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-59</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-60</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-61</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-62</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-63</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-64</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-65</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-66</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-67</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-68</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-69</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-70</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-71</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-72</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-73</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-74</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-75</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-76</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-77</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-78</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-79</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-80</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-81</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-82</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-83</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-84</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-85</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-86</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-87</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-88</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-89</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-90</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-91</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-92</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-93</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-94</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-95</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-96</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://timelesshadith.com/category.html?cat=book-97</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 
 </urlset>

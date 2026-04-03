@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Early theme: prevents flash of wrong theme on load -->
+  <script>(function(){try{var s=localStorage.getItem('th_theme');var p=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',s||p);}catch(e){}})()</script>
   <title>Timeless Hadith — Prophetic Guidance for Every Heart</title>
   <meta name="description" content="Authentic, searchable hadiths from Prophet Muhammad (PBUH). Explore timeless guidance by topic, beautifully organised." />
   <link rel="canonical" href="https://timelesshadith.com/" />
@@ -800,7 +802,6 @@
     </a>
     <ul class="nav-links">
       <li><a href="categories.html">Browse</a></li>
-      <li><a href="categories.html">Topics</a></li>
       <li><a href="bookmarks.html">Bookmarks<span class="bm-badge" id="nav-bm-badge" data-count="0" aria-label="bookmarks count"></span></a></li>
       <li><a href="about.html">About</a></li>
       <li>
@@ -1005,340 +1006,8 @@
 
     <div class="carousel-wrap">
       <div class="cards-track" id="cardsTrack">
-
-        <!-- Card 1 -->
-        <div class="card">
-          <p class="card-category" data-en="Faith & Belief">Faith &amp; Belief</p>
-          <h3>Strengthen your connection with Allah.</h3>
-          <p class="card-desc">Hadiths on the pillars of faith, sincerity of intention, and a deep relationship with Allah.</p>
-          <div class="subcategories">
-            <span class="subcat">Tawhid</span>
-            <span class="subcat">Pillars of Islam</span>
-            <span class="subcat">Iman</span>
-            <span class="subcat">Prophethood</span>
-          </div>
-          <a href="category.html?cat=faith-belief" class="card-plus" aria-label="Explore Faith & Belief">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="card">
-          <p class="card-category" data-en="Character & Conduct">Character &amp; Conduct</p>
-          <h3>Live with purpose and good character.</h3>
-          <p class="card-desc">Prophetic guidance on manners, kindness, honesty, and treating others with dignity.</p>
-          <div class="subcategories">
-            <span class="subcat">Manners</span>
-            <span class="subcat">Kindness</span>
-            <span class="subcat">Respect</span>
-            <span class="subcat">Integrity</span>
-          </div>
-          <a href="category.html?cat=character-conduct" class="card-plus" aria-label="Explore Character & Conduct">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="card">
-          <p class="card-category" data-en="Prayer & Worship">Prayer &amp; Worship</p>
-          <h3>Deepen your devotion through prayer.</h3>
-          <p class="card-desc">Guidance on Salah, dhikr, and drawing closer to Allah through consistent worship.</p>
-          <div class="subcategories">
-            <span class="subcat">Salah</span>
-            <span class="subcat">Dhikr</span>
-            <span class="subcat">Night Prayer</span>
-            <span class="subcat">Quranic Recitation</span>
-          </div>
-          <a href="category.html?cat=prayer-worship" class="card-plus" aria-label="Explore Prayer & Worship">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="card">
-          <p class="card-category" data-en="Family & Relations">Family &amp; Relations</p>
-          <h3>Build a home rooted in mercy.</h3>
-          <p class="card-desc">Prophetic wisdom on marriage, parenting, honouring parents, and maintaining family ties.</p>
-          <div class="subcategories">
-            <span class="subcat">Marriage</span>
-            <span class="subcat">Parenting</span>
-            <span class="subcat">Parents' Rights</span>
-            <span class="subcat">Kinship</span>
-          </div>
-          <a href="category.html?cat=family-relations" class="card-plus" aria-label="Explore Family & Relations">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="card">
-          <p class="card-category" data-en="Knowledge & Learning">Knowledge &amp; Learning</p>
-          <h3>Seek knowledge from the cradle to the grave.</h3>
-          <p class="card-desc">Hadiths on the virtue of seeking knowledge, teaching others, and the pursuit of wisdom.</p>
-          <div class="subcategories">
-            <span class="subcat">Seeking Knowledge</span>
-            <span class="subcat">Teaching</span>
-            <span class="subcat">Wisdom</span>
-            <span class="subcat">Scholarship</span>
-          </div>
-          <a href="category.html?cat=knowledge-learning" class="card-plus" aria-label="Explore Knowledge & Learning">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 6 -->
-        <div class="card">
-          <p class="card-category" data-en="Patience & Gratitude">Patience &amp; Gratitude</p>
-          <h3>Find strength in patience and thankfulness.</h3>
-          <p class="card-desc">Guidance on bearing hardship with grace, counting blessings, and trusting Allah's plan.</p>
-          <div class="subcategories">
-            <span class="subcat">Sabr</span>
-            <span class="subcat">Shukr</span>
-            <span class="subcat">Hardship</span>
-            <span class="subcat">Contentment</span>
-          </div>
-          <a href="category.html?cat=patience-gratitude" class="card-plus" aria-label="Explore Patience & Gratitude">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 7 -->
-        <div class="card">
-          <p class="card-category" data-en="Charity & Generosity">Charity &amp; Generosity</p>
-          <h3>Give freely and watch blessings grow.</h3>
-          <p class="card-desc">Prophetic teachings on Sadaqah, Zakat, and the immense reward of giving for Allah's sake.</p>
-          <div class="subcategories">
-            <span class="subcat">Sadaqah</span>
-            <span class="subcat">Zakat</span>
-            <span class="subcat">Helping Others</span>
-            <span class="subcat">Volunteerism</span>
-          </div>
-          <a href="category.html?cat=charity-generosity" class="card-plus" aria-label="Explore Charity & Generosity">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 8 -->
-        <div class="card">
-          <p class="card-category" data-en="Honesty & Truthfulness">Honesty &amp; Truthfulness</p>
-          <h3>Let your word be your bond.</h3>
-          <p class="card-desc">Hadiths on the virtue of speaking truth, avoiding falsehood, and the trust that honesty builds.</p>
-          <div class="subcategories">
-            <span class="subcat">Truthfulness</span>
-            <span class="subcat">Promises</span>
-            <span class="subcat">Trust</span>
-            <span class="subcat">Integrity</span>
-          </div>
-          <a href="category.html?cat=honesty-truthfulness" class="card-plus" aria-label="Explore Honesty & Truthfulness">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 9 -->
-        <div class="card">
-          <p class="card-category" data-en="Repentance & Forgiveness">Repentance &amp; Forgiveness</p>
-          <h3>Turn back to Allah at any moment.</h3>
-          <p class="card-desc">Guidance on seeking Tawbah, Allah's infinite mercy, and the liberating power of repentance.</p>
-          <div class="subcategories">
-            <span class="subcat">Tawbah</span>
-            <span class="subcat">Istighfar</span>
-            <span class="subcat">Mercy</span>
-            <span class="subcat">Second Chances</span>
-          </div>
-          <a href="category.html?cat=repentance-forgiveness" class="card-plus" aria-label="Explore Repentance & Forgiveness">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 10 -->
-        <div class="card">
-          <p class="card-category" data-en="Health & Body">Health &amp; Body</p>
-          <h3>Your body has rights over you.</h3>
-          <p class="card-desc">Prophetic wisdom on sleep, food, cleanliness, and caring for the body as an Amanah.</p>
-          <div class="subcategories">
-            <span class="subcat">Diet &amp; Food</span>
-            <span class="subcat">Sleep</span>
-            <span class="subcat">Cleanliness</span>
-            <span class="subcat">Wellbeing</span>
-          </div>
-          <a href="category.html?cat=health-body" class="card-plus" aria-label="Explore Health & Body">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 11 -->
-        <div class="card">
-          <p class="card-category" data-en="Neighbours & Community">Neighbours &amp; Community</p>
-          <h3>Be the best neighbour on your street.</h3>
-          <p class="card-desc">Hadiths on the rights of neighbours, community responsibility, and building brotherhood.</p>
-          <div class="subcategories">
-            <span class="subcat">Rights of Neighbours</span>
-            <span class="subcat">Brotherhood</span>
-            <span class="subcat">Community Service</span>
-          </div>
-          <a href="category.html?cat=neighbours-community" class="card-plus" aria-label="Explore Neighbours & Community">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 12 -->
-        <div class="card">
-          <p class="card-category" data-en="Death & Afterlife">Death &amp; Afterlife</p>
-          <h3>Prepare today for what comes after.</h3>
-          <p class="card-desc">Prophetic reminders on the reality of death, the grave, and the eternal life ahead.</p>
-          <div class="subcategories">
-            <span class="subcat">The Grave</span>
-            <span class="subcat">Resurrection</span>
-            <span class="subcat">Paradise</span>
-            <span class="subcat">Hereafter</span>
-          </div>
-          <a href="category.html?cat=death-afterlife" class="card-plus" aria-label="Explore Death & Afterlife">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 13 -->
-        <div class="card">
-          <p class="card-category" data-en="Remembrance of Allah">Remembrance of Allah</p>
-          <h3>Keep your tongue moist with dhikr.</h3>
-          <p class="card-desc">Hadiths on remembering Allah, morning and evening adhkar, and tranquility of the heart.</p>
-          <div class="subcategories">
-            <span class="subcat">Morning Adhkar</span>
-            <span class="subcat">Evening Adhkar</span>
-            <span class="subcat">Tasbeeh</span>
-            <span class="subcat">Istighfar</span>
-          </div>
-          <a href="category.html?cat=remembrance-allah" class="card-plus" aria-label="Explore Remembrance of Allah">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 14 -->
-        <div class="card">
-          <p class="card-category" data-en="Wealth & Livelihood">Wealth &amp; Livelihood</p>
-          <h3>Earn lawfully and spend wisely.</h3>
-          <p class="card-desc">Guidance on halal earnings, avoiding greed, the dangers of excessive wealth, and contentment.</p>
-          <div class="subcategories">
-            <span class="subcat">Halal Earnings</span>
-            <span class="subcat">Avoiding Interest</span>
-            <span class="subcat">Generosity</span>
-            <span class="subcat">Contentment</span>
-          </div>
-          <a href="category.html?cat=wealth-livelihood" class="card-plus" aria-label="Explore Wealth & Livelihood">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 15 -->
-        <div class="card">
-          <p class="card-category" data-en="Justice & Fairness">Justice &amp; Fairness</p>
-          <h3>Stand firmly for what is right.</h3>
-          <p class="card-desc">Prophetic teachings on upholding justice, protecting the oppressed, and leading with equity.</p>
-          <div class="subcategories">
-            <span class="subcat">Rights</span>
-            <span class="subcat">Equality</span>
-            <span class="subcat">Oppression</span>
-            <span class="subcat">Leadership</span>
-          </div>
-          <a href="category.html?cat=justice-fairness" class="card-plus" aria-label="Explore Justice & Fairness">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 16 -->
-        <div class="card">
-          <p class="card-category" data-en="Intentions & Actions">Intentions &amp; Actions</p>
-          <h3>Actions are judged by intentions.</h3>
-          <p class="card-desc">The foundational hadith on niyyah and how sincerity of purpose transforms every deed into worship.</p>
-          <div class="subcategories">
-            <span class="subcat">Niyyah</span>
-            <span class="subcat">Sincerity</span>
-            <span class="subcat">Deeds</span>
-            <span class="subcat">Reward</span>
-          </div>
-          <a href="category.html?cat=intentions-actions" class="card-plus" aria-label="Explore Intentions & Actions">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 17 -->
-        <div class="card">
-          <p class="card-category" data-en="Fasting & Ramadan">Fasting &amp; Ramadan</p>
-          <h3>Fast with your whole being.</h3>
-          <p class="card-desc">Hadiths on the blessings of Ramadan, the etiquette of fasting, and the night of Laylatul Qadr.</p>
-          <div class="subcategories">
-            <span class="subcat">Ramadan</span>
-            <span class="subcat">Suhoor &amp; Iftar</span>
-            <span class="subcat">Tarawih</span>
-            <span class="subcat">Laylatul Qadr</span>
-          </div>
-          <a href="category.html?cat=fasting-ramadan" class="card-plus" aria-label="Explore Fasting & Ramadan">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 18 -->
-        <div class="card">
-          <p class="card-category" data-en="Humility & Pride">Humility &amp; Pride</p>
-          <h3>True greatness lies in humility.</h3>
-          <p class="card-desc">Prophetic warnings against arrogance and the elevation that comes from lowering oneself before Allah.</p>
-          <div class="subcategories">
-            <span class="subcat">Avoiding Arrogance</span>
-            <span class="subcat">Gratitude</span>
-            <span class="subcat">Self-reflection</span>
-          </div>
-          <a href="category.html?cat=humility-pride" class="card-plus" aria-label="Explore Humility & Pride">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 19 -->
-        <div class="card">
-          <p class="card-category" data-en="Love & Brotherhood">Love &amp; Brotherhood</p>
-          <h3>You are not a believer until you love for others.</h3>
-          <p class="card-desc">Hadiths on loving for the sake of Allah, the bonds of brotherhood, and spreading Salam.</p>
-          <div class="subcategories">
-            <span class="subcat">Loving for Allah</span>
-            <span class="subcat">Brotherhood</span>
-            <span class="subcat">Salam</span>
-            <span class="subcat">Unity</span>
-          </div>
-          <a href="category.html?cat=love-brotherhood" class="card-plus" aria-label="Explore Love & Brotherhood">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 20 -->
-        <div class="card">
-          <p class="card-category" data-en="Supplication & Dua">Supplication &amp; Dua</p>
-          <h3>Call upon Allah — He is always listening.</h3>
-          <p class="card-desc">Prophetic guidance on the etiquette of dua, the best times to supplicate, and Allah's promise to respond.</p>
-          <div class="subcategories">
-            <span class="subcat">Etiquette of Dua</span>
-            <span class="subcat">Best Times</span>
-            <span class="subcat">Du'as from Sunnah</span>
-          </div>
-          <a href="category.html?cat=supplication-dua" class="card-plus" aria-label="Explore Supplication & Dua">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
-        <!-- Card 21 -->
-        <div class="card">
-          <p class="card-category" data-en="Trust & Reliance on Allah">Trust &amp; Reliance on Allah</p>
-          <h3>Tie your camel, then put your trust in Allah.</h3>
-          <p class="card-desc">Hadiths on tawakkul, taking means while relying on Allah, and finding peace in His perfect plan.</p>
-          <div class="subcategories">
-            <span class="subcat">Tawakkul</span>
-            <span class="subcat">Taking Means</span>
-            <span class="subcat">Divine Plan</span>
-            <span class="subcat">Peace of Heart</span>
-          </div>
-          <a href="category.html?cat=trust-allah" class="card-plus" aria-label="Explore Trust & Reliance on Allah">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
-        </div>
-
+        <p style="color:var(--muted);text-align:center;padding:40px 0;grid-column:1/-1" id="cards-loading">Loading categories…</p>
+      </div><!-- /cards-track -->
       </div><!-- /cards-track -->
     </div><!-- /carousel-wrap -->
 
@@ -1363,9 +1032,9 @@
         <img src="timelesshadith-logo.png" alt="Timeless Hadith" width="100" height="20" loading="lazy" />
       </a>
       <ul class="footer-links">
-        <li><a href="#">Browse</a></li>
-        <li><a href="#">Topics</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="categories.html">Browse</a></li>
+        <li><a href="bookmarks.html">Bookmarks</a></li>
+        <li><a href="about.html">About</a></li>
         <li><a href="privacy.html">Privacy Policy</a></li>
         <li><a href="terms.html">Terms of Use</a></li>
       </ul>
@@ -1398,13 +1067,13 @@
       set(k, v) { try { localStorage.setItem(k, v); }        catch(e) {} }
     };
 
-    const saved = store.get('theme');
+    const saved = store.get('th_theme');
     if (saved === 'light' || saved === 'dark') html.setAttribute('data-theme', saved);
 
     function applyTheme() {
       const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
       html.setAttribute('data-theme', next);
-      store.set('theme', next);
+      store.set('th_theme', next);
     }
 
     document.getElementById('themeToggle').addEventListener('click', applyTheme);
@@ -1660,19 +1329,17 @@
     updateMvArrows();
 
     /* ────────────────────────────────────────────
-       PAGINATION — 6 cards per page
+       CATEGORIES CAROUSEL — dynamic from Supabase
     ──────────────────────────────────────────── */
     const track    = document.getElementById('cardsTrack');
     const prevBtn  = document.getElementById('prevBtn');
     const nextBtn  = document.getElementById('nextBtn');
     const dotsWrap = document.getElementById('carouselDots');
+    const PER_PAGE = 6;
+    let   cardEls  = [];
+    let   current  = 0;
 
-    const cardEls   = Array.from(track.querySelectorAll('.card'));
-    const PER_PAGE  = 6;
-    const total     = Math.ceil(cardEls.length / PER_PAGE);
-    let   current   = 0;
-
-    function buildDots() {
+    function buildDots(total) {
       dotsWrap.innerHTML = '';
       for (let i = 0; i < total; i++) {
         const d = document.createElement('span');
@@ -1684,6 +1351,7 @@
     }
 
     function goTo(page) {
+      const total = Math.ceil(cardEls.length / PER_PAGE);
       track.classList.add('fading');
       setTimeout(() => {
         current = Math.max(0, Math.min(page, total - 1));
@@ -1700,28 +1368,40 @@
       }, 150);
     }
 
+    function buildCategoryCards(cats) {
+      track.innerHTML = '';
+      cats.forEach(cat => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML =
+          '<p class="card-category">' + cat.title + '</p>' +
+          '<h3>' + cat.title + '</h3>' +
+          '<p class="card-desc">' + cat.count + ' hadiths</p>' +
+          '<a href="category.html?cat=' + cat.slug + '" class="card-plus" aria-label="Explore ' + cat.title + '">' +
+            '<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>' +
+          '</a>';
+        card.querySelector('.card-plus').addEventListener('click', e => e.stopPropagation());
+        card.addEventListener('click', () => { window.location.href = 'category.html?cat=' + cat.slug; });
+        track.appendChild(card);
+      });
+      cardEls = Array.from(track.querySelectorAll('.card'));
+      buildDots(Math.ceil(cardEls.length / PER_PAGE));
+      current = 0;
+      goTo(0);
+    }
+
     prevBtn.addEventListener('click', () => goTo(current - 1));
     nextBtn.addEventListener('click', () => goTo(current + 1));
-    buildDots();
-    goTo(0);
 
-    /* ── Card click navigation ── */
-    cardEls.forEach(card => {
-      const catEl = card.querySelector('.card-category');
-      if (!catEl) return;
-      const slug = (catEl.dataset.en || catEl.textContent)
-        .toLowerCase().trim()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-|-$/g, '');
-      const plusBtn = card.querySelector('.card-plus');
-      if (plusBtn) {
-        plusBtn.href = 'category.html?cat=' + slug;
-        plusBtn.addEventListener('click', e => e.stopPropagation());
-      }
-      card.addEventListener('click', () => {
-        window.location.href = 'category.html?cat=' + slug;
+    if (window.TH && typeof TH.init === 'function') {
+      TH.init().then(function() {
+        if (TH.categories && TH.categories.length > 0) {
+          buildCategoryCards(TH.categories);
+        }
+      }).catch(function() {
+        track.innerHTML = '<p style="color:var(--muted);text-align:center;padding:40px 0;grid-column:1/-1">Could not load categories. Please refresh.</p>';
       });
-    });
+    }
 
     /* ────────────────────────────────────────────
        SHARE MODAL
