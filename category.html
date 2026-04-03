@@ -17,7 +17,15 @@
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0a0a0a"  media="(prefers-color-scheme: dark)" />
   <meta property="og:type" content="website" />
-  <meta property="og:url"         content="https://timelesshadith.com/category.html" />
+  <meta property="og:url" id="og-url-tag" content="https://timelesshadith.com/category.html" />
+  <script>
+    (function(){
+      var cat = new URLSearchParams(window.location.search).get('cat');
+      var base = 'https://timelesshadith.com/category.html';
+      var el = document.getElementById('og-url-tag');
+      if (el && cat) el.setAttribute('content', base + '?cat=' + encodeURIComponent(cat));
+    })();
+  </script>
   <meta property="og:title"       content="Hadith by Topic — Timeless Hadith" />
   <meta property="og:description" content="Explore authentic hadiths organized by Islamic topic. Verified sayings of the Prophet Muhammad (PBUH) from Sahih al-Bukhari, Sahih Muslim, and more." />
   <meta property="og:image"       content="https://timelesshadith.com/og-image.png" />
