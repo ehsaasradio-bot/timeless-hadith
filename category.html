@@ -806,6 +806,7 @@
       dots.innerHTML='';
       for(var i=0;i<pages;i++){
         (function(idx){
+          var dot=document.createElement('button');
           dot.className='p-dot'+(idx===currentPage?' active':'');
           dot.setAttribute('role','listitem');
           dot.setAttribute('aria-label','Page '+(idx+1));
