@@ -5,7 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hadith by Topic — Timeless Hadith</title>
   <meta name="description" content="Explore authentic hadiths organized by Islamic topic. Verified sayings of the Prophet Muhammad (PBUH) from Sahih al-Bukhari, Sahih Muslim, and more." />
-  <link rel="canonical" href="https://timelesshadith.com/category.html" />
+  <link rel="canonical" id="canonical-tag" href="https://timelesshadith.com/category.html" />
+  <script>
+    (function(){
+      var cat = new URLSearchParams(window.location.search).get('cat');
+      var base = 'https://timelesshadith.com/category.html';
+      var el = document.getElementById('canonical-tag');
+      if (el) el.setAttribute('href', cat ? base + '?cat=' + encodeURIComponent(cat) : base);
+    })();
+  </script>
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0a0a0a"  media="(prefers-color-scheme: dark)" />
   <meta property="og:type" content="website" />
