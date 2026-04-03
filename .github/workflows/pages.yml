@@ -31,4 +31,4 @@ jobs:
           test -f manifest.json && echo "✓ manifest.json"
           test -f robots.txt && echo "✓ robots.txt"
           test -f sitemap.xml && echo "✓ sitemap.xml"
-          echo "All core files present. Cloudflare P
+          echo "All core files present. Cloudflare Pages handles deployment automatically."
