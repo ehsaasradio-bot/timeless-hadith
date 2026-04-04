@@ -155,7 +155,12 @@
         return Promise.resolve(self.hadiths[slug]);
       }
 
+      /* Resolve book number from slug — supports both 'book-97' and custom slugs like 'tawheed' */
       var bookNum = parseInt(slug.replace('book-', ''), 10);
+      if (isNaN(bookNum)) {
+        var match = self.categories.find(function(c) { return c.slug === slug; });
+        bookNum = match ? match.bookNumber : NaN;
+      }
       if (isNaN(bookNum)) {
         self.hadiths[slug] = [];
         return Promise.resolve([]);
