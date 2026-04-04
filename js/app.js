@@ -554,7 +554,7 @@ const TH_SHARE = (() => {
     y += engLines * 48 + 44;
 
     // ── Reference pill ──
-    const refText = `${hadith.narrator || ''} · ${hadith.source || ''} ${hadith.number ? '#' + hadith.number : ''}`.trim().replace(/^·\s*/, '').replace(/\s*·\s*$/, '');
+    const refText = `${hadith.narrator || ''} · ${hadith.source || ''}`.trim().replace(/^·\s*/, '').replace(/\s*·\s*$/, '');
     ctx.font = '500 24px -apple-system, SF Pro Display, Helvetica Neue, sans-serif';
     const refW = ctx.measureText(refText).width + 48;
     const refX = (W - refW) / 2;

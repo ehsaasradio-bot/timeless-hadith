@@ -350,18 +350,16 @@
       margin-bottom: 14px; padding-right: 72px;
     }
     .card-subcat {
-      font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.4px;
-      color: var(--accent); background: rgba(0,113,227,0.07);
-      padding: 3px 9px; border-radius: 100px;
+      display: none;
     }
-    [data-theme="dark"] .card-subcat { background: rgba(41,151,255,0.12); }
+    [data-theme="dark"] .card-subcat { display: none; }
     .card-auth {
-      font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 100px;
+      display: none;
     }
-    .auth-sahih { background: rgba(52,199,89,0.1);  color: #1a7d30; }
-    [data-theme="dark"] .auth-sahih { color: #34c759; background: rgba(52,199,89,0.15); }
-    .auth-hasan { background: rgba(255,196,0,0.12); color: #8c6800; }
-    [data-theme="dark"] .auth-hasan { color: #ffd60a; background: rgba(255,214,10,0.15); }
+    .auth-sahih { display: none; }
+    [data-theme="dark"] .auth-sahih { display: none; }
+    .auth-hasan { display: none; }
+    [data-theme="dark"] .auth-hasan { display: none; }
 
     /* Arabic text */
     .arabic-text {
@@ -375,7 +373,7 @@
 
     /* English text */
     .english-text {
-      font-size: 14px; line-height: 1.7; color: var(--ink);
+      font-size: 16px; line-height: 1.7; color: var(--ink);
       letter-spacing: -0.1px; flex: 1;
       font-style: normal;
     }
@@ -393,14 +391,10 @@
       display: inline-flex; align-items: center; gap: 6px;
     }
     .card-source {
-      font-size: 11px; color: var(--muted); background: var(--surface2);
-      border: 1px solid var(--border); padding: 3px 9px; border-radius: 100px;
+      display: none;
     }
     .share-text-btn {
-      background: none; border: none; font-size: 12px; color: var(--muted);
-      cursor: pointer; font-family: var(--font); letter-spacing: -0.1px;
-      display: inline-flex; align-items: center; gap: 3px;
-      transition: color 0.2s ease;
+      display: none;
     }
     .share-text-btn:hover { color: var(--accent); }
 
@@ -559,11 +553,6 @@
   <div class="filter-row" role="group" aria-label="Filters" id="filter-row">
     <span class="filter-label">Narrator:</span>
     <div id="narrator-chips" style="display:contents"></div>
-    <div class="filter-sep" aria-hidden="true"></div>
-    <span class="filter-label">Authenticity:</span>
-    <button class="filter-pill active" data-auth=""      onclick="setAuthFilter(this,'')">All</button>
-    <button class="filter-pill"        data-auth="Sahih" onclick="setAuthFilter(this,'Sahih')">Sahih</button>
-    <button class="filter-pill"        data-auth="Hasan" onclick="setAuthFilter(this,'Hasan')">Hasan</button>
   </div>
 
   <div class="section-divider"></div>
@@ -704,19 +693,29 @@
       });
     }
 
+    /* Only show these five narrators as filter chips */
+    var ALLOWED_NARRATORS = [
+      'Abu Huraira',
+      'Abdullah ibn Umar',
+      'Anas ibn Malik',
+      'Aisha bint Abu Bakr',
+      'Abdullah ibn Abbas'
+    ];
+
     function buildNarratorChips() {
-      var nars=[], seen={};
-      _hadiths.forEach(function(h){ if(h.narrator && !seen[h.narrator]){ seen[h.narrator]=1; nars.push(h.narrator); } });
       var wrap=document.getElementById('narrator-chips');
       wrap.innerHTML='';
       var allBtn=document.createElement('button');
       allBtn.className='filter-pill active'; allBtn.dataset.nar=''; allBtn.textContent='All';
       allBtn.onclick=function(){setNarFilter(allBtn,'');};
       wrap.appendChild(allBtn);
-      nars.forEach(function(nar){
+      ALLOWED_NARRATORS.forEach(function(nar){
+        /* Only show chip if this narrator exists in the current hadiths */
+        var exists=_hadiths.some(function(h){ return h.narrator===nar; });
+        if(!exists) return;
         var btn=document.createElement('button');
         btn.className='filter-pill'; btn.dataset.nar=nar;
-        btn.textContent=nar.length>16?nar.slice(0,14)+'…':nar; btn.title=nar;
+        btn.textContent=nar; btn.title=nar;
         btn.onclick=function(){setNarFilter(btn,nar);};
         wrap.appendChild(btn);
       });
