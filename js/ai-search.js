@@ -286,11 +286,13 @@
 
   /* ── Mount ── */
   function _mount() {
-    /* Find the anchor: inject right before #featured (homepage) or
-       before the hadith grid (category pages).  If neither, append to main. */
+    /* Only show the AI search widget on the homepage */
+    var path = window.location.pathname;
+    if (path !== '/' && !path.endsWith('/index.html') && path !== '/index.html') return;
+
+    /* Find the anchor: inject right before #featured (homepage). */
     var anchor =
       document.getElementById('featured') ||
-      document.getElementById('hadith-grid') ||
       document.querySelector('main') ||
       document.body;
 
