@@ -798,13 +798,17 @@
 <script>
 (function() {
 
-  /* ── Auth gate ── */
-  // Password is stored as a btoa-encoded string. Change 'TimelessHadith2024!' to your preferred password.
-  var PASS_ENC = btoa('TimelessHadith2024!');
+  /* ── Auth gate (SHA-256) ── */
+  var ADMIN_HASH = 'ba541f871fd9f9ab172966270ada8ac0f3af6bbe91a468def8cfcd0cba5b5452';
   var overlay  = document.getElementById('auth-overlay');
   var authInput  = document.getElementById('auth-input');
   var authSubmit = document.getElementById('auth-submit');
   var authError  = document.getElementById('auth-error');
+
+  async function sha256(str) {
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+  }
 
   function checkAuth() {
     if (sessionStorage.getItem('th_admin_auth') === '1') {
@@ -813,8 +817,9 @@
   }
   checkAuth();
 
-  function attemptLogin() {
-    if (btoa(authInput.value) === PASS_ENC) {
+  async function attemptLogin() {
+    var hash = await sha256(authInput.value);
+    if (hash === ADMIN_HASH) {
       sessionStorage.setItem('th_admin_auth', '1');
       overlay.style.display = 'none';
       authError.textContent = '';
