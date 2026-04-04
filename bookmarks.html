@@ -135,8 +135,12 @@
     [data-theme="dark"] .auth-sahih { display:none; }
     .auth-hasan { display:none; }
     [data-theme="dark"] .auth-hasan { display:none; }
-    .arabic-text { font-family:'Noto Naskh Arabic',serif;font-size:1.25rem;line-height:2.0;direction:rtl;text-align:right;color:var(--ink);margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border); }
-    .english-text { font-size:16px;line-height:1.7;color:var(--ink);letter-spacing:-0.1px;flex:1;font-style:normal; }
+    .english-text { font-size:16px;line-height:1.7;color:var(--ink);letter-spacing:-0.1px;flex:1;font-style:normal;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border); }
+    .arabic-text { font-family:'Noto Naskh Arabic',serif;font-size:1.25rem;line-height:2.0;direction:rtl;text-align:right;color:var(--ink);margin-bottom:12px; }
+    .quick-read-text { font-size:16px;line-height:1.7;color:var(--ink);letter-spacing:-0.1px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border); }
+    .full-read-btn { display:inline-flex;align-items:center;gap:6px;padding:8px 20px;border-radius:100px;font-size:13px;font-weight:500;background:var(--surface2);color:var(--ink);border:1px solid var(--border);cursor:pointer;font-family:var(--font);transition:all 0.2s ease;margin-bottom:10px; }
+    .full-read-btn:hover { background:var(--accent);color:#fff;border-color:var(--accent); }
+    .full-read-wrap { animation:fadeUp 0.3s ease both; }
     .card-ref { margin-top:16px;padding-top:14px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px; }
     .card-narrator { font-size:12px;color:var(--muted);font-weight:500;letter-spacing:-0.1px; }
     .card-source-pill { display:inline-flex;align-items:center;gap:6px; }
@@ -199,7 +203,7 @@
 <body>
   <!-- ══ NAV ══ -->
   <nav class="main-nav" role="navigation" aria-label="Main navigation">
-    <a href="index.html" class="nav-logo">
+    <a href="index.html" class="nav-logo" aria-label="Timeless Hadith — Home">
       <img src="Timeless-Hadidh-Logo.png" alt="Timeless Hadith" width="135" height="69" />
     </a>
     <ul class="nav-links">
@@ -351,6 +355,21 @@
       return r ? r.hadith : null;
     }
 
+    /* Toggle Quick Read / Full Read */
+    function toggleFullRead(btn) {
+      var wrap = btn.previousElementSibling;
+      var quickRead = btn.parentElement.querySelector('.quick-read-text');
+      if (wrap.style.display === 'none') {
+        wrap.style.display = 'block';
+        if (quickRead) quickRead.style.display = 'none';
+        btn.textContent = 'Quick Read';
+      } else {
+        wrap.style.display = 'none';
+        if (quickRead) quickRead.style.display = '';
+        btn.textContent = 'Full Read';
+      }
+    }
+
     /* ── Build hadith card HTML ── */
     function buildCardHTML(h, catSlug, idx) {
       var authClass = (h.authenticity === 'Sahih') ? 'auth-sahih' : 'auth-hasan';
@@ -374,8 +393,16 @@
             '<a href="category.html?cat=' + catSlug + '" class="card-cat-link">' + (catSlug.replace(/-/g, ' ')) + '</a>' +
             '<span class="card-auth ' + authClass + '">' + authLabel + '</span>' +
           '</div>' +
-          '<p class="arabic-text">' + (h.arabic || '') + '</p>' +
-          '<p class="english-text">' + (h.english || '') + '</p>' +
+          (h.quick_read
+            ? '<p class="quick-read-text">\u201c' + h.quick_read + '\u201d</p>' +
+              '<div class="full-read-wrap" style="display:none">' +
+                '<p class="english-text">' + (h.english || '') + '</p>' +
+                '<p class="arabic-text">' + (h.arabic || '') + '</p>' +
+              '</div>' +
+              '<button class="full-read-btn" onclick="toggleFullRead(this)">Full Read</button>'
+            : '<p class="english-text">' + (h.english || '') + '</p>' +
+              '<p class="arabic-text">' + (h.arabic || '') + '</p>'
+          ) +
           '<div class="card-ref">' +
             '<span class="card-narrator">' + (h.narrator || '') + '</span>' +
             '<div class="card-source-pill">' +

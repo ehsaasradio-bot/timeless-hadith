@@ -11,5 +11,6 @@ Disallow: /firebase-integration-guide.html
 Disallow: /mac-lineup.html
 Disallow: /admin.html
 Disallow: /admin-backup.html
+Disallow: /cms.html
 
 Sitemap: https://timelesshadith.com/sitemap.xml

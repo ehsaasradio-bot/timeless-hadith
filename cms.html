@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CMS — Timeless Hadith</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --bg: #f5f5f7; --surface: #fff; --surface2: #f0f0f2;
+      --ink: #1d1d1f; --muted: #86868b; --border: #d2d2d7;
+      --accent: #0071e3; --accent-hover: #0077ED;
+      --success: #34c759; --error: #ff3b30; --warning: #ff9500;
+    }
+    [data-theme="dark"] {
+      --bg: #000; --surface: #1c1c1e; --surface2: #2c2c2e;
+      --ink: #f5f5f7; --muted: #86868b; --border: #38383a;
+      --accent: #2997ff; --accent-hover: #40a9ff;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font); background: var(--bg); color: var(--ink);
+      line-height: 1.5; transition: background 0.35s ease, color 0.35s ease;
+    }
+
+    /* Nav */
+    .cms-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 40px; border-bottom: 1px solid var(--border);
+      background: var(--surface); transition: background 0.35s ease;
+    }
+    .cms-nav-title { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+    .cms-nav-title span { color: var(--accent); }
+    .cms-nav-actions { display: flex; gap: 10px; align-items: center; }
+    .nav-btn {
+      padding: 8px 16px; border-radius: 100px; font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: var(--font); border: 1px solid var(--border);
+      background: var(--bg); color: var(--ink); text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover { background: var(--surface2); border-color: var(--ink); }
+
+    /* Auth gate */
+    .auth-gate {
+      max-width: 400px; margin: 120px auto; padding: 40px;
+      background: var(--surface); border-radius: 20px;
+      border: 1px solid var(--border); text-align: center;
+    }
+    .auth-gate h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .auth-gate p { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+    .auth-input {
+      width: 100%; padding: 12px 16px; border-radius: 12px; font-size: 14px;
+      border: 1.5px solid var(--border); background: var(--bg); color: var(--ink);
+      font-family: var(--font); outline: none; transition: border-color 0.2s;
+      margin-bottom: 16px;
+    }
+    .auth-input:focus { border-color: var(--accent); }
+    .auth-btn {
+      width: 100%; padding: 13px; border-radius: 100px; font-size: 15px; font-weight: 600;
+      background: var(--accent); color: #fff; border: none; cursor: pointer;
+      font-family: var(--font); transition: background 0.2s;
+    }
+    .auth-btn:hover { background: var(--accent-hover); }
+    .auth-error { color: var(--error); font-size: 13px; margin-top: 12px; display: none; }
+
+    /* Main content */
+    .cms-main { max-width: 900px; margin: 0 auto; padding: 40px 24px; display: none; }
+
+    /* Section card */
+    .cms-card {
+      background: var(--surface); border-radius: 20px; padding: 32px;
+      border: 1px solid var(--border); margin-bottom: 24px;
+      transition: background 0.35s ease;
+    }
+    .cms-card h3 {
+      font-size: 18px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 6px;
+    }
+    .cms-card p { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+
+    /* Upload area */
+    .upload-zone {
+      border: 2px dashed var(--border); border-radius: 16px; padding: 40px 24px;
+      text-align: center; cursor: pointer; transition: all 0.2s ease;
+      background: var(--bg);
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--accent); background: rgba(0,113,227,0.04);
+    }
+    .upload-zone-icon { font-size: 32px; margin-bottom: 12px; color: var(--muted); }
+    .upload-zone-text { font-size: 14px; color: var(--muted); }
+    .upload-zone-text strong { color: var(--accent); }
+    .upload-zone input { display: none; }
+
+    /* CSV format hint */
+    .format-hint {
+      margin-top: 16px; padding: 16px; background: var(--bg);
+      border-radius: 12px; font-size: 13px; color: var(--muted);
+    }
+    .format-hint code {
+      display: block; margin-top: 8px; padding: 10px 14px;
+      background: var(--surface2); border-radius: 8px;
+      font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px;
+      color: var(--ink); white-space: pre; overflow-x: auto;
+    }
+
+    /* Status & results */
+    .upload-status { margin-top: 20px; display: none; }
+    .status-bar {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 18px; border-radius: 12px; font-size: 14px; font-weight: 500;
+    }
+    .status-bar.success { background: rgba(52,199,89,0.1); color: #1a7d30; }
+    .status-bar.error { background: rgba(255,59,48,0.1); color: #ff3b30; }
+    .status-bar.processing { background: rgba(0,113,227,0.08); color: var(--accent); }
+    [data-theme="dark"] .status-bar.success { color: #34c759; }
+    [data-theme="dark"] .status-bar.error { color: #ff6961; }
+
+    .progress-bar {
+      width: 100%; height: 4px; border-radius: 2px; background: var(--surface2);
+      margin-top: 12px; overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%; background: var(--accent); border-radius: 2px;
+      transition: width 0.3s ease; width: 0%;
+    }
+
+    /* Results table */
+    .results-table {
+      width: 100%; margin-top: 16px; border-collapse: collapse;
+      font-size: 13px;
+    }
+    .results-table th {
+      text-align: left; padding: 10px 12px; font-weight: 600;
+      border-bottom: 2px solid var(--border); color: var(--muted);
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px;
+    }
+    .results-table td {
+      padding: 10px 12px; border-bottom: 1px solid var(--border);
+      max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .results-table tr:hover td { background: var(--bg); }
+    .badge-ok { color: var(--success); font-weight: 600; }
+    .badge-fail { color: var(--error); font-weight: 600; }
+    .badge-skip { color: var(--warning); font-weight: 600; }
+
+    /* Download template */
+    .template-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 100px; font-size: 13px; font-weight: 500;
+      background: var(--surface2); color: var(--ink); border: 1px solid var(--border);
+      cursor: pointer; font-family: var(--font); transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .template-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .cms-nav { padding: 12px 16px; }
+      .cms-main { padding: 24px 16px; }
+      .cms-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Auth Gate -->
+  <div id="authGate" class="auth-gate">
+    <h2>CMS Login</h2>
+    <p>Enter admin password to access the content management system.</p>
+    <input type="password" id="authPassword" class="auth-input" placeholder="Admin password" autofocus>
+    <button class="auth-btn" id="authSubmit">Sign In</button>
+    <p class="auth-error" id="authError">Incorrect password. Please try again.</p>
+  </div>
+
+  <!-- CMS Content (hidden until auth) -->
+  <div id="cmsContent" style="display:none">
+    <nav class="cms-nav">
+      <div class="cms-nav-title">Timeless Hadith <span>CMS</span></div>
+      <div class="cms-nav-actions">
+        <a href="index.html" class="nav-btn">View Site</a>
+        <button class="nav-btn" id="themeToggleCms">Dark Mode</button>
+        <button class="nav-btn" id="logoutBtn">Logout</button>
+      </div>
+    </nav>
+
+    <main class="cms-main" id="cmsMain">
+      <!-- Quick Read Upload -->
+      <div class="cms-card">
+        <h3>Quick Read — Bulk Upload</h3>
+        <p>Upload a CSV file to map Quick Read summaries to hadiths. Each row should contain a hadith ID and the summary text.</p>
+
+        <button class="template-btn" id="downloadTemplate">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download CSV Template
+        </button>
+
+        <div class="format-hint">
+          CSV format (2 columns, with header row):
+          <code>id,quick_read
+1,"The reward of deeds depends upon the intentions."
+2,"The angel Gabriel asked the Prophet about Islam, Iman, and Ihsan."
+13,"None of you truly believes until he loves for his brother what he loves for himself."</code>
+        </div>
+
+        <div class="upload-zone" id="uploadZone" style="margin-top:20px">
+          <div class="upload-zone-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <p class="upload-zone-text">Drag & drop your CSV here, or <strong>click to browse</strong></p>
+          <input type="file" id="csvInput" accept=".csv,.txt">
+        </div>
+
+        <div class="upload-status" id="uploadStatus">
+          <div class="status-bar" id="statusBar"></div>
+          <div class="progress-bar" id="progressBar" style="display:none">
+            <div class="progress-bar-fill" id="progressFill"></div>
+          </div>
+        </div>
+
+        <div id="resultsWrap" style="display:none">
+          <table class="results-table">
+            <thead>
+              <tr><th>ID</th><th>Quick Read</th><th>Status</th></tr>
+            </thead>
+            <tbody id="resultsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+  (function() {
+    'use strict';
+
+    /* ── Supabase credentials (same as main site) ── */
+    var SB_URL  = 'https://dwcsledifvnyrunxejzd.supabase.co';
+    var SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3Y3NsZWRpZnZueXJ1bnhlanpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTgwNzgsImV4cCI6MjA5MDUzNDA3OH0.Aww8QcExJF1tPwMPvqP5q0_avc3YJclqsFJcXptlnZo';
+    var SB_HDR  = { 'apikey': SB_ANON, 'Authorization': 'Bearer ' + SB_ANON, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
+
+    /* ── Auth ── */
+    var ADMIN_HASH = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'; /* sha256 of 'password' — CHANGE THIS */
+
+    async function sha256(str) {
+      var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+    }
+
+    var authGate    = document.getElementById('authGate');
+    var cmsContent  = document.getElementById('cmsContent');
+    var cmsMain     = document.getElementById('cmsMain');
+    var authPass    = document.getElementById('authPassword');
+    var authSubmit  = document.getElementById('authSubmit');
+    var authError   = document.getElementById('authError');
+
+    /* Check stored session */
+    if (sessionStorage.getItem('th_cms_auth') === 'true') {
+      authGate.style.display = 'none';
+      cmsContent.style.display = 'block';
+      cmsMain.style.display = 'block';
+    }
+
+    authSubmit.addEventListener('click', doLogin);
+    authPass.addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
+
+    async function doLogin() {
+      var hash = await sha256(authPass.value);
+      if (hash === ADMIN_HASH) {
+        sessionStorage.setItem('th_cms_auth', 'true');
+        authGate.style.display = 'none';
+        cmsContent.style.display = 'block';
+        cmsMain.style.display = 'block';
+        authError.style.display = 'none';
+      } else {
+        authError.style.display = 'block';
+        authPass.value = '';
+        authPass.focus();
+      }
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      sessionStorage.removeItem('th_cms_auth');
+      location.reload();
+    });
+
+    /* ── Theme ── */
+    var html = document.documentElement;
+    var stored = localStorage.getItem('th_theme');
+    if (stored) html.setAttribute('data-theme', stored);
+
+    document.getElementById('themeToggleCms').addEventListener('click', function() {
+      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('th_theme', next);
+      this.textContent = next === 'dark' ? 'Light Mode' : 'Dark Mode';
+    });
+
+    /* ── Download Template ── */
+    document.getElementById('downloadTemplate').addEventListener('click', function() {
+      var csv = 'id,quick_read\n1,"Example: The reward of deeds depends upon intentions."\n2,"Example: Gabriel asked about Islam, Iman, and Ihsan."';
+      var blob = new Blob([csv], { type: 'text/csv' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'quick_read_template.csv';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    /* ── Upload Zone ── */
+    var uploadZone = document.getElementById('uploadZone');
+    var csvInput   = document.getElementById('csvInput');
+    var statusDiv  = document.getElementById('uploadStatus');
+    var statusBar  = document.getElementById('statusBar');
+    var progressBar = document.getElementById('progressBar');
+    var progressFill = document.getElementById('progressFill');
+    var resultsWrap = document.getElementById('resultsWrap');
+    var resultsBody = document.getElementById('resultsBody');
+
+    uploadZone.addEventListener('click', function() { csvInput.click(); });
+    uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); this.classList.add('dragover'); });
+    uploadZone.addEventListener('dragleave', function() { this.classList.remove('dragover'); });
+    uploadZone.addEventListener('drop', function(e) {
+      e.preventDefault(); this.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+    csvInput.addEventListener('change', function() {
+      if (this.files.length) handleFile(this.files[0]);
+    });
+
+    /* ── Parse CSV ── */
+    function parseCSV(text) {
+      var lines = text.split(/\r?\n/).filter(function(l) { return l.trim(); });
+      if (lines.length < 2) return [];
+
+      var rows = [];
+      for (var i = 1; i < lines.length; i++) {
+        var line = lines[i];
+        var id, quickRead;
+
+        /* Handle quoted fields */
+        var match = line.match(/^(\d+)\s*,\s*"((?:[^"\\]|\\.|"")*)"\s*$/);
+        if (match) {
+          id = match[1];
+          quickRead = match[2].replace(/""/g, '"');
+        } else {
+          var parts = line.split(',');
+          id = (parts[0] || '').trim();
+          quickRead = parts.slice(1).join(',').trim().replace(/^"|"$/g, '');
+        }
+
+        if (id && quickRead && !isNaN(parseInt(id))) {
+          rows.push({ id: parseInt(id), quick_read: quickRead });
+        }
+      }
+      return rows;
+    }
+
+    /* ── Process file ── */
+    async function handleFile(file) {
+      if (!file.name.match(/\.(csv|txt)$/i)) {
+        showStatus('error', 'Please upload a .csv or .txt file.');
+        return;
+      }
+
+      var text = await file.text();
+      var rows = parseCSV(text);
+
+      if (!rows.length) {
+        showStatus('error', 'No valid rows found. Check CSV format: id,quick_read');
+        return;
+      }
+
+      showStatus('processing', 'Uploading ' + rows.length + ' Quick Read summaries...');
+      progressBar.style.display = 'block';
+      progressFill.style.width = '0%';
+      resultsBody.innerHTML = '';
+      resultsWrap.style.display = 'none';
+
+      var results = [];
+      var success = 0, failed = 0, skipped = 0;
+
+      for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        var pct = Math.round(((i + 1) / rows.length) * 100);
+        progressFill.style.width = pct + '%';
+
+        try {
+          var resp = await fetch(SB_URL + '/rest/v1/hadiths?id=eq.' + row.id, {
+            method: 'PATCH',
+            headers: SB_HDR,
+            body: JSON.stringify({ quick_read: row.quick_read })
+          });
+
+          if (resp.ok || resp.status === 204) {
+            results.push({ id: row.id, text: row.quick_read, status: 'ok' });
+            success++;
+          } else if (resp.status === 404) {
+            results.push({ id: row.id, text: row.quick_read, status: 'skip' });
+            skipped++;
+          } else {
+            results.push({ id: row.id, text: row.quick_read, status: 'fail' });
+            failed++;
+          }
+        } catch (err) {
+          results.push({ id: row.id, text: row.quick_read, status: 'fail' });
+          failed++;
+        }
+      }
+
+      progressBar.style.display = 'none';
+
+      var msg = success + ' updated';
+      if (skipped) msg += ', ' + skipped + ' not found';
+      if (failed) msg += ', ' + failed + ' failed';
+      showStatus(failed ? 'error' : 'success', msg);
+
+      /* Show results table */
+      results.forEach(function(r) {
+        var tr = document.createElement('tr');
+        var badgeClass = r.status === 'ok' ? 'badge-ok' : r.status === 'skip' ? 'badge-skip' : 'badge-fail';
+        var badgeText  = r.status === 'ok' ? 'Updated' : r.status === 'skip' ? 'Not Found' : 'Failed';
+        tr.innerHTML =
+          '<td>' + r.id + '</td>' +
+          '<td>' + escHtml(r.text) + '</td>' +
+          '<td><span class="' + badgeClass + '">' + badgeText + '</span></td>';
+        resultsBody.appendChild(tr);
+      });
+      resultsWrap.style.display = 'block';
+    }
+
+    function showStatus(type, msg) {
+      statusDiv.style.display = 'block';
+      statusBar.className = 'status-bar ' + type;
+      statusBar.textContent = msg;
+    }
+
+    function escHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+  })();
+  </script>
+</body>
+</html>
