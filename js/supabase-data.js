@@ -8,6 +8,24 @@
 (function () {
   'use strict';
 
+  /* ── Category enrichment metadata ──────────────────────────
+     Keyed by book number. When you have the full JSON file,
+     add all 97 entries here. Fields override Supabase defaults.
+  ──────────────────────────────────────────────────────────── */
+  var CATEGORY_META = {
+    97: {
+      slug: "tawheed",
+      title: "Oneness, Uniqueness of Allah (Tawheed)",
+      arabicTitle: "\u0643\u062a\u0627\u0628 \u0627\u0644\u062a\u0648\u062d\u064a\u062f",
+      seoTitle: "Tawheed \u2013 Sahih al-Bukhari",
+      metaDescription: "Learn authentic hadith on the oneness of Allah, divine uniqueness, and core Islamic belief in tawheed.",
+      h1: "Oneness, Uniqueness of Allah (Tawheed)",
+      shortDescription: "Allah\u2019s oneness, uniqueness, and core belief are explained clearly.",
+      contentBlock: "This section focuses on tawheed, affirming the oneness and uniqueness of Allah as the foundation of Islamic belief.",
+      keywords: ["tawheed", "oneness of Allah", "Islamic creed", "sahih bukhari tawheed"]
+    }
+  };
+
   /* ── Supabase credentials (anon / public read-only) ── */
   var _SB   = 'https://dwcsledifvnyrunxejzd.supabase.co';
   var _ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3Y3NsZWRpZnZueXJ1bnhlanpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTgwNzgsImV4cCI6MjA5MDUzNDA3OH0.Aww8QcExJF1tPwMPvqP5q0_avc3YJclqsFJcXptlnZo';
@@ -99,11 +117,19 @@
         self.categories = Object.values(bmap)
           .sort(function (a, b) { return a.num - b.num; })
           .map(function (b) {
+            var m = CATEGORY_META[b.num] || {};
             return {
-              slug:  'book-' + b.num,
-              title: b.en,
-              desc:  b.ar || b.en,
-              count: b.count
+              bookNumber:      b.num,
+              slug:            m.slug || ('book-' + b.num),
+              title:           m.title || b.en,
+              arabicTitle:     m.arabicTitle || b.ar || '',
+              desc:            m.shortDescription || b.ar || b.en,
+              count:           b.count,
+              seoTitle:        m.seoTitle || '',
+              metaDescription: m.metaDescription || '',
+              h1:              m.h1 || m.title || b.en,
+              contentBlock:    m.contentBlock || '',
+              keywords:        m.keywords || []
             };
           });
 

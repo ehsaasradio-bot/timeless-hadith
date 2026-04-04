@@ -675,9 +675,17 @@
             '<p><a href="categories.html">Browse all categories</a></p></div>';
           return;
         }
-        document.title = _cat.title + ' — Timeless Hadith';
-        document.getElementById('cat-title').textContent = _cat.title;
-        document.getElementById('cat-desc').textContent  = _cat.desc;
+        /* Apply enriched SEO fields if present */
+        document.title = _cat.seoTitle || (_cat.title + ' \u2014 Timeless Hadith');
+        var metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc && _cat.metaDescription) metaDesc.setAttribute('content', _cat.metaDescription);
+        var ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) ogTitle.setAttribute('content', _cat.seoTitle || _cat.title);
+        var ogDesc = document.querySelector('meta[property="og:description"]');
+        if (ogDesc && _cat.metaDescription) ogDesc.setAttribute('content', _cat.metaDescription);
+
+        document.getElementById('cat-title').textContent = _cat.h1 || _cat.title;
+        document.getElementById('cat-desc').textContent  = _cat.contentBlock || _cat.desc;
         document.getElementById('breadcrumb-cat').textContent = _cat.title;
 
         return TH.loadHadiths(_slug);

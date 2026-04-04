@@ -391,6 +391,12 @@
       font-size: 20px; font-weight: 700; letter-spacing: -0.4px;
       color: var(--ink); line-height: 1.25; margin-bottom: 10px;
     }
+    .card .card-arabic {
+      font-size: 15px; font-weight: 500; color: var(--muted);
+      direction: rtl; text-align: right; margin-bottom: 8px;
+      font-family: "Noto Naskh Arabic", "Amiri", serif; line-height: 1.6;
+      opacity: 0.7;
+    }
     .card .card-desc {
       font-size: 13px; font-weight: 400; color: var(--muted);
       line-height: 1.6; letter-spacing: -0.1px; margin-bottom: 14px;
@@ -781,9 +787,11 @@
       el.setAttribute('role','listitem');
       el.setAttribute('aria-label', cat.title + ' — ' + (cat.count||0) + ' hadiths');
       el.style.animationDelay = delay + 's';
+      var arLine = cat.arabicTitle ? '<p class="card-arabic">' + cat.arabicTitle + '</p>' : '';
       el.innerHTML =
         '<p class="card-category">' + (cat.count||0) + ' Hadiths</p>' +
         '<h3>' + cat.title + '</h3>' +
+        arLine +
         '<p class="card-desc">' + cat.desc + '</p>' +
         '<div class="subcategories">' + pillsHtml + '</div>' +
         '<div class="card-plus" aria-hidden="true">' +
@@ -858,6 +866,8 @@
         filteredCats = allCats.filter(function(cat) {
           return cat.title.toLowerCase().indexOf(q) !== -1 ||
                  cat.slug.replace(/-/g,' ').toLowerCase().indexOf(q) !== -1 ||
+                 (cat.arabicTitle||'').indexOf(q) !== -1 ||
+                 (cat.keywords||[]).join(' ').toLowerCase().indexOf(q) !== -1 ||
                  (PILLS[cat.slug]||[]).join(' ').toLowerCase().indexOf(q) !== -1;
         });
       }
