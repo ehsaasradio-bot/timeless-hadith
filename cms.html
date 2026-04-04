@@ -241,7 +241,7 @@
     var SB_HDR  = { 'apikey': SB_ANON, 'Authorization': 'Bearer ' + SB_ANON, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
 
     /* ── Auth ── */
-    var ADMIN_HASH = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'; /* sha256 of 'password' — CHANGE THIS */
+    var ADMIN_HASH = 'ba541f871fd9f9ab172966270ada8ac0f3af6bbe91a468def8cfcd0cba5b5452';
 
     async function sha256(str) {
       var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
