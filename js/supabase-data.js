@@ -50,6 +50,7 @@
       id:           String(h.id),
       arabic:       h.text_ar       || '',
       english:      h.text_en       || '',
+      quick_read:   h.quick_read    || '',
       narrator:     h.narrator      || '',
       source:       h.book_name_en  || 'Sahih al-Bukhari',
       number:       h.hadith_number || h.in_book_ref || '',
@@ -169,7 +170,7 @@
       return _api(
         'hadiths?book_number=eq.' + bookNum +
         '&order=id.asc&limit=1000' +
-        '&select=id,hadith_number,chapter_en,narrator,text_en,text_ar,book_name_en,in_book_ref'
+        '&select=id,hadith_number,chapter_en,narrator,text_en,text_ar,book_name_en,in_book_ref,quick_read'
       ).then(function (rows) {
         self.hadiths[slug] = rows.map(_mapHadith);
         return self.hadiths[slug];
@@ -220,7 +221,7 @@
       var q = encodeURIComponent(query);
       return _api(
         'hadiths?or=(text_en.ilike.*' + q + '*,narrator.ilike.*' + q + '*)' +
-        '&select=id,hadith_number,chapter_en,narrator,text_en,text_ar,book_name_en,in_book_ref' +
+        '&select=id,hadith_number,chapter_en,narrator,text_en,text_ar,book_name_en,in_book_ref,quick_read' +
         '&order=id.asc&limit=' + limit
       ).then(function (rows) {
         return rows.map(_mapHadith);

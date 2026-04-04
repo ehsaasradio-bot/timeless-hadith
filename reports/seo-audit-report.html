@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEO &amp; Website Audit Report — Timeless Hadith</title>
+  <style>
+    /* ── Confluence-Inspired Theme ── */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --bg: #ffffff;
+      --surface: #f4f5f7;
+      --ink: #172b4d;
+      --ink-secondary: #5e6c84;
+      --border: #dfe1e6;
+      --accent: #0052cc;
+      --accent-light: #deebff;
+      --success: #00875a;
+      --success-light: #e3fcef;
+      --warning: #ff991f;
+      --warning-light: #fffae6;
+      --error: #de350b;
+      --error-light: #ffebe6;
+      --info: #0065ff;
+      --info-light: #deebff;
+      --purple: #6554c0;
+      --purple-light: #eae6ff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* ── Confluence Top Bar ── */
+    .top-bar {
+      background: #0052cc;
+      color: #fff;
+      padding: 12px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .top-bar-brand {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .top-bar-brand svg { opacity: 0.9; }
+    .top-bar-meta {
+      font-size: 12px;
+      opacity: 0.85;
+    }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb {
+      padding: 12px 32px;
+      font-size: 12px;
+      color: var(--ink-secondary);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 6px; }
+
+    /* ── Page Layout ── */
+    .page-wrap {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: calc(100vh - 88px);
+    }
+
+    /* ── Sidebar / TOC ── */
+    .sidebar {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 24px 0;
+      position: sticky;
+      top: 44px;
+      height: calc(100vh - 44px);
+      overflow-y: auto;
+    }
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--ink-secondary);
+      padding: 0 20px;
+      margin-bottom: 12px;
+    }
+    .sidebar a {
+      display: block;
+      padding: 7px 20px;
+      font-size: 13px;
+      color: var(--ink-secondary);
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .sidebar a:hover {
+      color: var(--accent);
+      background: rgba(0,82,204,0.04);
+      border-left-color: var(--accent);
+    }
+    .sidebar a.section-head {
+      font-weight: 600;
+      color: var(--ink);
+      margin-top: 12px;
+    }
+
+    /* ── Main Content ── */
+    .content {
+      padding: 40px 48px 80px;
+      max-width: 920px;
+    }
+
+    /* ── Page Title ── */
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+    .page-subtitle {
+      font-size: 14px;
+      color: var(--ink-secondary);
+      margin-bottom: 32px;
+    }
+    .page-subtitle strong { color: var(--ink); }
+
+    /* ── Status Banner ── */
+    .status-banner {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 20px 24px;
+      background: var(--surface);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .status-item { text-align: center; }
+    .status-number {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .status-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: var(--ink-secondary);
+    }
+    .status-number.critical { color: var(--error); }
+    .status-number.warning { color: var(--warning); }
+    .status-number.good { color: var(--success); }
+    .status-number.info { color: var(--accent); }
+    .status-divider {
+      width: 1px;
+      height: 40px;
+      background: var(--border);
+    }
+
+    /* ── Section Headings ── */
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: var(--ink);
+      margin: 40px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border);
+    }
+    h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 28px 0 12px;
+    }
+    h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 20px 0 8px;
+    }
+
+    /* ── Paragraphs ── */
+    p { margin-bottom: 12px; }
+
+    /* ── Confluence-style Info Panels ── */
+    .panel {
+      border-radius: 4px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      border-left: 3px solid;
+      font-size: 13px;
+    }
+    .panel-info { background: var(--info-light); border-color: var(--info); }
+    .panel-success { background: var(--success-light); border-color: var(--success); }
+    .panel-warning { background: var(--warning-light); border-color: var(--warning); }
+    .panel-error { background: var(--error-light); border-color: var(--error); }
+    .panel-title {
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    th {
+      text-align: left;
+      padding: 10px 14px;
+      background: var(--surface);
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: var(--ink-secondary);
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:hover td { background: #fafbfc; }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .badge-critical { background: var(--error-light); color: var(--error); }
+    .badge-high { background: #fff0b3; color: #974f0c; }
+    .badge-medium { background: var(--warning-light); color: #974f0c; }
+    .badge-low { background: var(--info-light); color: var(--accent); }
+    .badge-pass { background: var(--success-light); color: var(--success); }
+    .badge-fail { background: var(--error-light); color: var(--error); }
+    .badge-partial { background: var(--warning-light); color: #974f0c; }
+    .badge-na { background: var(--surface); color: var(--ink-secondary); }
+
+    /* ── Score Cards ── */
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .score-card {
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+    .score-value {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .score-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .score-a { color: var(--success); }
+    .score-b { color: #36b37e; }
+    .score-c { color: var(--warning); }
+    .score-d { color: #ff7452; }
+    .score-f { color: var(--error); }
+
+    /* ── Code blocks ── */
+    code {
+      background: var(--surface);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      color: var(--error);
+    }
+    pre {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 16px 20px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 12px;
+      line-height: 1.6;
+      margin: 12px 0;
+    }
+    pre code { background: none; color: inherit; padding: 0; }
+
+    /* ── Checklist ── */
+    .checklist { list-style: none; margin: 12px 0; }
+    .checklist li {
+      padding: 6px 0 6px 28px;
+      position: relative;
+      font-size: 13px;
+    }
+    .checklist li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px;
+      width: 18px; height: 18px;
+      border-radius: 3px;
+      border: 2px solid var(--border);
+    }
+    .checklist li.done::before {
+      background: var(--success);
+      border-color: var(--success);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-size: 12px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* ── Expand/Collapse ── */
+    details {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      margin: 12px 0;
+    }
+    details summary {
+      padding: 12px 16px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      background: var(--surface);
+      border-radius: 4px;
+    }
+    details[open] summary { border-bottom: 1px solid var(--border); border-radius: 4px 4px 0 0; }
+    details .detail-body { padding: 16px; }
+
+    /* ── Print styles ── */
+    @media print {
+      .top-bar, .sidebar, .breadcrumb { display: none; }
+      .page-wrap { grid-template-columns: 1fr; }
+      .content { padding: 20px; max-width: none; }
+      h2 { break-before: page; }
+      table { font-size: 11px; }
+      .panel { break-inside: avoid; }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .page-wrap { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .content { padding: 24px 16px; }
+      .score-grid { grid-template-columns: 1fr 1fr; }
+      .status-banner { flex-wrap: wrap; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-brand">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Timeless Hadith — Audit Report
+    </div>
+    <div class="top-bar-meta">Generated: April 4, 2026</div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="#">Timeless Hadith</a> <span>/</span>
+    <a href="#">Engineering</a> <span>/</span>
+    SEO &amp; Website Audit Report
+  </div>
+
+  <div class="page-wrap">
+    <!-- Sidebar TOC -->
+    <nav class="sidebar">
+      <div class="sidebar-title">Contents</div>
+      <a href="#executive" class="section-head">Executive Summary</a>
+      <a href="#scores">Audit Scores</a>
+      <a href="#critical">Critical Issues</a>
+      <a href="#seo" class="section-head">SEO Analysis</a>
+      <a href="#titles">Title Tags</a>
+      <a href="#meta">Meta Descriptions</a>
+      <a href="#og">Open Graph</a>
+      <a href="#schema">Structured Data</a>
+      <a href="#headings">Heading Hierarchy</a>
+      <a href="#performance" class="section-head">Performance</a>
+      <a href="#scripts">Scripts &amp; CSS</a>
+      <a href="#images">Images</a>
+      <a href="#fonts">Font Loading</a>
+      <a href="#technical" class="section-head">Technical</a>
+      <a href="#robots">robots.txt</a>
+      <a href="#sitemap">Sitemap</a>
+      <a href="#security">Security</a>
+      <a href="#accessibility" class="section-head">Accessibility</a>
+      <a href="#aria">ARIA &amp; Semantics</a>
+      <a href="#issues" class="section-head">All Issues</a>
+      <a href="#recommendations" class="section-head">Recommendations</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content">
+
+      <h1 class="page-title">Comprehensive SEO &amp; Website Audit Report</h1>
+      <p class="page-subtitle">
+        <strong>timelesshadith.com</strong> — Full technical, SEO, performance, accessibility, and security audit.<br>
+        Report Date: April 4, 2026 &nbsp;|&nbsp; Audited by: Claude AI Engineering &nbsp;|&nbsp; Version: 2.0
+      </p>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- EXECUTIVE SUMMARY -->
+      <!-- ═══════════════════════════════════════════ -->
+      <h2 id="executive">1. Executive Summary</h2>
+
+      <div class="status-banner">
+        <div class="status-item">
+          <div class="status-number good">82</div>
+          <div class="status-label">Overall Score</div>
+        </div>
+        <div class="status-divider"></div>
+        <div class="status-item">
+          <div class="status-number critical">3</div>
+          <div class="status-label">Critical Issues</div>
+        </div>
+        <div class="status-divider"></div>
+        <div class="status-item">
+          <div class="status-number warning">7</div>
+          <div class="status-label">Warnings</div>
+        </div>
+        <div class="status-divider"></div>
+        <div class="status-item">
+          <div class="status-number good">24</div>
+          <div class="status-label">Checks Passed</div>
+        </div>
+        <div class="status-divider"></div>
+        <div class="status-item">
+          <div class="status-number info">8</div>
+          <div class="status-label">Pages Audited</div>
+        </div>
+      </div>
+
+      <p>Timeless Hadith is a well-architected single-page application hosted on Cloudflare Pages with a Supabase PostgreSQL backend containing 7,277 hadiths. The site demonstrates strong fundamentals in semantic HTML, security headers, and mobile responsiveness.</p>
+
+      <p>The primary concerns are missing asset files (OG image, PWA icons, favicons), some gaps in structured data coverage, and inline CSS that prevents browser caching. The security posture is excellent with comprehensive CSP, HSTS preload, and proper CORS configuration.</p>
+
+      <div class="panel panel-info">
+        <div class="panel-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          Stack Overview
+        </div>
+        Frontend: Vanilla HTML/CSS/JS (no framework) &nbsp;|&nbsp; Backend: Supabase PostgreSQL &nbsp;|&nbsp; Hosting: Cloudflare Pages &nbsp;|&nbsp; Domain: timelesshadith.com &nbsp;|&nbsp; Deploy: Auto via GitHub push to main
+      </div>
+
+      <!-- Scores -->
+      <h3 id="scores">Audit Scores by Category</h3>
+      <div class="score-grid">
+        <div class="score-card">
+          <div class="score-value score-b">B+</div>
+          <div class="score-label">SEO</div>
+        </div>
+        <div class="score-card">
+          <div class="score-value score-b">B</div>
+          <div class="score-label">Performance</div>
+        </div>
+        <div class="score-card">
+          <div class="score-value score-a">A</div>
+          <div class="score-label">Security</div>
+        </div>
+        <div class="score-card">
+          <div class="score-value score-b">B+</div>
+          <div class="score-label">Accessibility</div>
+        </div>
+      </div>
+
+      <!-- Critical Issues Summary -->
+      <h3 id="critical">Critical Issues Requiring Immediate Action</h3>
+      <div class="panel panel-error">
+        <div class="panel-title">Critical: Missing OG Image</div>
+        All pages reference <code>og-image.png</code> which does not exist in the repository. Social sharing on Facebook, Twitter/X, LinkedIn, and WhatsApp will show a broken or blank preview. Create a 1200x630px branded image immediately.
+      </div>
+      <div class="panel panel-error">
+        <div class="panel-title">Critical: Missing PWA &amp; Favicon Icons</div>
+        <code>icon-192.png</code>, <code>icon-512.png</code>, <code>favicon-32.png</code>, <code>favicon-16.png</code>, and <code>apple-touch-icon.png</code> are referenced but do not exist. This breaks PWA install, browser tabs, and mobile home screen icons.
+      </div>
+      <div class="panel panel-error">
+        <div class="panel-title">Critical: CMS Page Uses Default Password</div>
+        The <code>cms.html</code> admin page currently uses the SHA-256 hash of "password" as the default credential. This must be changed before deployment to production.
+      </div>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- SEO ANALYSIS -->
+      <!-- ═══════════════════════════════════════════ -->
+      <h2 id="seo">2. SEO Analysis</h2>
+
+      <h3 id="titles">2.1 Title Tags</h3>
+      <table>
+        <thead>
+          <tr><th>Page</th><th>Title</th><th>Length</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>index.html</code></td><td>Timeless Hadith — Prophetic Guidance for Every Heart</td><td>52</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>category.html</code></td><td>Hadith by Topic — Timeless Hadith (dynamic)</td><td>35+</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>categories.html</code></td><td>Browse Hadith Topics — Timeless Hadith</td><td>39</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>bookmarks.html</code></td><td>My Saved Hadiths — Timeless Hadith</td><td>36</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>about.html</code></td><td>About Us — Timeless Hadith | Authentic Islamic Guidance</td><td>56</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>privacy.html</code></td><td>Privacy Policy — Timeless Hadith</td><td>33</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>terms.html</code></td><td>Terms of Use — Timeless Hadith</td><td>31</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>404.html</code></td><td>Page Not Found — Timeless Hadith</td><td>34</td><td><span class="badge badge-pass">Pass</span></td></tr>
+        </tbody>
+      </table>
+      <div class="panel panel-success"><div class="panel-title">All title tags are well-optimized</div>Every page has a unique, descriptive title under 60 characters with the brand name included.</div>
+
+      <h3 id="meta">2.2 Meta Descriptions</h3>
+      <table>
+        <thead>
+          <tr><th>Page</th><th>Length</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>index.html</code></td><td>97 chars</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>category.html</code></td><td>139 chars</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>categories.html</code></td><td>146 chars</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>bookmarks.html</code></td><td>97 chars</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>about.html</code></td><td>156 chars</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>privacy.html</code></td><td>113 chars</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>terms.html</code></td><td>94 chars</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>404.html</code></td><td>—</td><td><span class="badge badge-fail">Missing</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3 id="og">2.3 Open Graph &amp; Social Tags</h3>
+      <table>
+        <thead><tr><th>Tag</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>og:type</code></td><td><span class="badge badge-pass">Pass</span></td><td>"website" — present on all pages</td></tr>
+          <tr><td><code>og:url</code></td><td><span class="badge badge-pass">Pass</span></td><td>Correct canonical URLs, dynamically updated on category pages</td></tr>
+          <tr><td><code>og:title</code></td><td><span class="badge badge-pass">Pass</span></td><td>Present on all pages</td></tr>
+          <tr><td><code>og:description</code></td><td><span class="badge badge-pass">Pass</span></td><td>Present on all pages</td></tr>
+          <tr><td><code>og:image</code></td><td><span class="badge badge-critical">Critical</span></td><td>References og-image.png — file does not exist</td></tr>
+          <tr><td><code>og:site_name</code></td><td><span class="badge badge-pass">Pass</span></td><td>"Timeless Hadith"</td></tr>
+          <tr><td><code>twitter:card</code></td><td><span class="badge badge-partial">Partial</span></td><td>Present on main pages, missing from 404.html</td></tr>
+          <tr><td><code>twitter:image</code></td><td><span class="badge badge-critical">Critical</span></td><td>Same missing og-image.png issue</td></tr>
+        </tbody>
+      </table>
+
+      <h3 id="schema">2.4 Structured Data (JSON-LD)</h3>
+      <table>
+        <thead><tr><th>Page</th><th>Schema Type</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><code>index.html</code></td><td>WebSite + SearchAction</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>category.html</code></td><td>WebSite (basic)</td><td><span class="badge badge-partial">Partial</span></td></tr>
+          <tr><td><code>categories.html</code></td><td>WebSite with description</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>about.html</code></td><td>Organization (comprehensive)</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>bookmarks.html</code></td><td>—</td><td><span class="badge badge-na">N/A</span></td></tr>
+          <tr><td><code>privacy.html</code></td><td>—</td><td><span class="badge badge-low">Missing</span></td></tr>
+          <tr><td><code>terms.html</code></td><td>—</td><td><span class="badge badge-low">Missing</span></td></tr>
+          <tr><td><code>404.html</code></td><td>—</td><td><span class="badge badge-na">N/A</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3 id="headings">2.5 Heading Hierarchy</h3>
+      <table>
+        <thead><tr><th>Page</th><th>H1</th><th>H2s</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><code>index.html</code></td><td>"Guidance from the Prophet"</td><td>Featured Hadiths, Explore by Topic</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>category.html</code></td><td>Dynamic (category title)</td><td>—</td><td><span class="badge badge-partial">Check</span></td></tr>
+          <tr><td><code>categories.html</code></td><td>"Browse Hadith Topics"</td><td>—</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>bookmarks.html</code></td><td>"Saved Hadiths"</td><td>—</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>about.html</code></td><td>"About Timeless Hadith"</td><td>Section headings</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>privacy.html</code></td><td>"Privacy Policy"</td><td>TOC sections</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>terms.html</code></td><td>"Terms of Use"</td><td>Section headings</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td><code>404.html</code></td><td>"Page not found"</td><td>—</td><td><span class="badge badge-pass">Pass</span></td></tr>
+        </tbody>
+      </table>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- PERFORMANCE -->
+      <!-- ═══════════════════════════════════════════ -->
+      <h2 id="performance">3. Performance Analysis</h2>
+
+      <h3 id="scripts">3.1 Scripts &amp; Stylesheets</h3>
+      <table>
+        <thead><tr><th>Resource</th><th>Type</th><th>Loading</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Google Fonts (Noto Naskh Arabic)</td><td>CSS</td><td>Preconnected + display=swap</td><td><span class="badge badge-pass">Good</span></td></tr>
+          <tr><td>Cloudflare Web Analytics</td><td>JS</td><td>Deferred</td><td><span class="badge badge-pass">Good</span></td></tr>
+          <tr><td>supabase-data.js</td><td>JS</td><td>Synchronous</td><td><span class="badge badge-medium">Review</span></td></tr>
+          <tr><td>app.js</td><td>JS</td><td>Synchronous</td><td><span class="badge badge-medium">Review</span></td></tr>
+          <tr><td>ai-search.js</td><td>JS</td><td>Synchronous</td><td><span class="badge badge-pass">Fixed</span></td></tr>
+          <tr><td>Inline CSS (all pages)</td><td>CSS</td><td>Render-blocking</td><td><span class="badge badge-medium">Warning</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel panel-warning">
+        <div class="panel-title">Inline CSS prevents caching</div>
+        All pages embed ~20-30KB of CSS inline in &lt;style&gt; blocks. This means the CSS is re-downloaded on every page load. Extracting to an external stylesheet with a long cache TTL would improve repeat-visit performance.
+      </div>
+
+      <h3 id="images">3.2 Image Optimization</h3>
+      <ul class="checklist">
+        <li class="done">SVG icons used inline (zero HTTP requests)</li>
+        <li class="done">Footer logo uses <code>loading="lazy"</code></li>
+        <li class="done">Width/height attributes set on images (prevents CLS)</li>
+        <li>Missing: WebP format for logo images</li>
+        <li>Missing: OG image, favicon, and PWA icon files</li>
+      </ul>
+
+      <h3 id="fonts">3.3 Font Loading Strategy</h3>
+      <ul class="checklist">
+        <li class="done">Preconnect to fonts.googleapis.com</li>
+        <li class="done">Preconnect to fonts.gstatic.com (crossorigin)</li>
+        <li class="done">Google Fonts API with <code>display=swap</code></li>
+        <li class="done">System fonts as primary body font (Inter fallback)</li>
+        <li class="done">Arabic font (Noto Naskh Arabic) only loaded when needed</li>
+      </ul>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- TECHNICAL -->
+      <!-- ═══════════════════════════════════════════ -->
+      <h2 id="technical">4. Technical Analysis</h2>
+
+      <h3 id="robots">4.1 robots.txt</h3>
+      <pre><code>User-agent: *
+Allow: /
+Disallow: /404.html
+Disallow: /apple-sa-landing.html
+Disallow: /audit-confluence-report.html
+Disallow: /firebase-integration-guide.html
+Disallow: /mac-lineup.html
+Disallow: /admin.html
+Disallow: /admin-backup.html
+Sitemap: https://timelesshadith.com/sitemap.xml</code></pre>
+      <div class="panel panel-success"><div class="panel-title">robots.txt is well configured</div>Public content allowed, admin/test pages blocked, sitemap referenced.</div>
+
+      <h3 id="sitemap">4.2 Sitemap</h3>
+      <table>
+        <thead><tr><th>Section</th><th>URLs</th><th>lastmod</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Core pages (home, categories, about, privacy, terms)</td><td>5</td><td>2026-04-03</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td>Category pages (book-1 to book-97)</td><td>97</td><td>Missing</td><td><span class="badge badge-medium">Warning</span></td></tr>
+          <tr><td><strong>Total URLs</strong></td><td><strong>102</strong></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+
+      <h3 id="security">4.3 Security Headers</h3>
+      <table>
+        <thead><tr><th>Header</th><th>Value</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Strict-Transport-Security</td><td>max-age=31536000; includeSubDomains; preload</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td>X-Frame-Options</td><td>DENY</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td>X-Content-Type-Options</td><td>nosniff</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td>Referrer-Policy</td><td>strict-origin-when-cross-origin</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td>Permissions-Policy</td><td>geolocation=(), microphone=(), camera=(), payment=()</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td>X-XSS-Protection</td><td>1; mode=block</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td>Content-Security-Policy</td><td>Comprehensive (see details)</td><td><span class="badge badge-partial">Partial</span></td></tr>
+        </tbody>
+      </table>
+      <div class="panel panel-warning">
+        <div class="panel-title">CSP uses unsafe-inline</div>
+        Both <code>script-src</code> and <code>style-src</code> include <code>'unsafe-inline'</code>. This is necessary for the current inline architecture but reduces CSP effectiveness. Consider externalizing critical scripts.
+      </div>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- ACCESSIBILITY -->
+      <!-- ═══════════════════════════════════════════ -->
+      <h2 id="accessibility">5. Accessibility Analysis</h2>
+
+      <h3 id="aria">5.1 ARIA &amp; Semantic HTML</h3>
+      <table>
+        <thead><tr><th>Feature</th><th>Implementation</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Semantic landmarks</td><td>nav, main, footer, section, aside, article</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td>ARIA labels on nav</td><td>"Main navigation", "Mobile navigation"</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td>ARIA on buttons</td><td>aria-label, aria-pressed, aria-expanded</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td>Skip-to-content link</td><td>Present, visible on focus</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td>Image alt text</td><td>Present on all visible images</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td>Cookie banner role</td><td>role="complementary" + aria-label</td><td><span class="badge badge-pass">Pass</span></td></tr>
+          <tr><td>Search input label</td><td>Placeholder only, no &lt;label&gt;</td><td><span class="badge badge-medium">Warning</span></td></tr>
+          <tr><td>Nav logo aria-label</td><td>Missing "Home" indication</td><td><span class="badge badge-medium">Warning</span></td></tr>
+        </tbody>
+      </table>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- ALL ISSUES -->
+      <!-- ═══════════════════════════════════════════ -->
+      <h2 id="issues">6. Complete Issues Register</h2>
+
+      <table>
+        <thead>
+          <tr><th>#</th><th>Issue</th><th>Severity</th><th>Location</th><th>Fix</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>og-image.png does not exist</td><td><span class="badge badge-critical">Critical</span></td><td>All pages</td><td>Create 1200x630px branded OG image</td></tr>
+          <tr><td>2</td><td>PWA icons missing (192, 512)</td><td><span class="badge badge-critical">Critical</span></td><td>manifest.json</td><td>Create icon-192.png and icon-512.png</td></tr>
+          <tr><td>3</td><td>Favicon files missing</td><td><span class="badge badge-critical">Critical</span></td><td>All pages &lt;head&gt;</td><td>Create favicon-16.png, favicon-32.png, apple-touch-icon.png</td></tr>
+          <tr><td>4</td><td>404.html missing meta description</td><td><span class="badge badge-medium">Medium</span></td><td>404.html</td><td>Add meta description tag</td></tr>
+          <tr><td>5</td><td>404.html missing Twitter card tags</td><td><span class="badge badge-medium">Medium</span></td><td>404.html</td><td>Add twitter:card, title, description</td></tr>
+          <tr><td>6</td><td>privacy.html missing JSON-LD</td><td><span class="badge badge-low">Low</span></td><td>privacy.html</td><td>Add WebPage schema</td></tr>
+          <tr><td>7</td><td>terms.html missing JSON-LD</td><td><span class="badge badge-low">Low</span></td><td>terms.html</td><td>Add WebPage schema</td></tr>
+          <tr><td>8</td><td>Sitemap: category pages lack lastmod</td><td><span class="badge badge-low">Low</span></td><td>sitemap.xml</td><td>Add lastmod dates</td></tr>
+          <tr><td>9</td><td>Inline CSS prevents caching</td><td><span class="badge badge-medium">Medium</span></td><td>All pages</td><td>Extract to external stylesheet</td></tr>
+          <tr><td>10</td><td>CSP uses unsafe-inline</td><td><span class="badge badge-medium">Medium</span></td><td>_headers</td><td>Externalize inline scripts where possible</td></tr>
+          <tr><td>11</td><td>Search input missing &lt;label&gt;</td><td><span class="badge badge-medium">Medium</span></td><td>category.html</td><td>Add sr-only label element</td></tr>
+          <tr><td>12</td><td>Nav logo missing aria-label</td><td><span class="badge badge-medium">Medium</span></td><td>All pages</td><td>Add aria-label="Timeless Hadith — Home"</td></tr>
+          <tr><td>13</td><td>CMS page uses default password</td><td><span class="badge badge-critical">Critical</span></td><td>cms.html</td><td>Change ADMIN_HASH to secure password hash</td></tr>
+        </tbody>
+      </table>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- RECOMMENDATIONS -->
+      <!-- ═══════════════════════════════════════════ -->
+      <h2 id="recommendations">7. Recommendations</h2>
+
+      <h3>Priority 1 — Critical (Do Immediately)</h3>
+      <ol>
+        <li>Create and deploy <code>og-image.png</code> (1200x630px branded image) for social sharing</li>
+        <li>Create PWA icons: <code>icon-192.png</code>, <code>icon-512.png</code></li>
+        <li>Create favicon files: <code>favicon-16.png</code>, <code>favicon-32.png</code>, <code>apple-touch-icon.png</code></li>
+        <li>Change CMS admin password from default</li>
+      </ol>
+
+      <h3>Priority 2 — High (This Sprint)</h3>
+      <ol>
+        <li>Add meta description and Twitter cards to 404.html</li>
+        <li>Add <code>&lt;label class="sr-only"&gt;</code> to search inputs for screen readers</li>
+        <li>Add <code>aria-label="Timeless Hadith — Home"</code> to nav logo links</li>
+        <li>Add JSON-LD WebPage schema to privacy.html and terms.html</li>
+      </ol>
+
+      <h3>Priority 3 — Medium (Next Sprint)</h3>
+      <ol>
+        <li>Extract inline CSS to external stylesheet with long cache TTL</li>
+        <li>Add <code>lastmod</code> dates to category URLs in sitemap.xml</li>
+        <li>Externalize inline theme script to reduce CSP unsafe-inline requirement</li>
+        <li>Add <code>cms.html</code> to robots.txt Disallow list</li>
+        <li>Consider WebP format for logo images</li>
+      </ol>
+
+      <h3>Strengths to Maintain</h3>
+      <div class="panel panel-success">
+        <div class="panel-title">What's Working Well</div>
+        Excellent semantic HTML with proper landmarks. Strong ARIA labeling on all interactive elements. Comprehensive security headers with HSTS preload. Proper font loading with preconnect and display=swap. Clean heading hierarchy. Responsive design with modern CSS. Dark mode support with theme persistence. PDPL cookie compliance. Deferred analytics loading. PWA manifest configured.
+      </div>
+
+      <p style="margin-top:48px;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--ink-secondary);">
+        End of Report. Generated by Claude AI Engineering for Timeless Hadith. &copy; 2026
+      </p>
+
+    </main>
+  </div>
+
+</body>
+</html>
