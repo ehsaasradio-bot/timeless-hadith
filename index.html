@@ -1289,6 +1289,22 @@
       doShareImage(currentHadith);
     });
 
+    /* ── Cookie Banner ── */
+    const banner = document.getElementById('cookieBanner');
+    if (banner && !store.get('th_cookie_consent')) {
+      setTimeout(function(){ banner.classList.add('show'); }, 1500);
+    }
+    document.getElementById('cookieAccept').addEventListener('click', function() {
+      store.set('th_cookie_consent', 'accepted');
+      store.set('th_cookie_consent_date', new Date().toISOString());
+      banner.classList.remove('show');
+    });
+    document.getElementById('cookieDecline').addEventListener('click', function() {
+      store.set('th_cookie_consent', 'declined');
+      store.set('th_cookie_consent_date', new Date().toISOString());
+      banner.classList.remove('show');
+    });
+
   })();
   </script>
 
