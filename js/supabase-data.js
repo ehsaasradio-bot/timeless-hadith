@@ -36,6 +36,16 @@
   var PAGE_SIZE   = 1000;
   var TOTAL_ROWS  = 8000; /* slightly above 7,277 — adjust if DB grows */
 
+  /* ── Slugify helper — converts book name to URL-friendly slug ── */
+  function _slugify(str) {
+    return str
+      .toLowerCase()
+      .replace(/[''`]/g, '')               /* remove apostrophes */
+      .replace(/[^a-z0-9]+/g, '-')         /* non-alphanumeric → dash */
+      .replace(/^-+|-+$/g, '')             /* trim leading/trailing dashes */
+      .substring(0, 60);                   /* cap length */
+  }
+
   /* ── Low-level fetch ── */
   function _api(path) {
     return fetch(_SB + '/rest/v1/' + path, { headers: _HDR }).then(function (r) {
@@ -121,7 +131,7 @@
             var m = CATEGORY_META[b.num] || {};
             return {
               bookNumber:      b.num,
-              slug:            m.slug || ('book-' + b.num),
+              slug:            m.slug || _slugify(b.en) || ('book-' + b.num),
               title:           m.title || b.en,
               arabicTitle:     m.arabicTitle || b.ar || '',
               desc:            m.shortDescription || b.ar || b.en,
