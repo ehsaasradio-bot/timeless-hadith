@@ -481,4 +481,24 @@ Before stopping to ask for push approval, verify:
 - [ ] `Both عربي English` removed beside search
 - [ ] About Us page created or improved
 - [ ] Website SEO optimized
-- [ ] All content validated against 
+- [ ] All content validated against reliable sources (no AI slop)
+- [ ] Final report added
+- [ ] Changes committed locally
+- [ ] Push has NOT happened yet
+- [ ] No major regressions introduced
+
+---
+
+# 12. FINAL RESPONSE FORMAT
+
+At the stop point, provide:
+- Concise implementation summary
+- Files changed
+- Commits created
+- Report location
+- Current branch status
+- Explicit push approval question
+
+Do not stop after planning only.
+Do not push automatically.
+Implement fully, commit locally, and then ask before push.
