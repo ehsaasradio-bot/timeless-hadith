@@ -239,10 +239,11 @@
       pointer-events: none;
     }
     .featured-hadith-arabic {
-      font-size: clamp(18px, 2.4vw, 26px);
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: 1.3rem;
       font-weight: 600; color: var(--ink);
       direction: rtl; text-align: right;
-      line-height: 1.8; margin-bottom: 20px;
+      line-height: 2.0; margin-bottom: 20px;
       letter-spacing: 0.02em;
     }
     .featured-hadith-text {
@@ -872,10 +873,15 @@
 
     /* ── Load live featured hadiths from Supabase ── */
     if (window.TH && typeof TH.getFeatured === 'function') {
-      TH.getFeatured(5).then(function(live) {
+      TH.getFeatured(10).then(function(live) {
         if (!live || live.length === 0) return;
+        /* Only show hadiths with 120 words or fewer — ensures complete display */
+        var filtered = live.filter(function(h) {
+          return h.text && h.text.trim().split(/\s+/).length <= 120;
+        }).slice(0, 5);
+        if (filtered.length === 0) return;
         FEATURED.length = 0;
-        live.forEach(function(h) { FEATURED.push(h); });
+        filtered.forEach(function(h) { FEATURED.push(h); });
         currentFeatured = 0;
         buildFeaturedDots();
         renderFeatured(0);
