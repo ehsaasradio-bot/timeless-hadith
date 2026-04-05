@@ -156,11 +156,91 @@
     }
     .template-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
+    /* Image upload */
+    .img-usage-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .usage-chip {
+      padding: 10px 22px; border-radius: 100px; font-size: 14px; font-weight: 500;
+      border: 1.5px solid var(--border); background: var(--bg); color: var(--muted);
+      cursor: pointer; font-family: var(--font); transition: all 0.2s ease;
+    }
+    .usage-chip:hover { border-color: var(--ink); color: var(--ink); }
+    .usage-chip.active { border-color: var(--accent); color: var(--accent); background: rgba(0,113,227,0.06); }
+    [data-theme="dark"] .usage-chip.active { background: rgba(41,151,255,0.12); }
+
+    .img-preview-wrap {
+      display: none; margin-top: 16px; padding: 20px;
+      background: var(--bg); border-radius: 16px; border: 1px solid var(--border);
+      text-align: center;
+    }
+    .img-preview-wrap img {
+      max-width: 240px; max-height: 160px; border-radius: 10px;
+      object-fit: contain; margin-bottom: 12px;
+    }
+    .img-file-info { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+    .img-file-info strong { color: var(--ink); }
+    .img-size-warn { font-size: 13px; color: var(--error); font-weight: 500; display: none; }
+    .img-upload-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px; border-radius: 100px; font-size: 14px; font-weight: 600;
+      background: var(--accent); color: #fff; border: none; cursor: pointer;
+      font-family: var(--font); transition: all 0.2s ease; margin-top: 8px;
+    }
+    .img-upload-btn:hover { background: var(--accent-hover); }
+    .img-upload-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* Blog search */
+    .blog-search-wrap { display: none; margin-bottom: 20px; position: relative; }
+    .blog-search-input {
+      width: 100%; padding: 12px 16px 12px 40px; border-radius: 12px; font-size: 14px;
+      border: 1.5px solid var(--border); background: var(--bg); color: var(--ink);
+      font-family: var(--font); outline: none; transition: border-color 0.2s;
+    }
+    .blog-search-input:focus { border-color: var(--accent); }
+    .blog-search-icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      width: 16px; height: 16px; stroke: var(--muted); fill: none; stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round; pointer-events: none;
+    }
+    .blog-suggestions {
+      position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      max-height: 240px; overflow-y: auto; display: none; z-index: 50;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    [data-theme="dark"] .blog-suggestions { box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+    .blog-suggestions.open { display: block; }
+    .blog-sug-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px; font-size: 13px; color: var(--ink);
+      cursor: pointer; transition: background 0.15s ease;
+      border-bottom: 1px solid var(--border);
+    }
+    .blog-sug-item:last-child { border-bottom: none; }
+    .blog-sug-item:hover { background: var(--bg); }
+    .blog-sug-item .sug-id { font-weight: 700; color: var(--accent); min-width: 40px; }
+    .blog-sug-item .sug-text { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .blog-sug-item .sug-cat { font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .blog-selected {
+      display: none; padding: 14px 18px; border-radius: 12px;
+      background: rgba(0,113,227,0.06); border: 1px solid var(--accent);
+      font-size: 14px; color: var(--ink); margin-bottom: 16px;
+    }
+    [data-theme="dark"] .blog-selected { background: rgba(41,151,255,0.1); }
+    .blog-selected strong { color: var(--accent); }
+    .blog-selected .clear-blog {
+      float: right; background: none; border: none; font-size: 18px;
+      color: var(--muted); cursor: pointer; line-height: 1;
+    }
+    .blog-selected .clear-blog:hover { color: var(--error); }
+    .blog-no-results { padding: 16px; font-size: 13px; color: var(--muted); text-align: center; }
+
     /* Responsive */
     @media (max-width: 600px) {
       .cms-nav { padding: 12px 16px; }
       .cms-main { padding: 24px 16px; }
       .cms-card { padding: 20px; }
+      .img-usage-row { gap: 8px; }
+      .usage-chip { padding: 8px 16px; font-size: 13px; }
     }
   </style>
 </head>
@@ -226,6 +306,51 @@
             </thead>
             <tbody id="resultsBody"></tbody>
           </table>
+        </div>
+      </div>
+
+      <!-- Image Upload -->
+      <div class="cms-card">
+        <h3>Image Upload</h3>
+        <p>Upload images for your site logo, favicon, or blog posts. Logo and favicon images are limited to 500 KB.</p>
+
+        <div class="img-usage-row">
+          <button class="usage-chip active" data-usage="logo">Logo</button>
+          <button class="usage-chip" data-usage="favicon">Favicon</button>
+          <button class="usage-chip" data-usage="blog">Blog Image</button>
+        </div>
+
+        <!-- Blog search (shown only when Blog is selected) -->
+        <div class="blog-search-wrap" id="blogSearchWrap">
+          <svg class="blog-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="blog-search-input" id="blogSearchInput" placeholder="Search hadith by ID, text, or narrator..." autocomplete="off">
+          <div class="blog-suggestions" id="blogSuggestions"></div>
+        </div>
+        <div class="blog-selected" id="blogSelected">
+          <button class="clear-blog" id="clearBlog" title="Remove selection">&times;</button>
+          <strong>Mapped to:</strong> <span id="blogSelectedText"></span>
+        </div>
+
+        <div class="upload-zone" id="imgUploadZone">
+          <div class="upload-zone-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <p class="upload-zone-text">Drag & drop an image here, or <strong>click to browse</strong></p>
+          <input type="file" id="imgInput" accept="image/png,image/jpeg,image/webp,image/svg+xml,image/x-icon">
+        </div>
+
+        <div class="img-preview-wrap" id="imgPreview">
+          <img id="imgPreviewImg" src="" alt="Preview">
+          <div class="img-file-info" id="imgFileInfo"></div>
+          <div class="img-size-warn" id="imgSizeWarn">Image exceeds 500 KB limit for logo/favicon. Please use a smaller file.</div>
+          <button class="img-upload-btn" id="imgUploadBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
+            Upload Image
+          </button>
+        </div>
+
+        <div class="upload-status" id="imgUploadStatus">
+          <div class="status-bar" id="imgStatusBar"></div>
         </div>
       </div>
     </main>
@@ -439,6 +564,263 @@
     function escHtml(s) {
       return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
+
+    /* ══════════════════════════════════════════════════════════
+       IMAGE UPLOAD SECTION
+    ══════════════════════════════════════════════════════════ */
+
+    var imgUsage       = 'logo';
+    var selectedBlogId = null;
+    var selectedFile   = null;
+    var MAX_SIZE_BYTES = 500 * 1024; /* 500 KB */
+
+    /* ── Usage chip toggle ── */
+    var usageChips = document.querySelectorAll('.usage-chip');
+    var blogSearchWrap = document.getElementById('blogSearchWrap');
+    var blogSelected   = document.getElementById('blogSelected');
+
+    usageChips.forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        usageChips.forEach(function(c) { c.classList.remove('active'); });
+        this.classList.add('active');
+        imgUsage = this.getAttribute('data-usage');
+
+        /* Show/hide blog search */
+        blogSearchWrap.style.display = imgUsage === 'blog' ? 'block' : 'none';
+        if (imgUsage !== 'blog') {
+          blogSelected.style.display = 'none';
+          selectedBlogId = null;
+        }
+
+        /* Re-validate size */
+        validateImageSize();
+      });
+    });
+
+    /* ── Image upload zone ── */
+    var imgUploadZone = document.getElementById('imgUploadZone');
+    var imgInput      = document.getElementById('imgInput');
+    var imgPreview    = document.getElementById('imgPreview');
+    var imgPreviewImg = document.getElementById('imgPreviewImg');
+    var imgFileInfo   = document.getElementById('imgFileInfo');
+    var imgSizeWarn   = document.getElementById('imgSizeWarn');
+    var imgUploadBtn  = document.getElementById('imgUploadBtn');
+    var imgStatusDiv  = document.getElementById('imgUploadStatus');
+    var imgStatusBar  = document.getElementById('imgStatusBar');
+
+    imgUploadZone.addEventListener('click', function() { imgInput.click(); });
+    imgUploadZone.addEventListener('dragover', function(e) { e.preventDefault(); this.classList.add('dragover'); });
+    imgUploadZone.addEventListener('dragleave', function() { this.classList.remove('dragover'); });
+    imgUploadZone.addEventListener('drop', function(e) {
+      e.preventDefault(); this.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleImageFile(e.dataTransfer.files[0]);
+    });
+    imgInput.addEventListener('change', function() {
+      if (this.files.length) handleImageFile(this.files[0]);
+    });
+
+    function handleImageFile(file) {
+      if (!file.type.match(/^image\/(png|jpeg|webp|svg\+xml|x-icon)$/)) {
+        showImgStatus('error', 'Unsupported format. Use PNG, JPEG, WebP, SVG, or ICO.');
+        return;
+      }
+
+      selectedFile = file;
+      imgPreview.style.display = 'block';
+      imgUploadZone.style.display = 'none';
+
+      /* Preview */
+      var reader = new FileReader();
+      reader.onload = function(e) { imgPreviewImg.src = e.target.result; };
+      reader.readAsDataURL(file);
+
+      /* File info */
+      var sizeKB = (file.size / 1024).toFixed(1);
+      var sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+      var sizeStr = file.size > 1024 * 1024 ? sizeMB + ' MB' : sizeKB + ' KB';
+      imgFileInfo.innerHTML = '<strong>' + escHtml(file.name) + '</strong> &middot; ' + sizeStr + ' &middot; ' + file.type.split('/')[1].toUpperCase();
+
+      validateImageSize();
+      imgStatusDiv.style.display = 'none';
+    }
+
+    function validateImageSize() {
+      if (!selectedFile) return;
+      var isBlog = imgUsage === 'blog';
+      var tooLarge = !isBlog && selectedFile.size > MAX_SIZE_BYTES;
+
+      imgSizeWarn.style.display = tooLarge ? 'block' : 'none';
+      imgUploadBtn.disabled = tooLarge;
+    }
+
+    /* Reset image upload */
+    function resetImageUpload() {
+      selectedFile = null;
+      imgPreview.style.display = 'none';
+      imgUploadZone.style.display = '';
+      imgInput.value = '';
+      imgSizeWarn.style.display = 'none';
+      imgUploadBtn.disabled = false;
+    }
+
+    /* ── Upload button ── */
+    imgUploadBtn.addEventListener('click', async function() {
+      if (!selectedFile) return;
+
+      /* Blog image requires a mapped hadith */
+      if (imgUsage === 'blog' && !selectedBlogId) {
+        showImgStatus('error', 'Please search and select a hadith to map this blog image to.');
+        return;
+      }
+
+      imgUploadBtn.disabled = true;
+      imgUploadBtn.textContent = 'Uploading...';
+
+      try {
+        /* Determine storage path */
+        var ext = selectedFile.name.split('.').pop().toLowerCase();
+        var fileName;
+        if (imgUsage === 'logo') {
+          fileName = 'site/logo.' + ext;
+        } else if (imgUsage === 'favicon') {
+          fileName = 'site/favicon.' + ext;
+        } else {
+          fileName = 'blog/' + selectedBlogId + '.' + ext;
+        }
+
+        /* Upload to Supabase Storage */
+        var uploadResp = await fetch(SB_URL + '/storage/v1/object/images/' + fileName, {
+          method: 'POST',
+          headers: {
+            'apikey': SB_ANON,
+            'Authorization': 'Bearer ' + SB_ANON,
+            'Content-Type': selectedFile.type,
+            'x-upsert': 'true'
+          },
+          body: selectedFile
+        });
+
+        if (uploadResp.ok || uploadResp.status === 200) {
+          var publicUrl = SB_URL + '/storage/v1/object/public/images/' + fileName;
+          var msg = 'Image uploaded successfully!';
+          if (imgUsage === 'blog') {
+            msg += ' Mapped to hadith #' + selectedBlogId;
+          }
+          msg += ' URL: ' + publicUrl;
+          showImgStatus('success', msg);
+          resetImageUpload();
+        } else {
+          var errData = await uploadResp.json().catch(function() { return {}; });
+          showImgStatus('error', 'Upload failed: ' + (errData.message || errData.error || uploadResp.statusText));
+        }
+      } catch (err) {
+        showImgStatus('error', 'Upload error: ' + err.message);
+      }
+
+      imgUploadBtn.disabled = false;
+      imgUploadBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg> Upload Image';
+    });
+
+    function showImgStatus(type, msg) {
+      imgStatusDiv.style.display = 'block';
+      imgStatusBar.className = 'status-bar ' + type;
+      imgStatusBar.textContent = msg;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       BLOG SEARCH — Live search hadiths from Supabase
+    ══════════════════════════════════════════════════════════ */
+
+    var blogSearchInput = document.getElementById('blogSearchInput');
+    var blogSuggestions = document.getElementById('blogSuggestions');
+    var blogSelectedEl  = document.getElementById('blogSelected');
+    var blogSelectedTxt = document.getElementById('blogSelectedText');
+    var clearBlogBtn    = document.getElementById('clearBlog');
+    var searchTimeout   = null;
+
+    blogSearchInput.addEventListener('input', function() {
+      clearTimeout(searchTimeout);
+      var query = this.value.trim();
+
+      if (query.length < 2) {
+        blogSuggestions.classList.remove('open');
+        blogSuggestions.innerHTML = '';
+        return;
+      }
+
+      searchTimeout = setTimeout(function() { searchHadiths(query); }, 300);
+    });
+
+    blogSearchInput.addEventListener('focus', function() {
+      if (blogSuggestions.children.length > 0) blogSuggestions.classList.add('open');
+    });
+
+    /* Close suggestions on outside click */
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.blog-search-wrap')) {
+        blogSuggestions.classList.remove('open');
+      }
+    });
+
+    async function searchHadiths(query) {
+      var isNumeric = /^\d+$/.test(query);
+      var url;
+
+      if (isNumeric) {
+        /* Search by ID */
+        url = SB_URL + '/rest/v1/hadiths?select=id,text_en,narrator,book_name_en&id=eq.' + query + '&limit=10';
+      } else {
+        /* Full-text search on English text and narrator */
+        var encoded = encodeURIComponent('%' + query + '%');
+        url = SB_URL + '/rest/v1/hadiths?select=id,text_en,narrator,book_name_en&or=(text_en.ilike.' + encoded + ',narrator.ilike.' + encoded + ')&limit=10';
+      }
+
+      try {
+        var resp = await fetch(url, { headers: { 'apikey': SB_ANON, 'Authorization': 'Bearer ' + SB_ANON } });
+        var data = await resp.json();
+
+        blogSuggestions.innerHTML = '';
+
+        if (!data.length) {
+          blogSuggestions.innerHTML = '<div class="blog-no-results">No hadiths found for "' + escHtml(query) + '"</div>';
+          blogSuggestions.classList.add('open');
+          return;
+        }
+
+        data.forEach(function(h) {
+          var item = document.createElement('div');
+          item.className = 'blog-sug-item';
+          var textSnippet = (h.text_en || '').substring(0, 80);
+          if ((h.text_en || '').length > 80) textSnippet += '...';
+          item.innerHTML =
+            '<span class="sug-id">#' + h.id + '</span>' +
+            '<span class="sug-text">' + escHtml(textSnippet) + '</span>' +
+            '<span class="sug-cat">' + escHtml(h.book_name_en || '') + '</span>';
+
+          item.addEventListener('click', function() {
+            selectedBlogId = h.id;
+            blogSelectedTxt.textContent = '#' + h.id + ' — ' + textSnippet;
+            blogSelectedEl.style.display = 'block';
+            blogSuggestions.classList.remove('open');
+            blogSearchInput.value = '';
+          });
+
+          blogSuggestions.appendChild(item);
+        });
+
+        blogSuggestions.classList.add('open');
+      } catch (err) {
+        blogSuggestions.innerHTML = '<div class="blog-no-results">Search error. Try again.</div>';
+        blogSuggestions.classList.add('open');
+      }
+    }
+
+    /* Clear blog selection */
+    clearBlogBtn.addEventListener('click', function() {
+      selectedBlogId = null;
+      blogSelectedEl.style.display = 'none';
+      blogSearchInput.focus();
+    });
 
   })();
   </script>
