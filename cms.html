@@ -234,6 +234,56 @@
     .blog-selected .clear-blog:hover { color: var(--error); }
     .blog-no-results { padding: 16px; font-size: 13px; color: var(--muted); text-align: center; }
 
+    /* Category descriptions section */
+    .cat-desc-toolbar {
+      display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;
+    }
+    .cat-desc-toolbar .template-btn { flex-shrink: 0; }
+    .cat-desc-count {
+      margin-left: auto; font-size: 13px; color: var(--muted); white-space: nowrap;
+    }
+    .cat-desc-count strong { color: var(--ink); }
+    .cat-desc-table {
+      width: 100%; border-collapse: collapse; font-size: 13px;
+    }
+    .cat-desc-table th {
+      text-align: left; padding: 10px 12px; font-weight: 600;
+      border-bottom: 2px solid var(--border); color: var(--muted);
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px;
+    }
+    .cat-desc-table td {
+      padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top;
+    }
+    .cat-desc-table tr:hover td { background: var(--bg); }
+    .cat-desc-table .slug-cell {
+      font-weight: 600; color: var(--accent); white-space: nowrap; width: 180px;
+    }
+    .cat-desc-table .title-cell {
+      font-weight: 500; color: var(--ink); white-space: nowrap; width: 200px;
+    }
+    .cat-desc-input {
+      width: 100%; padding: 8px 12px; border-radius: 8px; font-size: 13px;
+      border: 1.5px solid var(--border); background: var(--bg); color: var(--ink);
+      font-family: var(--font); outline: none; transition: border-color 0.2s;
+      resize: vertical; min-height: 36px;
+    }
+    .cat-desc-input:focus { border-color: var(--accent); }
+    .cat-desc-input.has-value { border-color: var(--success); }
+    .cat-desc-actions {
+      display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;
+    }
+    .cat-desc-save-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px; border-radius: 100px; font-size: 14px; font-weight: 600;
+      background: var(--accent); color: #fff; border: none; cursor: pointer;
+      font-family: var(--font); transition: all 0.2s ease;
+    }
+    .cat-desc-save-btn:hover { background: var(--accent-hover); }
+    .cat-desc-save-msg {
+      font-size: 13px; font-weight: 500; color: var(--success);
+      display: none; align-self: center;
+    }
+
     /* Responsive */
     @media (max-width: 600px) {
       .cms-nav { padding: 12px 16px; }
@@ -241,6 +291,7 @@
       .cms-card { padding: 20px; }
       .img-usage-row { gap: 8px; }
       .usage-chip { padding: 8px 16px; font-size: 13px; }
+      .cat-desc-table .slug-cell, .cat-desc-table .title-cell { width: auto; }
     }
   </style>
 </head>
@@ -351,6 +402,52 @@
 
         <div class="upload-status" id="imgUploadStatus">
           <div class="status-bar" id="imgStatusBar"></div>
+        </div>
+      </div>
+
+      <!-- Category Descriptions -->
+      <div class="cms-card">
+        <h3>Category Descriptions</h3>
+        <p>Edit the custom description shown on each category card. Changes are saved to browser storage and appear instantly on the Browse page.</p>
+
+        <div class="cat-desc-toolbar">
+          <button class="template-btn" id="catDescExport">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export CSV
+          </button>
+          <button class="template-btn" id="catDescImportBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Import CSV
+          </button>
+          <input type="file" id="catDescImportFile" accept=".csv,.txt" style="display:none">
+          <button class="template-btn" id="catDescTemplate">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Download Template
+          </button>
+          <span class="cat-desc-count" id="catDescCount"></span>
+        </div>
+
+        <div id="catDescTableWrap" style="max-height:500px;overflow-y:auto;border:1px solid var(--border);border-radius:12px">
+          <table class="cat-desc-table">
+            <thead>
+              <tr><th>Slug</th><th>Title</th><th>Description</th></tr>
+            </thead>
+            <tbody id="catDescBody">
+              <tr><td colspan="3" style="text-align:center;padding:24px;color:var(--muted)">Loading categories from Supabase...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cat-desc-actions">
+          <button class="cat-desc-save-btn" id="catDescSave">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1-2 2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Save All Descriptions
+          </button>
+          <span class="cat-desc-save-msg" id="catDescSaveMsg">Saved successfully</span>
+        </div>
+
+        <div class="upload-status" id="catDescStatus">
+          <div class="status-bar" id="catDescStatusBar"></div>
         </div>
       </div>
     </main>
@@ -821,6 +918,243 @@
       blogSelectedEl.style.display = 'none';
       blogSearchInput.focus();
     });
+
+    /* ══════════════════════════════════════════════════════════
+       CATEGORY DESCRIPTIONS — Edit, CSV Import/Export
+    ══════════════════════════════════════════════════════════ */
+
+    var catDescBody     = document.getElementById('catDescBody');
+    var catDescCount    = document.getElementById('catDescCount');
+    var catDescSaveBtn  = document.getElementById('catDescSave');
+    var catDescSaveMsg  = document.getElementById('catDescSaveMsg');
+    var catDescStatusEl = document.getElementById('catDescStatus');
+    var catDescStatusBar = document.getElementById('catDescStatusBar');
+    var catRows         = []; /* [{slug, title, bookNumber}] */
+
+    /* Load existing descriptions from localStorage */
+    var catDescriptions = {};
+    try {
+      var s = localStorage.getItem('th_cat_descriptions');
+      if (s) catDescriptions = JSON.parse(s);
+    } catch(e) {}
+
+    /* Fetch categories from Supabase (same as main site) */
+    function loadCategoriesForCMS() {
+      var PAGE = 1000;
+      var TOTAL = 8000;
+      var offsets = [];
+      for (var o = 0; o < TOTAL; o += PAGE) offsets.push(o);
+
+      Promise.all(
+        offsets.map(function(offset) {
+          return fetch(SB_URL + '/rest/v1/hadiths?select=book_number,book_name_en,book_name_ar&order=book_number.asc&limit=' + PAGE + '&offset=' + offset, {
+            headers: { 'apikey': SB_ANON, 'Authorization': 'Bearer ' + SB_ANON }
+          }).then(function(r) { return r.json(); }).catch(function() { return []; });
+        })
+      ).then(function(pages) {
+        var bmap = {};
+        pages.forEach(function(rows) {
+          rows.forEach(function(h) {
+            var n = h.book_number;
+            if (!bmap[n]) {
+              bmap[n] = { num: n, en: h.book_name_en || ('Book ' + n), ar: h.book_name_ar || '', count: 0 };
+            }
+            bmap[n].count++;
+          });
+        });
+
+        catRows = Object.values(bmap).sort(function(a, b) { return a.num - b.num; }).map(function(b) {
+          return { slug: 'book-' + b.num, title: b.en, bookNumber: b.num };
+        });
+
+        renderCatDescTable();
+      }).catch(function() {
+        catDescBody.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:24px;color:var(--error)">Failed to load categories</td></tr>';
+      });
+    }
+
+    function renderCatDescTable() {
+      catDescBody.innerHTML = '';
+      var filled = 0;
+
+      catRows.forEach(function(cat) {
+        var desc = catDescriptions[cat.slug] || '';
+        if (desc) filled++;
+
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td class="slug-cell">' + escHtml(cat.slug) + '</td>' +
+          '<td class="title-cell">' + escHtml(cat.title) + '</td>' +
+          '<td><textarea class="cat-desc-input' + (desc ? ' has-value' : '') + '" data-slug="' + escHtml(cat.slug) + '" rows="1" placeholder="Enter description...">' + escHtml(desc) + '</textarea></td>';
+        catDescBody.appendChild(tr);
+      });
+
+      catDescCount.innerHTML = '<strong>' + filled + '</strong> of ' + catRows.length + ' descriptions set';
+
+      /* Auto-resize textareas and mark on input */
+      catDescBody.querySelectorAll('.cat-desc-input').forEach(function(ta) {
+        ta.addEventListener('input', function() {
+          this.classList.toggle('has-value', this.value.trim().length > 0);
+        });
+      });
+    }
+
+    /* Save all descriptions */
+    catDescSaveBtn.addEventListener('click', function() {
+      var inputs = catDescBody.querySelectorAll('.cat-desc-input');
+      var descs = {};
+      var filled = 0;
+
+      inputs.forEach(function(ta) {
+        var slug = ta.getAttribute('data-slug');
+        var val = ta.value.trim();
+        if (val) {
+          descs[slug] = val;
+          filled++;
+        }
+      });
+
+      catDescriptions = descs;
+      localStorage.setItem('th_cat_descriptions', JSON.stringify(descs));
+
+      catDescCount.innerHTML = '<strong>' + filled + '</strong> of ' + catRows.length + ' descriptions set';
+      catDescSaveMsg.style.display = 'inline';
+      setTimeout(function() { catDescSaveMsg.style.display = 'none'; }, 2500);
+    });
+
+    /* Export CSV */
+    document.getElementById('catDescExport').addEventListener('click', function() {
+      var lines = ['slug,title,description'];
+      catRows.forEach(function(cat) {
+        var desc = catDescriptions[cat.slug] || '';
+        lines.push('"' + cat.slug + '","' + cat.title.replace(/"/g, '""') + '","' + desc.replace(/"/g, '""') + '"');
+      });
+      var blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'category_descriptions.csv';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    /* Download template CSV */
+    document.getElementById('catDescTemplate').addEventListener('click', function() {
+      var lines = ['slug,description'];
+      catRows.slice(0, 5).forEach(function(cat) {
+        lines.push('"' + cat.slug + '","Example description for ' + cat.title + '"');
+      });
+      lines.push('# Add one row per category. Slug must match exactly.');
+      var blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'category_descriptions_template.csv';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    /* Import CSV */
+    var catDescImportFile = document.getElementById('catDescImportFile');
+    document.getElementById('catDescImportBtn').addEventListener('click', function() {
+      catDescImportFile.click();
+    });
+
+    catDescImportFile.addEventListener('change', async function() {
+      if (!this.files.length) return;
+      var file = this.files[0];
+      var text = await file.text();
+      var lines = text.split(/\r?\n/).filter(function(l) { return l.trim() && !l.trim().startsWith('#'); });
+
+      if (lines.length < 2) {
+        showCatDescStatus('error', 'CSV has no data rows.');
+        return;
+      }
+
+      /* Detect header */
+      var header = lines[0].toLowerCase();
+      var hasTitle = header.indexOf('title') > -1;
+      var imported = 0;
+
+      for (var i = 1; i < lines.length; i++) {
+        var parts = parseCSVLine(lines[i]);
+        if (!parts || parts.length < 2) continue;
+
+        var slug, desc;
+        if (hasTitle && parts.length >= 3) {
+          slug = parts[0].trim();
+          desc = parts[2].trim();
+        } else {
+          slug = parts[0].trim();
+          desc = parts[1].trim();
+        }
+
+        if (slug && desc) {
+          catDescriptions[slug] = desc;
+          imported++;
+        }
+      }
+
+      if (imported > 0) {
+        localStorage.setItem('th_cat_descriptions', JSON.stringify(catDescriptions));
+        renderCatDescTable();
+        showCatDescStatus('success', imported + ' descriptions imported successfully.');
+      } else {
+        showCatDescStatus('error', 'No valid rows found. Format: slug,description');
+      }
+
+      catDescImportFile.value = '';
+    });
+
+    /* Parse a single CSV line handling quoted fields */
+    function parseCSVLine(line) {
+      var result = [];
+      var current = '';
+      var inQuotes = false;
+      for (var i = 0; i < line.length; i++) {
+        var ch = line[i];
+        if (inQuotes) {
+          if (ch === '"') {
+            if (i + 1 < line.length && line[i + 1] === '"') {
+              current += '"';
+              i++;
+            } else {
+              inQuotes = false;
+            }
+          } else {
+            current += ch;
+          }
+        } else {
+          if (ch === '"') {
+            inQuotes = true;
+          } else if (ch === ',') {
+            result.push(current);
+            current = '';
+          } else {
+            current += ch;
+          }
+        }
+      }
+      result.push(current);
+      return result;
+    }
+
+    function showCatDescStatus(type, msg) {
+      catDescStatusEl.style.display = 'block';
+      catDescStatusBar.className = 'status-bar ' + type;
+      catDescStatusBar.textContent = msg;
+      setTimeout(function() { catDescStatusEl.style.display = 'none'; }, 4000);
+    }
+
+    /* Load categories once auth is confirmed or after login */
+    if (sessionStorage.getItem('th_cms_auth') === 'true') {
+      loadCategoriesForCMS();
+    }
+    /* Listen for CMS content becoming visible (login success) */
+    var catObserver = new MutationObserver(function() {
+      if (cmsMain.style.display === 'block' && catRows.length === 0) {
+        loadCategoriesForCMS();
+      }
+    });
+    catObserver.observe(cmsMain, { attributes: true, attributeFilter: ['style'] });
 
   })();
   </script>

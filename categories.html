@@ -155,7 +155,7 @@
     /* ── Category Card ── */
     .card {
       background: var(--surface); border-radius: 20px;
-      padding: 28px 28px 80px;
+      padding: 28px 28px 64px;
       display: flex; flex-direction: column; position: relative;
       transition: box-shadow 0.25s ease, transform 0.25s ease, background 0.35s ease;
       cursor: pointer; overflow: hidden; text-decoration: none; color: inherit;
@@ -173,13 +173,13 @@
       transform: translateY(-4px) scale(1.005);
     }
     .card-category {
-      font-size: 13px; font-weight: 500; color: var(--accent);
+      font-size: 20px; font-weight: 500; color: var(--accent);
       letter-spacing: -0.1px; margin-bottom: 8px;
       transition: color 0.35s ease;
     }
     .card h3 {
-      font-size: 20px; font-weight: 700; letter-spacing: -0.4px;
-      color: var(--ink); line-height: 1.25; margin-bottom: 10px;
+      font-size: 16px; font-weight: 400; letter-spacing: -0.2px;
+      color: var(--ink); line-height: 1.35; margin-bottom: 10px;
     }
     .card .card-arabic {
       font-size: 15px; font-weight: 500; color: var(--muted);
@@ -191,30 +191,27 @@
       font-size: 13px; font-weight: 400; color: var(--muted);
       line-height: 1.6; letter-spacing: -0.1px; margin-bottom: 14px;
     }
-    .subcategories {
-      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;
+    .card-custom-desc {
+      font-size: 13px; font-weight: 400; color: var(--muted);
+      line-height: 1.6; letter-spacing: -0.1px; margin-top: 4px;
+      padding: 10px 14px; border-radius: 10px;
+      background: var(--surface2); border: 1px solid var(--border);
+      transition: background 0.35s ease, border-color 0.35s ease;
+      min-height: 42px;
     }
-    .subcat {
-      display: inline-flex; align-items: center;
-      padding: 4px 10px; border-radius: 100px;
-      font-size: 11px; font-weight: 500;
-      background: var(--surface2); color: var(--muted);
-      border: 1px solid var(--border);
-      transition: all 0.2s ease; white-space: nowrap;
+    .card:hover .card-custom-desc {
+      border-color: var(--accent);
     }
-    .card:hover .subcat {
-      background: var(--surface2);
-    }
-    /* Card arrow button */
+    /* Card arrow button — compact */
     .card-plus {
-      position: absolute; bottom: 24px; right: 24px;
-      width: 44px; height: 44px; background: var(--accent);
+      position: absolute; bottom: 20px; right: 20px;
+      width: 32px; height: 32px; background: var(--accent);
       color: #fff; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.35s ease, color 0.35s ease;
     }
     .card-plus svg {
-      width: 16px; height: 16px; stroke: #fff; fill: none;
+      width: 12px; height: 12px; stroke: #fff; fill: none;
       stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
       transition: stroke 0.35s ease, transform 0.2s ease;
     }
@@ -477,41 +474,22 @@
       banner.classList.remove('show');
     });
 
-    /* ── Subcategory pill data ── */
-    var PILLS = {
-      'faith-belief':          ['Pillars of Faith','Tawhid','Iman'],
-      'character-conduct':     ['Truthfulness','Kindness','Akhlaq'],
-      'prayer-worship':        ['Salah','Night Prayer','Dhikr'],
-      'family-relations':      ['Marriage','Parenting','Kinship'],
-      'knowledge-learning':    ['Seeking Knowledge','Teaching','Wisdom'],
-      'patience-gratitude':    ['Sabr','Shukr','Trials'],
-      'charity-generosity':    ['Sadaqah','Zakat','Giving'],
-      'honesty-truthfulness':  ['Truthfulness','Promises','Trust'],
-      'repentance-forgiveness':['Tawbah','Forgiveness','Mercy'],
-      'health-body':           ['Cleanliness','Nourishment','Medicine'],
-      'neighbours-community':  ['Rights','Justice','Brotherhood'],
-      'death-afterlife':       ['Remembering Death','Grave','Akhirah'],
-      'remembrance-allah':     ['Morning Athkar','Gratitude','Dhikr'],
-      'wealth-livelihood':     ['Halal Earning','Frugality','Trade'],
-      'justice-fairness':      ['Rights','Leadership','Equity'],
-      'intentions-actions':    ['Niyyah','Sincerity','Deeds'],
-      'fasting-ramadan':       ['Sawm','Tarawih','Laylat al-Qadr'],
-      'humility-pride':        ['Tawadu','Humility','Arrogance'],
-      'love-brotherhood':      ['Brotherhood','Love for Allah','Friendship'],
-      'supplication-dua':      ['Etiquette','Times','Answered Prayers'],
-      'trust-allah':           ['Tawakkul','Reliance','Provision'],
-    };
-
     /* ── Pagination state ── */
     var PER_PAGE = 9;
     var currentPage = 0;
     var allCats = [];
     var filteredCats = [];
 
+    /* ── Load CMS category descriptions from localStorage ── */
+    var catDescriptions = {};
+    try {
+      var stored = localStorage.getItem('th_cat_descriptions');
+      if (stored) catDescriptions = JSON.parse(stored);
+    } catch(e) {}
+
     /* ── Render ── */
     function buildCard(cat, index) {
-      var pills = (PILLS[cat.slug] || []).slice(0,3);
-      var pillsHtml = pills.map(function(p){ return '<span class="subcat">'+p+'</span>'; }).join('');
+      var customDesc = catDescriptions[cat.slug] || catDescriptions['book-' + cat.bookNumber] || '';
       var delay = Math.min(index * 0.05, 0.4);
       var el = document.createElement('a');
       el.className = 'card';
@@ -520,16 +498,23 @@
       el.setAttribute('aria-label', cat.title + ' — ' + (cat.count||0) + ' hadiths');
       el.style.animationDelay = delay + 's';
       var arLine = cat.arabicTitle ? '<p class="card-arabic">' + cat.arabicTitle + '</p>' : '';
+      var descBlock = customDesc
+        ? '<div class="card-custom-desc">' + escHtml(customDesc) + '</div>'
+        : '<div class="card-custom-desc" style="opacity:0.5;font-style:normal">No description set</div>';
       el.innerHTML =
         '<p class="card-category">' + (cat.count||0) + ' Hadiths</p>' +
         '<h3>' + cat.title + '</h3>' +
         arLine +
         '<p class="card-desc">' + cat.desc + '</p>' +
-        '<div class="subcategories">' + pillsHtml + '</div>' +
+        descBlock +
         '<div class="card-plus" aria-hidden="true">' +
           '<svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>' +
         '</div>';
       return el;
+    }
+
+    function escHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
     function renderPage() {
