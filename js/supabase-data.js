@@ -242,7 +242,15 @@
        Synchronous helpers (require init/loadHadiths to have run)
     ──────────────────────────────────────────────────────── */
     getCat: function (slug) {
-      return this.categories.find(function (c) { return c.slug === slug; });
+      /* Match by slug name first */
+      var match = this.categories.find(function (c) { return c.slug === slug; });
+      if (match) return match;
+      /* Fallback: support old book-N URLs for backward compatibility */
+      var bookNum = parseInt(String(slug).replace('book-', ''), 10);
+      if (!isNaN(bookNum)) {
+        match = this.categories.find(function (c) { return c.bookNumber === bookNum; });
+      }
+      return match || null;
     },
 
     getHadiths: function (slug) {
