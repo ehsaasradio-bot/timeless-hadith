@@ -215,9 +215,13 @@
             category: h.chapter_en || ''
           };
         });
-        /* Only return rows that actually have English text.
-           If none pass the check, return [] so the static fallback is kept. */
-        var valid = mapped.filter(function (h) { return h.text && h.text.length > 4; });
+        /* Only return rows that actually have English text and are 120 words or fewer.
+           Ensures featured hadiths display completely without being cut off. */
+        var valid = mapped.filter(function (h) {
+          if (!h.text || h.text.length < 5) return false;
+          var wordCount = h.text.trim().split(/\s+/).length;
+          return wordCount <= 120;
+        });
         return valid.length > 0 ? valid : [];
       }).catch(function () { return []; });
     },
