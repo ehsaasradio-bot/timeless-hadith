@@ -173,23 +173,20 @@
       transform: translateY(-4px) scale(1.005);
     }
     .card-category {
-      font-size: 20px; font-weight: 500; color: var(--accent);
-      letter-spacing: -0.1px; margin-bottom: 8px;
+      font-size: 16px; font-weight: 400; color: var(--ink);
+      letter-spacing: -0.2px; margin-bottom: 10px;
       transition: color 0.35s ease;
     }
     .card h3 {
-      font-size: 16px; font-weight: 400; letter-spacing: -0.2px;
-      color: var(--ink); line-height: 1.35; margin-bottom: 10px;
+      font-size: 20px; font-weight: 500; letter-spacing: -0.1px;
+      color: var(--accent); line-height: 1.25; margin-bottom: 8px;
+      transition: color 0.35s ease;
     }
     .card .card-arabic {
       font-size: 15px; font-weight: 500; color: var(--muted);
       direction: rtl; text-align: right; margin-bottom: 8px;
       font-family: "Noto Naskh Arabic", "Amiri", serif; line-height: 1.6;
       opacity: 0.7;
-    }
-    .card .card-desc {
-      font-size: 13px; font-weight: 400; color: var(--muted);
-      line-height: 1.6; letter-spacing: -0.1px; margin-bottom: 14px;
     }
     .card-custom-desc {
       font-size: 13px; font-weight: 400; color: var(--muted);
@@ -502,10 +499,9 @@
         ? '<div class="card-custom-desc">' + escHtml(customDesc) + '</div>'
         : '<div class="card-custom-desc" style="opacity:0.5;font-style:normal">No description set</div>';
       el.innerHTML =
-        '<p class="card-category">' + (cat.count||0) + ' Hadiths</p>' +
         '<h3>' + cat.title + '</h3>' +
+        '<p class="card-category">' + (cat.count||0) + ' Hadiths</p>' +
         arLine +
-        '<p class="card-desc">' + cat.desc + '</p>' +
         descBlock +
         '<div class="card-plus" aria-hidden="true">' +
           '<svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>' +
