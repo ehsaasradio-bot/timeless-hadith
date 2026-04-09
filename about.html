@@ -175,10 +175,10 @@
     }
     .source-pill:hover {
       border-color: var(--accent);
-      box-shadow: 0 4px 16px rgba(0,113,227,0.08);
+      box-shadow: 0 4px 16px rgba(var(--accent-raw),0.08);
       transform: translateY(-1px);
     }
-    [data-theme="dark"] .source-pill:hover { box-shadow: 0 4px 16px rgba(41,151,255,0.12); }
+    [data-theme="dark"] .source-pill:hover { box-shadow: 0 4px 16px rgba(var(--accent-raw),0.12); }
     .source-pill strong { display: block; font-size: 14px; color: var(--ink); margin-bottom: 4px; }
     .source-pill span { font-size: 12px; color: var(--muted); }
 

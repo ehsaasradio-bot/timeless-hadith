@@ -1,3 +1,6 @@
+/* ── Fonts: Plus Jakarta Sans (display headings) ── */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap');
+
 /* ── Accessibility ── */
 .skip-link {
   position: absolute; top: -100px; left: 16px;
@@ -27,6 +30,7 @@
 /* ── Tokens: Light ── */
 :root {
   --font: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Plus Jakarta Sans", -apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
   --radius: 16px;
   --bg:       #ffffff;
   --surface:  #f5f5f7;
@@ -38,28 +42,40 @@
   --toggle-bg:   #e8e8e8;
   --toggle-knob: #1d1d1f;
   --toggle-icon: #6e6e73;
-  --accent:   #0071e3;
-  --accent-hover: #0077ed;
+  /* ── Brand palette (from image) ── */
+  --accent:         #C8780A;   /* amber-orange, AA-contrast on white */
+  --accent-hover:   #B06808;
+  --accent-2:       #C03828;   /* coral-red, AA-contrast on white   */
+  --accent-3:       #3A7DB4;   /* steel-blue, AA-contrast on white  */
+  --accent-raw:     245, 162, 35;   /* RGB channels of full-brightness orange */
+  --accent-2-raw:   232, 93, 74;
+  --accent-3-raw:   168, 213, 245;
   --card-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  --card-shadow-hover: 0 16px 48px rgba(0,0,0,0.12);
+  --card-shadow-hover: 0 16px 48px rgba(0,0,0,0.14);
 }
 
 /* ── Tokens: Dark ── */
 [data-theme="dark"] {
   --bg:       #000000;
-  --surface:  #1c1c1e;
-  --surface2: #2c2c2e;
-  --border:   #3a3a3c;
+  --surface:  #111111;
+  --surface2: #1e1e1e;
+  --border:   #2e2e2e;
   --ink:      #f5f5f7;
   --muted:    #98989d;
-  --nav-bg:   rgba(0,0,0,0.85);
-  --toggle-bg:   #3a3a3c;
+  --nav-bg:   rgba(0,0,0,0.88);
+  --toggle-bg:   #2e2e2e;
   --toggle-knob: #f5f5f7;
   --toggle-icon: #98989d;
-  --accent:   #2997ff;
-  --accent-hover: #40a8ff;
-  --card-shadow: 0 2px 12px rgba(0,0,0,0.4);
-  --card-shadow-hover: 0 16px 48px rgba(0,0,0,0.6);
+  /* ── Brand palette — full saturation on dark ── */
+  --accent:         #F5A623;   /* amber-orange */
+  --accent-hover:   #F7B340;
+  --accent-2:       #E85D4A;   /* coral-red    */
+  --accent-3:       #A8D5F5;   /* powder-blue  */
+  --accent-raw:     245, 166, 35;
+  --accent-2-raw:   232, 93, 74;
+  --accent-3-raw:   168, 213, 245;
+  --card-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  --card-shadow-hover: 0 16px 48px rgba(0,0,0,0.72);
 }
 
 /* ── Global ── */
@@ -71,6 +87,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background 0.35s ease, color 0.35s ease;
+}
+
+/* ── Display headings — Plus Jakarta Sans 800 ── */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
 }
 
 /* ── Nav ── */

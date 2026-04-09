@@ -86,10 +86,10 @@
     }
     .search-bar:focus-within {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(0,113,227,0.12);
+      box-shadow: 0 0 0 3px rgba(var(--accent-raw),0.12);
     }
     [data-theme="dark"] .search-bar:focus-within {
-      box-shadow: 0 0 0 3px rgba(41,151,255,0.18);
+      box-shadow: 0 0 0 3px rgba(var(--accent-raw),0.18);
     }
     .search-icon {
       flex-shrink: 0; width: 16px; height: 16px;
@@ -205,7 +205,7 @@
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      background: var(--card-accent-bg, rgba(0,113,227,0.1));
+      background: var(--card-accent-bg, rgba(var(--accent-raw),0.1));
       display: flex;
       align-items: center;
       justify-content: center;
