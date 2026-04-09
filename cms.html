@@ -800,10 +800,16 @@
         if (uploadResp.ok || uploadResp.status === 200) {
           var publicUrl = SB_URL + '/storage/v1/object/public/images/' + fileName;
           var msg = 'Image uploaded successfully!';
-          if (imgUsage === 'blog') {
+          if (imgUsage === 'logo') {
+            /* Persist logo URL so all pages pick it up on next load */
+            try { localStorage.setItem('th_custom_logo_url', publicUrl); } catch(e) {}
+            msg += ' Logo is now live across the site.';
+          } else if (imgUsage === 'favicon') {
+            msg += ' Favicon uploaded.';
+          } else if (imgUsage === 'blog') {
             msg += ' Mapped to hadith #' + selectedBlogId;
           }
-          msg += ' URL: ' + publicUrl;
+          msg += ' <a href="' + publicUrl + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">View image</a>';
           showImgStatus('success', msg);
           resetImageUpload();
         } else {
@@ -821,7 +827,7 @@
     function showImgStatus(type, msg) {
       imgStatusDiv.style.display = 'block';
       imgStatusBar.className = 'status-bar ' + type;
-      imgStatusBar.textContent = msg;
+      imgStatusBar.innerHTML = msg;
     }
 
     /* ══════════════════════════════════════════════════════════

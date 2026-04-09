@@ -19,7 +19,30 @@ const APP_KEY = {
   CONSENT_DATE: 'th_cookie_consent_date',
   USER:     'th_user',
   BOOKMARKS:'th_bookmarks',
+  LOGO_URL: 'th_custom_logo_url',
 };
+
+/* ═══════════════════════════════════════════════════════════════════
+   CUSTOM LOGO — reads CMS-uploaded logo URL from localStorage
+   and swaps all nav/footer/modal logo images on page load.
+═══════════════════════════════════════════════════════════════════ */
+
+(function applyCustomLogo() {
+  try {
+    var url = localStorage.getItem(APP_KEY.LOGO_URL);
+    if (!url) return;
+    function swap() {
+      document.querySelectorAll(
+        '.nav-logo img, .footer-logo img, .login-modal-logo-img, .auth-logo'
+      ).forEach(function(img) { img.src = url; });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', swap);
+    } else {
+      swap();
+    }
+  } catch(e) {}
+})();
 
 // Replace with your real Google Cloud OAuth client ID
 const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
