@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap');
-/* ── Fonts: Plus Jakarta Sans loaded above (comment must come after @import) ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+/* ── Fonts: Inter loaded above (comment must come after @import) ── */
 
 /* ── Accessibility ── */
 .skip-link {
@@ -29,8 +29,8 @@
 
 /* ── Tokens: Light ── */
 :root {
-  --font: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Plus Jakarta Sans", -apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+  --font: "Inter", -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Inter", -apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
   --radius: 16px;
   --bg:       #ffffff;
   --surface:  #f5f5f7;
@@ -42,14 +42,14 @@
   --toggle-bg:   #e8e8e8;
   --toggle-knob: #1d1d1f;
   --toggle-icon: #6e6e73;
-  /* ── Brand palette (from image) ── */
-  --accent:         #C8780A;   /* amber-orange, AA-contrast on white */
-  --accent-hover:   #B06808;
-  --accent-2:       #C03828;   /* coral-red, AA-contrast on white   */
-  --accent-3:       #3A7DB4;   /* steel-blue, AA-contrast on white  */
-  --accent-raw:     245, 162, 35;   /* RGB channels of full-brightness orange */
-  --accent-2-raw:   232, 93, 74;
-  --accent-3-raw:   168, 213, 245;
+  /* ── Brand palette — indigo-blue / purple ── */
+  --accent:         #4f72f8;   /* indigo-blue, AA-contrast on white */
+  --accent-hover:   #3a5ce0;
+  --accent-2:       #7c5ce6;   /* purple, AA-contrast on white      */
+  --accent-3:       #a0baff;   /* periwinkle, AA-contrast on white  */
+  --accent-raw:     79, 114, 248;
+  --accent-2-raw:   124, 92, 230;
+  --accent-3-raw:   160, 186, 255;
   --card-shadow: 0 2px 12px rgba(0,0,0,0.06);
   --card-shadow-hover: 0 16px 48px rgba(0,0,0,0.14);
 }
@@ -66,19 +66,19 @@
   --toggle-bg:   #1a2540;
   --toggle-knob: #f0f4ff;
   --toggle-icon: #7c8fb0;
-  /* ── Brand palette — warm amber on deep navy ── */
-  --accent:         #F5A623;   /* amber-orange */
-  --accent-hover:   #F7B340;
-  --accent-2:       #E85D4A;   /* coral-red    */
-  --accent-3:       #A8D5F5;   /* powder-blue  */
-  --accent-raw:     245, 166, 35;
-  --accent-2-raw:   232, 93, 74;
-  --accent-3-raw:   168, 213, 245;
+  /* ── Brand palette — indigo-blue / purple on deep navy ── */
+  --accent:         #4f72f8;   /* indigo-blue  */
+  --accent-hover:   #6b8bff;
+  --accent-2:       #7c5ce6;   /* purple       */
+  --accent-3:       #a0baff;   /* periwinkle   */
+  --accent-raw:     79, 114, 248;
+  --accent-2-raw:   124, 92, 230;
+  --accent-3-raw:   160, 186, 255;
   --card-shadow:       0 2px 16px rgba(0,0,0,0.5);
   --card-shadow-hover: 0 20px 60px rgba(0,0,0,0.7);
   /* ── Glow colours for decorative effects ── */
-  --glow-accent: rgba(245,166,35,0.12);
-  --glow-2:      rgba(232,93,74,0.08);
+  --glow-accent: rgba(79,114,248,0.18);
+  --glow-2:      rgba(124,92,230,0.10);
 }
 
 /* ── Global ── */
@@ -105,18 +105,18 @@ body {
   z-index: 0;
 }
 
-/* ── Dark theme: ambient radial glow (amber + coral) ── */
+/* ── Dark theme: ambient radial glow (indigo + purple) ── */
 [data-theme="dark"] body::after {
   content: '';
   position: fixed;
-  top: -8%;
+  top: -10%;
   left: 50%;
   transform: translateX(-50%);
-  width: 1000px;
-  height: 640px;
-  background: radial-gradient(ellipse at 40% 50%,
-    rgba(245,166,35,0.12) 0%,
-    rgba(232,93,74,0.07) 40%,
+  width: 900px;
+  height: 600px;
+  background: radial-gradient(ellipse at center,
+    rgba(79,114,248,0.18) 0%,
+    rgba(124,92,230,0.10) 40%,
     transparent 70%);
   pointer-events: none;
   z-index: 0;
@@ -148,10 +148,10 @@ body {
 [data-theme="dark"] .card:hover,
 [data-theme="dark"] .hadith-card:hover {
   background: rgba(13,22,41,0.92);
-  border-color: rgba(245,166,35,0.22);
+  border-color: rgba(79,114,248,0.30);
 }
 
-/* ── Display headings — Plus Jakarta Sans 800 ── */
+/* ── Display headings — Inter 800 ── */
 h1, h2, h3 {
   font-family: var(--font-display);
   font-weight: 800;
