@@ -774,13 +774,16 @@
       imgUploadBtn.textContent = 'Uploading...';
 
       try {
-        /* Determine storage path */
+        /* Determine storage path
+           Logo is ALWAYS saved as logo.png so the URL is permanently predictable.
+           SVG logos are kept as logo.svg.
+           All other logo formats (jpg, webp, etc.) are saved as logo.png.        */
         var ext = selectedFile.name.split('.').pop().toLowerCase();
         var fileName;
         if (imgUsage === 'logo') {
-          fileName = 'site/logo.' + ext;
+          fileName = ext === 'svg' ? 'site/logo.svg' : 'site/logo.png';
         } else if (imgUsage === 'favicon') {
-          fileName = 'site/favicon.' + ext;
+          fileName = 'site/favicon.' + (ext === 'ico' ? 'ico' : 'png');
         } else {
           fileName = 'blog/' + selectedBlogId + '.' + ext;
         }
@@ -801,15 +804,20 @@
           var publicUrl = SB_URL + '/storage/v1/object/public/images/' + fileName;
           var msg = 'Image uploaded successfully!';
           if (imgUsage === 'logo') {
-            /* Persist logo URL so all pages pick it up on next load */
-            try { localStorage.setItem('th_custom_logo_url', publicUrl); } catch(e) {}
-            msg += ' Logo is now live across the site.';
+            /* Cache URL + new version timestamp → all pages pick it up instantly */
+            var ver = String(Date.now());
+            try {
+              localStorage.setItem('th_custom_logo_url', publicUrl);
+              localStorage.setItem('th_logo_ver', ver);
+              localStorage.setItem('th_logo_last_check', ver);
+            } catch(e) {}
+            msg += ' Logo is now live across the site on this browser.';
           } else if (imgUsage === 'favicon') {
             msg += ' Favicon uploaded.';
           } else if (imgUsage === 'blog') {
             msg += ' Mapped to hadith #' + selectedBlogId;
           }
-          msg += ' <a href="' + publicUrl + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">View image</a>';
+          msg += ' &nbsp;<a href="' + publicUrl + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">View</a>';
           showImgStatus('success', msg);
           resetImageUpload();
         } else {
