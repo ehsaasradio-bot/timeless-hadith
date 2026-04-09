@@ -23,25 +23,75 @@ const APP_KEY = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════
-   CUSTOM LOGO — reads CMS-uploaded logo URL from localStorage
-   and swaps all nav/footer/modal logo images on page load.
+   CUSTOM LOGO
+   ─────────────────────────────────────────────────────────────────
+   Probes the fixed Supabase Storage URL for a custom logo.
+   Works on ALL browsers automatically — no localStorage required.
+
+   Flow:
+   1. If localStorage has a cached URL → apply instantly (no flicker)
+   2. Background probe the Supabase URL → if it loads, cache + apply
+   3. CMS upload stores URL + version timestamp → cache-busted instantly
+   4. Re-probes at most once per hour for other browsers
 ═══════════════════════════════════════════════════════════════════ */
 
 (function applyCustomLogo() {
-  try {
-    var url = localStorage.getItem(APP_KEY.LOGO_URL);
-    if (!url) return;
-    function swap() {
-      document.querySelectorAll(
-        '.nav-logo img, .footer-logo img, .login-modal-logo-img, .auth-logo'
-      ).forEach(function(img) { img.src = url; });
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', swap);
-    } else {
-      swap();
-    }
-  } catch(e) {}
+  var SB_LOGO_PNG = 'https://dwcsledifvnyrunxejzd.supabase.co/storage/v1/object/public/images/site/logo.png';
+  var SB_LOGO_SVG = 'https://dwcsledifvnyrunxejzd.supabase.co/storage/v1/object/public/images/site/logo.svg';
+  var CACHE_KEY   = 'th_custom_logo_url';
+  var VER_KEY     = 'th_logo_ver';
+  var CHECK_KEY   = 'th_logo_last_check';
+  var ONE_HOUR    = 3600000;
+
+  function swapAll(url) {
+    document.querySelectorAll(
+      '.nav-logo img, .footer-logo img, .login-modal-logo-img, .auth-logo'
+    ).forEach(function(img) { img.src = url; });
+  }
+
+  function run() {
+    try {
+      var cached  = localStorage.getItem(CACHE_KEY);
+      var ver     = localStorage.getItem(VER_KEY) || '';
+      var lastChk = parseInt(localStorage.getItem(CHECK_KEY) || '0', 10);
+      var now     = Date.now();
+      var bust    = ver || now;
+
+      /* ── Fast path: apply cached URL immediately (no flicker) ── */
+      if (cached) { swapAll(cached + '?v=' + bust); }
+
+      /* ── Probe at most once per hour (skip if recently checked) ── */
+      if (!cached && (now - lastChk) < ONE_HOUR) return;
+
+      /* ── Probe PNG first, then SVG ── */
+      function probeSVG() {
+        var t = new Image();
+        t.onload = function() {
+          try { localStorage.setItem(CACHE_KEY, SB_LOGO_SVG); localStorage.setItem(CHECK_KEY, String(now)); } catch(e) {}
+          swapAll(SB_LOGO_SVG + '?v=' + bust);
+        };
+        t.onerror = function() {
+          try { localStorage.setItem(CHECK_KEY, String(now)); } catch(e) {}
+        };
+        t.src = SB_LOGO_SVG + '?_p=' + now;
+      }
+
+      var probe = new Image();
+      probe.onload = function() {
+        try { localStorage.setItem(CACHE_KEY, SB_LOGO_PNG); localStorage.setItem(CHECK_KEY, String(now)); } catch(e) {}
+        swapAll(SB_LOGO_PNG + '?v=' + bust);
+      };
+      probe.onerror = probeSVG;
+      probe.src = SB_LOGO_PNG + '?_p=' + now;
+
+    } catch(e) {}
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
 })();
 
 // Replace with your real Google Cloud OAuth client ID
