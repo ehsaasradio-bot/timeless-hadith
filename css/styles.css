@@ -1,5 +1,5 @@
-/* ── Fonts: Plus Jakarta Sans (display headings) ── */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap');
+/* ── Fonts: Plus Jakarta Sans loaded above (comment must come after @import) ── */
 
 /* ── Accessibility ── */
 .skip-link {
