@@ -293,6 +293,294 @@
       .usage-chip { padding: 8px 16px; font-size: 13px; }
       .cat-desc-table .slug-cell, .cat-desc-table .title-cell { width: auto; }
     }
+
+    /* ── Category Cards Section ── */
+    .cat-cards-layout {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+    .cat-cards-table-wrap {
+      flex: 1;
+      min-width: 0;
+      max-height: 540px;
+      overflow-y: auto;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .cat-cards-tbl {
+      width: 100%;
+      min-width: 860px;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+    .cat-cards-tbl th {
+      text-align: left;
+      padding: 10px 10px;
+      font-weight: 600;
+      border-bottom: 2px solid var(--border);
+      color: var(--muted);
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+      background: var(--surface);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    .cat-cards-tbl td {
+      padding: 7px 8px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .cat-cards-tbl tr:hover td { background: var(--bg); }
+    .cat-cards-tbl tr.cc-row-active td { background: rgba(0,113,227,0.06); }
+    [data-theme="dark"] .cat-cards-tbl tr.cc-row-active td { background: rgba(41,151,255,0.08); }
+    .cc-slug-cell {
+      font-weight: 600;
+      color: var(--accent);
+      white-space: nowrap;
+      font-size: 11.5px;
+    }
+    .cc-input {
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 7px;
+      font-size: 12.5px;
+      border: 1.5px solid var(--border);
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font);
+      outline: none;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .cc-input:focus { border-color: var(--accent); }
+    .cc-input.has-val { border-color: var(--success); }
+    .cc-input-sm { width: 60px; }
+    .cc-input-md { width: 100px; }
+    .cc-input-icon { width: 46px; text-align: center; font-size: 16px; padding: 4px 6px; }
+    .cc-color-wrap {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .cc-color {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      border: 1.5px solid var(--border);
+      padding: 2px;
+      cursor: pointer;
+      background: transparent;
+      flex-shrink: 0;
+    }
+    .cc-color-text {
+      width: 72px;
+      font-size: 11px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      padding: 6px 7px;
+      border-radius: 7px;
+      border: 1.5px solid var(--border);
+      background: var(--bg);
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .cc-color-text:focus { border-color: var(--accent); }
+    .cc-check {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+    .cc-val-errors {
+      display: none;
+      margin-bottom: 16px;
+      padding: 13px 16px;
+      border-radius: 12px;
+      background: rgba(255,59,48,0.08);
+      border: 1px solid rgba(255,59,48,0.22);
+      font-size: 12.5px;
+      color: #d43030;
+      line-height: 1.6;
+    }
+    [data-theme="dark"] .cc-val-errors { color: #ff6b6b; }
+    .cc-val-warnings {
+      display: none;
+      margin-bottom: 16px;
+      padding: 13px 16px;
+      border-radius: 12px;
+      background: rgba(255,149,0,0.08);
+      border: 1px solid rgba(255,149,0,0.22);
+      font-size: 12.5px;
+      color: #a06000;
+      line-height: 1.6;
+    }
+    [data-theme="dark"] .cc-val-warnings { color: #ffb340; }
+
+    /* ── Live Preview Panel ── */
+    .cc-preview-panel {
+      width: 220px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+    }
+    .cc-preview-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .cc-preview-card {
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      transition: background 0.35s ease, border-color 0.35s ease;
+    }
+    .cc-prev-bar {
+      height: 3px;
+      background: var(--cc-accent, var(--accent));
+    }
+    .cc-prev-body {
+      padding: 16px 16px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .cc-prev-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .cc-prev-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--cc-accent-bg, rgba(0,113,227,0.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .cc-prev-badges {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .cc-prev-tag {
+      display: none;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 100px;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      background: var(--surface2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .cc-prev-feat {
+      display: none;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 100px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      background: var(--cc-accent, var(--accent));
+      color: #fff;
+    }
+    .cc-prev-shortlabel {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      color: var(--cc-accent, var(--accent));
+    }
+    .cc-prev-title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+    .cc-prev-desc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.55;
+      letter-spacing: -0.05px;
+    }
+    .cc-prev-footer {
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .cc-prev-count { font-size: 10px; color: var(--muted); }
+    .cc-prev-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 600;
+      border: 1.5px solid var(--border);
+      color: var(--ink);
+      background: transparent;
+    }
+    .cc-prev-hint {
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 8px;
+      opacity: 0.7;
+    }
+
+    /* Desc row (expanded inline) */
+    .cc-desc-row { display: none; }
+    .cc-desc-row.open { display: table-row; }
+    .cc-desc-row td {
+      padding: 8px 10px 12px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .cc-desc-ta {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--ink);
+      font-family: var(--font);
+      outline: none;
+      resize: vertical;
+      min-height: 52px;
+      transition: border-color 0.2s;
+    }
+    .cc-desc-ta:focus { border-color: var(--accent); }
+
+    @media (max-width: 900px) {
+      .cat-cards-layout { flex-direction: column; }
+      .cc-preview-panel { width: 100%; position: static; }
+    }
   </style>
 </head>
 <body>
@@ -405,49 +693,96 @@
         </div>
       </div>
 
-      <!-- Category Descriptions -->
+      <!-- Category Cards -->
       <div class="cms-card">
-        <h3>Category Descriptions</h3>
-        <p>Edit the custom description shown on each category card. Changes are saved to browser storage and appear instantly on the Browse page.</p>
+        <h3>Category Cards</h3>
+        <p>Manage all display fields for each hadith category card. Data is saved to browser storage and applied instantly on the Browse page. Click a row to expand its description and update the live preview.</p>
 
         <div class="cat-desc-toolbar">
-          <button class="template-btn" id="catDescExport">
+          <button class="template-btn" id="catCardsExport">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Export CSV
           </button>
-          <button class="template-btn" id="catDescImportBtn">
+          <button class="template-btn" id="catCardsImportBtn">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             Import CSV
           </button>
-          <input type="file" id="catDescImportFile" accept=".csv,.txt" style="display:none">
-          <button class="template-btn" id="catDescTemplate">
+          <input type="file" id="catCardsImportFile" accept=".csv,.txt" style="display:none">
+          <button class="template-btn" id="catCardsTemplate">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             Download Template
           </button>
-          <span class="cat-desc-count" id="catDescCount"></span>
+          <span class="cat-desc-count" id="catCardsCount"></span>
         </div>
 
-        <div id="catDescTableWrap" style="max-height:500px;overflow-y:auto;border:1px solid var(--border);border-radius:12px">
-          <table class="cat-desc-table">
-            <thead>
-              <tr><th>Slug</th><th>Title</th><th>Description</th></tr>
-            </thead>
-            <tbody id="catDescBody">
-              <tr><td colspan="3" style="text-align:center;padding:24px;color:var(--muted)">Loading categories from Supabase...</td></tr>
-            </tbody>
-          </table>
+        <!-- Validation messages -->
+        <div class="cc-val-errors" id="ccValErrors"></div>
+        <div class="cc-val-warnings" id="ccValWarnings"></div>
+
+        <!-- Two-panel layout: table + live preview -->
+        <div class="cat-cards-layout">
+
+          <!-- Table -->
+          <div class="cat-cards-table-wrap">
+            <table class="cat-cards-tbl" id="catCardsTable">
+              <thead>
+                <tr>
+                  <th style="min-width:110px">Slug</th>
+                  <th style="min-width:120px">Title</th>
+                  <th style="min-width:90px">Short Label</th>
+                  <th style="min-width:60px">Count</th>
+                  <th style="min-width:80px">Tag</th>
+                  <th style="min-width:50px">Icon</th>
+                  <th style="min-width:110px">Accent Color</th>
+                  <th style="min-width:100px">CTA Text</th>
+                  <th style="min-width:50px">Sort</th>
+                  <th style="min-width:52px">Feat.</th>
+                </tr>
+              </thead>
+              <tbody id="catCardsBody">
+                <tr><td colspan="10" style="text-align:center;padding:24px;color:var(--muted)">Loading categories from Supabase...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Live preview panel -->
+          <div class="cc-preview-panel">
+            <p class="cc-preview-label">Live Preview</p>
+            <div class="cc-preview-card" id="ccPreviewCard">
+              <div class="cc-prev-bar" id="ccPrevBar"></div>
+              <div class="cc-prev-body">
+                <div class="cc-prev-top">
+                  <div class="cc-prev-icon" id="ccPrevIcon">📿</div>
+                  <div class="cc-prev-badges">
+                    <span class="cc-prev-tag" id="ccPrevTag"></span>
+                    <span class="cc-prev-feat" id="ccPrevFeat">Featured</span>
+                  </div>
+                </div>
+                <p class="cc-prev-shortlabel" id="ccPrevLabel">0 Hadiths</p>
+                <h4 class="cc-prev-title" id="ccPrevTitle">Category Title</h4>
+                <p class="cc-prev-desc" id="ccPrevDesc" style="opacity:0.4">No description added yet.</p>
+                <div class="cc-prev-footer">
+                  <span class="cc-prev-count" id="ccPrevCount">0 hadiths</span>
+                  <span class="cc-prev-cta" id="ccPrevCta">Explore
+                    <svg viewBox="0 0 24 24" style="width:8px;height:8px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <p class="cc-prev-hint">Click any row to preview</p>
+          </div>
         </div>
 
-        <div class="cat-desc-actions">
-          <button class="cat-desc-save-btn" id="catDescSave">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1-2 2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-            Save All Descriptions
+        <div class="cat-desc-actions" style="margin-top:20px">
+          <button class="cat-desc-save-btn" id="catCardsSave">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Save All Card Data
           </button>
-          <span class="cat-desc-save-msg" id="catDescSaveMsg">Saved successfully</span>
+          <span class="cat-desc-save-msg" id="catCardsSaveMsg">Saved successfully</span>
         </div>
 
-        <div class="upload-status" id="catDescStatus">
-          <div class="status-bar" id="catDescStatusBar"></div>
+        <div class="upload-status" id="catCardsStatus">
+          <div class="status-bar" id="catCardsStatusBar"></div>
         </div>
       </div>
     </main>
@@ -934,25 +1269,126 @@
     });
 
     /* ══════════════════════════════════════════════════════════
-       CATEGORY DESCRIPTIONS — Edit, CSV Import/Export
+       CATEGORY CARDS — 11-field CMS with CSV import/export
+       and live preview. Persisted to th_cat_data in localStorage.
+       Backward-compatible with old th_cat_descriptions key.
     ══════════════════════════════════════════════════════════ */
 
-    var catDescBody     = document.getElementById('catDescBody');
-    var catDescCount    = document.getElementById('catDescCount');
-    var catDescSaveBtn  = document.getElementById('catDescSave');
-    var catDescSaveMsg  = document.getElementById('catDescSaveMsg');
-    var catDescStatusEl = document.getElementById('catDescStatus');
-    var catDescStatusBar = document.getElementById('catDescStatusBar');
-    var catRows         = []; /* [{slug, title, bookNumber}] */
+    var catCardsBody     = document.getElementById('catCardsBody');
+    var catCardsCount    = document.getElementById('catCardsCount');
+    var catCardsSaveBtn  = document.getElementById('catCardsSave');
+    var catCardsSaveMsg  = document.getElementById('catCardsSaveMsg');
+    var catCardsStatusEl = document.getElementById('catCardsStatus');
+    var catCardsStatusBar = document.getElementById('catCardsStatusBar');
+    var ccValErrors      = document.getElementById('ccValErrors');
+    var ccValWarnings    = document.getElementById('ccValWarnings');
 
-    /* Load existing descriptions from localStorage */
-    var catDescriptions = {};
-    try {
-      var s = localStorage.getItem('th_cat_descriptions');
-      if (s) catDescriptions = JSON.parse(s);
-    } catch(e) {}
+    var catRows = []; /* [{slug, title, count, bookNumber}] */
 
-    /* Fetch categories from Supabase (same as main site) */
+    /* ── Load persisted card data (with migration) ── */
+    var catCardData = {};
+    (function loadPersistedData() {
+      try {
+        var newRaw = localStorage.getItem('th_cat_data');
+        if (newRaw) { catCardData = JSON.parse(newRaw); return; }
+        /* Migrate old th_cat_descriptions */
+        var oldRaw = localStorage.getItem('th_cat_descriptions');
+        if (oldRaw) {
+          var old = JSON.parse(oldRaw);
+          Object.keys(old).forEach(function(slug) {
+            catCardData[slug] = { description: old[slug] };
+          });
+          localStorage.setItem('th_cat_data', JSON.stringify(catCardData));
+        }
+      } catch(e) {}
+    })();
+
+    /* ── Live preview refs ── */
+    var ccPrevBar    = document.getElementById('ccPrevBar');
+    var ccPrevIcon   = document.getElementById('ccPrevIcon');
+    var ccPrevTag    = document.getElementById('ccPrevTag');
+    var ccPrevFeat   = document.getElementById('ccPrevFeat');
+    var ccPrevLabel  = document.getElementById('ccPrevLabel');
+    var ccPrevTitle  = document.getElementById('ccPrevTitle');
+    var ccPrevDesc   = document.getElementById('ccPrevDesc');
+    var ccPrevCount  = document.getElementById('ccPrevCount');
+    var ccPrevCta    = document.getElementById('ccPrevCta');
+    var ccPreviewCard = document.getElementById('ccPreviewCard');
+
+    var activeRow = null; /* currently previewed row index */
+
+    function hexToRgba(hex, alpha) {
+      if (!hex || !/^#[0-9a-fA-F]{6}$/.test(hex)) return null;
+      var r = parseInt(hex.slice(1, 3), 16);
+      var g = parseInt(hex.slice(3, 5), 16);
+      var b = parseInt(hex.slice(5, 7), 16);
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+    }
+
+    var ICON_MAP = {
+      prayer:'🤲', salat:'🤲', dua:'🤲', faith:'☪', iman:'☪',
+      tawheed:'☪', belief:'☪', purification:'💧', tahara:'💧',
+      zakat:'💰', charity:'💰', fasting:'🌙', ramadan:'🌙',
+      hajj:'🕋', quran:'📖', knowledge:'📚', character:'⭐',
+      manners:'⭐', akhlaq:'⭐', etiquette:'⭐', family:'👨‍👩‍👧',
+      marriage:'👨‍👩‍👧', business:'🤝', trade:'🤝', governance:'⚖',
+      justice:'⚖', jihad:'🛡', paradise:'✨', jannah:'✨',
+      death:'🌿', afterlife:'🌿', food:'🍽', medicine:'🌿',
+      dream:'🌙', travel:'🧭', remembrance:'💫', dhikr:'💫'
+    };
+
+    function defaultIcon(slug) {
+      var s = (slug || '').toLowerCase();
+      for (var k in ICON_MAP) {
+        if (s.indexOf(k) !== -1) return ICON_MAP[k];
+      }
+      return '📿';
+    }
+
+    /* ── Update live preview from row data ── */
+    function updatePreview(slug, title, desc, shortLabel, count, tag, icon, accent, ctaText, isFeatured) {
+      var hasAccent = accent && /^#[0-9a-fA-F]{6}$/i.test(accent);
+      var accentVal = hasAccent ? accent : getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#0071e3';
+
+      ccPrevBar.style.background = accentVal;
+      ccPreviewCard.style.setProperty('--cc-accent', accentVal);
+      var rgba = hasAccent ? hexToRgba(accent, 0.12) : 'rgba(0,113,227,0.1)';
+      ccPreviewCard.style.setProperty('--cc-accent-bg', rgba);
+
+      ccPrevIcon.textContent = icon || defaultIcon(slug);
+
+      if (tag) {
+        ccPrevTag.textContent = tag;
+        ccPrevTag.style.display = 'inline-flex';
+      } else {
+        ccPrevTag.style.display = 'none';
+      }
+
+      if (isFeatured) {
+        ccPrevFeat.style.display = 'inline-flex';
+        ccPrevFeat.style.background = accentVal;
+      } else {
+        ccPrevFeat.style.display = 'none';
+      }
+
+      ccPrevLabel.textContent = shortLabel || ((count || 0) + ' Hadiths');
+      ccPrevLabel.style.color = accentVal;
+      ccPrevTitle.textContent = title || 'Category Title';
+
+      if (desc) {
+        ccPrevDesc.textContent = desc;
+        ccPrevDesc.style.opacity = '';
+      } else {
+        ccPrevDesc.textContent = 'No description added yet.';
+        ccPrevDesc.style.opacity = '0.4';
+      }
+
+      ccPrevCount.textContent = (count || 0) + ' hadiths';
+      /* Keep only the text node of CTA (preserve the SVG arrow) */
+      ccPrevCta.childNodes[0].textContent = (ctaText || 'Explore') + ' ';
+    }
+
+    /* ── Fetch categories from Supabase ── */
     function loadCategoriesForCMS() {
       var PAGE = 1000;
       var TOTAL = 8000;
@@ -977,146 +1413,409 @@
           });
         });
 
-        catRows = Object.values(bmap).sort(function(a, b) { return a.num - b.num; }).map(function(b) {
-          return { slug: 'book-' + b.num, title: b.en, bookNumber: b.num };
-        });
+        catRows = Object.values(bmap)
+          .sort(function(a, b) { return a.num - b.num; })
+          .map(function(b) {
+            return { slug: 'book-' + b.num, title: b.en, count: b.count, bookNumber: b.num };
+          });
 
-        renderCatDescTable();
+        renderCatCardsTable();
       }).catch(function() {
-        catDescBody.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:24px;color:var(--error)">Failed to load categories</td></tr>';
+        catCardsBody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:24px;color:var(--error)">Failed to load categories. Check connection.</td></tr>';
       });
     }
 
-    function renderCatDescTable() {
-      catDescBody.innerHTML = '';
+    /* ── Build and render the 10-column table (desc in expandable row) ── */
+    function renderCatCardsTable() {
+      catCardsBody.innerHTML = '';
       var filled = 0;
 
-      catRows.forEach(function(cat) {
-        var desc = catDescriptions[cat.slug] || '';
-        if (desc) filled++;
+      catRows.forEach(function(cat, idx) {
+        var d = catCardData[cat.slug] || {};
+        if (d.title || d.description || d.tag || d.accent_color || d.icon) filled++;
 
+        /* Main data row */
         var tr = document.createElement('tr');
+        tr.dataset.idx = idx;
+        tr.style.cursor = 'pointer';
+        tr.title = 'Click to expand description and preview';
+
+        var accentVal = d.accent_color || '';
+        var colorSwatch = accentVal ? 'background:' + accentVal + ';border-color:' + accentVal : '';
+        var isFeat = (d.is_featured === true || d.is_featured === 'true');
+
         tr.innerHTML =
-          '<td class="slug-cell">' + escHtml(cat.slug) + '</td>' +
-          '<td class="title-cell">' + escHtml(cat.title) + '</td>' +
-          '<td><textarea class="cat-desc-input' + (desc ? ' has-value' : '') + '" data-slug="' + escHtml(cat.slug) + '" rows="1" placeholder="Enter description...">' + escHtml(desc) + '</textarea></td>';
-        catDescBody.appendChild(tr);
-      });
+          '<td class="cc-slug-cell">' + escHtml(cat.slug) + '</td>' +
+          '<td><input class="cc-input cc-input-md" type="text" data-field="title" placeholder="' + escHtml(cat.title) + '" value="' + escHtml(d.title || '') + '"></td>' +
+          '<td><input class="cc-input cc-input-md" type="text" data-field="short_label" placeholder="e.g. 42 Hadiths" value="' + escHtml(d.short_label || '') + '"></td>' +
+          '<td><input class="cc-input cc-input-sm" type="number" data-field="hadith_count" min="0" placeholder="' + cat.count + '" value="' + escHtml(d.hadith_count != null ? String(d.hadith_count) : '') + '"></td>' +
+          '<td><input class="cc-input cc-input-md" type="text" data-field="tag" placeholder="e.g. Faith" value="' + escHtml(d.tag || '') + '"></td>' +
+          '<td><input class="cc-input cc-input-icon" type="text" data-field="icon" maxlength="4" placeholder="📿" value="' + escHtml(d.icon || '') + '"></td>' +
+          '<td>' +
+            '<div class="cc-color-wrap">' +
+              '<input class="cc-color" type="color" data-field="accent_color" value="' + (accentVal || '#0071e3') + '" style="' + colorSwatch + '">' +
+              '<input class="cc-color-text" type="text" data-field="accent_color_text" placeholder="#0071e3" value="' + escHtml(accentVal) + '" maxlength="7">' +
+            '</div>' +
+          '</td>' +
+          '<td><input class="cc-input cc-input-md" type="text" data-field="cta_text" placeholder="Explore" value="' + escHtml(d.cta_text || '') + '"></td>' +
+          '<td><input class="cc-input cc-input-sm" type="number" data-field="sort_order" min="0" placeholder="—" value="' + escHtml(d.sort_order != null ? String(d.sort_order) : '') + '"></td>' +
+          '<td style="text-align:center"><input class="cc-check" type="checkbox" data-field="is_featured" ' + (isFeat ? 'checked' : '') + '></td>';
 
-      catDescCount.innerHTML = '<strong>' + filled + '</strong> of ' + catRows.length + ' descriptions set';
+        /* Description expansion row */
+        var descTr = document.createElement('tr');
+        descTr.className = 'cc-desc-row';
+        descTr.dataset.parentIdx = idx;
+        var descCell = document.createElement('td');
+        descCell.colSpan = 10;
+        descCell.innerHTML =
+          '<label style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);display:block;margin-bottom:5px">Description</label>' +
+          '<textarea class="cc-desc-ta" data-field="description" placeholder="Add a short description shown on the Browse page card...">' + escHtml(d.description || '') + '</textarea>';
+        descTr.appendChild(descCell);
 
-      /* Auto-resize textareas and mark on input */
-      catDescBody.querySelectorAll('.cat-desc-input').forEach(function(ta) {
-        ta.addEventListener('input', function() {
-          this.classList.toggle('has-value', this.value.trim().length > 0);
+        catCardsBody.appendChild(tr);
+        catCardsBody.appendChild(descTr);
+
+        /* Row click — toggle description row and update preview */
+        tr.addEventListener('click', function(e) {
+          /* Don't toggle if clicking inside an input */
+          if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+            syncPreviewFromRow(tr, descTr, cat);
+            return;
+          }
+          var isOpen = descTr.classList.contains('open');
+          /* Close all other desc rows */
+          catCardsBody.querySelectorAll('.cc-desc-row.open').forEach(function(r) {
+            r.classList.remove('open');
+          });
+          catCardsBody.querySelectorAll('tr.cc-row-active').forEach(function(r) {
+            r.classList.remove('cc-row-active');
+          });
+          if (!isOpen) {
+            descTr.classList.add('open');
+            tr.classList.add('cc-row-active');
+          }
+          syncPreviewFromRow(tr, descTr, cat);
+        });
+
+        /* Live input → preview for this row */
+        tr.querySelectorAll('input').forEach(function(inp) {
+          inp.addEventListener('input', function() {
+            markHasValue(inp);
+            if (tr.classList.contains('cc-row-active')) {
+              syncPreviewFromRow(tr, descTr, cat);
+            }
+            /* Sync color picker ↔ text field */
+            if (inp.dataset.field === 'accent_color') {
+              var textInp = tr.querySelector('[data-field="accent_color_text"]');
+              if (textInp) textInp.value = inp.value;
+            } else if (inp.dataset.field === 'accent_color_text') {
+              var hex = inp.value.trim();
+              if (/^#[0-9a-fA-F]{6}$/.test(hex)) {
+                var picker = tr.querySelector('[data-field="accent_color"]');
+                if (picker) picker.value = hex;
+              }
+            }
+          });
+        });
+        descTr.querySelector('textarea').addEventListener('input', function() {
+          if (tr.classList.contains('cc-row-active')) {
+            syncPreviewFromRow(tr, descTr, cat);
+          }
         });
       });
+
+      catCardsCount.innerHTML = '<strong>' + filled + '</strong> of ' + catRows.length + ' cards configured';
+
+      /* Auto-preview first row */
+      if (catRows.length > 0) {
+        var firstTr  = catCardsBody.querySelector('tr:not(.cc-desc-row)');
+        var firstDTr = catCardsBody.querySelector('.cc-desc-row');
+        if (firstTr && firstDTr) {
+          firstTr.classList.add('cc-row-active');
+          firstDTr.classList.add('open');
+          syncPreviewFromRow(firstTr, firstDTr, catRows[0]);
+        }
+      }
     }
 
-    /* Save all descriptions */
-    catDescSaveBtn.addEventListener('click', function() {
-      var inputs = catDescBody.querySelectorAll('.cat-desc-input');
-      var descs = {};
-      var filled = 0;
+    function markHasValue(inp) {
+      inp.classList.toggle('has-val', inp.value.trim().length > 0);
+    }
 
-      inputs.forEach(function(ta) {
-        var slug = ta.getAttribute('data-slug');
-        var val = ta.value.trim();
-        if (val) {
-          descs[slug] = val;
-          filled++;
+    function syncPreviewFromRow(tr, descTr, cat) {
+      function v(field) {
+        var el = tr.querySelector('[data-field="' + field + '"]') ||
+                 descTr.querySelector('[data-field="' + field + '"]');
+        if (!el) return '';
+        if (el.type === 'checkbox') return el.checked;
+        return el.value.trim();
+      }
+      var title      = v('title')       || cat.title || '';
+      var shortLabel = v('short_label');
+      var count      = v('hadith_count') !== '' ? Number(v('hadith_count')) : (cat.count || 0);
+      var tag        = v('tag');
+      var icon       = v('icon');
+      var accent     = v('accent_color_text') || v('accent_color');
+      var ctaText    = v('cta_text');
+      var isFeat     = v('is_featured');
+      var desc       = v('description');
+
+      updatePreview(cat.slug, title, desc, shortLabel, count, tag, icon, accent, ctaText, isFeat);
+    }
+
+    /* ── Save all card data ── */
+    catCardsSaveBtn.addEventListener('click', function() {
+      var errors = [];
+      var warnings = [];
+      var newData = {};
+      var slugsSeen = {};
+
+      catRows.forEach(function(cat, idx) {
+        var tr = catCardsBody.querySelector('tr[data-idx="' + idx + '"]');
+        var descTr = catCardsBody.querySelector('tr.cc-desc-row[data-parent-idx="' + idx + '"]');
+        if (!tr) return;
+
+        function v(field) {
+          var el = tr.querySelector('[data-field="' + field + '"]') ||
+                   (descTr && descTr.querySelector('[data-field="' + field + '"]'));
+          if (!el) return '';
+          if (el.type === 'checkbox') return el.checked;
+          return el.value.trim();
         }
+
+        var slug        = cat.slug;
+        var title       = v('title');
+        var desc        = v('description');
+        var shortLabel  = v('short_label');
+        var hadithCount = v('hadith_count');
+        var tag         = v('tag');
+        var icon        = v('icon');
+        var accent      = v('accent_color_text') || v('accent_color');
+        var ctaText     = v('cta_text');
+        var sortOrder   = v('sort_order');
+        var isFeat      = v('is_featured');
+
+        /* Validate */
+        if (!slug) { errors.push('Row ' + (idx + 1) + ': missing slug.'); return; }
+        if (slugsSeen[slug]) { errors.push('Duplicate slug: ' + slug); return; }
+        slugsSeen[slug] = true;
+
+        if (accent && !/^#[0-9a-fA-F]{6}$/i.test(accent)) {
+          errors.push('Row ' + slug + ': accent color "' + accent + '" must be #RRGGBB format.');
+        }
+        if (!title) { warnings.push(slug + ': no title set — using Supabase default.'); }
+
+        /* Build record */
+        var rec = {};
+        if (title)      rec.title       = title;
+        if (desc)       rec.description = desc;
+        if (shortLabel) rec.short_label = shortLabel;
+        if (hadithCount !== '') rec.hadith_count = Number(hadithCount);
+        if (tag)        rec.tag         = tag;
+        if (icon)       rec.icon        = icon;
+        if (accent && /^#[0-9a-fA-F]{6}$/i.test(accent)) rec.accent_color = accent;
+        if (ctaText)    rec.cta_text    = ctaText;
+        if (sortOrder !== '') rec.sort_order = Number(sortOrder);
+        rec.is_featured = isFeat;
+
+        newData[slug] = rec;
       });
 
-      catDescriptions = descs;
-      localStorage.setItem('th_cat_descriptions', JSON.stringify(descs));
+      /* Show validation feedback */
+      ccValErrors.style.display = errors.length ? 'block' : 'none';
+      ccValErrors.innerHTML = errors.map(function(e) { return '&#9888; ' + escHtml(e); }).join('<br>');
+      ccValWarnings.style.display = warnings.length ? 'block' : 'none';
+      ccValWarnings.innerHTML = warnings.map(function(w) { return 'Note: ' + escHtml(w); }).join('<br>');
 
-      catDescCount.innerHTML = '<strong>' + filled + '</strong> of ' + catRows.length + ' descriptions set';
-      catDescSaveMsg.style.display = 'inline';
-      setTimeout(function() { catDescSaveMsg.style.display = 'none'; }, 2500);
-    });
-
-    /* Export CSV */
-    document.getElementById('catDescExport').addEventListener('click', function() {
-      var lines = ['slug,title,description'];
-      catRows.forEach(function(cat) {
-        var desc = catDescriptions[cat.slug] || '';
-        lines.push('"' + cat.slug + '","' + cat.title.replace(/"/g, '""') + '","' + desc.replace(/"/g, '""') + '"');
-      });
-      var blob = new Blob([lines.join('\n')], { type: 'text/csv' });
-      var a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'category_descriptions.csv';
-      a.click();
-      URL.revokeObjectURL(a.href);
-    });
-
-    /* Download template CSV */
-    document.getElementById('catDescTemplate').addEventListener('click', function() {
-      var lines = ['slug,description'];
-      catRows.slice(0, 5).forEach(function(cat) {
-        lines.push('"' + cat.slug + '","Example description for ' + cat.title + '"');
-      });
-      lines.push('# Add one row per category. Slug must match exactly.');
-      var blob = new Blob([lines.join('\n')], { type: 'text/csv' });
-      var a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'category_descriptions_template.csv';
-      a.click();
-      URL.revokeObjectURL(a.href);
-    });
-
-    /* Import CSV */
-    var catDescImportFile = document.getElementById('catDescImportFile');
-    document.getElementById('catDescImportBtn').addEventListener('click', function() {
-      catDescImportFile.click();
-    });
-
-    catDescImportFile.addEventListener('change', async function() {
-      if (!this.files.length) return;
-      var file = this.files[0];
-      var text = await file.text();
-      var lines = text.split(/\r?\n/).filter(function(l) { return l.trim() && !l.trim().startsWith('#'); });
-
-      if (lines.length < 2) {
-        showCatDescStatus('error', 'CSV has no data rows.');
+      if (errors.length) {
+        showCatCardsStatus('error', errors.length + ' validation error(s). Fix before saving.');
         return;
       }
 
-      /* Detect header */
-      var header = lines[0].toLowerCase();
-      var hasTitle = header.indexOf('title') > -1;
+      catCardData = newData;
+      localStorage.setItem('th_cat_data', JSON.stringify(newData));
+
+      var filled = Object.keys(newData).filter(function(k) {
+        return newData[k].title || newData[k].description;
+      }).length;
+      catCardsCount.innerHTML = '<strong>' + filled + '</strong> of ' + catRows.length + ' cards configured';
+
+      catCardsSaveMsg.style.display = 'inline';
+      setTimeout(function() { catCardsSaveMsg.style.display = 'none'; }, 2500);
+    });
+
+    /* ── CSV Export ── */
+    var CSV_HEADER = 'slug,title,description,short_label,hadith_count,tag,icon,accent_color,cta_text,sort_order,is_featured';
+
+    function csvField(v) {
+      v = String(v == null ? '' : v);
+      return '"' + v.replace(/"/g, '""') + '"';
+    }
+
+    document.getElementById('catCardsExport').addEventListener('click', function() {
+      var lines = [CSV_HEADER];
+      catRows.forEach(function(cat) {
+        var d = catCardData[cat.slug] || {};
+        lines.push([
+          csvField(cat.slug),
+          csvField(d.title || ''),
+          csvField(d.description || ''),
+          csvField(d.short_label || ''),
+          csvField(d.hadith_count != null ? d.hadith_count : ''),
+          csvField(d.tag || ''),
+          csvField(d.icon || ''),
+          csvField(d.accent_color || ''),
+          csvField(d.cta_text || ''),
+          csvField(d.sort_order != null ? d.sort_order : ''),
+          csvField(d.is_featured ? 'true' : 'false')
+        ].join(','));
+      });
+      downloadCSV(lines.join('\n'), 'category_cards.csv');
+    });
+
+    /* ── CSV Template ── */
+    document.getElementById('catCardsTemplate').addEventListener('click', function() {
+      var lines = [
+        CSV_HEADER,
+        '# 11-field category card template for Timeless Hadith CMS',
+        '# Required: slug must match exactly. Colors must be #RRGGBB. is_featured: true or false.',
+        '# Example rows:'
+      ];
+      (catRows.slice(0, 3)).forEach(function(cat) {
+        lines.push([
+          csvField(cat.slug),
+          csvField(cat.title),
+          csvField(''),
+          csvField(cat.count + ' Hadiths'),
+          csvField(cat.count),
+          csvField(''),
+          csvField('📿'),
+          csvField('#0071e3'),
+          csvField('Explore'),
+          csvField(''),
+          csvField('false')
+        ].join(','));
+      });
+      downloadCSV(lines.join('\n'), 'category_cards_template.csv');
+    });
+
+    /* ── CSV Import ── */
+    var catCardsImportFile = document.getElementById('catCardsImportFile');
+    document.getElementById('catCardsImportBtn').addEventListener('click', function() {
+      catCardsImportFile.click();
+    });
+
+    catCardsImportFile.addEventListener('change', async function() {
+      if (!this.files.length) return;
+      var file = this.files[0];
+      var text = await file.text();
+      var lines = text.split(/\r?\n/).filter(function(l) {
+        return l.trim() && !l.trim().startsWith('#');
+      });
+
+      if (lines.length < 2) {
+        showCatCardsStatus('error', 'CSV has no data rows.');
+        catCardsImportFile.value = '';
+        return;
+      }
+
+      var headerLine = lines[0].toLowerCase();
+      var fields = parseCSVLine(headerLine).map(function(f) { return f.trim(); });
+      var isNewSchema = fields.indexOf('is_featured') !== -1;
+      var isOldSchema = fields.indexOf('description') !== -1 && !isNewSchema;
+
+      var errors = [];
+      var warnings = [];
       var imported = 0;
+      var slugsSeen = {};
 
       for (var i = 1; i < lines.length; i++) {
         var parts = parseCSVLine(lines[i]);
         if (!parts || parts.length < 2) continue;
 
-        var slug, desc;
-        if (hasTitle && parts.length >= 3) {
-          slug = parts[0].trim();
-          desc = parts[2].trim();
-        } else {
-          slug = parts[0].trim();
-          desc = parts[1].trim();
+        var row = {};
+        fields.forEach(function(f, fi) { row[f] = (parts[fi] || '').trim(); });
+
+        var slug = row['slug'];
+
+        /* Validate slug */
+        if (!slug) { errors.push('Row ' + (i + 1) + ': missing slug — skipped.'); continue; }
+        if (slugsSeen[slug]) { errors.push('Duplicate slug "' + slug + '" at row ' + (i + 1) + ' — skipped.'); continue; }
+        slugsSeen[slug] = true;
+
+        /* Validate accent color */
+        if (row['accent_color'] && !/^#[0-9a-fA-F]{6}$/i.test(row['accent_color'])) {
+          errors.push('Row ' + (i + 1) + ' slug "' + slug + '": invalid accent_color "' + row['accent_color'] + '" (must be #RRGGBB) — color skipped.');
+          row['accent_color'] = '';
         }
 
-        if (slug && desc) {
-          catDescriptions[slug] = desc;
-          imported++;
+        /* Validate is_featured */
+        if (row['is_featured'] && row['is_featured'] !== 'true' && row['is_featured'] !== 'false') {
+          warnings.push('Row ' + (i + 1) + ' slug "' + slug + '": is_featured "' + row['is_featured'] + '" not recognised — treated as false.');
+          row['is_featured'] = 'false';
         }
+
+        /* Warn on empty title */
+        if (!row['title']) { warnings.push('Row "' + slug + '": no title — Supabase default will be used.'); }
+
+        /* Merge into existing data */
+        var existing = catCardData[slug] || {};
+        var rec = {};
+        if (isNewSchema) {
+          if (row['title'])       rec.title       = row['title'];
+          if (row['description']) rec.description = row['description'];
+          if (row['short_label']) rec.short_label = row['short_label'];
+          if (row['hadith_count'] !== '') rec.hadith_count = Number(row['hadith_count']) || existing.hadith_count;
+          if (row['tag'])         rec.tag         = row['tag'];
+          if (row['icon'])        rec.icon        = row['icon'];
+          if (row['accent_color']) rec.accent_color = row['accent_color'];
+          if (row['cta_text'])    rec.cta_text    = row['cta_text'];
+          if (row['sort_order'] !== '') rec.sort_order = Number(row['sort_order']);
+          rec.is_featured = (row['is_featured'] === 'true');
+        } else if (isOldSchema) {
+          /* Old 3-column format: slug, title, description */
+          if (row['description']) rec.description = row['description'];
+          if (row['title'])       rec.title       = row['title'];
+        } else {
+          /* Minimal: slug, description */
+          var desc = parts[1] ? parts[1].trim() : '';
+          if (desc) rec.description = desc;
+        }
+
+        catCardData[slug] = Object.assign({}, existing, rec);
+        imported++;
       }
 
       if (imported > 0) {
-        localStorage.setItem('th_cat_descriptions', JSON.stringify(catDescriptions));
-        renderCatDescTable();
-        showCatDescStatus('success', imported + ' descriptions imported successfully.');
+        localStorage.setItem('th_cat_data', JSON.stringify(catCardData));
+        renderCatCardsTable();
+
+        var msg = imported + ' rows imported.';
+        if (errors.length) msg += ' ' + errors.length + ' error(s).';
+        showCatCardsStatus(errors.length ? 'error' : 'success', msg);
+
+        ccValErrors.style.display = errors.length ? 'block' : 'none';
+        ccValErrors.innerHTML = errors.map(function(e) { return '&#9888; ' + escHtml(e); }).join('<br>');
+        ccValWarnings.style.display = warnings.length ? 'block' : 'none';
+        ccValWarnings.innerHTML = warnings.map(function(w) { return 'Note: ' + escHtml(w); }).join('<br>');
       } else {
-        showCatDescStatus('error', 'No valid rows found. Format: slug,description');
+        showCatCardsStatus('error', 'No valid rows imported. Check CSV format and slug values.');
+        ccValErrors.style.display = errors.length ? 'block' : 'none';
+        ccValErrors.innerHTML = errors.map(function(e) { return '&#9888; ' + escHtml(e); }).join('<br>');
       }
 
-      catDescImportFile.value = '';
+      catCardsImportFile.value = '';
     });
+
+    /* ── CSV helpers ── */
+    function downloadCSV(content, filename) {
+      var blob = new Blob([content], { type: 'text/csv' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
 
     /* Parse a single CSV line handling quoted fields */
     function parseCSVLine(line) {
@@ -1127,42 +1826,32 @@
         var ch = line[i];
         if (inQuotes) {
           if (ch === '"') {
-            if (i + 1 < line.length && line[i + 1] === '"') {
-              current += '"';
-              i++;
-            } else {
-              inQuotes = false;
-            }
+            if (i + 1 < line.length && line[i + 1] === '"') { current += '"'; i++; }
+            else { inQuotes = false; }
           } else {
             current += ch;
           }
         } else {
-          if (ch === '"') {
-            inQuotes = true;
-          } else if (ch === ',') {
-            result.push(current);
-            current = '';
-          } else {
-            current += ch;
-          }
+          if (ch === '"') { inQuotes = true; }
+          else if (ch === ',') { result.push(current); current = ''; }
+          else { current += ch; }
         }
       }
       result.push(current);
       return result;
     }
 
-    function showCatDescStatus(type, msg) {
-      catDescStatusEl.style.display = 'block';
-      catDescStatusBar.className = 'status-bar ' + type;
-      catDescStatusBar.textContent = msg;
-      setTimeout(function() { catDescStatusEl.style.display = 'none'; }, 4000);
+    function showCatCardsStatus(type, msg) {
+      catCardsStatusEl.style.display = 'block';
+      catCardsStatusBar.className = 'status-bar ' + type;
+      catCardsStatusBar.textContent = msg;
+      setTimeout(function() { catCardsStatusEl.style.display = 'none'; }, 5000);
     }
 
-    /* Load categories once auth is confirmed or after login */
+    /* ── Initialise categories once auth is confirmed ── */
     if (sessionStorage.getItem('th_cms_auth') === 'true') {
       loadCategoriesForCMS();
     }
-    /* Listen for CMS content becoming visible (login success) */
     var catObserver = new MutationObserver(function() {
       if (cmsMain.style.display === 'block' && catRows.length === 0) {
         loadCategoriesForCMS();
