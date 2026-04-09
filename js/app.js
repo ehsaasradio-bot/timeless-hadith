@@ -194,7 +194,7 @@ const TH_AUTH = (() => {
       <div class="th-modal-box login-modal-box" role="document">
         <button class="th-modal-close" aria-label="Close" onclick="TH_AUTH.closeLoginModal()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
         <div class="login-modal-logo">
-          <img src="timelessHadithLogo.png" alt="Timeless Hadith" class="login-modal-logo-img" onerror="this.style.display='none'" />
+          <img src="logo.svg" alt="Timeless Hadith" class="login-modal-logo-img" onerror="this.style.display='none'" />
         </div>
         <h2 class="login-modal-title">Sign in to Timeless Hadith</h2>
         <div id="google-signin-btn-modal" class="gis-btn-wrap"></div>

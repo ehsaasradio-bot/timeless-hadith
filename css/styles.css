@@ -95,8 +95,12 @@ nav.main-nav {
   text-decoration: none;
 }
 .nav-logo img {
-  height: 64px; width: auto;
+  height: 36px; width: auto;
   transition: filter 0.35s ease;
+}
+[data-theme="dark"] .nav-logo img,
+[data-theme="dark"] .footer-logo img {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 .nav-links {
