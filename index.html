@@ -113,10 +113,10 @@
     }
     .search-bar:focus-within {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(0,113,227,0.12);
+      box-shadow: 0 0 0 3px rgba(var(--accent-raw),0.12);
     }
     [data-theme="dark"] .search-bar:focus-within {
-      box-shadow: 0 0 0 3px rgba(41,151,255,0.18);
+      box-shadow: 0 0 0 3px rgba(var(--accent-raw),0.18);
     }
     .search-icon {
       flex-shrink: 0; width: 16px; height: 16px;
@@ -203,8 +203,8 @@
       transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
     }
     .tag:hover { border-color: var(--ink); color: var(--ink); background: var(--surface); }
-    .tag.active { border-color: var(--accent); color: var(--accent); background: rgba(0,113,227,0.06); }
-    [data-theme="dark"] .tag.active { background: rgba(41,151,255,0.1); }
+    .tag.active { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-raw),0.06); }
+    [data-theme="dark"] .tag.active { background: rgba(var(--accent-raw),0.1); }
 
     /* ── Section Divider ── */
     .section-divider {
@@ -315,8 +315,8 @@
       color: var(--muted); cursor: pointer; font-family: var(--font);
       transition: all 0.2s ease;
     }
-    .filter-pill:hover, .filter-pill.active { border-color: var(--accent); color: var(--accent); background: rgba(0,113,227,0.06); }
-    [data-theme="dark"] .filter-pill.active { background: rgba(41,151,255,0.1); }
+    .filter-pill:hover, .filter-pill.active { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-raw),0.06); }
+    [data-theme="dark"] .filter-pill.active { background: rgba(var(--accent-raw),0.1); }
 
     /* ── Cards Grid ── */
     .carousel-wrap { position: relative; }
@@ -1181,28 +1181,28 @@
       ctx.fillRect(0, 0, W, H);
 
       // Left accent bar
-      ctx.fillStyle = isDark ? '#2997ff' : '#0071e3';
+      ctx.fillStyle = isDark ? '#F5A623' : '#C8780A';
       ctx.fillRect(0, 0, 8, H);
 
       // Decorative top-right gradient
       const grad = ctx.createRadialGradient(W, 0, 0, W, 0, 500);
-      grad.addColorStop(0, isDark ? 'rgba(41,151,255,0.08)' : 'rgba(0,113,227,0.06)');
+      grad.addColorStop(0, isDark ? 'rgba(var(--accent-raw),0.08)' : 'rgba(var(--accent-raw),0.06)');
       grad.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, W, H);
 
       // Brand mark
-      ctx.fillStyle = isDark ? '#2997ff' : '#0071e3';
+      ctx.fillStyle = isDark ? '#F5A623' : '#C8780A';
       ctx.font      = 'bold 14px -apple-system, Helvetica, Arial, sans-serif';
       ctx.textAlign = 'left';
       ctx.fillText('TIMELESS HADITH', 64, 60);
 
       // Category badge
-      ctx.fillStyle = isDark ? 'rgba(41,151,255,0.15)' : 'rgba(0,113,227,0.08)';
+      ctx.fillStyle = isDark ? 'rgba(var(--accent-raw),0.15)' : 'rgba(var(--accent-raw),0.08)';
       const badgeW = ctx.measureText(hadith.category).width + 32;
       roundRect(ctx, 64, 80, badgeW, 28, 14);
       ctx.fill();
-      ctx.fillStyle = isDark ? '#2997ff' : '#0071e3';
+      ctx.fillStyle = isDark ? '#F5A623' : '#C8780A';
       ctx.font      = '500 13px -apple-system, Helvetica, Arial, sans-serif';
       ctx.fillText(hadith.category, 80, 99);
 
