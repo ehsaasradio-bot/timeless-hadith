@@ -59,9 +59,9 @@
   --bg:       #060c1a;
   --surface:  #0d1629;
   --surface2: #111d35;
-  --border:   rgba(255,255,255,0.08);
+  --border:   rgba(255,255,255,0.10);
   --ink:      #f0f4ff;
-  --muted:    #7c8fb0;
+  --muted:    #9aa9c7;
   --nav-bg:   rgba(6,12,26,0.82);
   --toggle-bg:   #1a2540;
   --toggle-knob: #f0f4ff;
@@ -416,4 +416,111 @@ footer {
   .nav-hamburger { display: flex; }
   footer { padding: 32px 20px; }
   .cookie-banner { bottom: 12px; right: 12px; left: 12px; width: auto; }
+}
+
+/* ──────────────────────────────────────────────────────────
+   Dark-mode polish pass (spacing, contrast, focus, scrollbar)
+   Applies only in dark mode so light theme is untouched.
+   ────────────────────────────────────────────────────────── */
+
+/* Slightly lifted card elevation + softer border in dark mode */
+[data-theme="dark"] .card,
+[data-theme="dark"] .cat-card,
+[data-theme="dark"] .hadith-card,
+[data-theme="dark"] .bm-card {
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset,
+              0 10px 40px rgba(0,0,0,0.35);
+}
+
+/* More breathing room for sections in dark mode so the
+   ambient radial glow and grid background can breathe */
+[data-theme="dark"] .featured-section { margin: 72px auto; }
+[data-theme="dark"] .cards-section { padding-top: 56px; padding-bottom: 96px; }
+
+/* Softer nav border in dark mode so the bar floats cleanly */
+[data-theme="dark"] nav.main-nav {
+  border-bottom-color: rgba(255,255,255,0.06);
+}
+
+/* Footer separator looks cleaner in dark mode */
+[data-theme="dark"] footer {
+  border-top-color: rgba(255,255,255,0.06);
+}
+
+/* Crisper focus ring in dark mode — default outline
+   can disappear against the deep navy background */
+[data-theme="dark"] :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+[data-theme="dark"] .theme-toggle:focus-visible {
+  box-shadow: 0 0 0 2px var(--accent);
+  outline: none;
+}
+
+/* Custom scrollbar in dark mode so the default bright
+   scrollbar doesn't flash against the deep navy canvas */
+[data-theme="dark"] {
+  scrollbar-color: rgba(255,255,255,0.12) transparent;
+  scrollbar-width: thin;
+}
+[data-theme="dark"] ::-webkit-scrollbar { width: 10px; height: 10px; }
+[data-theme="dark"] ::-webkit-scrollbar-track { background: transparent; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.10);
+  border-radius: 100px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.20);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+/* Selection highlight — indigo tint in dark mode */
+[data-theme="dark"] ::selection {
+  background: rgba(79,114,248,0.35);
+  color: #fff;
+}
+
+/* Improve dark-mode link/code contrast on privacy & terms pages */
+[data-theme="dark"] p,
+[data-theme="dark"] li {
+  color: var(--muted);
+}
+[data-theme="dark"] a {
+  color: var(--accent-3);
+}
+[data-theme="dark"] a:hover { color: #c7d6ff; }
+
+/* Hamburger lines were using var(--ink) which is fine, but add
+   a small hover bg that matches dark surfaces */
+[data-theme="dark"] .nav-hamburger:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+/* Reduce transition flicker when switching themes by locking
+   critical element transitions to transform/opacity only */
+[data-theme="dark"] .hero-mark img,
+[data-theme="dark"] .nav-avatar img {
+  transition: transform 0.2s ease;
+}
+
+/* Drawer polish in dark mode */
+[data-theme="dark"] .nav-drawer {
+  border-bottom-color: rgba(255,255,255,0.06);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+[data-theme="dark"] .nav-drawer a {
+  border-bottom-color: rgba(255,255,255,0.06);
+}
+
+/* Cookie banner blends better with the glass surfaces */
+[data-theme="dark"] .cookie-banner {
+  background: rgba(13,22,41,0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-color: rgba(255,255,255,0.10);
 }
