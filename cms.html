@@ -797,13 +797,7 @@
     var SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3Y3NsZWRpZnZueXJ1bnhlanpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTgwNzgsImV4cCI6MjA5MDUzNDA3OH0.Aww8QcExJF1tPwMPvqP5q0_avc3YJclqsFJcXptlnZo';
     var SB_HDR  = { 'apikey': SB_ANON, 'Authorization': 'Bearer ' + SB_ANON, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
 
-    /* ── Auth ── */
-    var ADMIN_HASH = 'ba541f871fd9f9ab172966270ada8ac0f3af6bbe91a468def8cfcd0cba5b5452';
-
-    async function sha256(str) {
-      var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-      return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
-    }
+    /* ── Auth (server-side via /api/cms-auth — no credentials in client code) ── */
 
     var authGate    = document.getElementById('authGate');
     var cmsContent  = document.getElementById('cmsContent');
@@ -812,34 +806,49 @@
     var authSubmit  = document.getElementById('authSubmit');
     var authError   = document.getElementById('authError');
 
-    /* Check stored session */
-    if (sessionStorage.getItem('th_cms_auth') === 'true') {
-      authGate.style.display = 'none';
-      cmsContent.style.display = 'block';
-      cmsMain.style.display = 'block';
-    }
+    /*
+     * The edge middleware (_middleware.js) protects this page.
+     * If we are here, the session cookie is valid — show CMS immediately.
+     */
+    authGate.style.display   = 'none';
+    cmsContent.style.display = 'block';
+    cmsMain.style.display    = 'block';
 
+    /* Login form is kept as a fallback for direct-load without cookie */
     authSubmit.addEventListener('click', doLogin);
     authPass.addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
 
     async function doLogin() {
-      var hash = await sha256(authPass.value);
-      if (hash === ADMIN_HASH) {
-        sessionStorage.setItem('th_cms_auth', 'true');
-        authGate.style.display = 'none';
-        cmsContent.style.display = 'block';
-        cmsMain.style.display = 'block';
-        authError.style.display = 'none';
-      } else {
+      authSubmit.disabled = true;
+      authError.style.display = 'none';
+      try {
+        var resp = await fetch('/api/cms-auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: authPass.value }),
+          credentials: 'same-origin'
+        });
+        if (resp.ok) {
+          authGate.style.display   = 'none';
+          cmsContent.style.display = 'block';
+          cmsMain.style.display    = 'block';
+          authError.style.display  = 'none';
+        } else {
+          authError.style.display = 'block';
+          authPass.value = '';
+          authPass.focus();
+        }
+      } catch (err) {
+        authError.textContent = 'Connection error. Please try again.';
         authError.style.display = 'block';
-        authPass.value = '';
-        authPass.focus();
+      } finally {
+        authSubmit.disabled = false;
       }
     }
 
-    document.getElementById('logoutBtn').addEventListener('click', function() {
-      sessionStorage.removeItem('th_cms_auth');
-      location.reload();
+    document.getElementById('logoutBtn').addEventListener('click', async function() {
+      await fetch('/api/cms-logout', { method: 'POST', credentials: 'same-origin' });
+      window.location.href = '/';
     });
 
     /* ── Theme ── */
@@ -1848,10 +1857,8 @@
       setTimeout(function() { catCardsStatusEl.style.display = 'none'; }, 5000);
     }
 
-    /* ── Initialise categories once auth is confirmed ── */
-    if (sessionStorage.getItem('th_cms_auth') === 'true') {
-      loadCategoriesForCMS();
-    }
+    /* ── Initialise categories — auth confirmed by edge middleware ── */
+    loadCategoriesForCMS();
     var catObserver = new MutationObserver(function() {
       if (cmsMain.style.display === 'block' && catRows.length === 0) {
         loadCategoriesForCMS();
