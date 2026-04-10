@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Offline — Timeless Hadith</title>
+<meta name="description" content="You are currently offline. Timeless Hadith will reconnect when your connection returns." />
+<meta name="robots" content="noindex" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="manifest" href="manifest.json" />
+<link rel="stylesheet" href="css/styles.css" />
+<style>
+  body {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg, #f7f7f5);
+    color: var(--ink, #0a0a0a);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    margin: 0; padding: 24px;
+  }
+  .offline-card {
+    max-width: 480px; width: 100%;
+    background: var(--surface, #fff);
+    border: 1px solid var(--border, #e4e4e0);
+    border-radius: 20px; padding: 48px 36px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+  }
+  .offline-card img {
+    width: 72px; height: 72px; margin-bottom: 20px;
+  }
+  .offline-card h1 {
+    font-size: 28px; font-weight: 700;
+    letter-spacing: -0.02em; margin: 0 0 10px;
+  }
+  .offline-card p {
+    font-size: 15px; line-height: 1.6;
+    color: var(--muted, #666); margin: 0 0 24px;
+  }
+  .offline-card button {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 26px; border-radius: 100px;
+    background: #4f72f8; color: #fff;
+    border: none; cursor: pointer;
+    font-size: 15px; font-weight: 500;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .offline-card button:hover {
+    background: #3d5fd9; transform: translateY(-1px);
+  }
+</style>
+</head>
+<body>
+  <main class="offline-card" role="main">
+    <img src="favicon-32.png" alt="" width="72" height="72" />
+    <h1>You&rsquo;re offline</h1>
+    <p>Timeless Hadith needs a connection to fetch new content. Any pages you&rsquo;ve already visited are still available from cache.</p>
+    <button type="button" onclick="location.reload()">Try again</button>
+  </main>
+</body>
+</html>
