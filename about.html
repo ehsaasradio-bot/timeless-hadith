@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us — Timeless Hadith | Authentic Islamic Guidance</title>
-  <meta name="description" content="Learn about Timeless Hadith — our mission to make authentic prophetic guidance accessible to every Muslim. Explore verified hadiths from the six major hadith collections." />
+  <meta name="description" content="Learn about Timeless Hadith — our mission to make authentic prophetic guidance accessible to every Muslim. Verified hadiths from major collections." />
   <link rel="canonical" href="https://timelesshadith.com/about.html" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
@@ -12,7 +12,7 @@
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://timelesshadith.com/about.html" />
   <meta property="og:title"       content="About Us — Timeless Hadith | Authentic Islamic Guidance" />
-  <meta property="og:description" content="Learn about Timeless Hadith — our mission to make authentic prophetic guidance accessible to every Muslim. Explore verified hadiths from the six major hadith collections." />
+  <meta property="og:description" content="Learn about Timeless Hadith — our mission to make authentic prophetic guidance accessible to every Muslim. Verified hadiths from major collections." />
   <meta property="og:image"       content="https://timelesshadith.com/og-image.png" />
   <link rel="icon"             type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="icon"             type="image/png" sizes="16x16" href="favicon-16.png" />
@@ -410,7 +410,7 @@
   <footer>
     <div class="footer-inner">
       <a href="index.html" class="footer-logo">
-        <img src="logo.svg" alt="Timeless Hadith" height="32" />
+        <img src="logo.svg" alt="Timeless Hadith" height="32" loading="lazy" />
       </a>
       <ul class="footer-links">
         <li><a href="index.html">Home</a></li>
@@ -438,9 +438,9 @@
   </div>
 
   <!-- ══ SCRIPTS ══ -->
-  <script src="js/supabase-data.js?v=2"></script>
-  <script src="js/app.js"></script>
-  <script src="js/supabase-auth.js"></script>
+  <script src="dist/js/supabase-data.js" defer></script>
+  <script src="dist/js/app.js" defer></script>
+  <script src="dist/js/supabase-auth.js" defer></script>
 
   <script>
   (function() {
@@ -490,7 +490,16 @@
   </script>
 
   <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' integrity='sha384-OngJu5CJZ5lWGKcpmuxzX/oKa+Gcbcw0xdBkaOPd+KAe6c0poNtwdci1DEIrrtF/' crossorigin='anonymous' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
   <!-- End Cloudflare Web Analytics -->
+  <!-- M-08: Service Worker registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+          .catch(function(err) { console.warn('[SW] registration failed:', err); });
+      });
+    }
+  </script>
 </body>
 </html>

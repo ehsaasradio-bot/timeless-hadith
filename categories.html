@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Browse Hadith Topics — Timeless Hadith</title>
-  <meta name="description" content="Browse all hadith topics and categories. Explore authentic sayings of Prophet Muhammad (PBUH) organized by theme — from faith and prayer to family and character." />
+  <meta name="description" content="Browse all hadith topics and categories. Authentic sayings of Prophet Muhammad (PBUH) organised by theme — faith, prayer, family, and character." />
   <link rel="canonical" href="https://timelesshadith.com/categories.html" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
@@ -12,7 +12,7 @@
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://timelesshadith.com/categories.html" />
   <meta property="og:title"       content="Browse Hadith Topics — Timeless Hadith" />
-  <meta property="og:description" content="Browse all hadith topics and categories. Explore authentic sayings of Prophet Muhammad (PBUH) organized by theme — from faith and prayer to family and character." />
+  <meta property="og:description" content="Browse all hadith topics and categories. Authentic sayings of Prophet Muhammad (PBUH) organised by theme — faith, prayer, family, and character." />
   <meta property="og:image"       content="https://timelesshadith.com/og-image.png" />
   <script type="application/ld+json">
   {
@@ -511,7 +511,7 @@
   <footer>
     <div class="footer-inner">
       <a href="index.html" class="footer-logo">
-        <img src="logo.svg" alt="Timeless Hadith" height="32" />
+        <img src="logo.svg" alt="Timeless Hadith" height="32" loading="lazy" />
       </a>
       <ul class="footer-links">
         <li><a href="index.html">Home</a></li>
@@ -526,10 +526,10 @@
   </footer>
 
   <!-- ══ SCRIPTS ══ -->
-  <script src="js/supabase-data.js?v=2"></script>
-  <script src="js/app.js"></script>
-  <script src="js/supabase-auth.js"></script>
-  <script src="js/ai-search.js"></script>
+  <script src="dist/js/supabase-data.js" defer></script>
+  <script src="dist/js/app.js" defer></script>
+  <script src="dist/js/supabase-auth.js" defer></script>
+  <script src="dist/js/ai-search.js" defer></script>
 
   <script>
   (function() {
@@ -863,7 +863,16 @@
   </script>
 
   <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' integrity='sha384-OngJu5CJZ5lWGKcpmuxzX/oKa+Gcbcw0xdBkaOPd+KAe6c0poNtwdci1DEIrrtF/' crossorigin='anonymous' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
   <!-- End Cloudflare Web Analytics -->
+  <!-- M-08: Service Worker registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+          .catch(function(err) { console.warn('[SW] registration failed:', err); });
+      });
+    }
+  </script>
 </body>
 </html>

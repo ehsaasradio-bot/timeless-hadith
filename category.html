@@ -29,12 +29,46 @@
   <meta property="og:title"       content="Hadith by Topic — Timeless Hadith" />
   <meta property="og:description" content="Explore authentic hadiths organized by Islamic topic. Verified sayings of the Prophet Muhammad (PBUH) from Sahih al-Bukhari, Sahih Muslim, and more." />
   <meta property="og:image"       content="https://timelesshadith.com/og-image.png" />
-  <script type="application/ld+json">
+  <!-- Schema.org: BreadcrumbList + CollectionPage (category name injected by JS) -->
+  <script type="application/ld+json" id="schema-category">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Timeless Hadith",
-    "url": "https://timelesshadith.com/"
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://timelesshadith.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "All Categories",
+            "item": "https://timelesshadith.com/categories.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Hadith Category",
+            "item": "https://timelesshadith.com/category.html"
+          }
+        ]
+      },
+      {
+        "@type": "CollectionPage",
+        "name": "Hadith Category — Timeless Hadith",
+        "description": "Authentic hadiths organised by topic from Sahih al-Bukhari and other major collections.",
+        "url": "https://timelesshadith.com/category.html",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "Timeless Hadith",
+          "url": "https://timelesshadith.com/"
+        }
+      }
+    ]
   }
   </script>
   <link rel="icon"             type="image/png" sizes="32x32" href="favicon-32.png" />
@@ -452,7 +486,7 @@
   <footer>
     <div class="footer-inner">
       <a href="index.html" class="footer-logo">
-        <img src="logo.svg" alt="Timeless Hadith" height="32" />
+        <img src="logo.svg" alt="Timeless Hadith" height="32" loading="lazy" />
       </a>
       <ul class="footer-links">
         <li><a href="index.html">Home</a></li>
@@ -467,10 +501,10 @@
   </footer>
 
   <!-- ══ SCRIPTS ══ -->
-  <script src="js/supabase-data.js?v=2"></script>
-  <script src="js/app.js"></script>
-  <script src="js/supabase-auth.js"></script>
-  <script src="js/ai-search.js"></script>
+  <script src="dist/js/supabase-data.js" defer></script>
+  <script src="dist/js/app.js" defer></script>
+  <script src="dist/js/supabase-auth.js" defer></script>
+  <script src="dist/js/ai-search.js" defer></script>
 
   <script>
   (function() {
@@ -528,6 +562,24 @@
         document.getElementById('cat-title').textContent = _cat.h1 || _cat.title;
         document.getElementById('cat-desc').textContent  = _cat.contentBlock || _cat.desc;
         document.getElementById('breadcrumb-cat').textContent = _cat.title;
+
+        /* M-07: Update JSON-LD schema with real category name + URL */
+        (function() {
+          var schemaEl = document.getElementById('schema-category');
+          if (!schemaEl) return;
+          try {
+            var schema = JSON.parse(schemaEl.textContent);
+            var catName = _cat.title || 'Hadith Category';
+            var catUrl  = 'https://timelesshadith.com/category.html?cat=' + encodeURIComponent(_slug);
+            /* BreadcrumbList: update position 3 */
+            schema['@graph'][0].itemListElement[2].name = catName;
+            schema['@graph'][0].itemListElement[2].item = catUrl;
+            /* CollectionPage: update name + url */
+            schema['@graph'][1].name = catName + ' \u2014 Timeless Hadith';
+            schema['@graph'][1].url  = catUrl;
+            schemaEl.textContent = JSON.stringify(schema);
+          } catch(e) { /* non-fatal */ }
+        })();
 
         return TH.loadHadiths(_slug);
       }).then(function() {
@@ -711,7 +763,16 @@
   </script>
 
   <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' integrity='sha384-OngJu5CJZ5lWGKcpmuxzX/oKa+Gcbcw0xdBkaOPd+KAe6c0poNtwdci1DEIrrtF/' crossorigin='anonymous' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
   <!-- End Cloudflare Web Analytics -->
+  <!-- M-08: Service Worker registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+          .catch(function(err) { console.warn('[SW] registration failed:', err); });
+      });
+    }
+  </script>
 </body>
 </html>
