@@ -2,8 +2,8 @@
  * Timeless Hadith — app.js
  * Shared application logic: Auth · Bookmarks · Share as Image · Theme
  * ─────────────────────────────────────────────────────────────────────
- * Depends on: js/supabase-data.js  (TH object must be loaded first)
- * Usage: <script src="js/supabase-data.js"></script>
+ * Depends on: js/data.js  (TH object must be loaded first)
+ * Usage: <script src="js/data.js"></script>
  *        <script src="js/app.js"></script>
  */
 
@@ -19,80 +19,7 @@ const APP_KEY = {
   CONSENT_DATE: 'th_cookie_consent_date',
   USER:     'th_user',
   BOOKMARKS:'th_bookmarks',
-  LOGO_URL: 'th_custom_logo_url',
 };
-
-/* ═══════════════════════════════════════════════════════════════════
-   CUSTOM LOGO
-   ─────────────────────────────────────────────────────────────────
-   Probes the fixed Supabase Storage URL for a custom logo.
-   Works on ALL browsers automatically — no localStorage required.
-
-   Flow:
-   1. If localStorage has a cached URL → apply instantly (no flicker)
-   2. Background probe the Supabase URL → if it loads, cache + apply
-   3. CMS upload stores URL + version timestamp → cache-busted instantly
-   4. Re-probes at most once per hour for other browsers
-═══════════════════════════════════════════════════════════════════ */
-
-(function applyCustomLogo() {
-  var SB_LOGO_PNG = 'https://dwcsledifvnyrunxejzd.supabase.co/storage/v1/object/public/images/site/logo.png';
-  var SB_LOGO_SVG = 'https://dwcsledifvnyrunxejzd.supabase.co/storage/v1/object/public/images/site/logo.svg';
-  var CACHE_KEY   = 'th_custom_logo_url';
-  var VER_KEY     = 'th_logo_ver';
-  var CHECK_KEY   = 'th_logo_last_check';
-  var ONE_HOUR    = 3600000;
-
-  function swapAll(url) {
-    document.querySelectorAll(
-      '.nav-logo img, .footer-logo img, .login-modal-logo-img, .auth-logo'
-    ).forEach(function(img) { img.src = url; });
-  }
-
-  function run() {
-    try {
-      var cached  = localStorage.getItem(CACHE_KEY);
-      var ver     = localStorage.getItem(VER_KEY) || '';
-      var lastChk = parseInt(localStorage.getItem(CHECK_KEY) || '0', 10);
-      var now     = Date.now();
-      var bust    = ver || now;
-
-      /* ── Fast path: apply cached URL immediately (no flicker) ── */
-      if (cached) { swapAll(cached + '?v=' + bust); }
-
-      /* ── Probe at most once per hour (skip if recently checked) ── */
-      if (!cached && (now - lastChk) < ONE_HOUR) return;
-
-      /* ── Probe PNG first, then SVG ── */
-      function probeSVG() {
-        var t = new Image();
-        t.onload = function() {
-          try { localStorage.setItem(CACHE_KEY, SB_LOGO_SVG); localStorage.setItem(CHECK_KEY, String(now)); } catch(e) {}
-          swapAll(SB_LOGO_SVG + '?v=' + bust);
-        };
-        t.onerror = function() {
-          try { localStorage.setItem(CHECK_KEY, String(now)); } catch(e) {}
-        };
-        t.src = SB_LOGO_SVG + '?_p=' + now;
-      }
-
-      var probe = new Image();
-      probe.onload = function() {
-        try { localStorage.setItem(CACHE_KEY, SB_LOGO_PNG); localStorage.setItem(CHECK_KEY, String(now)); } catch(e) {}
-        swapAll(SB_LOGO_PNG + '?v=' + bust);
-      };
-      probe.onerror = probeSVG;
-      probe.src = SB_LOGO_PNG + '?_p=' + now;
-
-    } catch(e) {}
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', run);
-  } else {
-    run();
-  }
-})();
 
 // Replace with your real Google Cloud OAuth client ID
 const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
@@ -266,11 +193,18 @@ const TH_AUTH = (() => {
     el.innerHTML = `
       <div class="th-modal-box login-modal-box" role="document">
         <button class="th-modal-close" aria-label="Close" onclick="TH_AUTH.closeLoginModal()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-        <div class="login-modal-logo">
-          <img src="logo.svg" alt="Timeless Hadith" class="login-modal-logo-img" onerror="this.style.display='none'" />
-        </div>
+        <div class="login-modal-logo"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
         <h2 class="login-modal-title">Sign in to Timeless Hadith</h2>
+        <p class="login-modal-reason"></p>
         <div id="google-signin-btn-modal" class="gis-btn-wrap"></div>
+        <div class="login-modal-divider"><span>or</span></div>
+        <button class="btn-demo-login" onclick="TH_AUTH.demoLogin()">
+          Continue as Guest (Demo)
+        </button>
+        <p class="login-modal-note">
+          We only use your name and profile picture.<br>
+          <a href="privacy.html">Privacy Policy</a>
+        </p>
       </div>`;
     // Close on backdrop click
     el.addEventListener('click', e => { if (e.target === el) closeLoginModal(); });
@@ -331,13 +265,37 @@ const TH_AUTH = (() => {
         transition: background .2s;
       }
       .th-modal-close:hover { background: var(--hover-bg, rgba(0,0,0,.06)); }
-      .login-modal-logo { text-align: center; margin-bottom: 1.25rem; }
-      .login-modal-logo-img { height: 48px; width: auto; object-fit: contain; }
+      .login-modal-logo { font-size: 2.5rem; text-align: center; margin-bottom: .5rem; }
       .login-modal-title {
-        font-size: 1.15rem; font-weight: 700; text-align: center;
-        margin: 0 0 1.5rem; color: var(--text-primary, #1d1d1f);
+        font-size: 1.2rem; font-weight: 700; text-align: center;
+        margin: 0 0 .5rem; color: var(--text-primary, #1d1d1f);
+      }
+      .login-modal-reason {
+        font-size: .875rem; text-align: center; color: var(--text-secondary, #666);
+        margin: 0 0 1.5rem;
       }
       .gis-btn-wrap { display: flex; justify-content: center; }
+      .login-modal-divider {
+        display: flex; align-items: center; gap: .75rem;
+        margin: 1rem 0; color: var(--text-secondary, #999); font-size: .8rem;
+      }
+      .login-modal-divider::before, .login-modal-divider::after {
+        content:''; flex:1; height:1px; background: var(--border, #e5e5e5);
+      }
+      .btn-demo-login {
+        width: 100%; padding: .75rem 1rem;
+        background: var(--bg-secondary, #f5f5f7);
+        border: 1px solid var(--border, #e5e5e5);
+        border-radius: 12px; font-size: .9rem; font-weight: 600;
+        cursor: pointer; color: var(--text-primary, #1d1d1f);
+        transition: background .2s, transform .15s;
+      }
+      .btn-demo-login:hover { background: var(--hover-bg, #eaeaec); transform: translateY(-1px); }
+      .login-modal-note {
+        font-size: .75rem; text-align: center; color: var(--text-secondary, #999);
+        margin: 1rem 0 0;
+      }
+      .login-modal-note a { color: var(--accent, #0071e3); text-decoration: none; }
     `;
     document.head.appendChild(s);
   }
@@ -627,7 +585,7 @@ const TH_SHARE = (() => {
     y += engLines * 48 + 44;
 
     // ── Reference pill ──
-    const refText = `${hadith.narrator || ''} · ${hadith.source || ''}`.trim().replace(/^·\s*/, '').replace(/\s*·\s*$/, '');
+    const refText = `${hadith.narrator || ''} · ${hadith.source || ''} ${hadith.number ? '#' + hadith.number : ''}`.trim().replace(/^·\s*/, '').replace(/\s*·\s*$/, '');
     ctx.font = '500 24px -apple-system, SF Pro Display, Helvetica Neue, sans-serif';
     const refW = ctx.measureText(refText).width + 48;
     const refX = (W - refW) / 2;
@@ -661,7 +619,7 @@ const TH_SHARE = (() => {
     ctx.font = '400 20px -apple-system, SF Pro Display, Helvetica Neue, sans-serif';
     ctx.fillStyle = TEXT2;
     ctx.textAlign = 'center';
-    ctx.fillText('ehsaasradio-bot.github.io/timeless-hadith', W / 2, footerY);
+    ctx.fillText('timelesshadith.com  ·  Free to share with attribution', W / 2, footerY);
 
     _canvas = canvas;
 
@@ -955,77 +913,6 @@ const TH_COOKIE = (() => {
 })();
 
 /* ═══════════════════════════════════════════════════════════════════
-   LIKES (localStorage-based heart/like count per hadith)
-═══════════════════════════════════════════════════════════════════ */
-
-const TH_LIKES = (() => {
-  const STORE_KEY = 'th_likes';
-
-  function _getAll() {
-    try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch(e) { return {}; }
-  }
-  function _save(obj) {
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(obj)); } catch(e) {}
-  }
-
-  function isLiked(id) {
-    return !!_getAll()[id];
-  }
-
-  function getCount(id) {
-    /* Simulate a "total likes" count: user's like + a seed based on id hash */
-    const seed = _hashCode(id) % 47 + 3;  // 3–49 base likes
-    return seed + (_getAll()[id] ? 1 : 0);
-  }
-
-  function toggle(id, btnEl) {
-    const all = _getAll();
-    if (all[id]) {
-      delete all[id];
-    } else {
-      all[id] = Date.now();
-    }
-    _save(all);
-    /* Update this button's UI */
-    if (btnEl) _updateBtn(btnEl, id);
-    /* Also update any other like buttons for same id on page */
-    document.querySelectorAll('[data-like-id="' + id + '"]').forEach(el => {
-      if (el !== btnEl) _updateBtn(el, id);
-    });
-  }
-
-  function _updateBtn(btn, id) {
-    const liked = isLiked(id);
-    const count = getCount(id);
-    btn.classList.toggle('liked', liked);
-    btn.setAttribute('aria-pressed', liked);
-    const countEl = btn.querySelector('.like-count');
-    if (countEl) countEl.textContent = count;
-    const svg = btn.querySelector('svg');
-    if (svg) svg.setAttribute('fill', liked ? 'currentColor' : 'none');
-  }
-
-  function syncPage() {
-    document.querySelectorAll('[data-like-id]').forEach(btn => {
-      const id = btn.dataset.likeId;
-      _updateBtn(btn, id);
-    });
-  }
-
-  /* Simple string hash for deterministic seed */
-  function _hashCode(s) {
-    let h = 0;
-    for (let i = 0; i < s.length; i++) {
-      h = ((h << 5) - h) + s.charCodeAt(i);
-      h |= 0;
-    }
-    return Math.abs(h);
-  }
-
-  return { isLiked, getCount, toggle, syncPage };
-})();
-
-/* ═══════════════════════════════════════════════════════════════════
    CARD MICRO-INTERACTIONS
 ═══════════════════════════════════════════════════════════════════ */
 
@@ -1061,7 +948,6 @@ const TH_INTERACTIONS = (() => {
     TH_BOOKMARKS.init();
     TH_COOKIE.init();
     TH_INTERACTIONS.initCards();
-    TH_LIKES.syncPage();
   });
 })();
 
