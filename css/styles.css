@@ -184,12 +184,15 @@ nav.main-nav {
   text-decoration: none;
 }
 .nav-logo img {
-  height: 36px; width: auto;
-  transition: filter 0.35s ease;
+  height: 40px; width: auto;
+  display: block;
+  transition: filter 0.35s ease, opacity 0.2s ease;
 }
+.nav-logo:hover img { opacity: 0.85; }
+.footer-logo img { height: 34px; width: auto; display: block; }
 [data-theme="dark"] .nav-logo img,
 [data-theme="dark"] .footer-logo img {
-  filter: invert(1) hue-rotate(180deg);
+  filter: brightness(0) invert(1);
 }
 
 .nav-links {
