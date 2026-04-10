@@ -17,13 +17,35 @@
 var SB_URL  = 'https://dwcsledifvnyrunxejzd.supabase.co';
 var SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3Y3NsZWRpZnZueXJ1bnhlanpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTgwNzgsImV4cCI6MjA5MDUzNDA3OH0.Aww8QcExJF1tPwMPvqP5q0_avc3YJclqsFJcXptlnZo';
 
+/* ── Allowed origin (H-02: restrict CORS to own domain) ── */
+var ALLOWED_ORIGIN = 'https://timelesshadith.com';
+
+/* ── In-memory rate limiting (M-04) ── */
+/* Note: Cloudflare Workers are ephemeral — for persistent rate limiting
+   enable Cloudflare Rate Limiting rules in the dashboard:
+   Dashboard → Security → WAF → Rate Limiting → 20 req/min per IP on /api/ai-search */
+var _ratemap = new Map();
+var RATE_LIMIT = 20;         // requests per window
+var RATE_WINDOW = 60 * 1000; // 1 minute
+
+function _checkRateLimit(ip) {
+  var now = Date.now();
+  var key = ip || 'unknown';
+  var entry = _ratemap.get(key) || { count: 0, reset: now + RATE_WINDOW };
+  if (now > entry.reset) { entry = { count: 0, reset: now + RATE_WINDOW }; }
+  entry.count++;
+  _ratemap.set(key, entry);
+  return entry.count <= RATE_LIMIT;
+}
+
 /* ── CORS helper ── */
 function _cors(body, status) {
   return new Response(JSON.stringify(body), {
     status: status || 200,
     headers: {
       'Content-Type':                'application/json',
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+      'Vary':                        'Origin'
     }
   });
 }
@@ -33,7 +55,7 @@ export async function onRequestOptions() {
   return new Response(null, {
     status: 204,
     headers: {
-      'Access-Control-Allow-Origin':  '*',
+      'Access-Control-Allow-Origin':  ALLOWED_ORIGIN,
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type'
     }
@@ -43,6 +65,15 @@ export async function onRequestOptions() {
 /* ── Handle POST ── */
 export async function onRequestPost(context) {
   var env = context.env;
+
+  /* M-04: Rate-limit check */
+  var clientIP =
+    context.request.headers.get('CF-Connecting-IP') ||
+    context.request.headers.get('X-Forwarded-For') ||
+    'unknown';
+  if (!_checkRateLimit(clientIP)) {
+    return _cors({ error: 'Too many requests. Please wait a moment and try again.' }, 429);
+  }
 
   /* 0. Parse request body */
   var body;
