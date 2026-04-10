@@ -141,7 +141,28 @@
       if(_query){ var hay=[h.english,h.arabic,h.narrator,h.source,h.subcategory].join(' ').toLowerCase(); if(hay.indexOf(_query)===-1) return false; }
       return true;
     });
+    /* Honour deep-link ?h=<id> — jump to the page that contains it */
+    var deepId = new URLSearchParams(window.location.search).get('h');
+    if (deepId) {
+      for (var i=0;i<_filtered.length;i++) {
+        if (_filtered[i].id === deepId) {
+          currentPage = Math.floor(i / PER_PAGE);
+          break;
+        }
+      }
+    }
     renderPage();
+    if (deepId) {
+      /* Wait for card DOM to exist, then scroll + highlight */
+      setTimeout(function(){
+        var target = document.getElementById('h-' + deepId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          target.classList.add('hadith-card-flash');
+          setTimeout(function(){ target.classList.remove('hadith-card-flash'); }, 2400);
+        }
+      }, 260);
+    }
   }
 
   function authCls(a){ return a==='Sahih'?'auth-sahih':a==='Hasan'?'auth-hasan':''; }
@@ -151,6 +172,8 @@
   function buildCard(h, i) {
     var card=document.createElement('article');
     card.className='hadith-card';
+    card.id='h-'+h.id;
+    card.setAttribute('data-hadith-id', h.id);
     card.style.animationDelay=Math.min(i*0.06,0.5)+'s';
     var isBm=typeof TH_BOOKMARKS!=='undefined' && TH_BOOKMARKS && TH_BOOKMARKS.has(h.id);
     var catTitle=_cat?_cat.title:'';
@@ -201,8 +224,33 @@
       }
       list.classList.remove('fading');
       updatePagination();
+      renderInternalLinks();
       if(typeof TH_BOOKMARKS!=='undefined' && TH_BOOKMARKS) TH_BOOKMARKS.syncPage();
     },180);
+  }
+
+  /* ── Internal link block: render every hadith in the category
+     as a crawlable <a href="?cat=X&h=ID">...</a> so search engines
+     can discover every permalink. Only shown when no filters are
+     active, to keep filtered views clean. ── */
+  function renderInternalLinks() {
+    var host = document.getElementById('hadith-index-block');
+    if (!host) return;
+    if (_authFilter || _narFilter || _query) { host.style.display = 'none'; return; }
+    if (!_hadiths || !_hadiths.length) { host.style.display = 'none'; return; }
+    host.style.display = '';
+    var parts = ['<h2 class="hadith-index-title">All hadiths in ' + (_cat ? _cat.title : '') + '</h2>',
+                 '<p class="hadith-index-sub">Jump to any hadith. Each link is a stable permalink.</p>',
+                 '<ul class="hadith-index-list">'];
+    for (var i=0;i<_hadiths.length;i++) {
+      var h = _hadiths[i];
+      var label = h.number ? ('#' + h.number + ' \u00b7 ' + (h.source || '')) :
+                  ('Hadith ' + (i+1));
+      var href = 'category.html?cat=' + encodeURIComponent(_slug) + '&h=' + encodeURIComponent(h.id);
+      parts.push('<li><a href="' + href + '" rel="bookmark">' + label + '</a></li>');
+    }
+    parts.push('</ul>');
+    host.innerHTML = parts.join('');
   }
 
   function updatePagination() {
