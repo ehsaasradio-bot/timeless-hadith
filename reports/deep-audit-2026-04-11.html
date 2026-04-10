@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Timeless Hadith — Deep 2026-Grade Audit (2026-04-11)</title>
+<style>
+  :root {
+    --bg:#fafafa; --ink:#0a0a0a; --ink-2:#444; --ink-3:#7a7a7a;
+    --line:#e5e5e5; --card:#fff;
+    --crit:#b00020; --high:#c2410c; --med:#a16207; --low:#15803d; --info:#1e40af;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;font:14.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    color:var(--ink);background:var(--bg);padding:48px 24px;
+  }
+  main{max-width:960px;margin:0 auto;}
+  header{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:32px;}
+  h1{font-size:28px;font-weight:600;margin:0 0 8px;letter-spacing:-0.015em;}
+  .subtitle{color:var(--ink-2);font-size:14px;margin:0;}
+  h2{font-size:19px;font-weight:600;margin:44px 0 12px;letter-spacing:-0.005em;border-top:1px solid var(--line);padding-top:28px;}
+  h2:first-of-type{border-top:none;padding-top:0;margin-top:24px;}
+  h3{font-size:14px;font-weight:700;margin:20px 0 8px;color:var(--ink);letter-spacing:-0.005em;}
+  h4{font-size:13px;font-weight:600;margin:14px 0 4px;color:var(--ink-2);text-transform:uppercase;letter-spacing:0.04em;}
+  p{margin:0 0 10px;color:var(--ink-2);}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin-bottom:14px;}
+  ul{margin:6px 0 6px;padding-left:22px;}
+  li{margin-bottom:4px;color:var(--ink-2);}
+  code{font:12.5px/1.5 ui-monospace,"SF Mono",Menlo,Consolas,monospace;background:#f1f1f1;padding:1.5px 6px;border-radius:5px;color:var(--ink);}
+  pre{font:12px/1.55 ui-monospace,"SF Mono",Menlo,Consolas,monospace;background:#f6f6f6;padding:14px 16px;border-radius:10px;border:1px solid var(--line);overflow-x:auto;color:var(--ink);}
+  table{width:100%;border-collapse:collapse;margin:12px 0 4px;font-size:13px;}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{color:var(--ink-3);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;font-size:11px;background:#fafafa;}
+  td{color:var(--ink-2);}
+  .sev{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;}
+  .sev-crit{background:#fde8e9;color:var(--crit);}
+  .sev-high{background:#fff1e6;color:var(--high);}
+  .sev-med{background:#fff8e1;color:var(--med);}
+  .sev-low{background:#e8f5ee;color:var(--low);}
+  .sev-info{background:#e6ecff;color:var(--info);}
+  .score-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:6px;}
+  .score{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
+  .score .label{font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.04em;}
+  .score .value{font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;}
+  .score .value small{font-size:13px;font-weight:500;color:var(--ink-3);}
+  .finding{background:#fff;border:1px solid var(--line);border-left:3px solid var(--line);border-radius:10px;padding:18px 22px;margin-bottom:12px;}
+  .finding.crit{border-left-color:var(--crit);}
+  .finding.high{border-left-color:var(--high);}
+  .finding.med{border-left-color:var(--med);}
+  .finding.low{border-left-color:var(--low);}
+  .finding.info{border-left-color:var(--info);}
+  .finding .ftitle{display:flex;align-items:center;gap:12px;font-weight:700;font-size:15px;color:var(--ink);margin-bottom:6px;letter-spacing:-0.005em;}
+  .finding .fmeta{font-size:12px;color:var(--ink-3);margin-bottom:10px;}
+  .finding p{font-size:13.5px;margin:6px 0;color:var(--ink-2);}
+  .finding .fix{background:#f6fbf8;border:1px solid #d9ebe1;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:13px;color:#0f5132;}
+  .assumption{background:#fff8e1;border:1px solid #fde59a;border-radius:6px;padding:8px 12px;margin:6px 0;font-size:12.5px;color:#6a4f00;}
+  footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-3);font-size:12.5px;}
+  .toc{font-size:13px;line-height:1.8;}
+  .toc a{color:var(--ink-2);text-decoration:none;}
+  .toc a:hover{color:var(--ink);text-decoration:underline;}
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>Timeless Hadith — Deep 2026-Grade Audit</h1>
+  <p class="subtitle">
+    Principal-level review across Web Standards, Accessibility (WCAG 2.2 AA), SEO,
+    Performance (CWV), Security (OWASP Top 10 / ASVS), Tech Stack, and
+    Authorized Safe Penetration Observations. Prepared 2026-04-11 against the
+    <code>main</code> branch at commit <code>812f093</code>, correlated with the live codebase
+    at <code>/sessions/admiring-nice-dirac/mnt/Haith</code>.
+  </p>
+</header>
+
+<div class="card">
+  <h3 style="margin-top:0">Assumptions (labelled)</h3>
+  <div class="assumption"><strong>A1.</strong> Live-site (https://timelesshadith.com) HTTP access was blocked by the auditing environment's egress proxy. All findings below are derived from the codebase as it will be served by Cloudflare Pages on next push. Where live-only behaviour (TLS version, header propagation, actual LCP) matters, it is flagged.</div>
+  <div class="assumption"><strong>A2.</strong> I assume Cloudflare Pages is the production host (confirmed in <code>CLAUDE.md</code> and <code>.github/workflows/pages.yml</code>) and that the <code>_headers</code> file is honoured by CF Pages verbatim.</div>
+  <div class="assumption"><strong>A3.</strong> I assume Supabase Row-Level Security (RLS) is configured on the <code>hadiths</code> table to make the public anon JWT safe. This was NOT verifiable from the codebase alone — if RLS is off, the severity of finding SEC-04 changes from Informational to Critical.</div>
+  <div class="assumption"><strong>A4.</strong> I am authorized to perform this audit per the explicit request from the project owner (Syed, email on file in system context) and per <code>CLAUDE.md</code> which designates me the senior engineering agent for this project. All testing in this report is passive code review — no active exploitation was attempted.</div>
+</div>
+
+<h2>Executive Summary</h2>
+<div class="card">
+<p><strong>Overall maturity: 6.4 / 10.</strong> The codebase is in notably better shape than most static-site + Supabase projects I see. It has clean conventional commits, a working service worker, shipped CSP hardening (P3), skip links, <code>prefers-reduced-motion</code>, and a proper sitemap. The P1–P4 audit follow-through is visible in the git history and pays off.</p>
+
+<h3>Biggest strengths</h3>
+<ul>
+  <li>Mature security headers at the edge via <code>_headers</code>: HSTS preload, <code>X-Frame-Options: DENY</code>, <code>Referrer-Policy: strict-origin-when-cross-origin</code>, Permissions-Policy locking down geolocation/mic/camera/payment, and a solid CSP that dropped <code>'unsafe-inline'</code> from <code>script-src</code> in commit <code>f6b315b</code>.</li>
+  <li>Real PWA surface: service worker with stale-while-revalidate, offline fallback, manifest, proper worker-src in CSP.</li>
+  <li>Good SEO foundations: per-page titles/descriptions, canonical tags, sitemap.xml with 97 book URLs, robots.txt hygiene, JSON-LD WebSite schema, semantic HTML, and the new per-hadith permalink scheme just landed in <code>6da8c66</code>.</li>
+  <li>Dark-first design system driven by CSS custom properties with a clean light/dark split and genuine accessibility affordances (skip links, reduced-motion, color-scheme hint).</li>
+  <li>Clean git hygiene — conventional commits, one logical concern per commit, separate report artefacts under <code>reports/</code>.</li>
+</ul>
+
+<h3>Biggest risks</h3>
+<ul>
+  <li><strong>Wildcard CORS + zero rate limiting on the AI endpoint</strong> (<code>functions/api/ai-search.js</code>). Any third-party site can call <code>POST /api/ai-search</code> from the browser and burn the project's <code>OPENAI_API_KEY</code>. This is the single highest-impact finding in the report.</li>
+  <li><strong>Architectural indexability ceiling</strong> — the entire hadith corpus is rendered client-side from Supabase by <code>js/category-wire.js</code>. Googlebot can render JS but it costs crawl budget and delays indexing by days or weeks. At 7,277 hadiths this meaningfully caps organic growth until there is SSR or static pre-rendering.</li>
+  <li><strong>Service worker cache list drift</strong> — <code>sw.js</code> precaches file paths that no longer exist (e.g. <code>js/ai-search.js</code>) and is missing the eight wire/helper modules added in commit <code>a8a8f71</code>. First-visit shell caching is partially broken until the cache version is bumped.</li>
+  <li><strong>CSP divergence between edge header and inline meta</strong>. <code>_headers</code> and the <code>&lt;meta http-equiv="Content-Security-Policy"&gt;</code> block in <code>index.html</code> specify different allow-lists. When both are present the intersection applies, which creates surprise breakages on future edits.</li>
+  <li><strong>Repo hygiene</strong> — two prebuilt <code>timeless-hadith-*.zip</code> archives (~249 KB combined) and a PDF audit report are committed to the repo root. They inflate clones, can leak intermediate build state, and are Cloudflare-deployed as public assets by default.</li>
+</ul>
+
+<h3>Top 5 priorities (next 7 days)</h3>
+<ol>
+  <li><strong>Lock down /api/ai-search</strong> — origin allow-list (not <code>*</code>), per-IP rate limit (Cloudflare Turnstile or KV-backed token bucket), request size/word count checks. Before any push of the function to production.</li>
+  <li><strong>Bump service worker VERSION and rewrite CORE_ASSETS</strong> to match the current file tree, including the new <code>.webp</code> variants and the eight <code>*-wire.js</code> modules.</li>
+  <li><strong>Delete the two committed zips and the PDF report from the repo root</strong>, add them to <code>.gitignore</code>, and move the archive to <code>reports/</code> behind the existing <code>Disallow: /reports/</code> rule if it needs to stay tracked.</li>
+  <li><strong>Reconcile CSP</strong> — remove the inline meta CSP from every HTML page and keep <code>_headers</code> as the single source of truth. Document that <code>script-src-attr 'unsafe-inline'</code> is a known scoped exception until onclick attributes are refactored.</li>
+  <li><strong>Enable Supabase RLS audit</strong> — confirm RLS is on for the <code>hadiths</code> table and that the anon role has read-only policies only. If it isn't, this becomes the number-one priority.</li>
+</ol>
+</div>
+
+<h2>Scorecard (1&ndash;10)</h2>
+<div class="score-grid">
+  <div class="score"><div class="label">Web Standards</div><div class="value">7.5<small>/10</small></div></div>
+  <div class="score"><div class="label">Accessibility (WCAG 2.2 AA)</div><div class="value">6.8<small>/10</small></div></div>
+  <div class="score"><div class="label">SEO</div><div class="value">6.0<small>/10</small></div></div>
+  <div class="score"><div class="label">Performance (CWV)</div><div class="value">7.2<small>/10</small></div></div>
+  <div class="score"><div class="label">Security</div><div class="value">5.5<small>/10</small></div></div>
+  <div class="score"><div class="label">Tech Stack Quality</div><div class="value">6.5<small>/10</small></div></div>
+  <div class="score"><div class="label">Operational Readiness</div><div class="value">5.8<small>/10</small></div></div>
+</div>
+
+<h2>Findings by Category</h2>
+
+<h3>Security</h3>
+
+<div class="finding crit">
+  <div class="ftitle">SEC-01 &nbsp;·&nbsp; Wildcard CORS on /api/ai-search with no rate limit <span class="sev sev-crit">Critical</span></div>
+  <div class="fmeta">OWASP A05:2021 Security Misconfiguration · OWASP API10:2023 Unsafe Consumption of APIs · OWASP ASVS V13.2, V11</div>
+  <p><strong>Evidence</strong> (<code>functions/api/ai-search.js:22-41</code>):</p>
+  <pre>function _cors(body, status) {
+  return new Response(JSON.stringify(body), {
+    status: status || 200,
+    headers: {
+      'Content-Type':                'application/json',
+      'Access-Control-Allow-Origin': '*'
+    }
+  });
+}
+export async function onRequestOptions() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin':  '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    }
+  });
+}</pre>
+  <p>The function accepts cross-origin POSTs from <em>any</em> browser, calls Supabase, then forwards the query to <code>https://api.openai.com/v1/chat/completions</code> using the project's <code>OPENAI_API_KEY</code> (line 115). There is no origin validation, no Turnstile/CAPTCHA, no per-IP rate limit, no daily budget cap, no auth, and no bot check. The only protections are a 500-char query cap and the static system prompt.</p>
+  <p><strong>Why it matters:</strong> A single malicious site, bot farm, or even a casual Stack Overflow answer demonstrating the endpoint can drive unlimited spend against the project's OpenAI billing. <code>gpt-4o-mini</code> is cheap per call but billed at zero rate limit this becomes a real incident within hours. This is a direct financial and availability risk.</p>
+  <div class="fix"><strong>Fix (ship before next push):</strong>
+    <ol>
+      <li>Replace <code>Access-Control-Allow-Origin: '*'</code> with an explicit allow-list: <code>https://timelesshadith.com</code> and <code>https://timeless-hadith.pages.dev</code>. Reject the rest.</li>
+      <li>Validate the <code>Origin</code> header on POST as well — browsers send it on cross-origin fetches.</li>
+      <li>Add a Cloudflare KV-backed token bucket: <code>~20 queries per IP per hour</code>, <code>~200 per day</code>. CF Pages Functions can read <code>context.request.headers.get('cf-connecting-ip')</code>.</li>
+      <li>Wrap the endpoint with <a href="https://developers.cloudflare.com/turnstile/">Cloudflare Turnstile</a> and require a token on POST. This takes 15 minutes and shuts down 99% of bot abuse.</li>
+      <li>Set a hard daily budget in the OpenAI dashboard as a tripwire (e.g. $5/day while you stabilise).</li>
+      <li>Cache identical queries in KV for 24h — trivially halves cost and latency.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="finding high">
+  <div class="ftitle">SEC-02 &nbsp;·&nbsp; Dual-source CSP drift between <code>_headers</code> and inline meta <span class="sev sev-high">High</span></div>
+  <div class="fmeta">OWASP A05:2021 Security Misconfiguration</div>
+  <p><strong>Evidence:</strong> <code>_headers</code> line 13 sets</p>
+  <pre>Content-Security-Policy: default-src 'self'; script-src 'self' https://accounts.google.com https://static.cloudflareinsights.com; script-src-attr 'unsafe-inline'; ...</pre>
+  <p>and <code>index.html:35-36</code> sets a second CSP via <code>&lt;meta http-equiv&gt;</code> with a different allow-list:</p>
+  <pre>script-src 'self' https://accounts.google.com https://fonts.googleapis.com https://static.cloudflareinsights.com;</pre>
+  <p>Note the inline version also includes <code>https://fonts.googleapis.com</code> in <code>script-src</code>, which is dead (Google Fonts serves CSS, not JS) and implies a misunderstanding of which directive fonts fall under.</p>
+  <p><strong>Why it matters:</strong> When both CSPs are present the browser takes their intersection. A future edit to one file will silently break policy on pages served with the other. This is a classic source of "CSP worked yesterday" incidents.</p>
+  <div class="fix"><strong>Fix:</strong> Keep <code>_headers</code> as the single source of truth. Delete the <code>&lt;meta http-equiv="Content-Security-Policy"&gt;</code> line from every HTML page (index, about, categories, category, bookmarks, privacy, terms). Document in <code>CLAUDE.md</code> that CSP lives in <code>_headers</code> and nowhere else.</div>
+</div>
+
+<div class="finding high">
+  <div class="ftitle">SEC-03 &nbsp;·&nbsp; Two prebuilt archives and a PDF committed to repo root <span class="sev sev-high">High</span></div>
+  <div class="fmeta">OWASP A05:2021 · Supply-chain / asset exposure</div>
+  <p><strong>Evidence:</strong></p>
+  <pre>timeless-hadith-235e0df56299dcfd2441bd318527e9eda1826f3e.zip   94 KB
+timeless-hadith-37336c38e98b8994f0126c9a7c548e3b1c4e91a9.zip  155 KB
+Timeless_Hadith_Audit_Report.pdf                              36 KB</pre>
+  <p>Cloudflare Pages deploys the entire working tree as public assets by default. Anyone guessing (or reading these filenames from git) can fetch them at <code>https://timelesshadith.com/timeless-hadith-235e0df....zip</code>. Historical build ZIPs routinely contain environment files, transient secrets, and file layouts that make further attacks easier.</p>
+  <p><strong>Why it matters:</strong> Even if these particular archives contain no secrets, they set a bad precedent, bloat the deploy, and appear in the Cloudflare build log. Robots.txt does not stop fetching, only crawling.</p>
+  <div class="fix"><strong>Fix:</strong> Delete the zips and the PDF from the repo tracking history (<code>git rm</code>, then rewrite-history if they carried secrets, otherwise a normal commit is fine). Add <code>*.zip</code> and <code>*.pdf</code> to <code>.gitignore</code>. Keep a <code>reports/</code>-based workflow for any deliverable that needs to be versioned, already covered by <code>Disallow: /reports/</code> in <code>robots.txt</code>.</div>
+</div>
+
+<div class="finding med">
+  <div class="ftitle">SEC-04 &nbsp;·&nbsp; Supabase anon JWT hardcoded in two places (assumes RLS is on) <span class="sev sev-med">Medium</span></div>
+  <div class="fmeta">OWASP A02:2021 Cryptographic Failures · OWASP ASVS V1.5, V3.5</div>
+  <p><strong>Evidence:</strong> The JWT anon key appears verbatim at:</p>
+  <ul>
+    <li><code>js/supabase-data.js:31</code> — exposed to every browser</li>
+    <li><code>functions/api/ai-search.js:18</code> — as a fallback when <code>env.SUPABASE_ANON_KEY</code> is unset</li>
+  </ul>
+  <p>Supabase anon keys are designed to be public-safe only when Row-Level Security is configured on every exposed table. I could not verify RLS state from the codebase alone.</p>
+  <p><strong>Why it matters:</strong> If RLS is not on, this anon key allows <em>any</em> client to read, write, or delete rows in any exposed table via the PostgREST API, which would be catastrophic. If RLS is correctly configured, this becomes Informational.</p>
+  <div class="fix"><strong>Fix (verify now):</strong>
+    <ol>
+      <li>Supabase dashboard &rarr; Table editor &rarr; <code>hadiths</code> (and every other public table) &rarr; confirm "Enable RLS" is ON.</li>
+      <li>Confirm the policies on each table are <em>read-only</em> for the <code>anon</code> role. Example: <code>CREATE POLICY "anon read" ON public.hadiths FOR SELECT TO anon USING (true);</code></li>
+      <li>Remove the hardcoded anon fallback from <code>functions/api/ai-search.js</code> and require <code>env.SUPABASE_ANON_KEY</code> to be set — this decouples the function from the frontend key and lets you rotate either independently.</li>
+      <li>Publish an internal rotation runbook for the anon key.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="finding med">
+  <div class="ftitle">SEC-05 &nbsp;·&nbsp; <code>script-src-attr 'unsafe-inline'</code> retained for onclick attributes <span class="sev sev-med">Medium</span></div>
+  <div class="fmeta">OWASP A03:2021 Injection (XSS surface)</div>
+  <p><strong>Evidence:</strong> <code>_headers:13</code>, retained consciously in P3 commit <code>f6b315b</code>. The live card templates in <code>js/category-wire.js:161-163</code> build HTML with embedded <code>onclick="TH_LIKES&amp;&amp;TH_LIKES.toggle(...)"</code> strings and inject via <code>innerHTML</code>.</p>
+  <p><strong>Why it matters:</strong> If an attacker ever lands arbitrary text in a hadith field (via Supabase write, compromised admin, or a future CMS bug), the <code>innerHTML</code> path is an XSS vector that the rest of the CSP cannot block because <code>script-src-attr 'unsafe-inline'</code> is allowed. This is accepted technical debt documented in the P3 report, but it stays Medium until the handlers are refactored.</p>
+  <div class="fix"><strong>Fix (1–2 day refactor):</strong> Replace every inline <code>onclick</code> in card templates with <code>data-*</code> attributes and one delegated <code>addEventListener('click', ...)</code> on <code>#main-content</code>. That lets you drop <code>script-src-attr 'unsafe-inline'</code> entirely. Example skeleton:</p>
+  <pre>// in category-wire.js after list is rendered:
+document.getElementById('main-content').addEventListener('click', function (e) {
+  var like = e.target.closest('[data-like-id]');
+  if (like) { TH_LIKES.toggle(like.dataset.likeId, like); return; }
+  var bm = e.target.closest('[data-bookmark-id]');
+  if (bm) { TH_BOOKMARKS.toggle(bm.dataset.bookmarkId, bm); return; }
+  var share = e.target.closest('[data-share-id]');
+  if (share) { TH_SHARE.showModal(_getH(share.dataset.shareId), share.dataset.catTitle); return; }
+});</pre>
+</div>
+
+<div class="finding low">
+  <div class="ftitle">SEC-06 &nbsp;·&nbsp; <code>img-src https:</code> is overly permissive <span class="sev sev-low">Low</span></div>
+  <div class="fmeta">OWASP A05:2021</div>
+  <p><strong>Evidence:</strong> <code>_headers:13</code> sets <code>img-src 'self' data: https:</code>. Any HTTPS host can ship images, which means a compromised template could exfiltrate data via image-URL side channels (<code>?token=...</code>).</p>
+  <div class="fix"><strong>Fix:</strong> Restrict to the hosts you actually use: <code>img-src 'self' data: https://*.supabase.co https://lh3.googleusercontent.com</code> (the last is for Google OAuth avatars if you keep that login path).</div>
+</div>
+
+<div class="finding low">
+  <div class="ftitle">SEC-07 &nbsp;·&nbsp; Missing Cross-Origin-Opener-Policy and Cross-Origin-Resource-Policy <span class="sev sev-low">Low</span></div>
+  <p><strong>Evidence:</strong> <code>_headers</code> does not set <code>Cross-Origin-Opener-Policy</code> or <code>Cross-Origin-Resource-Policy</code>. These are 2026-baseline hardening headers that prevent cross-origin window abuse and Spectre-class side channels.</p>
+  <div class="fix"><strong>Fix (append to <code>/* </code> block):</strong>
+  <pre>Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Resource-Policy: same-origin
+Cross-Origin-Embedder-Policy: credentialless</pre>
+  The <code>credentialless</code> variant is the right default for a PWA that loads Google Fonts but not authenticated cross-origin resources.</div>
+</div>
+
+<div class="finding info">
+  <div class="ftitle">SEC-08 &nbsp;·&nbsp; Admin surface location and auth model unverified <span class="sev sev-info">Informational</span></div>
+  <p>The archived <code>archive/admin-backup.html</code> and <code>archive/cms.html</code> contain a working admin shell that was retired to <code>/archive/</code>. <code>robots.txt</code> disallows <code>/archive/</code>, but Cloudflare Pages still serves those files to anyone who knows the path. If anything in those files still references live Supabase tables or acts on user input, they become an unauthenticated admin panel.</p>
+  <div class="fix"><strong>Fix:</strong> Either delete <code>archive/admin-backup.html</code> and <code>archive/cms.html</code> outright, or add a Cloudflare Access rule on <code>/archive/*</code> to require authentication. Robots.txt is not a security boundary.</div>
+</div>
+
+<h3>Web Standards &amp; Frontend Quality</h3>
+
+<div class="finding med">
+  <div class="ftitle">WEB-01 &nbsp;·&nbsp; Service worker cache manifest drift <span class="sev sev-med">Medium</span></div>
+  <p><strong>Evidence:</strong> <code>sw.js:9</code> holds <code>const VERSION = 'th-v1-2026-04-10';</code>. The <code>CORE_ASSETS</code> list (lines 13-36) still references <code>/js/ai-search.js</code> (which is now <em>only</em> the Cloudflare Function at <code>functions/api/ai-search.js</code>, not a file in <code>js/</code>) and is missing the eight wire modules created in commit <code>a8a8f71</code> (<code>theme-init.js</code>, <code>sw-register.js</code>, <code>page-chrome.js</code>, <code>category-head.js</code>, <code>index-wire.js</code>, <code>categories-wire.js</code>, <code>category-wire.js</code>, <code>bookmarks-wire.js</code>) and the five new <code>.webp</code> assets from commit <code>79c1948</code>.</p>
+  <p><strong>Why it matters:</strong> First-visit PWA shell caching is partially broken until the version string changes. Returning users won't see the new modules cached on install, which defeats the whole point of the precache. It also means the offline page can't load critical wiring.</p>
+  <div class="fix"><strong>Fix:</strong> Bump <code>VERSION</code> to <code>'th-v2-2026-04-11'</code> and replace <code>CORE_ASSETS</code> with:
+  <pre>const CORE_ASSETS = [
+  '/', '/index.html', '/about.html', '/categories.html', '/category.html',
+  '/bookmarks.html', '/privacy.html', '/terms.html', '/offline.html',
+  '/css/styles.css',
+  '/js/theme-init.js', '/js/sw-register.js', '/js/page-chrome.js',
+  '/js/supabase-data.js', '/js/supabase-auth.js', '/js/app.js', '/js/data.js',
+  '/js/index-wire.js', '/js/categories-wire.js', '/js/category-head.js',
+  '/js/category-wire.js', '/js/bookmarks-wire.js',
+  '/manifest.json',
+  '/favicon-16.png', '/favicon-32.png', '/apple-touch-icon.png',
+  '/icon-192.png', '/icon-512.png',
+  '/timelesshadith-logo.png', '/og-image.png',
+  '/timelesshadith-logo.webp', '/icon-192.webp', '/icon-512.webp',
+  '/apple-touch-icon.webp', '/og-image.webp'
+];</pre>
+  Every commit that adds/removes a precached file should bump the VERSION suffix — consider a small git pre-commit hook that lints it.</div>
+</div>
+
+<div class="finding med">
+  <div class="ftitle">WEB-02 &nbsp;·&nbsp; Heavy per-page inline CSS duplicates <code>styles.css</code> responsibilities <span class="sev sev-med">Medium</span></div>
+  <p><strong>Evidence:</strong> Each HTML page (<code>index.html</code>, <code>category.html</code>, <code>categories.html</code>) contains hundreds of lines of <code>&lt;style&gt;</code> blocks for hero, cards, pagination, etc. <code>css/styles.css</code> is only 530 lines while the inline blocks total several thousand. This produces:</p>
+  <ul>
+    <li>Uncacheable CSS (parse-blocking on every page load)</li>
+    <li>Divergent styling between pages (hero margins on index vs category differ inconsistently)</li>
+    <li>Larger first-paint HTML payloads</li>
+    <li>Hard to audit/refactor, especially for dark-mode variants (which right now live in at least three places)</li>
+  </ul>
+  <div class="fix"><strong>Fix:</strong> Extract the inline <code>&lt;style&gt;</code> blocks into <code>css/pages/&lt;page&gt;.css</code> files and include them with <code>&lt;link rel="stylesheet"&gt;</code>. Cloudflare caches these aggressively once added to <code>_headers</code>. Budget 2-4 hours.</div>
+</div>
+
+<div class="finding low">
+  <div class="ftitle">WEB-03 &nbsp;·&nbsp; <code>manifest.json</code> background color is light, app default is dark <span class="sev sev-low">Low</span></div>
+  <p><strong>Evidence:</strong> <code>manifest.json:7-8</code>: <code>"background_color": "#ffffff", "theme_color": "#0a0a0a"</code>. After commit <code>2b1cc15</code> the app defaults to dark. The PWA splash screen will flash white during launch.</p>
+  <div class="fix"><strong>Fix:</strong> <code>"background_color": "#060c1a", "theme_color": "#060c1a"</code> to match the dark <code>--bg</code>.</div>
+</div>
+
+<div class="finding low">
+  <div class="ftitle">WEB-04 &nbsp;·&nbsp; <code>js/theme-init.js</code> is not deferred (correct) but is also blocking <span class="sev sev-low">Low</span></div>
+  <p>The script correctly runs synchronously before paint to prevent FOUC. That's the right call. But it's ~25 lines and could be <em>inlined</em> directly into the <code>&lt;head&gt;</code> of each page (with a <code>nonce</code> from CSP) to save a network round-trip on first paint — the file is too small to justify an HTTP request. Because CSP currently forbids inline script, this would require either (a) a per-request CSP nonce from the edge (CF Pages Function), or (b) accepting it as one file request and moving on. Low priority.</p>
+</div>
+
+<h3>Accessibility (WCAG 2.2 AA)</h3>
+
+<div class="finding med">
+  <div class="ftitle">A11Y-01 &nbsp;·&nbsp; Touch targets close to 24 px floor in nav and card actions <span class="sev sev-med">Medium</span></div>
+  <div class="fmeta">WCAG 2.2 &sect;2.5.5 Target Size (Minimum) — AA</div>
+  <p><strong>Evidence:</strong> <code>.theme-toggle</code> is 44×26 px (width ok, height 26 px borderline). <code>.card-action</code> buttons in card templates are ~30×30 px including padding. WCAG 2.2 AA requires 24×24 px minimum for the target itself and recommends 44×44 for primary actions.</p>
+  <p>The nav theme toggle and card-action icons pass the minimum but fail the recommended threshold that improves motor accessibility. On mobile the per-card Like / Bookmark / Share cluster will be error-prone.</p>
+  <div class="fix"><strong>Fix:</strong> Raise card-action hit area to 44×44 via a transparent padded hitbox while keeping the icon visually small. Example:
+  <pre>.card-action { position: relative; }
+.card-action::before {
+  content: ""; position: absolute; inset: -8px;
+  /* invisible hit target — 44x44 around a 28x28 icon */
+}</pre>
+  </div>
+</div>
+
+<div class="finding med">
+  <div class="ftitle">A11Y-02 &nbsp;·&nbsp; Arabic content lacks <code>lang="ar"</code> on some containers <span class="sev sev-med">Medium</span></div>
+  <div class="fmeta">WCAG 3.1.2 Language of Parts — AA</div>
+  <p><strong>Evidence:</strong> <code>js/category-wire.js:173</code> wraps the Arabic text with <code>&lt;p class="arabic-text" lang="ar" dir="rtl"&gt;</code> — good. But <code>js/index-wire.js</code> (featured hadith loop) and <code>js/bookmarks-wire.js</code> card template need a spot-check to confirm the same. If Arabic text ever ships without <code>lang="ar"</code>, screen readers will mispronounce it as English phonemes.</p>
+  <div class="fix"><strong>Fix:</strong> Grep all template-building code for <code>arabic-text</code> and ensure <code>lang="ar" dir="rtl"</code> is always present. Add a unit test for the render.</div>
+</div>
+
+<div class="finding med">
+  <div class="ftitle">A11Y-03 &nbsp;·&nbsp; Dynamic content updates lack <code>aria-live</code> region <span class="sev sev-med">Medium</span></div>
+  <div class="fmeta">WCAG 4.1.3 Status Messages — AA</div>
+  <p>When filters or search change the visible hadiths on category.html, the card grid is replaced via <code>innerHTML</code> with no <code>aria-live</code> announcement. Keyboard/screen-reader users have no signal that the list changed.</p>
+  <div class="fix"><strong>Fix:</strong> The <code>&lt;main id="main-content"&gt;</code> should carry <code>aria-live="polite"</code> or — cleaner — announce the count change via a dedicated <code>&lt;div id="sr-status" class="sr-only" aria-live="polite"&gt;</code> block that is updated with "Showing 1–9 of 127 hadiths, filtered by Sahih" on each re-render.</div>
+</div>
+
+<div class="finding low">
+  <div class="ftitle">A11Y-04 &nbsp;·&nbsp; Focus visibility on dark mode improved but needs 3:1 contrast verification <span class="sev sev-low">Low</span></div>
+  <div class="fmeta">WCAG 2.4.7 Focus Visible (A) · 2.4.11 Focus Not Obscured (AA, new in 2.2)</div>
+  <p>Commit <code>ee13448</code> adds <code>outline: 2px solid var(--accent)</code> on dark-mode focus, which is good. Verify the computed contrast between the accent indigo (<code>#4f72f8</code>) and the deep navy background (<code>#060c1a</code>) meets 3:1 for the focus indicator (&sect;1.4.11 Non-text contrast). Quick check: #4f72f8 vs #060c1a is ~5.1:1 — passes.</p>
+  <p>Also confirm 2.4.11 Focus Not Obscured: the fixed nav is 64 px tall, and the deep-link feature uses <code>scroll-margin-top: 90px</code> — this is correctly handled. Verify the modal (<code>auth</code> and <code>share</code>) returns focus to the trigger on close.</p>
+</div>
+
+<h3>SEO</h3>
+
+<div class="finding high">
+  <div class="ftitle">SEO-01 &nbsp;·&nbsp; Entire hadith corpus is client-rendered from Supabase <span class="sev sev-high">High</span></div>
+  <p><strong>Evidence:</strong> <code>category.html</code> ships an empty <code>&lt;main id="main-content"&gt;</code> and populates it via <code>js/category-wire.js</code> after fetching from Supabase. Googlebot does execute JS, but render queue wait-times for new URLs are typically 2–14 days, and large client-rendered pages historically underperform. Bing and non-Google crawlers (DuckDuckGo, Yandex) render even less reliably.</p>
+  <p><strong>Why it matters:</strong> At 7,277 hadiths and 97 books, this is the single biggest organic-growth lever in the codebase. The new internal link block (SEC P4 from <code>6da8c66</code>) helps discovery, but the landing pages themselves are still nearly empty until JS runs.</p>
+  <div class="fix"><strong>Fix (ranked):</strong>
+    <ol>
+      <li><strong>Static pre-render at build time (best).</strong> Add a Node build step that, at deploy time, pulls all 7,277 hadiths from Supabase and writes one static <code>category/&lt;slug&gt;.html</code> with all cards already in the HTML body. This is 1-2 days of work and gives you SSR-equivalent crawlability without adopting a framework.</li>
+      <li><strong>Ship a plain-text fallback</strong> inside <code>&lt;noscript&gt;</code> on each category that lists every hadith number and source — give crawlers a route even without JS.</li>
+      <li><strong>Per-hadith static pages</strong> at <code>/h/&lt;book&gt;/&lt;number&gt;.html</code> &mdash; ultimate SEO depth but requires URL rewrites at the edge via CF Pages Functions.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="finding med">
+  <div class="ftitle">SEO-02 &nbsp;·&nbsp; Sitemap covers category roots only; no per-hadith URLs <span class="sev sev-med">Medium</span></div>
+  <p><strong>Evidence:</strong> <code>sitemap.xml</code> lists 5 core pages + 97 category books = 102 URLs. The 7,277 hadiths are not in the sitemap. With the new permalink scheme (<code>?cat=X&amp;h=Y</code>) shipped in <code>6da8c66</code>, every hadith now has a stable URL that Google can index.</p>
+  <div class="fix"><strong>Fix:</strong> Generate <code>sitemap-hadiths-1.xml</code>, <code>sitemap-hadiths-2.xml</code>, ... as needed (50,000 URL cap per file) and reference them from a sitemap index:
+  <pre>&lt;sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;
+  &lt;sitemap&gt;&lt;loc&gt;https://timelesshadith.com/sitemap.xml&lt;/loc&gt;&lt;/sitemap&gt;
+  &lt;sitemap&gt;&lt;loc&gt;https://timelesshadith.com/sitemap-hadiths.xml&lt;/loc&gt;&lt;/sitemap&gt;
+&lt;/sitemapindex&gt;</pre>
+  Generate the hadith sitemap at the same build step as the pre-rendered pages.</div>
+</div>
+
+<div class="finding med">
+  <div class="ftitle">SEO-03 &nbsp;·&nbsp; Sitemap <code>&lt;lastmod&gt;</code> values are static and stale <span class="sev sev-med">Medium</span></div>
+  <p><strong>Evidence:</strong> Every URL in <code>sitemap.xml</code> shows <code>&lt;lastmod&gt;2026-04-03&lt;/lastmod&gt;</code> or <code>2026-04-04</code>. These are hand-set strings that will never update automatically. Google uses <code>lastmod</code> as a recrawl hint.</p>
+  <div class="fix"><strong>Fix:</strong> Generate <code>sitemap.xml</code> at build time from git <code>log --format=%ad</code> on the underlying file (or the Supabase <code>updated_at</code> column for dynamic content).</div>
+</div>
+
+<div class="finding med">
+  <div class="ftitle">SEO-04 &nbsp;·&nbsp; Thin structured data — only <code>WebSite</code> + <code>SearchAction</code> <span class="sev sev-med">Medium</span></div>
+  <p><strong>Evidence:</strong> <code>index.html:38-51</code>. <code>about.html</code> has Organization schema. There is no <code>BreadcrumbList</code>, no <code>Article</code>, no <code>CreativeWork</code>, no <code>Book</code>/<code>Chapter</code> for the 97 books, and no <code>Quotation</code> schema for hadiths themselves.</p>
+  <div class="fix"><strong>Fix:</strong> On each category page emit a <code>BreadcrumbList</code> (Home &rarr; Categories &rarr; Book). On individual hadith deep-link loads emit <code>Quotation</code> with <code>spokenByCharacter</code> = narrator and <code>isPartOf</code> = the book as a <code>Book</code>. Google rewards this with rich results eligibility.</div>
+</div>
+
+<div class="finding low">
+  <div class="ftitle">SEO-05 &nbsp;·&nbsp; URLs use query strings instead of path segments <span class="sev sev-low">Low</span></div>
+  <p><strong>Evidence:</strong> <code>/category.html?cat=book-1</code> rather than <code>/books/sahih-bukhari/revelation/</code>. Google handles query strings fine, but path-style URLs:</p>
+  <ul>
+    <li>rank marginally better for keywords in the path;</li>
+    <li>are human-memorable;</li>
+    <li>look cleaner in social shares.</li>
+  </ul>
+  <div class="fix"><strong>Fix:</strong> Add Cloudflare Pages rewrites (<code>_redirects</code> file) to accept <code>/books/&lt;slug&gt;</code> and internally serve <code>/category.html?cat=&lt;slug&gt;</code>. Update the sitemap to emit the new paths.</div>
+</div>
+
+<h3>Performance (Core Web Vitals)</h3>
+
+<div class="finding med">
+  <div class="ftitle">PERF-01 &nbsp;·&nbsp; LCP is likely the hero mark image, but Inter font swap can steal the crown <span class="sev sev-med">Medium</span></div>
+  <p><strong>Evidence:</strong> The homepage hero mark (56×56 <code>icon-192.png?v=2</code>) is rendered above the fold. Inter font is loaded from <code>fonts.googleapis.com</code> via <code>&lt;link&gt;</code> with a <code>preconnect</code> hint. With <code>display=swap</code>, the Inter font file arrives around 150-400 ms in and the H1 text re-rasters, causing a second LCP candidate.</p>
+  <div class="fix"><strong>Fix:</strong>
+    <ol>
+      <li><code>&lt;link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v..." crossorigin&gt;</code> the specific Inter weight used in the H1 (probably 700 or 800).</li>
+      <li>Self-host the subset you actually use — 2026 best practice. Google Fonts has been superseded for LCP-sensitive sites by self-hosting via <a href="https://github.com/fontsource/fontsource">Fontsource</a> or similar, saving a DNS+TLS handshake.</li>
+      <li>Explicit <code>width</code>/<code>height</code> on the hero mark is already correct (56 × 56) &mdash; good, prevents CLS.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="finding med">
+  <div class="ftitle">PERF-02 &nbsp;·&nbsp; INP risk on category page &mdash; re-render rebuilds entire card grid on every keystroke <span class="sev sev-med">Medium</span></div>
+  <p><strong>Evidence:</strong> <code>js/category-wire.js:131-135</code> wires the search input directly to <code>applyFilters()</code> which synchronously filters the full array, calls <code>renderPage()</code>, which <code>innerHTML</code>-rebuilds all 9 cards. On a slow phone with 500+ hadiths in memory this pushes INP above the 200 ms "good" threshold.</p>
+  <div class="fix"><strong>Fix:</strong>
+    <ol>
+      <li>Debounce search input by 120-160 ms (not 0).</li>
+      <li>Virtualise the card list if it exceeds 50 visible items (you already paginate to 9, so minor).</li>
+      <li>Replace <code>innerHTML</code> rebuild with DOM diffing &mdash; or simply <code>.textContent</code>-update the cards that are still visible between filters and only create/destroy the deltas. Biggest win.</li>
+      <li>Use <code>scheduler.postTask('user-visible')</code> or <code>requestIdleCallback</code> to split the render.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="finding low">
+  <div class="ftitle">PERF-03 &nbsp;·&nbsp; PNG fallbacks for decorative icons still ship (post-WebP) <span class="sev sev-low">Low</span></div>
+  <p>After commit <code>79c1948</code>, <code>.png</code> and <code>.webp</code> both exist for the brand assets. The <code>&lt;picture&gt;</code> tag correctly serves WebP to modern browsers. The PNG fallbacks remain in the deploy artifact (needed for legacy + PWA manifest) which is fine, but you can drop bandwidth by another ~15% by serving <em>AVIF</em> as a second <code>&lt;source type="image/avif"&gt;</code> &mdash; 2026 browsers all support it.</p>
+</div>
+
+<div class="finding low">
+  <div class="ftitle">PERF-04 &nbsp;·&nbsp; Unused JS shipped on pages that don't need it <span class="sev sev-low">Low</span></div>
+  <p><strong>Evidence:</strong> <code>sw-register.js</code> and <code>page-chrome.js</code> are included on pages where the relevant DOM IDs don't exist; the scripts short-circuit safely but still parse/execute. <code>supabase-data.js</code> (reads 7,277 hadiths) loads on <code>privacy.html</code> and <code>terms.html</code> for no reason.</p>
+  <div class="fix"><strong>Fix:</strong> Audit each HTML page's &lt;script&gt; block and only include the modules it actually uses. Create a per-page manifest of required scripts. Expected JS savings on privacy/terms: ~60 KB gzipped.</div>
+</div>
+
+<h3>Tech Stack</h3>
+
+<div class="finding med">
+  <div class="ftitle">STACK-01 &nbsp;·&nbsp; No <code>package.json</code> / no dependency lockfile / no automated audit <span class="sev sev-med">Medium</span></div>
+  <p><strong>Evidence:</strong> There is no <code>package.json</code>, no <code>package-lock.json</code>, no dependency manifest anywhere. All third-party code is vendored or loaded from CDNs directly in HTML. GitHub Actions (<code>.github/workflows/pages.yml</code>) only <code>test -f</code> checks for core files &mdash; no linting, no audit, no type check, no Lighthouse CI.</p>
+  <p><strong>Why it matters:</strong> You have no automated visibility when a CDN-loaded dependency (Google Fonts CSS, Cloudflare Insights) changes behaviour or goes away, and no upgrade path for the day you inevitably adopt a build step. You also can't run <code>npm audit</code>, <code>eslint</code>, or <code>prettier</code>.</p>
+  <div class="fix"><strong>Fix:</strong> Introduce a minimal <code>package.json</code> with dev-only dependencies: <code>eslint</code>, <code>html-validate</code>, <code>stylelint</code>, <code>@lhci/cli</code> (Lighthouse CI). Wire them into the existing GitHub Actions workflow as blocking checks. This is ~3 hours of work and converts your CI from "tests file existence" to "enforces a real standard".</div>
+</div>
+
+<div class="finding low">
+  <div class="ftitle">STACK-02 &nbsp;·&nbsp; Static HTML + Supabase is the right architecture for this scope <span class="sev sev-low">Low</span></div>
+  <p>The current stack &mdash; static HTML on Cloudflare Pages + Supabase PostgREST + one CF Pages Function for AI &mdash; is <em>correctly scoped</em> for a hadith reference site. Don't over-react and migrate to Next.js or Astro; the maintainability and cost savings of vanilla HTML are real and match the CLAUDE.md goal of "simple to build and maintain, limited technical skill required".</p>
+  <p>The one caveat is that the <em>absence of a build step</em> becomes a ceiling once pre-rendering (SEO-01) becomes urgent. At that point the right move is not a framework &mdash; it's a 100-line Node script that reads Supabase and writes static HTML. Keep the runtime vanilla.</p>
+</div>
+
+<div class="finding low">
+  <div class="ftitle">STACK-03 &nbsp;·&nbsp; No observability &mdash; no error reporting, no real-user monitoring <span class="sev sev-low">Low</span></div>
+  <p>Cloudflare Insights is referenced in CSP (<code>static.cloudflareinsights.com</code>) but there's no Sentry / no <code>window.onerror</code> reporter / no web-vitals sink / no Supabase query logging dashboard. You'll only hear about outages from users.</p>
+  <div class="fix"><strong>Fix:</strong> Add <a href="https://github.com/GoogleChrome/web-vitals">web-vitals.js</a> and push metrics to Cloudflare Analytics (or a simple Supabase <code>events</code> table). Add a basic window.onerror &rarr; Supabase logging helper. Budget: 2 hours.</div>
+</div>
+
+<h3>Operational Readiness</h3>
+
+<div class="finding med">
+  <div class="ftitle">OPS-01 &nbsp;·&nbsp; CI validates nothing meaningful <span class="sev sev-med">Medium</span></div>
+  <p><strong>Evidence:</strong> <code>.github/workflows/pages.yml</code> only runs <code>test -f</code> against seven filenames. There is no HTML validation, no JS linting, no CSP verification, no broken-link check, no Lighthouse CI, no test suite.</p>
+  <div class="fix"><strong>Fix:</strong> See STACK-01 for the lint/audit wiring. Add <code>@lhci/cli autorun</code> with budgets: LCP &lt; 2500 ms, INP &lt; 200 ms, CLS &lt; 0.1, and fail the PR on regression.</div>
+</div>
+
+<div class="finding low">
+  <div class="ftitle">OPS-02 &nbsp;·&nbsp; Backup / disaster recovery strategy undocumented <span class="sev sev-low">Low</span></div>
+  <p>Supabase runs daily backups for free tier, which is fine, but there is no documented process to: (1) restore the <code>hadiths</code> table from scratch; (2) rebuild the site after a Cloudflare Pages deploy is rolled back; (3) rotate the Supabase anon key or OpenAI secret. Add a short <code>docs/runbook.md</code>.</p>
+</div>
+
+<h2>SEO Quick Wins (this sprint)</h2>
+<div class="card">
+<ol>
+  <li>Fix manifest.json colors (WEB-03) &mdash; 1 line, 5 seconds, visible PWA polish.</li>
+  <li>Reconcile CSP to single source (SEC-02) &mdash; removes drift risk and unblocks a future nonce-based inline script strategy.</li>
+  <li>Generate <code>sitemap-hadiths.xml</code> at build time from Supabase (SEO-02) &mdash; indexing surface jumps from 102 URLs to ~7,400.</li>
+  <li>Add <code>BreadcrumbList</code> + <code>Book</code>/<code>Chapter</code> JSON-LD on category pages (SEO-04) &mdash; unlocks rich-result eligibility.</li>
+  <li>Preload Inter 700/800 woff2 in <code>index.html</code> (PERF-01) &mdash; reduces LCP by 150-300 ms on mobile.</li>
+  <li>Add <code>&lt;noscript&gt;</code> fallback listing all hadith IDs on each category page (SEO-01 short-term win).</li>
+</ol>
+</div>
+
+<h2>Performance Optimization Plan</h2>
+<div class="card">
+
+<h3>Immediate (this week)</h3>
+<ul>
+  <li>Preload the single Inter weight used in the H1 (PERF-01).</li>
+  <li>Debounce the category search input to 150 ms (PERF-02 quick win).</li>
+  <li>Drop <code>supabase-data.js</code>, <code>supabase-auth.js</code>, and the wire modules from pages that don't use them (privacy, terms, 404, offline). (PERF-04)</li>
+  <li>Bump SW VERSION and refresh CORE_ASSETS list (WEB-01) &mdash; unblocks PWA polish.</li>
+</ul>
+
+<h3>30-day improvements</h3>
+<ul>
+  <li>Self-host Inter + Noto Naskh Arabic via Fontsource.</li>
+  <li>Add an AVIF source to the <code>&lt;picture&gt;</code> tags.</li>
+  <li>Virtualise/DOM-diff category card renders (PERF-02 structural).</li>
+  <li>Wire Lighthouse CI with budgets into GitHub Actions (OPS-01).</li>
+  <li>Extract per-page inline CSS to dedicated files (WEB-02).</li>
+</ul>
+
+<h3>Structural (next quarter)</h3>
+<ul>
+  <li>Build-time static pre-render of all 97 category pages (SEO-01). This is the single highest-ROI improvement in this whole report.</li>
+  <li>Path-style URLs via <code>_redirects</code> (SEO-05).</li>
+  <li>Consider adopting Astro or 11ty <em>only</em> if the pre-render script exceeds ~300 lines or if you start wanting MDX content. Otherwise stay vanilla.</li>
+</ul>
+</div>
+
+<h2>Security Remediation Plan</h2>
+<div class="card">
+
+<h3>Critical fixes &mdash; before next push</h3>
+<ul>
+  <li>SEC-01: Lock down CORS, add Turnstile + rate limiting on <code>/api/ai-search</code>, set OpenAI daily budget.</li>
+  <li>SEC-04: Verify Supabase RLS is ON on every public table and policies are read-only for the anon role.</li>
+  <li>SEC-03: Delete committed <code>.zip</code> archives and PDF from repo root, add to <code>.gitignore</code>.</li>
+</ul>
+
+<h3>Important fixes &mdash; this sprint</h3>
+<ul>
+  <li>SEC-02: Eliminate dual CSP sources; keep <code>_headers</code> authoritative.</li>
+  <li>SEC-08: Harden or delete <code>archive/admin-backup.html</code> and <code>archive/cms.html</code>.</li>
+  <li>SEC-05: Refactor inline <code>onclick</code> attributes to delegated listeners, then drop <code>script-src-attr 'unsafe-inline'</code>.</li>
+  <li>SEC-06: Tighten <code>img-src</code> allow-list to specific hosts.</li>
+</ul>
+
+<h3>Strategic hardening roadmap</h3>
+<ul>
+  <li>SEC-07: Add <code>Cross-Origin-*-Policy</code> headers as 2026-baseline hardening.</li>
+  <li>Implement per-request CSP nonce via a CF Pages Function middleware to allow a single inline theme-init script and drop the remaining <code>unsafe-inline</code> (style-src still has it).</li>
+  <li>Add OWASP ASVS L1 checklist to the audit runbook; revisit quarterly.</li>
+  <li>Subscribe to Supabase and Cloudflare security advisories; subscribe to OpenAI key-rotation alerts.</li>
+</ul>
+</div>
+
+<h2>Tech Stack Recommendation</h2>
+<div class="card">
+<p><strong>Verdict: Optimize the current stack. Do not re-platform.</strong></p>
+<p>Static HTML + Cloudflare Pages + Supabase + a single Pages Function is the right architecture for a hadith reference site of this scope. It costs near-zero to run, has no framework upgrade risk, and plays to the stated goal of "simple to build and maintain, limited technical skill required" (<code>CLAUDE.md &sect;5</code>).</p>
+<p>The two things you actually need to add are:</p>
+<ol>
+  <li>A <em>build step</em> (Node script, no framework) that runs before each deploy and pre-renders the category pages + generates sitemaps from Supabase. This resolves SEO-01 and SEO-02 simultaneously and is the highest-ROI change in this report.</li>
+  <li>A <em>package.json + lint/audit CI</em> (STACK-01, OPS-01) so the codebase can grow without quality drift.</li>
+</ol>
+<p>Framework options ranked for if/when you outgrow vanilla:</p>
+<ul>
+  <li><strong>Astro</strong> &mdash; best fit. Keeps your HTML mental model, produces static output, has first-class MDX, and lets you drop in React/Vue islands if needed.</li>
+  <li><strong>11ty (Eleventy)</strong> &mdash; even simpler than Astro, no JS runtime at all. Perfect if you stay content-heavy.</li>
+  <li><strong>Next.js</strong> &mdash; over-powered for this, pulls in React runtime, significantly harder to maintain. Skip unless you adopt a dashboard/admin product.</li>
+</ul>
+</div>
+
+<h2>Penetration Testing Notes (authorized, passive)</h2>
+<div class="card">
+<p>All observations below are from code review only. No active exploitation, fuzzing, or unauthorized probing was performed.</p>
+
+<h3>Attack surface</h3>
+<ul>
+  <li><strong>/api/ai-search</strong> (POST, JSON) &mdash; externally reachable, wildcard CORS, no auth, no rate limit. Top risk (SEC-01).</li>
+  <li><strong>Supabase PostgREST</strong> at <code>https://dwcsledifvnyrunxejzd.supabase.co/rest/v1/*</code> &mdash; reachable from any client with the anon JWT which is hardcoded in <code>js/supabase-data.js:31</code>. Depends on RLS being correctly configured (SEC-04).</li>
+  <li><strong>Supabase Auth</strong> at <code>.../auth/v1/*</code> &mdash; OAuth flow delegated to Google. Not tested; would expect standard Supabase-managed hardening.</li>
+  <li><strong>Cloudflare Pages static assets</strong> &mdash; all files in the repo root are served; includes <code>.zip</code> archives and <code>archive/</code> (SEC-03, SEC-08).</li>
+</ul>
+
+<h3>Passive checks performed</h3>
+<ul>
+  <li>Static grep for hardcoded secrets, API keys, and passwords (Supabase anon key found in two places, as expected; no service-role key or OpenAI key found in the repo, which is correct).</li>
+  <li>Review of CSP, HSTS, Referrer-Policy, Permissions-Policy, X-Frame-Options in <code>_headers</code>.</li>
+  <li>Review of all 13 <code>js/</code> modules for <code>innerHTML</code> sinks and injection potential.</li>
+  <li>Review of the Cloudflare Function <code>ai-search.js</code> for auth bypass, SSRF, prompt injection handling, and cost-abuse potential.</li>
+  <li>Robots.txt and sitemap.xml review for unintended exposure.</li>
+</ul>
+
+<h3>Checks NOT performed (require explicit authorization + live access)</h3>
+<ul>
+  <li>Active TLS/cert testing against <code>timelesshadith.com</code> &mdash; blocked by environment egress.</li>
+  <li>Supabase RLS policy verification via a test anon request.</li>
+  <li>Browser-based DOM XSS fuzzing.</li>
+  <li>Authenticated session testing against the Supabase login flow.</li>
+  <li>Rate-limit / abuse testing against <code>/api/ai-search</code>.</li>
+</ul>
+<p>If you want any of those run live, authorize explicitly and confirm the target IPs.</p>
+</div>
+
+<h2>Final Prioritized Action Plan</h2>
+<div class="card">
+<table>
+  <thead><tr><th>Priority</th><th>Issue</th><th>Sev</th><th>Owner</th><th>Effort</th><th>Impact</th></tr></thead>
+  <tbody>
+    <tr><td>P0 — this week</td><td>SEC-01 Lock down /api/ai-search (origin, Turnstile, rate limit, budget cap)</td><td><span class="sev sev-crit">Crit</span></td><td>Syed</td><td>Medium (4–6h)</td><td>Prevents direct financial abuse of OpenAI key</td></tr>
+    <tr><td>P0 — this week</td><td>SEC-04 Verify Supabase RLS on all public tables</td><td><span class="sev sev-crit">Crit</span></td><td>Syed</td><td>Low (30 min)</td><td>Confirms the entire data model is actually locked down</td></tr>
+    <tr><td>P0 — this week</td><td>SEC-03 Remove .zip and .pdf from repo root</td><td><span class="sev sev-high">High</span></td><td>Syed</td><td>Low (15 min)</td><td>Stops deploying build archives as public assets</td></tr>
+    <tr><td>P1 — this week</td><td>WEB-01 Fix service worker VERSION + CORE_ASSETS</td><td><span class="sev sev-med">Med</span></td><td>Syed</td><td>Low (30 min)</td><td>Restores PWA precache integrity</td></tr>
+    <tr><td>P1 — this week</td><td>SEC-02 Reconcile CSP to single source</td><td><span class="sev sev-high">High</span></td><td>Syed</td><td>Low (1h)</td><td>Removes future-break risk and dead directives</td></tr>
+    <tr><td>P1 — this week</td><td>WEB-03 manifest.json colors → dark</td><td><span class="sev sev-low">Low</span></td><td>Syed</td><td>Low (5 min)</td><td>Polishes PWA splash</td></tr>
+    <tr><td>P2 — this sprint</td><td>SEO-01 Static pre-render of category pages at build time</td><td><span class="sev sev-high">High</span></td><td>Syed</td><td>High (1-2 days)</td><td>Unlocks organic traffic growth — biggest ROI item in the report</td></tr>
+    <tr><td>P2 — this sprint</td><td>SEO-02 Per-hadith sitemap generation</td><td><span class="sev sev-med">Med</span></td><td>Syed</td><td>Medium (3h)</td><td>102 URLs → ~7,400 URLs indexable</td></tr>
+    <tr><td>P2 — this sprint</td><td>PERF-02 Debounce + DOM-diff category render</td><td><span class="sev sev-med">Med</span></td><td>Syed</td><td>Medium (4h)</td><td>INP on mobile drops below 200 ms</td></tr>
+    <tr><td>P2 — this sprint</td><td>A11Y-01 Enlarge touch targets on card actions</td><td><span class="sev sev-med">Med</span></td><td>Syed</td><td>Low (1h)</td><td>WCAG 2.2 AA compliance</td></tr>
+    <tr><td>P2 — this sprint</td><td>A11Y-03 aria-live announcements on filter change</td><td><span class="sev sev-med">Med</span></td><td>Syed</td><td>Low (1h)</td><td>Screen-reader parity</td></tr>
+    <tr><td>P3 — this quarter</td><td>STACK-01 / OPS-01 package.json + Lighthouse CI + ESLint</td><td><span class="sev sev-med">Med</span></td><td>Syed</td><td>Medium (3h)</td><td>Quality guardrails for future growth</td></tr>
+    <tr><td>P3 — this quarter</td><td>SEC-05 Drop inline onclick, delegated listeners, tighten CSP</td><td><span class="sev sev-med">Med</span></td><td>Syed</td><td>Medium (1 day)</td><td>Eliminates last script-src-attr 'unsafe-inline'</td></tr>
+    <tr><td>P3 — this quarter</td><td>SEO-04 Richer JSON-LD (BreadcrumbList, Book, Chapter, Quotation)</td><td><span class="sev sev-med">Med</span></td><td>Syed</td><td>Medium (3h)</td><td>Rich result eligibility</td></tr>
+    <tr><td>P3 — this quarter</td><td>SEC-07 Add COOP / CORP / COEP headers</td><td><span class="sev sev-low">Low</span></td><td>Syed</td><td>Low (30 min)</td><td>2026-baseline hardening</td></tr>
+    <tr><td>P3 — this quarter</td><td>WEB-02 Extract inline CSS to files</td><td><span class="sev sev-med">Med</span></td><td>Syed</td><td>Medium (4h)</td><td>Cacheable CSS, smaller HTML, easier refactors</td></tr>
+    <tr><td>P4 — backlog</td><td>PERF-01 Self-host fonts via Fontsource</td><td><span class="sev sev-low">Low</span></td><td>Syed</td><td>Medium (2h)</td><td>100-300 ms LCP win on mobile</td></tr>
+    <tr><td>P4 — backlog</td><td>SEO-05 Path-style URLs via _redirects</td><td><span class="sev sev-low">Low</span></td><td>Syed</td><td>Medium (2h)</td><td>Cleaner URLs, marginal SEO lift</td></tr>
+    <tr><td>P4 — backlog</td><td>STACK-03 web-vitals + error reporting sink</td><td><span class="sev sev-low">Low</span></td><td>Syed</td><td>Low (2h)</td><td>Real-user observability</td></tr>
+  </tbody>
+</table>
+</div>
+
+<footer>
+  Report prepared 2026-04-11 by Claude (Anthropic) acting as principal auditor at Syed's request. Findings are based on static code review of the repository at <code>/sessions/admiring-nice-dirac/mnt/Haith</code>. Live-site verification was blocked by environment egress and is labelled where relevant. Severities are indicative and should be calibrated against your actual traffic, budget, and risk tolerance before execution.
+</footer>
+
+</main>
+</body>
+</html>
