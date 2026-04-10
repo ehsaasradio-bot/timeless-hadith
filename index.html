@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Early theme: prevents flash of wrong theme on load -->
-  <script>(function(){try{var s=localStorage.getItem('th_theme');var p=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',s||'dark');}catch(e){}})()</script>
   <title>Timeless Hadith — Prophetic Guidance for Every Heart</title>
   <meta name="description" content="Authentic, searchable hadiths from Prophet Muhammad (PBUH). Explore timeless guidance by topic, beautifully organised." />
   <link rel="canonical" href="https://timelesshadith.com/" />
@@ -26,14 +24,12 @@
   <link rel="icon"             type="image/png" sizes="16x16" href="favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180"              href="apple-touch-icon.png" />
   <link rel="manifest"         href="manifest.json" />
-  <!-- Shared styles -->
-  <link rel="stylesheet" href="css/styles.css" />
   <!-- Arabic font for Canvas share images -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet" />
   <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://fonts.googleapis.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://dwcsledifvnyrunxejzd.supabase.co https://cloudflareinsights.com https://accounts.google.com;" />
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'none';" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <script type="application/ld+json">
   {
@@ -51,6 +47,211 @@
   </script>
 
   <style>
+    /* ── Accessibility ── */
+    .skip-link {
+      position: absolute; top: -100px; left: 16px;
+      background: var(--ink, #0a0a0a); color: #fff;
+      padding: 8px 16px; border-radius: 0 0 8px 8px;
+      font-size: 14px; font-weight: 600; z-index: 9999;
+      text-decoration: none; transition: top 0.2s ease;
+    }
+    .skip-link:focus { top: 0; }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Tokens: Light ── */
+    :root {
+      --font: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      --radius: 16px;
+      --bg:       #ffffff;
+      --surface:  #f5f5f7;
+      --surface2: #ebebeb;
+      --border:   #e0e0e0;
+      --ink:      #1d1d1f;
+      --muted:    #6e6e73;
+      --nav-bg:   rgba(255,255,255,0.85);
+      --toggle-bg:   #e8e8e8;
+      --toggle-knob: #1d1d1f;
+      --toggle-icon: #6e6e73;
+      --accent:   #0071e3;
+      --accent-hover: #0077ed;
+      --card-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      --card-shadow-hover: 0 16px 48px rgba(0,0,0,0.12);
+    }
+
+    /* ── Tokens: Dark ── */
+    [data-theme="dark"] {
+      --bg:       #000000;
+      --surface:  #1c1c1e;
+      --surface2: #2c2c2e;
+      --border:   #3a3a3c;
+      --ink:      #f5f5f7;
+      --muted:    #98989d;
+      --nav-bg:   rgba(0,0,0,0.85);
+      --toggle-bg:   #3a3a3c;
+      --toggle-knob: #f5f5f7;
+      --toggle-icon: #98989d;
+      --accent:   #2997ff;
+      --accent-hover: #40a8ff;
+      --card-shadow: 0 2px 12px rgba(0,0,0,0.4);
+      --card-shadow-hover: 0 16px 48px rgba(0,0,0,0.6);
+    }
+
+    /* ── Global ── */
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background 0.35s ease, color 0.35s ease;
+    }
+
+    /* ── Nav ── */
+    nav.main-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.35s ease, border-color 0.35s ease;
+    }
+    .nav-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 26px; width: auto;
+      filter: brightness(0);
+      transition: filter 0.35s ease;
+    }
+    [data-theme="dark"] .nav-logo img { filter: brightness(0) invert(1); }
+
+    .nav-links {
+      display: flex; align-items: center;
+      gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px; font-weight: 400;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s ease; letter-spacing: -0.1px;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* Bookmark badge */
+    .bm-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 18px; height: 18px; padding: 0 5px;
+      background: var(--accent); color: #fff;
+      border-radius: 100px; font-size: 10px; font-weight: 700;
+      line-height: 1; margin-left: 5px; vertical-align: middle;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .bm-badge[data-count="0"] { opacity: 0; transform: scale(0.6); }
+
+    .nav-cta {
+      display: inline-flex; align-items: center;
+      justify-content: center; padding: 9px 20px;
+      background: var(--ink); color: var(--bg);
+      border-radius: 100px; font-size: 14px; font-weight: 500;
+      letter-spacing: -0.1px; text-decoration: none;
+      transition: opacity 0.2s ease, background 0.35s ease, color 0.35s ease;
+    }
+    .nav-cta:hover { opacity: 0.75; }
+
+    /* Hamburger */
+    .nav-hamburger {
+      display: none; flex-direction: column;
+      justify-content: center; gap: 5px;
+      width: 40px; height: 40px; background: none;
+      border: none; cursor: pointer; padding: 8px;
+      border-radius: 8px; transition: background 0.2s ease;
+    }
+    .nav-hamburger:hover { background: var(--surface); }
+    .nav-hamburger span {
+      display: block; width: 100%; height: 1.5px;
+      background: var(--ink); border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.25s ease, background 0.35s ease;
+    }
+
+    /* Mobile drawer */
+    .nav-drawer {
+      display: none; position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 16px 24px 24px; z-index: 199;
+      flex-direction: column; gap: 4px;
+      transition: background 0.35s ease;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a {
+      font-size: 16px; font-weight: 400; color: var(--muted);
+      text-decoration: none; padding: 12px 4px;
+      border-bottom: 1px solid var(--border); transition: color 0.2s ease;
+    }
+    .nav-drawer a:hover { color: var(--ink); }
+    .nav-drawer a:last-of-type { border-bottom: none; }
+    .nav-drawer .drawer-cta {
+      margin-top: 8px; padding: 14px;
+      background: var(--ink); color: var(--bg);
+      border-radius: 12px; text-align: center;
+      font-weight: 500; border-bottom: none !important;
+      transition: opacity 0.2s ease, background 0.35s ease, color 0.35s ease;
+    }
+    .nav-drawer .drawer-cta:hover { opacity: 0.75; color: var(--bg) !important; }
+
+    /* ── Theme Toggle ── */
+    .theme-toggle {
+      width: 44px; height: 26px;
+      background: var(--toggle-bg); border-radius: 100px;
+      border: none; cursor: pointer; position: relative;
+      flex-shrink: 0; transition: background 0.35s ease; outline: none;
+    }
+    .theme-toggle:focus-visible { box-shadow: 0 0 0 2px var(--ink); }
+    .theme-toggle .icon-sun,
+    .theme-toggle .icon-moon {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 13px; height: 13px; transition: opacity 0.25s ease;
+      stroke: var(--toggle-icon); fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .theme-toggle .icon-sun  { left: 6px; }
+    .theme-toggle .icon-moon { right: 5px; }
+    [data-theme="light"] .theme-toggle .icon-moon { opacity: 0; }
+    [data-theme="light"] .theme-toggle .icon-sun  { opacity: 1; }
+    [data-theme="dark"]  .theme-toggle .icon-sun  { opacity: 0; }
+    [data-theme="dark"]  .theme-toggle .icon-moon { opacity: 1; }
+    .theme-toggle::after {
+      content: ""; position: absolute; top: 3px;
+      width: 20px; height: 20px; background: var(--toggle-knob);
+      border-radius: 50%;
+      transition: left 0.28s cubic-bezier(0.4,0,0.2,1), background 0.35s ease;
+    }
+    [data-theme="light"] .theme-toggle::after { left: 3px; }
+    [data-theme="dark"]  .theme-toggle::after { left: 21px; }
 
     /* ── Hero ── */
     .hero {
@@ -113,10 +314,10 @@
     }
     .search-bar:focus-within {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(var(--accent-raw),0.12);
+      box-shadow: 0 0 0 3px rgba(0,113,227,0.12);
     }
     [data-theme="dark"] .search-bar:focus-within {
-      box-shadow: 0 0 0 3px rgba(var(--accent-raw),0.18);
+      box-shadow: 0 0 0 3px rgba(41,151,255,0.18);
     }
     .search-icon {
       flex-shrink: 0; width: 16px; height: 16px;
@@ -133,7 +334,7 @@
     .search-input::placeholder { color: var(--muted); }
     .search-btn {
       flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px;
-      padding: 10px 18px; background: var(--accent); color: #fff;
+      padding: 10px 18px; background: var(--ink); color: var(--bg);
       border: none; border-radius: 100px; font-family: var(--font);
       font-size: 13px; font-weight: 500; cursor: pointer;
       letter-spacing: -0.1px; transition: opacity 0.2s ease, background 0.35s ease, color 0.35s ease;
@@ -141,7 +342,7 @@
     }
     .search-btn:hover { opacity: 0.75; }
     .search-btn svg {
-      width: 13px; height: 13px; stroke: #fff; fill: none;
+      width: 13px; height: 13px; stroke: var(--bg); fill: none;
       stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.35s ease;
     }
     /* Search dropdown */
@@ -203,8 +404,8 @@
       transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
     }
     .tag:hover { border-color: var(--ink); color: var(--ink); background: var(--surface); }
-    .tag.active { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-raw),0.06); }
-    [data-theme="dark"] .tag.active { background: rgba(var(--accent-raw),0.1); }
+    .tag.active { border-color: var(--accent); color: var(--accent); background: rgba(0,113,227,0.06); }
+    [data-theme="dark"] .tag.active { background: rgba(41,151,255,0.1); }
 
     /* ── Section Divider ── */
     .section-divider {
@@ -239,15 +440,14 @@
       pointer-events: none;
     }
     .featured-hadith-arabic {
-      font-family: 'Noto Naskh Arabic', serif;
-      font-size: 1.3rem;
+      font-size: clamp(18px, 2.4vw, 26px);
       font-weight: 600; color: var(--ink);
       direction: rtl; text-align: right;
-      line-height: 2.0; margin-bottom: 20px;
+      line-height: 1.8; margin-bottom: 20px;
       letter-spacing: 0.02em;
     }
     .featured-hadith-text {
-      font-size: 16px;
+      font-size: clamp(15px, 1.5vw, 18px);
       font-weight: 400; color: var(--ink);
       line-height: 1.65; letter-spacing: -0.01em;
       margin-bottom: 16px; font-style: normal;
@@ -271,9 +471,9 @@
     }
     .share-btn:hover { background: var(--surface2); border-color: var(--ink); transform: translateY(-1px); }
     .share-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .share-btn.as-image { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .share-btn.as-image { background: var(--ink); color: var(--bg); border-color: var(--ink); }
     .share-btn.as-image:hover { opacity: 0.8; }
-    [data-theme="dark"] .share-btn.as-image { background: var(--accent); color: #fff; }
+    [data-theme="dark"] .share-btn.as-image { background: var(--ink); color: var(--bg); }
 
     .featured-nav-row {
       display: flex; align-items: center; justify-content: center;
@@ -297,7 +497,7 @@
 
     /* ── Categories Section ── */
     .cards-section {
-      padding: 48px 40px 80px;
+      padding: 0 40px 80px;
       max-width: 1100px; margin: 0 auto;
     }
     .categories-header {
@@ -315,16 +515,15 @@
       color: var(--muted); cursor: pointer; font-family: var(--font);
       transition: all 0.2s ease;
     }
-    .filter-pill:hover, .filter-pill.active { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-raw),0.06); }
-    [data-theme="dark"] .filter-pill.active { background: rgba(var(--accent-raw),0.1); }
+    .filter-pill:hover, .filter-pill.active { border-color: var(--accent); color: var(--accent); background: rgba(0,113,227,0.06); }
+    [data-theme="dark"] .filter-pill.active { background: rgba(41,151,255,0.1); }
 
     /* ── Cards Grid ── */
     .carousel-wrap { position: relative; }
     .cards-track {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 20px; transition: opacity 0.3s ease;
-      align-items: stretch;
     }
     .cards-track.fading { opacity: 0; }
 
@@ -375,14 +574,14 @@
     /* Card arrow button */
     .card-plus {
       position: absolute; bottom: 24px; right: 24px;
-      width: 44px; height: 44px; background: var(--accent);
-      color: #fff; border-radius: 50%;
+      width: 44px; height: 44px; background: var(--ink);
+      color: var(--bg); border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       text-decoration: none;
       transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.35s ease, color 0.35s ease;
     }
     .card-plus svg {
-      width: 16px; height: 16px; stroke: #fff; fill: none;
+      width: 16px; height: 16px; stroke: var(--bg); fill: none;
       stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.35s ease, transform 0.2s ease;
     }
     .card-plus:hover { transform: scale(1.1); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
@@ -459,7 +658,7 @@
       margin-bottom: 12px;
     }
     .modal-hadith-text {
-      font-size: 16px; color: var(--ink); line-height: 1.65; font-style: normal;
+      font-size: 14px; color: var(--ink); line-height: 1.65; font-style: normal;
       margin-bottom: 8px;
     }
     .modal-hadith-meta {
@@ -483,12 +682,96 @@
     /* canvas for image generation */
     #shareCanvas { display: none; }
 
+    /* ── Cookie Banner ── */
+    .cookie-banner {
+      position: fixed; bottom: 24px; right: 24px; z-index: 400;
+      width: 340px; background: var(--bg);
+      border: 1px solid var(--border); border-radius: 20px;
+      padding: 20px 20px 16px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.14);
+      transform: translateY(100px); opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease, background 0.35s ease, border-color 0.35s ease;
+      pointer-events: none;
+    }
+    [data-theme="dark"] .cookie-banner { box-shadow: 0 16px 48px rgba(0,0,0,0.5); }
+    .cookie-banner.show { transform: translateY(0); opacity: 1; pointer-events: all; }
+    .cookie-banner-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+    }
+    .cookie-banner-title {
+      font-size: 14px; font-weight: 600; color: var(--ink); letter-spacing: -0.2px;
+    }
+    .cookie-banner p {
+      font-size: 12px; color: var(--muted); line-height: 1.6;
+      letter-spacing: -0.05px; margin-bottom: 14px;
+    }
+    .cookie-banner p a {
+      color: var(--accent); text-decoration: none; font-weight: 500;
+    }
+    .cookie-banner p a:hover { text-decoration: underline; }
+    .cookie-banner-btns {
+      display: flex; gap: 8px;
+    }
+    .cookie-btn {
+      flex: 1; padding: 9px 10px; border-radius: 100px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: var(--font); border: 1px solid var(--border);
+      transition: all 0.2s ease; letter-spacing: -0.1px;
+    }
+    .cookie-btn.accept {
+      background: var(--ink); color: var(--bg);
+      border-color: var(--ink);
+    }
+    .cookie-btn.accept:hover { opacity: 0.8; }
+    .cookie-btn.decline {
+      background: transparent; color: var(--muted);
+    }
+    .cookie-btn.decline:hover { background: var(--surface); color: var(--ink); }
+    .cookie-pdpl-note {
+      font-size: 10px; color: var(--muted); text-align: center;
+      margin-top: 10px; opacity: 0.7;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border); padding: 44px 40px;
+      transition: border-color 0.35s ease, background 0.35s ease;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center; gap: 24px;
+    }
+    .footer-logo {
+      display: inline-flex; align-items: center; text-decoration: none;
+    }
+    .footer-logo img {
+      height: 18px; width: auto; filter: brightness(0); transition: filter 0.35s ease;
+    }
+    [data-theme="dark"] .footer-logo img { filter: brightness(0) invert(1); }
+    .footer-links {
+      display: flex; gap: 24px; list-style: none; justify-content: center;
+    }
+    .footer-links a {
+      font-size: 13px; color: var(--muted); text-decoration: none;
+      letter-spacing: -0.1px; transition: color 0.2s ease;
+    }
+    .footer-links a:hover { color: var(--ink); }
+    .footer-copy {
+      font-size: 12px; color: var(--muted); letter-spacing: -0.1px; text-align: right;
+    }
 
     /* ── Responsive ── */
     @media (max-width: 960px) {
       .cards-track { grid-template-columns: 1fr 1fr; }
+      .footer-inner { grid-template-columns: 1fr; text-align: center; }
+      .footer-copy { text-align: center; }
+      .footer-links { justify-content: center; }
     }
     @media (max-width: 680px) {
+      nav.main-nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
       .hero { padding: 84px 20px 44px; }
       .hero h1 { letter-spacing: -0.03em; }
       .search-btn-label { display: none; }
@@ -496,6 +779,8 @@
       .featured-section { padding: 0 20px; margin: 40px auto; }
       .cards-track { grid-template-columns: 1fr; }
       .section-divider { margin: 0 20px; width: auto; }
+      footer { padding: 32px 20px; }
+      .cookie-banner { bottom: 12px; right: 12px; left: 12px; width: auto; }
       .modal-share-options { grid-template-columns: 1fr 1fr; }
       .featured-hadith-card { padding: 28px 24px; }
       .hero-actions { flex-direction: column; width: 100%; }
@@ -509,11 +794,12 @@
 
   <!-- ── Navigation ── -->
   <nav class="main-nav" aria-label="Main navigation">
-    <a href="index.html" class="nav-logo" aria-label="Timeless Hadith — Home">
-      <img src="logo.svg" alt="Timeless Hadith" height="48" />
+    <a href="index.html" class="nav-logo">
+      <img src="timelesshadith-logo.png" alt="Timeless Hadith" width="130" height="26" />
     </a>
     <ul class="nav-links">
       <li><a href="categories.html">Browse</a></li>
+      <li><a href="categories.html">Topics</a></li>
       <li><a href="bookmarks.html">Bookmarks<span class="bm-badge" id="nav-bm-badge" data-count="0" aria-label="bookmarks count"></span></a></li>
       <li><a href="about.html">About</a></li>
       <li>
@@ -616,7 +902,7 @@
       <span aria-hidden="true"></span>
       Prophetic Wisdom
     </div>
-    <h1>Guidance from the Prophet ﷺ<br>Timeless, Authentic Hadiths</h1>
+    <h1>Guidance from the Prophet ﷺ<br><em>Timeless, Authentic Hadiths</em></h1>
     <p class="hero-sub">
       Explore the words of Prophet Muhammad (PBUH) — searchable, beautifully organised, and always close to your heart.
     </p>
@@ -683,8 +969,8 @@
   <section class="featured-section" id="featured" aria-labelledby="featured-heading">
     <h2 class="section-label" id="featured-heading">Featured Hadiths</h2>
     <div class="featured-hadith-card" id="featuredCard">
-      <p class="featured-hadith-text" id="featuredText"></p>
       <p class="featured-hadith-arabic" id="featuredArabic"></p>
+      <p class="featured-hadith-text" id="featuredText"></p>
       <p class="featured-hadith-meta" id="featuredMeta"></p>
       <div class="hadith-share-btns">
         <button class="share-btn" id="featuredShareText">
@@ -718,8 +1004,340 @@
 
     <div class="carousel-wrap">
       <div class="cards-track" id="cardsTrack">
-        <p style="color:var(--muted);text-align:center;padding:40px 0;grid-column:1/-1" id="cards-loading">Loading categories…</p>
-      </div><!-- /cards-track -->
+
+        <!-- Card 1 -->
+        <div class="card">
+          <p class="card-category" data-en="Faith & Belief">Faith &amp; Belief</p>
+          <h3>Strengthen your connection with Allah.</h3>
+          <p class="card-desc">Hadiths on the pillars of faith, sincerity of intention, and a deep relationship with Allah.</p>
+          <div class="subcategories">
+            <span class="subcat">Tawhid</span>
+            <span class="subcat">Pillars of Islam</span>
+            <span class="subcat">Iman</span>
+            <span class="subcat">Prophethood</span>
+          </div>
+          <a href="category.html?cat=faith-belief" class="card-plus" aria-label="Explore Faith & Belief">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+          <p class="card-category" data-en="Character & Conduct">Character &amp; Conduct</p>
+          <h3>Live with purpose and good character.</h3>
+          <p class="card-desc">Prophetic guidance on manners, kindness, honesty, and treating others with dignity.</p>
+          <div class="subcategories">
+            <span class="subcat">Manners</span>
+            <span class="subcat">Kindness</span>
+            <span class="subcat">Respect</span>
+            <span class="subcat">Integrity</span>
+          </div>
+          <a href="category.html?cat=character-conduct" class="card-plus" aria-label="Explore Character & Conduct">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+          <p class="card-category" data-en="Prayer & Worship">Prayer &amp; Worship</p>
+          <h3>Deepen your devotion through prayer.</h3>
+          <p class="card-desc">Guidance on Salah, dhikr, and drawing closer to Allah through consistent worship.</p>
+          <div class="subcategories">
+            <span class="subcat">Salah</span>
+            <span class="subcat">Dhikr</span>
+            <span class="subcat">Night Prayer</span>
+            <span class="subcat">Quranic Recitation</span>
+          </div>
+          <a href="category.html?cat=prayer-worship" class="card-plus" aria-label="Explore Prayer & Worship">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card">
+          <p class="card-category" data-en="Family & Relations">Family &amp; Relations</p>
+          <h3>Build a home rooted in mercy.</h3>
+          <p class="card-desc">Prophetic wisdom on marriage, parenting, honouring parents, and maintaining family ties.</p>
+          <div class="subcategories">
+            <span class="subcat">Marriage</span>
+            <span class="subcat">Parenting</span>
+            <span class="subcat">Parents' Rights</span>
+            <span class="subcat">Kinship</span>
+          </div>
+          <a href="category.html?cat=family-relations" class="card-plus" aria-label="Explore Family & Relations">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="card">
+          <p class="card-category" data-en="Knowledge & Learning">Knowledge &amp; Learning</p>
+          <h3>Seek knowledge from the cradle to the grave.</h3>
+          <p class="card-desc">Hadiths on the virtue of seeking knowledge, teaching others, and the pursuit of wisdom.</p>
+          <div class="subcategories">
+            <span class="subcat">Seeking Knowledge</span>
+            <span class="subcat">Teaching</span>
+            <span class="subcat">Wisdom</span>
+            <span class="subcat">Scholarship</span>
+          </div>
+          <a href="category.html?cat=knowledge-learning" class="card-plus" aria-label="Explore Knowledge & Learning">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="card">
+          <p class="card-category" data-en="Patience & Gratitude">Patience &amp; Gratitude</p>
+          <h3>Find strength in patience and thankfulness.</h3>
+          <p class="card-desc">Guidance on bearing hardship with grace, counting blessings, and trusting Allah's plan.</p>
+          <div class="subcategories">
+            <span class="subcat">Sabr</span>
+            <span class="subcat">Shukr</span>
+            <span class="subcat">Hardship</span>
+            <span class="subcat">Contentment</span>
+          </div>
+          <a href="category.html?cat=patience-gratitude" class="card-plus" aria-label="Explore Patience & Gratitude">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="card">
+          <p class="card-category" data-en="Charity & Generosity">Charity &amp; Generosity</p>
+          <h3>Give freely and watch blessings grow.</h3>
+          <p class="card-desc">Prophetic teachings on Sadaqah, Zakat, and the immense reward of giving for Allah's sake.</p>
+          <div class="subcategories">
+            <span class="subcat">Sadaqah</span>
+            <span class="subcat">Zakat</span>
+            <span class="subcat">Helping Others</span>
+            <span class="subcat">Volunteerism</span>
+          </div>
+          <a href="category.html?cat=charity-generosity" class="card-plus" aria-label="Explore Charity & Generosity">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="card">
+          <p class="card-category" data-en="Honesty & Truthfulness">Honesty &amp; Truthfulness</p>
+          <h3>Let your word be your bond.</h3>
+          <p class="card-desc">Hadiths on the virtue of speaking truth, avoiding falsehood, and the trust that honesty builds.</p>
+          <div class="subcategories">
+            <span class="subcat">Truthfulness</span>
+            <span class="subcat">Promises</span>
+            <span class="subcat">Trust</span>
+            <span class="subcat">Integrity</span>
+          </div>
+          <a href="category.html?cat=honesty-truthfulness" class="card-plus" aria-label="Explore Honesty & Truthfulness">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 9 -->
+        <div class="card">
+          <p class="card-category" data-en="Repentance & Forgiveness">Repentance &amp; Forgiveness</p>
+          <h3>Turn back to Allah at any moment.</h3>
+          <p class="card-desc">Guidance on seeking Tawbah, Allah's infinite mercy, and the liberating power of repentance.</p>
+          <div class="subcategories">
+            <span class="subcat">Tawbah</span>
+            <span class="subcat">Istighfar</span>
+            <span class="subcat">Mercy</span>
+            <span class="subcat">Second Chances</span>
+          </div>
+          <a href="category.html?cat=repentance-forgiveness" class="card-plus" aria-label="Explore Repentance & Forgiveness">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 10 -->
+        <div class="card">
+          <p class="card-category" data-en="Health & Body">Health &amp; Body</p>
+          <h3>Your body has rights over you.</h3>
+          <p class="card-desc">Prophetic wisdom on sleep, food, cleanliness, and caring for the body as an Amanah.</p>
+          <div class="subcategories">
+            <span class="subcat">Diet &amp; Food</span>
+            <span class="subcat">Sleep</span>
+            <span class="subcat">Cleanliness</span>
+            <span class="subcat">Wellbeing</span>
+          </div>
+          <a href="category.html?cat=health-body" class="card-plus" aria-label="Explore Health & Body">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 11 -->
+        <div class="card">
+          <p class="card-category" data-en="Neighbours & Community">Neighbours &amp; Community</p>
+          <h3>Be the best neighbour on your street.</h3>
+          <p class="card-desc">Hadiths on the rights of neighbours, community responsibility, and building brotherhood.</p>
+          <div class="subcategories">
+            <span class="subcat">Rights of Neighbours</span>
+            <span class="subcat">Brotherhood</span>
+            <span class="subcat">Community Service</span>
+          </div>
+          <a href="category.html?cat=neighbours-community" class="card-plus" aria-label="Explore Neighbours & Community">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 12 -->
+        <div class="card">
+          <p class="card-category" data-en="Death & Afterlife">Death &amp; Afterlife</p>
+          <h3>Prepare today for what comes after.</h3>
+          <p class="card-desc">Prophetic reminders on the reality of death, the grave, and the eternal life ahead.</p>
+          <div class="subcategories">
+            <span class="subcat">The Grave</span>
+            <span class="subcat">Resurrection</span>
+            <span class="subcat">Paradise</span>
+            <span class="subcat">Hereafter</span>
+          </div>
+          <a href="category.html?cat=death-afterlife" class="card-plus" aria-label="Explore Death & Afterlife">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 13 -->
+        <div class="card">
+          <p class="card-category" data-en="Remembrance of Allah">Remembrance of Allah</p>
+          <h3>Keep your tongue moist with dhikr.</h3>
+          <p class="card-desc">Hadiths on remembering Allah, morning and evening adhkar, and tranquility of the heart.</p>
+          <div class="subcategories">
+            <span class="subcat">Morning Adhkar</span>
+            <span class="subcat">Evening Adhkar</span>
+            <span class="subcat">Tasbeeh</span>
+            <span class="subcat">Istighfar</span>
+          </div>
+          <a href="category.html?cat=remembrance-allah" class="card-plus" aria-label="Explore Remembrance of Allah">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 14 -->
+        <div class="card">
+          <p class="card-category" data-en="Wealth & Livelihood">Wealth &amp; Livelihood</p>
+          <h3>Earn lawfully and spend wisely.</h3>
+          <p class="card-desc">Guidance on halal earnings, avoiding greed, the dangers of excessive wealth, and contentment.</p>
+          <div class="subcategories">
+            <span class="subcat">Halal Earnings</span>
+            <span class="subcat">Avoiding Interest</span>
+            <span class="subcat">Generosity</span>
+            <span class="subcat">Contentment</span>
+          </div>
+          <a href="category.html?cat=wealth-livelihood" class="card-plus" aria-label="Explore Wealth & Livelihood">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 15 -->
+        <div class="card">
+          <p class="card-category" data-en="Justice & Fairness">Justice &amp; Fairness</p>
+          <h3>Stand firmly for what is right.</h3>
+          <p class="card-desc">Prophetic teachings on upholding justice, protecting the oppressed, and leading with equity.</p>
+          <div class="subcategories">
+            <span class="subcat">Rights</span>
+            <span class="subcat">Equality</span>
+            <span class="subcat">Oppression</span>
+            <span class="subcat">Leadership</span>
+          </div>
+          <a href="category.html?cat=justice-fairness" class="card-plus" aria-label="Explore Justice & Fairness">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 16 -->
+        <div class="card">
+          <p class="card-category" data-en="Intentions & Actions">Intentions &amp; Actions</p>
+          <h3>Actions are judged by intentions.</h3>
+          <p class="card-desc">The foundational hadith on niyyah and how sincerity of purpose transforms every deed into worship.</p>
+          <div class="subcategories">
+            <span class="subcat">Niyyah</span>
+            <span class="subcat">Sincerity</span>
+            <span class="subcat">Deeds</span>
+            <span class="subcat">Reward</span>
+          </div>
+          <a href="category.html?cat=intentions-actions" class="card-plus" aria-label="Explore Intentions & Actions">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 17 -->
+        <div class="card">
+          <p class="card-category" data-en="Fasting & Ramadan">Fasting &amp; Ramadan</p>
+          <h3>Fast with your whole being.</h3>
+          <p class="card-desc">Hadiths on the blessings of Ramadan, the etiquette of fasting, and the night of Laylatul Qadr.</p>
+          <div class="subcategories">
+            <span class="subcat">Ramadan</span>
+            <span class="subcat">Suhoor &amp; Iftar</span>
+            <span class="subcat">Tarawih</span>
+            <span class="subcat">Laylatul Qadr</span>
+          </div>
+          <a href="category.html?cat=fasting-ramadan" class="card-plus" aria-label="Explore Fasting & Ramadan">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 18 -->
+        <div class="card">
+          <p class="card-category" data-en="Humility & Pride">Humility &amp; Pride</p>
+          <h3>True greatness lies in humility.</h3>
+          <p class="card-desc">Prophetic warnings against arrogance and the elevation that comes from lowering oneself before Allah.</p>
+          <div class="subcategories">
+            <span class="subcat">Avoiding Arrogance</span>
+            <span class="subcat">Gratitude</span>
+            <span class="subcat">Self-reflection</span>
+          </div>
+          <a href="category.html?cat=humility-pride" class="card-plus" aria-label="Explore Humility & Pride">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 19 -->
+        <div class="card">
+          <p class="card-category" data-en="Love & Brotherhood">Love &amp; Brotherhood</p>
+          <h3>You are not a believer until you love for others.</h3>
+          <p class="card-desc">Hadiths on loving for the sake of Allah, the bonds of brotherhood, and spreading Salam.</p>
+          <div class="subcategories">
+            <span class="subcat">Loving for Allah</span>
+            <span class="subcat">Brotherhood</span>
+            <span class="subcat">Salam</span>
+            <span class="subcat">Unity</span>
+          </div>
+          <a href="category.html?cat=love-brotherhood" class="card-plus" aria-label="Explore Love & Brotherhood">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 20 -->
+        <div class="card">
+          <p class="card-category" data-en="Supplication & Dua">Supplication &amp; Dua</p>
+          <h3>Call upon Allah — He is always listening.</h3>
+          <p class="card-desc">Prophetic guidance on the etiquette of dua, the best times to supplicate, and Allah's promise to respond.</p>
+          <div class="subcategories">
+            <span class="subcat">Etiquette of Dua</span>
+            <span class="subcat">Best Times</span>
+            <span class="subcat">Du'as from Sunnah</span>
+          </div>
+          <a href="category.html?cat=supplication-dua" class="card-plus" aria-label="Explore Supplication & Dua">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 21 -->
+        <div class="card">
+          <p class="card-category" data-en="Trust & Reliance on Allah">Trust &amp; Reliance on Allah</p>
+          <h3>Tie your camel, then put your trust in Allah.</h3>
+          <p class="card-desc">Hadiths on tawakkul, taking means while relying on Allah, and finding peace in His perfect plan.</p>
+          <div class="subcategories">
+            <span class="subcat">Tawakkul</span>
+            <span class="subcat">Taking Means</span>
+            <span class="subcat">Divine Plan</span>
+            <span class="subcat">Peace of Heart</span>
+          </div>
+          <a href="category.html?cat=trust-allah" class="card-plus" aria-label="Explore Trust & Reliance on Allah">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
       </div><!-- /cards-track -->
     </div><!-- /carousel-wrap -->
 
@@ -741,12 +1359,12 @@
   <footer>
     <div class="footer-inner">
       <a href="index.html" class="footer-logo">
-        <img src="logo.svg" alt="Timeless Hadith" height="32" loading="lazy" />
+        <img src="timelesshadith-logo.png" alt="Timeless Hadith" width="100" height="20" loading="lazy" />
       </a>
       <ul class="footer-links">
-        <li><a href="categories.html">Browse</a></li>
-        <li><a href="bookmarks.html">Bookmarks</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="#">Browse</a></li>
+        <li><a href="#">Topics</a></li>
+        <li><a href="#">About</a></li>
         <li><a href="privacy.html">Privacy Policy</a></li>
         <li><a href="terms.html">Terms of Use</a></li>
       </ul>
@@ -763,11 +1381,7 @@
     </p>
   </noscript>
 
-  <script src="dist/js/supabase-data.js" defer></script>
-  <script src="dist/js/app.js" defer></script>
-  <script src="dist/js/supabase-auth.js" defer></script>
-  <script src="dist/js/ai-search.js" defer></script>
-  <script>
+  <script defer>
   (function() {
 
     /* ────────────────────────────────────────────
@@ -779,13 +1393,13 @@
       set(k, v) { try { localStorage.setItem(k, v); }        catch(e) {} }
     };
 
-    const saved = store.get('th_theme');
+    const saved = store.get('theme');
     if (saved === 'light' || saved === 'dark') html.setAttribute('data-theme', saved);
 
     function applyTheme() {
       const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
       html.setAttribute('data-theme', next);
-      store.set('th_theme', next);
+      store.set('theme', next);
     }
 
     document.getElementById('themeToggle').addEventListener('click', applyTheme);
@@ -870,23 +1484,6 @@
 
     buildFeaturedDots();
     renderFeatured(0);
-
-    /* ── Load live featured hadiths from Supabase ── */
-    if (window.TH && typeof TH.getFeatured === 'function') {
-      TH.getFeatured(10).then(function(live) {
-        if (!live || live.length === 0) return;
-        /* Only show hadiths with 120 words or fewer — ensures complete display */
-        var filtered = live.filter(function(h) {
-          return h.text && h.text.trim().split(/\s+/).length <= 120;
-        }).slice(0, 5);
-        if (filtered.length === 0) return;
-        FEATURED.length = 0;
-        filtered.forEach(function(h) { FEATURED.push(h); });
-        currentFeatured = 0;
-        buildFeaturedDots();
-        renderFeatured(0);
-      }).catch(function() { /* keep static fallback silently */ });
-    }
 
     // Prev / Next buttons
     document.getElementById('featuredPrev').addEventListener('click', () => {
@@ -1046,17 +1643,19 @@
     updateMvArrows();
 
     /* ────────────────────────────────────────────
-       CATEGORIES CAROUSEL — dynamic from Supabase
+       PAGINATION — 6 cards per page
     ──────────────────────────────────────────── */
     const track    = document.getElementById('cardsTrack');
     const prevBtn  = document.getElementById('prevBtn');
     const nextBtn  = document.getElementById('nextBtn');
     const dotsWrap = document.getElementById('carouselDots');
-    const PER_PAGE = 6;
-    let   cardEls  = [];
-    let   current  = 0;
 
-    function buildDots(total) {
+    const cardEls   = Array.from(track.querySelectorAll('.card'));
+    const PER_PAGE  = 6;
+    const total     = Math.ceil(cardEls.length / PER_PAGE);
+    let   current   = 0;
+
+    function buildDots() {
       dotsWrap.innerHTML = '';
       for (let i = 0; i < total; i++) {
         const d = document.createElement('span');
@@ -1068,7 +1667,6 @@
     }
 
     function goTo(page) {
-      const total = Math.ceil(cardEls.length / PER_PAGE);
       track.classList.add('fading');
       setTimeout(() => {
         current = Math.max(0, Math.min(page, total - 1));
@@ -1085,40 +1683,28 @@
       }, 150);
     }
 
-    function buildCategoryCards(cats) {
-      track.innerHTML = '';
-      cats.forEach(cat => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML =
-          '<p class="card-category">' + cat.title + '</p>' +
-          '<h3>' + cat.title + '</h3>' +
-          '<p class="card-desc">' + cat.count + ' hadiths</p>' +
-          '<a href="category.html?cat=' + cat.slug + '" class="card-plus" aria-label="Explore ' + cat.title + '">' +
-            '<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>' +
-          '</a>';
-        card.querySelector('.card-plus').addEventListener('click', e => e.stopPropagation());
-        card.addEventListener('click', () => { window.location.href = 'category.html?cat=' + cat.slug; });
-        track.appendChild(card);
-      });
-      cardEls = Array.from(track.querySelectorAll('.card'));
-      buildDots(Math.ceil(cardEls.length / PER_PAGE));
-      current = 0;
-      goTo(0);
-    }
-
     prevBtn.addEventListener('click', () => goTo(current - 1));
     nextBtn.addEventListener('click', () => goTo(current + 1));
+    buildDots();
+    goTo(0);
 
-    if (window.TH && typeof TH.init === 'function') {
-      TH.init().then(function() {
-        if (TH.categories && TH.categories.length > 0) {
-          buildCategoryCards(TH.categories);
-        }
-      }).catch(function() {
-        track.innerHTML = '<p style="color:var(--muted);text-align:center;padding:40px 0;grid-column:1/-1">Could not load categories. Please refresh.</p>';
+    /* ── Card click navigation ── */
+    cardEls.forEach(card => {
+      const catEl = card.querySelector('.card-category');
+      if (!catEl) return;
+      const slug = (catEl.dataset.en || catEl.textContent)
+        .toLowerCase().trim()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '');
+      const plusBtn = card.querySelector('.card-plus');
+      if (plusBtn) {
+        plusBtn.href = 'category.html?cat=' + slug;
+        plusBtn.addEventListener('click', e => e.stopPropagation());
+      }
+      card.addEventListener('click', () => {
+        window.location.href = 'category.html?cat=' + slug;
       });
-    }
+    });
 
     /* ────────────────────────────────────────────
        SHARE MODAL
@@ -1181,28 +1767,28 @@
       ctx.fillRect(0, 0, W, H);
 
       // Left accent bar
-      ctx.fillStyle = isDark ? '#4f72f8' : '#4f72f8';
+      ctx.fillStyle = isDark ? '#2997ff' : '#0071e3';
       ctx.fillRect(0, 0, 8, H);
 
       // Decorative top-right gradient
       const grad = ctx.createRadialGradient(W, 0, 0, W, 0, 500);
-      grad.addColorStop(0, isDark ? 'rgba(var(--accent-raw),0.08)' : 'rgba(var(--accent-raw),0.06)');
+      grad.addColorStop(0, isDark ? 'rgba(41,151,255,0.08)' : 'rgba(0,113,227,0.06)');
       grad.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, W, H);
 
       // Brand mark
-      ctx.fillStyle = isDark ? '#4f72f8' : '#4f72f8';
+      ctx.fillStyle = isDark ? '#2997ff' : '#0071e3';
       ctx.font      = 'bold 14px -apple-system, Helvetica, Arial, sans-serif';
       ctx.textAlign = 'left';
       ctx.fillText('TIMELESS HADITH', 64, 60);
 
       // Category badge
-      ctx.fillStyle = isDark ? 'rgba(var(--accent-raw),0.15)' : 'rgba(var(--accent-raw),0.08)';
+      ctx.fillStyle = isDark ? 'rgba(41,151,255,0.15)' : 'rgba(0,113,227,0.08)';
       const badgeW = ctx.measureText(hadith.category).width + 32;
       roundRect(ctx, 64, 80, badgeW, 28, 14);
       ctx.fill();
-      ctx.fillStyle = isDark ? '#4f72f8' : '#4f72f8';
+      ctx.fillStyle = isDark ? '#2997ff' : '#0071e3';
       ctx.font      = '500 13px -apple-system, Helvetica, Arial, sans-serif';
       ctx.fillText(hadith.category, 80, 99);
 
@@ -1289,42 +1875,49 @@
 
     // Modal share buttons
     document.getElementById('shareAsText').addEventListener('click', () => {
-      doShareText(currentHadith);
+      if (currentHadith) { doShareText(currentHadith); closeShareModal(); }
     });
     document.getElementById('shareAsImage').addEventListener('click', () => {
-      doShareImage(currentHadith);
+      if (currentHadith) { doShareImage(currentHadith); closeShareModal(); }
     });
 
-    /* ── Cookie Banner ── */
-    const banner = document.getElementById('cookieBanner');
-    if (banner && !store.get('th_cookie_consent')) {
-      setTimeout(function(){ banner.classList.add('show'); }, 1500);
-    }
-    document.getElementById('cookieAccept').addEventListener('click', function() {
-      store.set('th_cookie_consent', 'accepted');
-      store.set('th_cookie_consent_date', new Date().toISOString());
-      banner.classList.remove('show');
+    // Make featured card also trigger modal on click of arabic text
+    document.getElementById('featuredArabic').addEventListener('click', () => {
+      openShareModal(FEATURED[currentFeatured]);
     });
-    document.getElementById('cookieDecline').addEventListener('click', function() {
-      store.set('th_cookie_consent', 'declined');
-      store.set('th_cookie_consent_date', new Date().toISOString());
-      banner.classList.remove('show');
+
+    /* ────────────────────────────────────────────
+       COOKIE BANNER (PDPL)
+    ──────────────────────────────────────────── */
+    const cookieBanner  = document.getElementById('cookieBanner');
+    const cookieAccept  = document.getElementById('cookieAccept');
+    const cookieDecline = document.getElementById('cookieDecline');
+
+    const cookieConsent = store.get('cookieConsent');
+
+    if (!cookieConsent) {
+      // Show after 1.5s delay for better UX
+      setTimeout(() => cookieBanner.classList.add('show'), 1500);
+    }
+
+    cookieAccept.addEventListener('click', () => {
+      store.set('cookieConsent', 'accepted');
+      store.set('cookieConsentDate', new Date().toISOString());
+      cookieBanner.classList.remove('show');
+    });
+
+    cookieDecline.addEventListener('click', () => {
+      store.set('cookieConsent', 'declined');
+      store.set('cookieConsentDate', new Date().toISOString());
+      cookieBanner.classList.remove('show');
     });
 
   })();
   </script>
 
-  <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' integrity='sha384-OngJu5CJZ5lWGKcpmuxzX/oKa+Gcbcw0xdBkaOPd+KAe6c0poNtwdci1DEIrrtF/' crossorigin='anonymous' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
-  <!-- End Cloudflare Web Analytics -->
-  <!-- M-08: Service Worker registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js')
-          .catch(function(err) { console.warn('[SW] registration failed:', err); });
-      });
-    }
-  </script>
+  <!-- ── Shared app modules (auth, bookmarks, share) ── -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
