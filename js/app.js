@@ -604,7 +604,7 @@ const TH_SHARE = (() => {
       ctx.direction = 'rtl';
       ctx.textAlign = 'center';
       ctx.fillStyle = TEXT1;
-      ctx.font = '500 38px "Noto Naskh Arabic", serif';
+      ctx.font = '500 38px "Noto Kufi Arabic", serif';
       const arabicLines = _wrapArabic(ctx, hadith.arabic, W / 2, y, INNER, 62);
       y += arabicLines * 62 + 40;
       ctx.direction = 'ltr';
