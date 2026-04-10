@@ -1,11 +1,18 @@
 // ═══════════════════════════════════════════════════════════════════════════════
-//  js/firebase-auth.js  —  Firebase Authentication · Timeless Hadith
-//  ES Module · Firebase SDK v10 (modular) via CDN · No build step required
+//  js/firebase-auth.js  — DEPRECATED — DO NOT USE
+//  ──────────────────────────────────────────────────────────────────────────────
+//  This file has been superseded by js/supabase-auth.js (Supabase Auth).
+//  Firebase Auth has been removed from all pages as part of security remediation
+//  (Finding H-03 — April 2026).
 //
-//  HOW TO USE
-//  ──────────
-//  Add ONE line to every HTML page, just before </body>:
-//    <script type="module" src="js/firebase-auth.js"></script>
+//  This file is kept for reference only. It is NOT loaded by any page.
+//  Safe to delete once Supabase Auth is fully confirmed working.
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+//  Original file preserved below for rollback reference if needed.
+//
+// ── ORIGINAL CONTENT (inactive) ─────────────────────────────────────────────
+/*
 //
 //  (Replace the existing Google Identity Services line on each page:)
 //    ❌  <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -490,3 +497,5 @@ export { auth, signInWithGoogle, signOutUser };
 //    return snapshot.docs.map(d => d.id);  // array of hadithIds
 //  }
 // ══════════════════════════════════════════════════════════════════════════════
+
+*/
