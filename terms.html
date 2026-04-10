@@ -34,13 +34,7 @@
   </script>
 
   <!-- Theme initialiser — must run before paint -->
-  <script>
-    (function() {
-      var saved = localStorage.getItem('th_theme');
-      var prefer = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', saved || 'dark');
-    })();
-  </script>
+  <script src="js/theme-init.js"></script>
 
   <style>
     /* ── Page layout ── */
@@ -342,7 +336,7 @@
   <footer>
     <div class="footer-inner">
       <a href="index.html" class="footer-logo">
-        <img src="timelesshadith-logo.png" alt="Timeless Hadith" height="32" />
+        <img src="timelesshadith-logo.png" alt="Timeless Hadith" height="32" loading="lazy" decoding="async" />
       </a>
       <ul class="footer-links">
         <li><a href="index.html">Home</a></li>
@@ -374,56 +368,10 @@
   <script defer src="js/app.js"></script>
   <script defer src="js/supabase-auth.js"></script>
 
-  <script>
-  (function() {
-    /* ── Theme toggle ── */
-    var html = document.documentElement;
-    function setTheme(t) {
-      html.setAttribute('data-theme', t);
-      try { localStorage.setItem('th_theme', t); } catch(e) {}
-    }
-    function toggleTheme() {
-      setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-    }
-    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-    if (document.getElementById('themeToggleDrawer'))
-      document.getElementById('themeToggleDrawer').addEventListener('click', toggleTheme);
-
-    /* ── Hamburger ── */
-    var burger = document.getElementById('hamburger');
-    var drawer = document.getElementById('navDrawer');
-    burger.addEventListener('click', function() {
-      drawer.classList.toggle('open');
-      burger.setAttribute('aria-expanded', drawer.classList.contains('open'));
-    });
-
-    /* ── Cookie ── */
-    var banner  = document.getElementById('cookieBanner');
-    var accept  = document.getElementById('cookieAccept');
-    var decline = document.getElementById('cookieDecline');
-    var store = {
-      get: function(k) { try { return localStorage.getItem(k); } catch(e) { return null; } },
-      set: function(k,v) { try { localStorage.setItem(k,v); } catch(e) {} }
-    };
-    if (!store.get('th_cookie_consent')) {
-
-    if (!store.get('th_cookie_consent')) {
-      setTimeout(function() { banner.classList.add('show'); }, 1500);
-    }
-    accept.addEventListener('click', function() {
-      store.set('th_cookie_consent','accepted');
-      store.set('th_cookie_consent_date', new Date().toISOString());
-      banner.classList.remove('show');
-    });
-    decline.addEventListener('click', function() {
-      store.set('th_cookie_consent','declined');
-      banner.classList.remove('show');
-    });
-  })();
-  </script>
+  <script defer src="js/page-chrome.js"></script>
 
   <!-- Cloudflare Web Analytics -->
-  <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){});});}</script>
+  <script defer src="js/sw-register.js"></script>
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
   <!-- End Cloudflare Web Analytics -->
 </body>
