@@ -163,16 +163,19 @@
 .ai-send-btn {
   width: 36px; height: 36px;
   border-radius: 10px;
-  background: #a855f7;
+  background: #18181b;
   border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: background .15s, transform .1s;
   color: white; flex-shrink: 0;
 }
-.ai-send-btn:hover { background: #c084fc; transform: scale(1.05); }
+[data-theme="dark"] .ai-send-btn { background: #e8e8ed; }
+.ai-send-btn:hover { background: #2d2d33; transform: scale(1.05); }
+[data-theme="dark"] .ai-send-btn:hover { background: #f5f5f7; }
 .ai-send-btn:active { transform: scale(.95); }
 .ai-send-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
 .ai-send-btn svg { stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+[data-theme="dark"] .ai-send-btn svg { stroke: #18181b; }
 
 /* ── Collection dropdown ── */
 .ai-dropdown {
@@ -231,7 +234,7 @@
   transition: all .2s;
   display: flex; flex-direction: column;
   justify-content: space-between;
-  min-height: 100px; gap: 10px;
+  min-height: 96px; gap: 12px;
   font-family: inherit; text-align: left;
 }
 [data-theme="dark"] .ai-chip {
@@ -444,7 +447,7 @@
       <!-- Greeting -->
       <div class="ai-greeting">
         <div class="ai-greeting-line1" id="ai-greeting">${_greeting()}</div>
-        <div class="ai-greeting-line2">What would you like to <span>explore?</span></div>
+        <div class="ai-greeting-line2">What's on <span>your mind?</span></div>
       </div>
 
       <!-- Results (shown after search) -->
@@ -515,30 +518,30 @@
 
       <!-- Example chips -->
       <div id="ai-examples">
-        <p class="ai-examples-label">Get started with an example</p>
+        <p class="ai-examples-label">Get started with an example below</p>
         <div class="ai-chips-grid">
           <button class="ai-chip" data-prompt="What did the Prophet say about the importance of intentions?" type="button">
             <span class="ai-chip-text">What did the Prophet say about the importance of intentions?</span>
             <span class="ai-chip-icon">
-              <svg width="13" height="13" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
             </span>
           </button>
           <button class="ai-chip" data-prompt="Show me hadiths about kindness to parents and family" type="button">
             <span class="ai-chip-text">Show me hadiths about kindness to parents and family</span>
             <span class="ai-chip-icon">
-              <svg width="13" height="13" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </span>
           </button>
           <button class="ai-chip" data-prompt="What hadiths speak about the virtues of fasting in Ramadan?" type="button">
             <span class="ai-chip-text">What hadiths speak about the virtues of fasting in Ramadan?</span>
             <span class="ai-chip-icon">
-              <svg width="13" height="13" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </span>
           </button>
           <button class="ai-chip" data-prompt="How did the Prophet describe the importance of prayer?" type="button">
             <span class="ai-chip-text">How did the Prophet describe the importance of prayer?</span>
             <span class="ai-chip-icon">
-              <svg width="13" height="13" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             </span>
           </button>
         </div>
