@@ -1,11 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Page Not Found — Timeless Hadith</title>
+  <meta name="description" content="The page you are looking for does not exist. Return to Timeless Hadith for authentic, searchable hadiths from Sahih al-Bukhari." />
   <meta name="robots" content="noindex, follow" />
   <link rel="canonical" href="https://timelesshadith.com/" />
+  <meta property="og:title" content="Page Not Found — Timeless Hadith" />
+  <meta property="og:description" content="The page you are looking for does not exist. Return to Timeless Hadith for authentic hadiths." />
+  <meta property="og:image" content="https://timelesshadith.com/og-image.png" />
+  <meta property="og:url" content="https://timelesshadith.com/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Page Not Found — Timeless Hadith" />
+  <meta name="twitter:description" content="The page you are looking for does not exist. Return to Timeless Hadith for authentic hadiths." />
+  <meta name="twitter:image" content="https://timelesshadith.com/og-image.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -56,8 +65,8 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--ink);
-      color: var(--bg);
+      background: #0071e3;
+      color: #fff;
       padding: 12px 24px;
       border-radius: var(--radius);
       text-decoration: none;
@@ -82,5 +91,8 @@
     const s = localStorage.getItem('theme');
     if (s === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
   </script>
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
+  <!-- End Cloudflare Web Analytics -->
 </body>
 </html>

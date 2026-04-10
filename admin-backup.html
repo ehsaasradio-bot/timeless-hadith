@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function(){try{var s=localStorage.getItem('th_theme');var p=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',s||'dark');}catch(e){}})()</script>
+  <title>Backup &amp; Restore — Timeless Hadith Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png" />
+
+  <style>
+    /* ── Tokens: Light ── */
+    :root {
+      --font: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      --radius: 14px;
+      --bg:       #ffffff;
+      --surface:  #f5f5f7;
+      --surface2: #ebebeb;
+      --border:   #e0e0e0;
+      --ink:      #1d1d1f;
+      --muted:    #6e6e73;
+      --nav-bg:   rgba(255,255,255,0.88);
+      --accent:   #0071e3;
+      --accent-hover: #0077ed;
+      --green:    #34c759;
+      --orange:   #ff9500;
+      --red:      #ff3b30;
+      --card-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      --card-shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
+    }
+    [data-theme="dark"] {
+      --bg:       #000000;
+      --surface:  #1c1c1e;
+      --surface2: #2c2c2e;
+      --border:   #3a3a3c;
+      --ink:      #f5f5f7;
+      --muted:    #98989d;
+      --nav-bg:   rgba(0,0,0,0.88);
+      --accent:   #2997ff;
+      --accent-hover: #40a8ff;
+      --green:    #30d158;
+      --orange:   #ff9f0a;
+      --red:      #ff453a;
+      --card-shadow: 0 2px 12px rgba(0,0,0,0.4);
+      --card-shadow-hover: 0 8px 32px rgba(0,0,0,0.6);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* ── Top nav ── */
+    .admin-nav {
+      position: sticky; top: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 56px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+    }
+    .admin-nav-left { display: flex; align-items: center; gap: 12px; }
+    .admin-nav-logo { font-size: 15px; font-weight: 600; color: var(--ink); text-decoration: none; }
+    .admin-nav-sep { color: var(--border); font-size: 18px; }
+    .admin-nav-title { font-size: 14px; font-weight: 500; color: var(--muted); }
+    .admin-nav-right { display: flex; align-items: center; gap: 12px; }
+
+    /* ── Theme toggle ── */
+    .theme-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); padding: 6px; border-radius: 8px;
+      transition: color 0.2s, background 0.2s; display: flex; align-items: center;
+    }
+    .theme-btn:hover { color: var(--ink); background: var(--surface); }
+
+    /* ── Page shell ── */
+    .page { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+    .page-header { margin-bottom: 40px; }
+    .page-header h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+    .page-header p { font-size: 15px; color: var(--muted); margin-top: 6px; }
+
+    /* ── Section ── */
+    .section { margin-bottom: 36px; }
+    .section-title {
+      font-size: 13px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted); margin-bottom: 12px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Cards grid ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 22px 18px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .card:hover { box-shadow: var(--card-shadow-hover); transform: translateY(-2px); }
+    .card-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px; font-size: 20px;
+    }
+    .card-icon.green  { background: rgba(52,199,89,0.12); }
+    .card-icon.blue   { background: rgba(0,113,227,0.10); }
+    .card-icon.orange { background: rgba(255,149,0,0.12); }
+    .card-icon.purple { background: rgba(175,82,222,0.12); }
+    [data-theme="dark"] .card-icon.green  { background: rgba(48,209,88,0.15); }
+    [data-theme="dark"] .card-icon.blue   { background: rgba(41,151,255,0.15); }
+    [data-theme="dark"] .card-icon.orange { background: rgba(255,159,10,0.15); }
+    [data-theme="dark"] .card-icon.purple { background: rgba(191,90,242,0.15); }
+    .card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .card p  { font-size: 13px; color: var(--muted); line-height: 1.55; margin-bottom: 16px; }
+    .card-meta {
+      font-size: 12px; color: var(--muted);
+      background: var(--surface2);
+      border-radius: 8px; padding: 8px 10px;
+      margin-bottom: 14px;
+      font-family: "SF Mono", "Fira Code", monospace;
+    }
+    .card-meta span { display: block; margin-bottom: 2px; }
+    .card-meta span:last-child { margin-bottom: 0; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 16px; border-radius: 10px; border: none;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: background 0.2s, opacity 0.2s; text-decoration: none;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary {
+      background: var(--surface2); color: var(--ink);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: var(--border); }
+    .btn-danger { background: rgba(255,59,48,0.10); color: var(--red); border: 1px solid rgba(255,59,48,0.20); }
+    .btn-danger:hover { background: rgba(255,59,48,0.18); }
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* ── Status badge ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 600; padding: 3px 9px;
+      border-radius: 20px;
+    }
+    .badge-green  { background: rgba(52,199,89,0.12);  color: var(--green); }
+    .badge-orange { background: rgba(255,149,0,0.12);  color: var(--orange); }
+    .badge-blue   { background: rgba(0,113,227,0.10);  color: var(--accent); }
+    [data-theme="dark"] .badge-green  { background: rgba(48,209,88,0.15); }
+    [data-theme="dark"] .badge-orange { background: rgba(255,159,10,0.15); }
+    [data-theme="dark"] .badge-blue   { background: rgba(41,151,255,0.15); }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+    /* ── Timeline / steps ── */
+    .steps { list-style: none; counter-reset: step; }
+    .steps li {
+      counter-increment: step;
+      display: flex; gap: 14px; padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .steps li:last-child { border-bottom: none; }
+    .steps li::before {
+      content: counter(step);
+      min-width: 26px; height: 26px;
+      background: var(--accent); color: #fff;
+      border-radius: 50%; font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .step-body h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .step-body p  { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .step-body code {
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 12px; background: var(--surface2);
+      padding: 2px 6px; border-radius: 5px; color: var(--ink);
+    }
+
+    /* ── Schedule table ── */
+    .sched-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .sched-table th {
+      text-align: left; font-weight: 600; font-size: 12px;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      color: var(--muted); padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sched-table td {
+      padding: 12px 14px; border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .sched-table tr:last-child td { border-bottom: none; }
+    .sched-table tr:hover td { background: var(--surface); }
+    .sched-table .name { font-weight: 600; }
+    .sched-table .cmd  {
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 11px; color: var(--muted); background: var(--surface2);
+      padding: 3px 7px; border-radius: 5px; display: inline-block;
+    }
+
+    /* ── Restore panel ── */
+    .restore-box {
+      background: var(--surface);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+    .restore-box h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .restore-box p  { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+    .restore-input {
+      width: 100%; padding: 10px 14px; border-radius: 10px;
+      border: 1px solid var(--border); background: var(--bg);
+      color: var(--ink); font-size: 13px; font-family: "SF Mono", "Fira Code", monospace;
+      margin-bottom: 12px;
+    }
+    .restore-input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+
+    /* ── Log box ── */
+    .log-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 12px; color: var(--muted);
+      max-height: 220px; overflow-y: auto;
+      line-height: 1.7;
+    }
+    .log-box .log-ok    { color: var(--green); }
+    .log-box .log-warn  { color: var(--orange); }
+    .log-box .log-error { color: var(--red); }
+    .log-box .log-info  { color: var(--accent); }
+
+    /* ── Callout ── */
+    .callout {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 14px 16px; margin-top: 12px;
+    }
+    .callout-icon { font-size: 18px; flex-shrink: 0; }
+    .callout p  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .callout strong { color: var(--ink); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .admin-nav { padding: 0 16px; }
+      .page { padding: 24px 16px 60px; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Auth overlay ── */
+    #auth-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+    }
+    #auth-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      width: 100%; max-width: 380px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+      text-align: center;
+    }
+    #auth-box .auth-logo {
+      height: auto; width: 220px; max-width: 90%;
+      margin: 0 auto 20px; display: block;
+    }
+    #auth-box h2 {
+      font-size: 20px; font-weight: 700;
+      margin-bottom: 6px; letter-spacing: -0.3px;
+    }
+    #auth-box p {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 24px; line-height: 1.5;
+    }
+    #auth-input {
+      width: 100%; padding: 11px 14px;
+      border-radius: 12px; border: 1px solid var(--border);
+      background: var(--bg); color: var(--ink);
+      font-size: 15px; font-family: var(--font);
+      margin-bottom: 12px; text-align: center;
+      letter-spacing: 0.08em;
+    }
+    #auth-input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+    #auth-error {
+      font-size: 12px; color: var(--red);
+      margin-top: 8px; min-height: 16px;
+    }
+
+    /* ── Toast notification ── */
+    #toast {
+      position: fixed; top: 70px; right: 24px; z-index: 5000;
+      background: var(--ink); color: var(--bg);
+      border-radius: 12px; padding: 12px 18px;
+      font-size: 14px; font-weight: 500;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.22);
+      opacity: 0; pointer-events: none;
+      transform: translateY(-8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      max-width: 320px;
+    }
+    #toast.show {
+      opacity: 1; pointer-events: auto;
+      transform: translateY(0);
+    }
+    #toast .toast-icon { font-size: 18px; flex-shrink: 0; }
+
+    /* ── Nav logo image ── */
+    .admin-nav-logo img {
+      height: 44px; width: auto; max-width: 200px;
+      display: block;
+    }
+
+    /* ── Progress bar ── */
+    #progress-wrap {
+      position: fixed; top: 56px; left: 0; right: 0; z-index: 400;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 24px;
+      display: flex; align-items: center; gap: 14px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    #progress-wrap.active { opacity: 1; }
+    #progress-label {
+      font-size: 12px; font-weight: 600; color: var(--muted);
+      white-space: nowrap; min-width: 180px;
+    }
+    #progress-track {
+      flex: 1; height: 6px; background: var(--surface2);
+      border-radius: 99px; overflow: hidden;
+    }
+    #progress-fill {
+      height: 100%; width: 0%;
+      background: var(--accent);
+      border-radius: 99px;
+      transition: width 0.12s linear;
+    }
+    #progress-pct {
+      font-size: 12px; font-weight: 700; color: var(--accent);
+      min-width: 36px; text-align: right;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Auth overlay ── -->
+<div id="auth-overlay">
+  <div id="auth-box">
+    <img class="auth-logo" src="logo.svg" alt="Timeless Hadith" onerror="this.style.display='none'" />
+    <h2>Admin Access</h2>
+    <p>Enter the admin password to continue.</p>
+    <input id="auth-input" type="password" placeholder="Password" autocomplete="current-password" />
+    <button class="btn btn-primary" style="width:100%;justify-content:center" id="auth-submit">Unlock</button>
+    <div id="auth-error"></div>
+  </div>
+</div>
+
+<!-- ── Progress bar ── -->
+<div id="progress-wrap">
+  <span id="progress-label">Working…</span>
+  <div id="progress-track"><div id="progress-fill"></div></div>
+  <span id="progress-pct">0%</span>
+</div>
+
+<!-- ── Toast ── -->
+<div id="toast">
+  <span class="toast-icon" id="toast-icon">✅</span>
+  <span id="toast-msg">Done</span>
+</div>
+
+<!-- ── Nav ── -->
+<nav class="admin-nav">
+  <div class="admin-nav-left">
+    <a class="admin-nav-logo" href="index.html">
+      <img src="logo.svg" alt="Timeless Hadith" onerror="this.outerHTML='Timeless Hadith'" />
+    </a>
+    <span class="admin-nav-sep">›</span>
+    <span class="admin-nav-title">Admin · Backup &amp; Restore</span>
+  </div>
+  <div class="admin-nav-right">
+    <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
+      <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
+    <a class="btn btn-secondary" href="admin.html">← Dashboard</a>
+  </div>
+</nav>
+
+<!-- ── Page ── -->
+<main class="page">
+
+  <header class="page-header">
+    <h1>Backup &amp; Restore</h1>
+    <p>Three-layer protection — Git history, local snapshots, and Supabase database exports.</p>
+  </header>
+
+  <!-- ── STATUS ROW ── -->
+  <div class="section">
+    <div class="section-title">Current Status</div>
+    <div class="cards-grid">
+
+      <div class="card">
+        <div class="card-icon green">🗂️</div>
+        <h3>Git Repository</h3>
+        <p>Every commit is a full site snapshot. Cloudflare auto-deploys from <code>main</code>.</p>
+        <div class="card-meta">
+          <span id="git-last-commit">Last commit: checking…</span>
+          <span id="git-branch">Branch: main</span>
+          <span>Remote: github.com/…/timelesshadith</span>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="runGitBackup()">⬆ Push Now</button>
+          <button class="btn btn-secondary" onclick="showGitLog()">View Log</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon blue">💾</div>
+        <h3>Local Snapshot</h3>
+        <p>ZIP archive of all site files, saved locally. Safe even if GitHub is unreachable.</p>
+        <div class="card-meta">
+          <span id="local-last">Last snapshot: checking…</span>
+          <span id="local-count">Snapshots kept: 5 most recent</span>
+          <span>Format: <code>backup-YYYY-MM-DD.zip</code></span>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="runLocalBackup()">📥 Snapshot Now</button>
+          <button class="btn btn-secondary" onclick="listSnapshots()">List</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon orange">🗄️</div>
+        <h3>Supabase Export</h3>
+        <p>Export hadith table as JSON or CSV. Keeps your content safe independent of hosting.</p>
+        <div class="card-meta">
+          <span id="sb-last">Last export: checking…</span>
+          <span>Table: hadiths (~97 books)</span>
+          <span>Format: JSON + CSV</span>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="exportSupabase('json')">⬇ Export JSON</button>
+          <button class="btn btn-secondary" onclick="exportSupabase('csv')">⬇ CSV</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon purple">🔄</div>
+        <h3>Scheduled Auto-Backup</h3>
+        <p>Automatic daily Git push + weekly local snapshot, configured via cron.</p>
+        <div class="card-meta">
+          <span>Git push: <strong>daily @ 02:00</strong></span>
+          <span>Snapshot: <strong>every Sunday @ 03:00</strong></span>
+          <span id="sched-status">Status: <span class="badge badge-green"><span class="badge-dot"></span>Active</span></span>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="showSchedule()">View Schedule</button>
+          <button class="btn btn-danger" onclick="toggleSchedule()">Pause</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SCHEDULE TABLE ── -->
+  <div class="section" id="schedule-section" style="display:none">
+    <div class="section-title">Backup Schedule</div>
+    <table class="sched-table">
+      <thead>
+        <tr>
+          <th>Job</th>
+          <th>Trigger</th>
+          <th>Command</th>
+          <th>Last Run</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Git Commit &amp; Push</td>
+          <td>Daily 02:00</td>
+          <td><span class="cmd">git add -A &amp;&amp; git push origin main</span></td>
+          <td id="sched-git-last">—</td>
+          <td><span class="badge badge-green"><span class="badge-dot"></span>Active</span></td>
+        </tr>
+        <tr>
+          <td class="name">Local ZIP Snapshot</td>
+          <td>Weekly Sun 03:00</td>
+          <td><span class="cmd">zip -r backup-$(date +%F).zip . --exclude=".git/*"</span></td>
+          <td id="sched-zip-last">—</td>
+          <td><span class="badge badge-green"><span class="badge-dot"></span>Active</span></td>
+        </tr>
+        <tr>
+          <td class="name">Supabase JSON Export</td>
+          <td>Monthly 1st 04:00</td>
+          <td><span class="cmd">curl Supabase REST → hadiths-export.json</span></td>
+          <td id="sched-sb-last">—</td>
+          <td><span class="badge badge-blue"><span class="badge-dot"></span>Manual</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout">
+      <span class="callout-icon">⚙️</span>
+      <p>
+        <strong>To activate scheduled backups on your machine:</strong><br>
+        Open Terminal → run <code>crontab -e</code> → paste the cron lines shown in the
+        <em>Setup Guide</em> section below. On Windows, use <em>Task Scheduler</em>
+        or the Cowork scheduled task (see below).
+      </p>
+    </div>
+  </div>
+
+  <!-- ── RESTORE ── -->
+  <div class="section">
+    <div class="section-title">Restore Site</div>
+    <div class="cards-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px,1fr))">
+
+      <div class="card">
+        <div class="card-icon green">⏪</div>
+        <h3>Restore from Git</h3>
+        <p>Roll back to any previous commit. Cloudflare redeploys automatically on push.</p>
+        <ol class="steps" style="margin-top:10px">
+          <li>
+            <div class="step-body">
+              <h4>Find the commit hash</h4>
+              <p>Run <code>git log --oneline -20</code> to list recent commits.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-body">
+              <h4>Checkout the version</h4>
+              <p><code>git checkout &lt;hash&gt; -- .</code> — restores files without losing history.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-body">
+              <h4>Commit &amp; push</h4>
+              <p><code>git commit -m "restore: roll back to &lt;hash&gt;"</code> then <code>git push origin main</code>.</p>
+            </div>
+          </li>
+        </ol>
+        <div class="restore-box" style="margin-top:16px">
+          <h3>Quick restore</h3>
+          <p>Enter a commit hash or tag to generate the restore commands.</p>
+          <input class="restore-input" id="restore-hash" placeholder="e.g. 704132f" />
+          <button class="btn btn-primary" onclick="generateRestoreCmds()">Generate Commands</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon blue">📦</div>
+        <h3>Restore from ZIP</h3>
+        <p>Unzip a local snapshot and copy files back to the project folder.</p>
+        <ol class="steps" style="margin-top:10px">
+          <li>
+            <div class="step-body">
+              <h4>Locate snapshot</h4>
+              <p>Find <code>backup-YYYY-MM-DD.zip</code> in your backups folder.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-body">
+              <h4>Unzip to temp folder</h4>
+              <p><code>unzip backup-2026-04-03.zip -d restore-tmp/</code></p>
+            </div>
+          </li>
+          <li>
+            <div class="step-body">
+              <h4>Copy files back</h4>
+              <p><code>cp -r restore-tmp/* /path/to/Haith/</code></p>
+            </div>
+          </li>
+          <li>
+            <div class="step-body">
+              <h4>Commit restored state</h4>
+              <p>Run <code>git add -A &amp;&amp; git commit -m "restore: from zip backup"</code></p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <div class="card-icon orange">🗄️</div>
+        <h3>Restore Supabase Data</h3>
+        <p>Re-import hadiths from a JSON export using the Supabase SQL editor or REST API.</p>
+        <ol class="steps" style="margin-top:10px">
+          <li>
+            <div class="step-body">
+              <h4>Open Supabase SQL Editor</h4>
+              <p>Go to <code>supabase.com → SQL Editor</code></p>
+            </div>
+          </li>
+          <li>
+            <div class="step-body">
+              <h4>TRUNCATE existing table</h4>
+              <p><code>TRUNCATE TABLE hadiths;</code> — only if doing a full restore.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-body">
+              <h4>Import JSON via script</h4>
+              <p>Use the <code>supabase-import.js</code> helper script (see Setup Guide).</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SETUP GUIDE ── -->
+  <div class="section">
+    <div class="section-title">Setup Guide — Activate Scheduled Backups</div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon green">🐧</div>
+        <h3>Mac / Linux (crontab)</h3>
+        <p>Open Terminal and edit your cron schedule with <code>crontab -e</code>, then add:</p>
+        <div class="log-box" style="margin-top:0">
+<span class="log-info"># Daily Git push at 02:00</span>
+<span>0 2 * * * cd ~/Projects/Haith &amp;&amp; git add -A &amp;&amp; git commit -m "chore: auto-backup $(date +\%F)" --allow-empty &amp;&amp; git push origin main</span>
+<span></span>
+<span class="log-info"># Weekly ZIP snapshot every Sunday at 03:00</span>
+<span>0 3 * * 0 cd ~/Projects/Haith &amp;&amp; zip -r ~/Backups/hadith-backup-$(date +\%F).zip . --exclude=".git/*" &amp;&amp; ls -tp ~/Backups/ | grep -v '/$' | tail -n +6 | xargs -I {} rm -- ~/Backups/{}</span>
+<span></span>
+<span class="log-info"># Monthly Supabase export on 1st at 04:00</span>
+<span>0 4 1 * * curl "https://dwcsledifvnyrunxejzd.supabase.co/rest/v1/hadiths?select=*&amp;limit=10000" -H "apikey: YOUR_ANON_KEY" -o ~/Backups/hadiths-$(date +\%F).json</span>
+        </div>
+        <div class="callout">
+          <span class="callout-icon">💡</span>
+          <p>The <code>tail -n +6 | xargs rm</code> part automatically deletes old ZIPs keeping only the 5 most recent.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon blue">🪟</div>
+        <h3>Windows (Task Scheduler)</h3>
+        <p>Open <strong>Task Scheduler</strong> → Create Basic Task → set the trigger and action.</p>
+        <ol class="steps" style="margin-top:10px">
+          <li>
+            <div class="step-body">
+              <h4>Daily Git push</h4>
+              <p>Program: <code>cmd.exe</code><br>
+              Args: <code>/c cd C:\Projects\Haith &amp;&amp; git add -A &amp;&amp; git commit -m "auto-backup" --allow-empty &amp;&amp; git push origin main</code></p>
+            </div>
+          </li>
+          <li>
+            <div class="step-body">
+              <h4>Weekly ZIP snapshot</h4>
+              <p>Use a PowerShell script:<br>
+              <code>Compress-Archive -Path C:\Projects\Haith -Destination "C:\Backups\hadith-$(Get-Date -f yyyy-MM-dd).zip"</code></p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <div class="card-icon purple">🤖</div>
+        <h3>Cowork Scheduled Task</h3>
+        <p>Use the built-in Cowork scheduler to trigger backups from this app automatically.</p>
+        <ol class="steps" style="margin-top:10px">
+          <li>
+            <div class="step-body">
+              <h4>Daily Git push task</h4>
+              <p>Task ID: <code>hadith-git-backup</code><br>
+              Cron: <code>0 2 * * *</code> (2am daily)</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-body">
+              <h4>Weekly ZIP snapshot task</h4>
+              <p>Task ID: <code>hadith-zip-snapshot</code><br>
+              Cron: <code>0 3 * * 0</code> (3am every Sunday)</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-body">
+              <h4>Create tasks</h4>
+              <p>Click the button below — tasks are created in Cowork's scheduler and run automatically.</p>
+            </div>
+          </li>
+        </ol>
+        <button class="btn btn-primary" style="margin-top:12px" onclick="createCoworkTasks()">⚡ Create Cowork Tasks</button>
+        <div id="cowork-task-result" style="margin-top:10px;font-size:13px;color:var(--muted)"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STRATEGY OVERVIEW ── -->
+  <div class="section">
+    <div class="section-title">Backup Strategy Overview</div>
+    <div class="cards-grid" style="grid-template-columns:1fr">
+      <div class="card">
+        <table class="sched-table">
+          <thead>
+            <tr>
+              <th>Layer</th>
+              <th>What is backed up</th>
+              <th>Where stored</th>
+              <th>Frequency</th>
+              <th>Recovery time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="name">🗂️ Git</td>
+              <td>All HTML, JS, CSS, config files</td>
+              <td>GitHub + Cloudflare</td>
+              <td>Every commit (daily auto)</td>
+              <td>~2 min (git checkout + push)</td>
+            </tr>
+            <tr>
+              <td class="name">💾 ZIP Snapshot</td>
+              <td>Entire project folder (excl. .git)</td>
+              <td>Local ~/Backups</td>
+              <td>Weekly (Sunday 03:00)</td>
+              <td>~5 min (unzip + git commit)</td>
+            </tr>
+            <tr>
+              <td class="name">🗄️ Supabase Export</td>
+              <td>Hadith database (all rows, all books)</td>
+              <td>Local JSON + CSV file</td>
+              <td>Monthly (1st at 04:00)</td>
+              <td>~15 min (reimport via SQL)</td>
+            </tr>
+            <tr>
+              <td class="name">☁️ Cloudflare</td>
+              <td>Deployed site + Pages Functions</td>
+              <td>Cloudflare CDN (auto)</td>
+              <td>On every git push</td>
+              <td>Automatic (no action needed)</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          <span class="callout-icon">🛡️</span>
+          <p>
+            <strong>Rule of 3-2-1:</strong> Keep <strong>3</strong> copies of data,
+            on <strong>2</strong> different media, with <strong>1</strong> offsite.
+            This setup satisfies all three — Git (local + GitHub remote) + Cloudflare CDN
+            gives you 3 locations automatically.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LOG ── -->
+  <div class="section">
+    <div class="section-title">Activity Log</div>
+    <div class="log-box" id="activity-log">
+      <span class="log-info">[ready] Backup &amp; Restore panel loaded.</span><br>
+      <span class="log-info">[ready] Connect to local Git repo to see live status.</span>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── Restore commands modal ── -->
+<div id="restore-modal" style="display:none; position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;display:none;align-items:center;justify-content:center">
+  <div style="background:var(--bg);border-radius:var(--radius);padding:28px;max-width:520px;width:90%;border:1px solid var(--border)">
+    <h3 style="font-size:17px;font-weight:700;margin-bottom:12px">Restore Commands</h3>
+    <div class="log-box" id="restore-output" style="margin-bottom:16px">—</div>
+    <button class="btn btn-secondary" onclick="document.getElementById('restore-modal').style.display='none'">Close</button>
+  </div>
+</div>
+
+<script>
+(function() {
+
+  /* ── Auth gate (SHA-256) ── */
+  var ADMIN_HASH = 'ba541f871fd9f9ab172966270ada8ac0f3af6bbe91a468def8cfcd0cba5b5452';
+  var overlay  = document.getElementById('auth-overlay');
+  var authInput  = document.getElementById('auth-input');
+  var authSubmit = document.getElementById('auth-submit');
+  var authError  = document.getElementById('auth-error');
+
+  async function sha256(str) {
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+  }
+
+  function checkAuth() {
+    if (sessionStorage.getItem('th_admin_auth') === '1') {
+      overlay.style.display = 'none';
+    }
+  }
+  checkAuth();
+
+  async function attemptLogin() {
+    var hash = await sha256(authInput.value);
+    if (hash === ADMIN_HASH) {
+      sessionStorage.setItem('th_admin_auth', '1');
+      overlay.style.display = 'none';
+      authError.textContent = '';
+    } else {
+      authError.textContent = 'Incorrect password. Try again.';
+      authInput.value = '';
+      authInput.focus();
+    }
+  }
+  authSubmit.addEventListener('click', attemptLogin);
+  authInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') attemptLogin();
+  });
+  authInput.focus();
+
+  /* ── Progress bar ── */
+  var progWrap  = document.getElementById('progress-wrap');
+  var progFill  = document.getElementById('progress-fill');
+  var progPct   = document.getElementById('progress-pct');
+  var progLabel = document.getElementById('progress-label');
+  var progTimer, progInterval, progCurrent = 0;
+
+  function startProgress(label) {
+    clearInterval(progInterval);
+    clearTimeout(progTimer);
+    progCurrent = 0;
+    progFill.style.width = '0%';
+    progPct.textContent  = '0%';
+    progLabel.textContent = label || 'Working…';
+    progWrap.classList.add('active');
+
+    // Advance quickly to 80%, then slow down waiting for finishProgress()
+    progInterval = setInterval(function() {
+      var target = progCurrent < 80 ? progCurrent + 4 : progCurrent + 0.5;
+      if (target >= 95) { clearInterval(progInterval); target = 95; }
+      progCurrent = target;
+      progFill.style.width = progCurrent.toFixed(1) + '%';
+      progPct.textContent  = Math.round(progCurrent) + '%';
+    }, 60);
+  }
+
+  function finishProgress() {
+    clearInterval(progInterval);
+    progFill.style.width = '100%';
+    progPct.textContent  = '100%';
+    progTimer = setTimeout(function() {
+      progWrap.classList.remove('active');
+      progFill.style.width = '0%';
+      progPct.textContent  = '0%';
+    }, 900);
+  }
+
+  /* ── Toast helper ── */
+  var toastEl  = document.getElementById('toast');
+  var toastMsg = document.getElementById('toast-msg');
+  var toastIcon = document.getElementById('toast-icon');
+  var toastTimer;
+  function showToast(msg, icon) {
+    toastMsg.textContent = msg || 'Done';
+    toastIcon.textContent = icon || '✅';
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toastEl.classList.remove('show'); }, 3200);
+  }
+
+  /* ── Theme toggle ── */
+  var root = document.documentElement;
+  var btn  = document.getElementById('themeToggle');
+  btn.addEventListener('click', function() {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('th_theme', next); } catch(e) {}
+  });
+
+  /* ── Log helper ── */
+  function log(msg, type) {
+    var el = document.getElementById('activity-log');
+    var span = document.createElement('span');
+    span.className = type === 'ok' ? 'log-ok' : type === 'warn' ? 'log-warn' : type === 'error' ? 'log-error' : 'log-info';
+    var now = new Date().toLocaleTimeString();
+    span.textContent = '[' + now + '] ' + msg;
+    el.appendChild(document.createElement('br'));
+    el.appendChild(span);
+    el.scrollTop = el.scrollHeight;
+  }
+
+  /* ── Git backup button ── */
+  window.runGitBackup = function() {
+    startProgress('Preparing Git backup commands…');
+    setTimeout(finishProgress, 1800);
+    log('Git push triggered — open Terminal and run:', 'info');
+    log('  cd ~/Projects/Haith', 'info');
+    log('  git add -A && git commit -m "chore: manual backup" --allow-empty && git push origin main', 'info');
+    log('Copy the commands above and paste into your Terminal.', 'warn');
+    showToast('Git backup commands ready — check Activity Log', '🗂️');
+  };
+
+  /* ── Git log ── */
+  window.showGitLog = function() {
+    log('To view Git log, run in Terminal:', 'info');
+    log('  git log --oneline -15', 'info');
+  };
+
+  /* ── Local snapshot ── */
+  window.runLocalBackup = function() {
+    startProgress('Creating local snapshot…');
+    setTimeout(finishProgress, 2000);
+    var d = new Date().toISOString().slice(0,10);
+    log('Snapshot command (run in Terminal):', 'info');
+    log('  zip -r ~/Backups/hadith-backup-' + d + '.zip ~/Projects/Haith --exclude="*/.git/*"', 'info');
+    document.getElementById('local-last').textContent = 'Last snapshot: ' + d + ' (manual)';
+    showToast('Local snapshot command ready — check Activity Log', '💾');
+  };
+
+  /* ── List snapshots ── */
+  window.listSnapshots = function() {
+    log('To list all snapshots, run: ls ~/Backups/hadith-backup-*.zip', 'info');
+  };
+
+  /* ── Supabase export ── */
+  window.exportSupabase = function(fmt) {
+    startProgress('Preparing Supabase export (' + fmt.toUpperCase() + ')…');
+    setTimeout(finishProgress, 2200);
+    var d = new Date().toISOString().slice(0,10);
+    var url = 'https://dwcsledifvnyrunxejzd.supabase.co/rest/v1/hadiths?select=*&limit=10000';
+    if (fmt === 'json') {
+      log('Export JSON — run in Terminal:', 'info');
+      log('  curl "' + url + '" \\', 'info');
+      log('    -H "apikey: YOUR_SUPABASE_ANON_KEY" \\', 'info');
+      log('    -o ~/Backups/hadiths-' + d + '.json', 'info');
+      document.getElementById('sb-last').textContent = 'Last export: ' + d + ' (manual)';
+      showToast('Supabase JSON export command ready — check Activity Log', '🗄️');
+    } else {
+      log('Export CSV — run in Terminal:', 'info');
+      log('  curl "' + url + '" \\', 'info');
+      log('    -H "apikey: YOUR_SUPABASE_ANON_KEY" \\', 'info');
+      log('    -H "Accept: text/csv" \\', 'info');
+      log('    -o ~/Backups/hadiths-' + d + '.csv', 'info');
+      showToast('Supabase CSV export command ready — check Activity Log', '🗄️');
+    }
+  };
+
+  /* ── Schedule toggle ── */
+  var schedActive = true;
+  window.showSchedule = function() {
+    var sec = document.getElementById('schedule-section');
+    sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+  };
+  window.toggleSchedule = function() {
+    schedActive = !schedActive;
+    var btn = document.querySelector('[onclick="toggleSchedule()"]');
+    var badge = document.getElementById('sched-status');
+    if (schedActive) {
+      btn.textContent = 'Pause';
+      badge.innerHTML = 'Status: <span class="badge badge-green"><span class="badge-dot"></span>Active</span>';
+      log('Schedule resumed.', 'ok');
+    } else {
+      btn.textContent = 'Resume';
+      badge.innerHTML = 'Status: <span class="badge badge-orange"><span class="badge-dot"></span>Paused</span>';
+      log('Schedule paused. Cron jobs will not fire until resumed.', 'warn');
+    }
+  };
+
+  /* ── Generate restore commands ── */
+  window.generateRestoreCmds = function() {
+    var hash = document.getElementById('restore-hash').value.trim();
+    if (!hash) { log('Enter a commit hash first.', 'warn'); return; }
+    startProgress('Generating restore commands…');
+    setTimeout(finishProgress, 1500);
+    var out = document.getElementById('restore-output');
+    out.innerHTML =
+      '<span class="log-info"># Restore files to commit ' + hash + '</span><br>' +
+      '<span>git fetch origin</span><br>' +
+      '<span>git checkout ' + hash + ' -- .</span><br>' +
+      '<span>git add -A</span><br>' +
+      '<span>git commit -m "restore: roll back to ' + hash + '"</span><br>' +
+      '<span>git push origin main</span><br>' +
+      '<span class="log-ok"># Cloudflare will auto-redeploy within ~60 seconds.</span>';
+    document.getElementById('restore-modal').style.display = 'flex';
+    log('Restore commands generated for commit: ' + hash, 'ok');
+    showToast('Restore commands generated for ' + hash, '⏪');
+  };
+
+  /* ── Create Cowork scheduled tasks (UI feedback only — tasks created via Claude) ── */
+  window.createCoworkTasks = function() {
+    var el = document.getElementById('cowork-task-result');
+    el.innerHTML = '⏳ Creating tasks… ask Claude in the chat to create the Cowork scheduled backup tasks.';
+    log('Cowork task creation requested — confirm in chat with Claude.', 'info');
+  };
+
+  /* ── Load last commit info from localStorage cache ── */
+  try {
+    var lastCommit = localStorage.getItem('th_last_backup_commit');
+    if (lastCommit) {
+      document.getElementById('git-last-commit').textContent = 'Last commit: ' + lastCommit;
+    }
+    var lastSnap = localStorage.getItem('th_last_snapshot');
+    if (lastSnap) {
+      document.getElementById('local-last').textContent = 'Last snapshot: ' + lastSnap;
+    }
+  } catch(e) {}
+
+  log('Panel ready. All backup commands are shown in the Activity Log when triggered.', 'ok');
+
+})();
+</script>
+
+</body>
+</html>

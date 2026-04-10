@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,6 +27,8 @@
   <link rel="icon"             type="image/png" sizes="16x16" href="favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180"              href="apple-touch-icon.png" />
   <link rel="manifest"         href="manifest.json" />
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="css/styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -36,225 +38,11 @@
     (function() {
       var saved = localStorage.getItem('th_theme');
       var prefer = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', saved || prefer);
+      document.documentElement.setAttribute('data-theme', saved || 'dark');
     })();
   </script>
 
   <style>
-    /* ── Accessibility ── */
-    .skip-link {
-      position: absolute; top: -100px; left: 16px;
-      background: var(--ink, #0a0a0a); color: #fff;
-      padding: 8px 16px; border-radius: 0 0 8px 8px;
-      font-size: 14px; font-weight: 600; z-index: 9999;
-      text-decoration: none; transition: top 0.2s ease;
-    }
-    .skip-link:focus { top: 0; }
-    .sr-only {
-      position: absolute; width: 1px; height: 1px;
-      padding: 0; margin: -1px; overflow: hidden;
-      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-    }
-
-    /* ── Reset ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    /* ── Tokens: Light ── */
-    :root {
-      --font: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-      --radius: 16px;
-      --bg:       #ffffff;
-      --surface:  #f5f5f7;
-      --surface2: #ebebeb;
-      --border:   #e0e0e0;
-      --ink:      #1d1d1f;
-      --muted:    #6e6e73;
-      --nav-bg:   rgba(255,255,255,0.85);
-      --toggle-bg:   #e8e8e8;
-      --toggle-knob: #1d1d1f;
-      --toggle-icon: #6e6e73;
-      --accent:   #0071e3;
-      --accent-hover: #0077ed;
-      --card-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      --card-shadow-hover: 0 16px 48px rgba(0,0,0,0.12);
-    }
-
-    /* ── Tokens: Dark ── */
-    [data-theme="dark"] {
-      --bg:       #000000;
-      --surface:  #1c1c1e;
-      --surface2: #2c2c2e;
-      --border:   #3a3a3c;
-      --ink:      #f5f5f7;
-      --muted:    #98989d;
-      --nav-bg:   rgba(0,0,0,0.85);
-      --toggle-bg:   #3a3a3c;
-      --toggle-knob: #f5f5f7;
-      --toggle-icon: #98989d;
-      --accent:   #2997ff;
-      --accent-hover: #40a8ff;
-      --card-shadow: 0 2px 12px rgba(0,0,0,0.4);
-      --card-shadow-hover: 0 16px 48px rgba(0,0,0,0.6);
-    }
-
-    /* ── Global ── */
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--ink);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      transition: background 0.35s ease, color 0.35s ease;
-    }
-
-    /* ── Nav ── */
-    nav.main-nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-      height: 64px;
-      background: var(--nav-bg);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.35s ease, border-color 0.35s ease;
-    }
-    .nav-logo {
-      display: inline-flex; align-items: center; text-decoration: none;
-    }
-    .nav-logo img {
-      height: 26px; width: auto;
-      filter: brightness(0);
-      transition: filter 0.35s ease;
-    }
-    [data-theme="dark"] .nav-logo img { filter: brightness(0) invert(1); }
-
-    .nav-links {
-      display: flex; align-items: center;
-      gap: 32px; list-style: none;
-    }
-    .nav-links a {
-      font-size: 14px; font-weight: 400;
-      color: var(--muted); text-decoration: none;
-      transition: color 0.2s ease; letter-spacing: -0.1px;
-    }
-    .nav-links a:hover,
-    .nav-links a.active { color: var(--ink); }
-
-    .nav-cta {
-      display: inline-flex; align-items: center;
-      justify-content: center; padding: 9px 20px;
-      background: var(--ink); color: var(--bg);
-      border-radius: 100px; font-size: 14px; font-weight: 500;
-      letter-spacing: -0.1px; text-decoration: none;
-      border: none; cursor: pointer; font-family: var(--font);
-      transition: opacity 0.2s ease, background 0.35s ease, color 0.35s ease;
-    }
-    .nav-cta:hover { opacity: 0.75; }
-
-    /* Nav auth */
-    #nav-auth-item { display: flex; align-items: center; gap: 8px; }
-    #btn-login {
-      display: inline-flex; align-items: center;
-      padding: 9px 20px; background: var(--ink); color: var(--bg);
-      border-radius: 100px; font-size: 14px; font-weight: 500;
-      border: none; cursor: pointer; font-family: var(--font);
-      letter-spacing: -0.1px;
-      transition: opacity 0.2s ease, background 0.35s ease, color 0.35s ease;
-    }
-    #btn-login:hover { opacity: 0.75; }
-    #btn-logout {
-      display: none; background: transparent;
-      border: 1px solid var(--border); padding: 7px 16px;
-      border-radius: 100px; font-size: 13px; font-weight: 500;
-      color: var(--muted); cursor: pointer; font-family: var(--font);
-      transition: all 0.2s ease;
-    }
-    #btn-logout:hover { background: var(--surface); color: var(--ink); }
-    #nav-avatar-wrap { display: none; align-items: center; cursor: pointer; }
-    .nav-avatar {
-      width: 30px; height: 30px; border-radius: 50%;
-      background: var(--accent); display: flex; align-items: center;
-      justify-content: center; font-weight: 700; font-size: 12px;
-      color: #fff; overflow: hidden; border: 2px solid var(--border);
-    }
-    .nav-avatar img { width: 100%; height: 100%; object-fit: cover; display: none; }
-
-    /* Hamburger */
-    .nav-hamburger {
-      display: none; flex-direction: column;
-      justify-content: center; gap: 5px;
-      width: 40px; height: 40px; background: none;
-      border: none; cursor: pointer; padding: 8px;
-      border-radius: 8px; transition: background 0.2s ease;
-    }
-    .nav-hamburger:hover { background: var(--surface); }
-    .nav-hamburger span {
-      display: block; width: 100%; height: 1.5px;
-      background: var(--ink); border-radius: 2px;
-      transition: transform 0.25s ease, opacity 0.25s ease, background 0.35s ease;
-    }
-
-    /* Mobile drawer */
-    .nav-drawer {
-      display: none; position: fixed;
-      top: 64px; left: 0; right: 0;
-      background: var(--bg); border-bottom: 1px solid var(--border);
-      padding: 16px 24px 24px; z-index: 199;
-      flex-direction: column; gap: 4px;
-      transition: background 0.35s ease;
-    }
-    .nav-drawer.open { display: flex; }
-    .nav-drawer a {
-      font-size: 16px; font-weight: 400; color: var(--muted);
-      text-decoration: none; padding: 12px 4px;
-      border-bottom: 1px solid var(--border); transition: color 0.2s ease;
-    }
-    .nav-drawer a:hover { color: var(--ink); }
-    .nav-drawer a:last-of-type { border-bottom: none; }
-
-    /* ── Theme Toggle ── */
-    .theme-toggle {
-      width: 44px; height: 26px;
-      background: var(--toggle-bg); border-radius: 100px;
-      border: none; cursor: pointer; position: relative;
-      flex-shrink: 0; transition: background 0.35s ease; outline: none;
-    }
-    .theme-toggle:focus-visible { box-shadow: 0 0 0 2px var(--ink); }
-    .theme-toggle .icon-sun,
-    .theme-toggle .icon-moon {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      width: 13px; height: 13px; transition: opacity 0.25s ease;
-      stroke: var(--toggle-icon); fill: none;
-      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
-    }
-    .theme-toggle .icon-sun  { left: 6px; }
-    .theme-toggle .icon-moon { right: 5px; }
-    [data-theme="light"] .theme-toggle .icon-moon { opacity: 0; }
-    [data-theme="light"] .theme-toggle .icon-sun  { opacity: 1; }
-    [data-theme="dark"]  .theme-toggle .icon-sun  { opacity: 0; }
-    [data-theme="dark"]  .theme-toggle .icon-moon { opacity: 1; }
-    .theme-toggle::after {
-      content: ""; position: absolute; top: 3px;
-      width: 20px; height: 20px; background: var(--toggle-knob);
-      border-radius: 50%;
-      transition: left 0.28s cubic-bezier(0.4,0,0.2,1), background 0.35s ease;
-    }
-    [data-theme="light"] .theme-toggle::after { left: 3px; }
-    [data-theme="dark"]  .theme-toggle::after { left: 21px; }
 
     /* ── Page Header ── */
     .page-header {
@@ -298,10 +86,10 @@
     }
     .search-bar:focus-within {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(0,113,227,0.12);
+      box-shadow: 0 0 0 3px rgba(var(--accent-raw),0.12);
     }
     [data-theme="dark"] .search-bar:focus-within {
-      box-shadow: 0 0 0 3px rgba(41,151,255,0.18);
+      box-shadow: 0 0 0 3px rgba(var(--accent-raw),0.18);
     }
     .search-icon {
       flex-shrink: 0; width: 16px; height: 16px;
@@ -319,7 +107,7 @@
     .search-input::placeholder { color: var(--muted); }
     .search-btn {
       flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px;
-      padding: 10px 18px; background: var(--ink); color: var(--bg);
+      padding: 10px 18px; background: var(--accent); color: #fff;
       border: none; border-radius: 100px; font-family: var(--font);
       font-size: 13px; font-weight: 500; cursor: pointer;
       letter-spacing: -0.1px;
@@ -354,10 +142,10 @@
     }
     .results-note strong { color: var(--ink); font-weight: 600; }
 
-    /* ── 2-column grid ── */
+    /* ── Grid ── */
     .cards-track {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       transition: opacity 0.25s ease;
       margin-top: 20px;
@@ -365,68 +153,172 @@
     .cards-track.fading { opacity: 0; }
 
     /* ── Category Card ── */
-    .card {
-      background: var(--surface); border-radius: 20px;
-      padding: 28px 28px 80px;
-      display: flex; flex-direction: column; position: relative;
-      transition: box-shadow 0.25s ease, transform 0.25s ease, background 0.35s ease;
-      cursor: pointer; overflow: hidden; text-decoration: none; color: inherit;
+    .cat-card {
+      background: var(--surface);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      transition: box-shadow 0.25s ease, transform 0.25s ease, background 0.35s ease, border-color 0.25s ease;
     }
-    .card::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(135deg, transparent 60%, rgba(0,0,0,0.02));
-      border-radius: 20px; pointer-events: none;
-    }
-    [data-theme="dark"] .card::after {
-      background: linear-gradient(135deg, transparent 60%, rgba(255,255,255,0.01));
-    }
-    .card:hover {
+    .cat-card:hover {
       box-shadow: var(--card-shadow-hover);
-      transform: translateY(-4px) scale(1.005);
+      transform: translateY(-4px);
     }
-    .card-category {
-      font-size: 13px; font-weight: 500; color: var(--accent);
-      letter-spacing: -0.1px; margin-bottom: 8px;
+    .cat-card:hover .cat-card-cta {
+      background: var(--card-accent, var(--accent));
+      color: #fff;
+      border-color: transparent;
+    }
+    .cat-card:hover .cat-card-cta svg { transform: translateX(2px); }
+
+    /* Accent bar */
+    .cat-card-bar {
+      height: 3px;
+      background: var(--card-accent, var(--accent));
+      flex-shrink: 0;
+    }
+
+    /* Card body */
+    .cat-card-body {
+      padding: 22px 22px 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 10px;
+    }
+
+    /* Top row: icon + badges */
+    .cat-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    /* Icon */
+    .cat-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--card-accent-bg, rgba(var(--accent-raw),0.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+      line-height: 1;
+      transition: background 0.35s ease;
+    }
+
+    /* Badges */
+    .cat-card-badges {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+    .cat-card-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      background: var(--surface2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      transition: background 0.35s ease, border-color 0.35s ease;
+    }
+    .cat-card-feat {
+      display: none;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      background: var(--card-accent, var(--accent));
+      color: #fff;
+    }
+    .cat-card.is-featured .cat-card-feat { display: inline-flex; }
+
+    /* Label */
+    .cat-card-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      color: var(--card-accent, var(--accent));
+    }
+
+    /* Title */
+    .cat-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: var(--ink);
+      line-height: 1.25;
       transition: color 0.35s ease;
     }
-    .card h3 {
-      font-size: 20px; font-weight: 700; letter-spacing: -0.4px;
-      color: var(--ink); line-height: 1.25; margin-bottom: 10px;
+
+    /* Description */
+    .cat-card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      letter-spacing: -0.1px;
+      flex: 1;
     }
-    .card .card-desc {
-      font-size: 13px; font-weight: 400; color: var(--muted);
-      line-height: 1.6; letter-spacing: -0.1px; margin-bottom: 14px;
+
+    /* Footer */
+    .cat-card-footer {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transition: border-color 0.35s ease;
     }
-    .subcategories {
-      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;
+    .cat-card-count {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: -0.1px;
     }
-    .subcat {
-      display: inline-flex; align-items: center;
-      padding: 4px 10px; border-radius: 100px;
-      font-size: 11px; font-weight: 500;
-      background: var(--surface2); color: var(--muted);
-      border: 1px solid var(--border);
-      transition: all 0.2s ease; white-space: nowrap;
+    .cat-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 13px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1.5px solid var(--border);
+      color: var(--ink);
+      background: transparent;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
     }
-    .card:hover .subcat {
-      background: var(--surface2);
+    .cat-card-cta svg {
+      width: 10px;
+      height: 10px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.2s ease;
     }
-    /* Card arrow button */
-    .card-plus {
-      position: absolute; bottom: 24px; right: 24px;
-      width: 44px; height: 44px; background: var(--ink);
-      color: var(--bg); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.35s ease, color 0.35s ease;
-    }
-    .card-plus svg {
-      width: 16px; height: 16px; stroke: var(--bg); fill: none;
-      stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
-      transition: stroke 0.35s ease, transform 0.2s ease;
-    }
-    .card:hover .card-plus { transform: scale(1.1); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
-    .card:hover .card-plus svg { transform: translateX(2px); }
-    [data-theme="dark"] .card:hover .card-plus { box-shadow: 0 4px 16px rgba(255,255,255,0.1); }
 
     /* ── No Results ── */
     .no-results {
@@ -477,68 +369,15 @@
       font-size: 13px; color: var(--muted); letter-spacing: -0.1px;
     }
 
-    /* ── Cookie Banner ── */
-    .cookie-banner {
-      position: fixed; bottom: 24px; right: 24px; z-index: 400;
-      width: 340px; background: var(--bg);
-      border: 1px solid var(--border); border-radius: 20px;
-      padding: 20px 20px 16px;
-      box-shadow: 0 16px 48px rgba(0,0,0,0.14);
-      transform: translateY(100px); opacity: 0;
-      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease,
-                  background 0.35s ease, border-color 0.35s ease;
-      pointer-events: none;
-    }
-    [data-theme="dark"] .cookie-banner { box-shadow: 0 16px 48px rgba(0,0,0,0.5); }
-    .cookie-banner.show { transform: translateY(0); opacity: 1; pointer-events: all; }
-    .cookie-banner-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-    .cookie-btn.accept { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-    .cookie-btn.accept:hover { opacity: 0.8; }
-    .cookie-btn.decline { background: transparent; color: var(--muted); }
-    .cookie-btn.decline:hover { background: var(--surface); color: var(--ink); }
-    .cookie-pdpl-note { font-size: 10px; color: var(--muted); text-align: center; margin-top: 10px; opacity: 0.7; }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border); padding: 44px 40px;
-      transition: border-color 0.35s ease, background 0.35s ease;
-    }
-    .footer-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr auto 1fr;
-      align-items: center; gap: 24px;
-    }
-    .footer-logo { display: inline-flex; align-items: center; text-decoration: none; }
-    .footer-logo img {
-      height: 18px; width: auto; filter: brightness(0);
-      transition: filter 0.35s ease;
-    }
-    [data-theme="dark"] .footer-logo img { filter: brightness(0) invert(1); }
-    .footer-links { display: flex; gap: 24px; list-style: none; justify-content: center; }
-    .footer-links a {
-      font-size: 13px; color: var(--muted); text-decoration: none;
-      letter-spacing: -0.1px; transition: color 0.2s ease;
-    }
-    .footer-links a:hover { color: var(--ink); }
-    .footer-copy { font-size: 12px; color: var(--muted); letter-spacing: -0.1px; text-align: right; }
 
     /* ── Responsive ── */
     @media (max-width: 960px) {
-      .footer-inner { grid-template-columns: 1fr; text-align: center; }
-      .footer-copy  { text-align: center; }
-      .footer-links { justify-content: center; }
-    }
-    @media (max-width: 720px) {
-      .cards-track { grid-template-columns: 1fr; }
+      .cards-track { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 680px) {
-      nav.main-nav { padding: 0 20px; }
-      .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
       .page-header { padding: 88px 20px 40px; }
       .cards-section { padding: 32px 20px 60px; }
-      footer { padding: 32px 20px; }
-      .cookie-banner { bottom: 12px; right: 12px; left: 12px; width: auto; }
+      .cards-track { grid-template-columns: 1fr; }
       .pagination { flex-wrap: wrap; justify-content: center; gap: 16px; }
     }
 
@@ -547,7 +386,7 @@
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .card { animation: fadeUp 0.4s ease both; }
+    .cat-card { animation: fadeUp 0.4s ease both; }
   </style>
 </head>
 <body>
@@ -556,8 +395,8 @@
 
   <!-- ══ NAV ══ -->
   <nav class="main-nav" aria-label="Main navigation">
-    <a href="index.html" class="nav-logo">
-      <img src="timelesshadith-logo.png" alt="Timeless Hadith" width="130" height="26" />
+    <a href="index.html" class="nav-logo" aria-label="Timeless Hadith — Home">
+      <img src="logo.svg" alt="Timeless Hadith" height="48" />
     </a>
     <ul class="nav-links">
       <li><a href="categories.html" class="active" aria-current="page">Browse</a></li>
@@ -672,7 +511,7 @@
   <footer>
     <div class="footer-inner">
       <a href="index.html" class="footer-logo">
-        <img src="timelesshadith-logo.png" alt="Timeless Hadith" width="120" height="18" />
+        <img src="logo.svg" alt="Timeless Hadith" height="32" />
       </a>
       <ul class="footer-links">
         <li><a href="index.html">Home</a></li>
@@ -687,12 +526,15 @@
   </footer>
 
   <!-- ══ SCRIPTS ══ -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="js/data.js"></script>
+  <script src="js/supabase-data.js?v=2"></script>
   <script src="js/app.js"></script>
+  <script src="js/supabase-auth.js"></script>
+  <script src="js/ai-search.js"></script>
 
   <script>
   (function() {
+    'use strict';
+
     /* ── Theme toggle ── */
     var html = document.documentElement;
     function setTheme(t) {
@@ -720,46 +562,21 @@
     var decline = document.getElementById('cookieDecline');
     var store = {
       get: function(k) { try { return localStorage.getItem(k); } catch(e) { return null; } },
-      set: function(k,v) { try { localStorage.setItem(k,v); } catch(e) {} }
+      set: function(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
     };
     if (!store.get('th_cookie_consent')) {
       setTimeout(function() { banner.classList.add('show'); }, 1500);
     }
     accept.addEventListener('click', function() {
-      store.set('th_cookie_consent','accepted');
+      store.set('th_cookie_consent', 'accepted');
       store.set('th_cookie_consent_date', new Date().toISOString());
       banner.classList.remove('show');
     });
     decline.addEventListener('click', function() {
-      store.set('th_cookie_consent','declined');
+      store.set('th_cookie_consent', 'declined');
       store.set('th_cookie_consent_date', new Date().toISOString());
       banner.classList.remove('show');
     });
-
-    /* ── Subcategory pill data ── */
-    var PILLS = {
-      'faith-belief':          ['Pillars of Faith','Tawhid','Iman'],
-      'character-conduct':     ['Truthfulness','Kindness','Akhlaq'],
-      'prayer-worship':        ['Salah','Night Prayer','Dhikr'],
-      'family-relations':      ['Marriage','Parenting','Kinship'],
-      'knowledge-learning':    ['Seeking Knowledge','Teaching','Wisdom'],
-      'patience-gratitude':    ['Sabr','Shukr','Trials'],
-      'charity-generosity':    ['Sadaqah','Zakat','Giving'],
-      'honesty-truthfulness':  ['Truthfulness','Promises','Trust'],
-      'repentance-forgiveness':['Tawbah','Forgiveness','Mercy'],
-      'health-body':           ['Cleanliness','Nourishment','Medicine'],
-      'neighbours-community':  ['Rights','Justice','Brotherhood'],
-      'death-afterlife':       ['Remembering Death','Grave','Akhirah'],
-      'remembrance-allah':     ['Morning Athkar','Gratitude','Dhikr'],
-      'wealth-livelihood':     ['Halal Earning','Frugality','Trade'],
-      'justice-fairness':      ['Rights','Leadership','Equity'],
-      'intentions-actions':    ['Niyyah','Sincerity','Deeds'],
-      'fasting-ramadan':       ['Sawm','Tarawih','Laylat al-Qadr'],
-      'humility-pride':        ['Tawadu','Humility','Arrogance'],
-      'love-brotherhood':      ['Brotherhood','Love for Allah','Friendship'],
-      'supplication-dua':      ['Etiquette','Times','Answered Prayers'],
-      'trust-allah':           ['Tawakkul','Reliance','Provision'],
-    };
 
     /* ── Pagination state ── */
     var PER_PAGE = 9;
@@ -767,28 +584,167 @@
     var allCats = [];
     var filteredCats = [];
 
-    /* ── Render ── */
+    /* ══════════════════════════════════════════════════════
+       CATEGORY DATA — load from th_cat_data, migrate from
+       th_cat_descriptions if present (backward compat).
+    ══════════════════════════════════════════════════════ */
+    var catData = {};
+
+    function loadCatData() {
+      try {
+        var newRaw = localStorage.getItem('th_cat_data');
+        if (newRaw) {
+          catData = JSON.parse(newRaw);
+          return;
+        }
+        /* Migrate from old schema */
+        var oldRaw = localStorage.getItem('th_cat_descriptions');
+        if (oldRaw) {
+          var oldParsed = JSON.parse(oldRaw);
+          var migrated = {};
+          Object.keys(oldParsed).forEach(function(slug) {
+            migrated[slug] = { description: oldParsed[slug] };
+          });
+          catData = migrated;
+          localStorage.setItem('th_cat_data', JSON.stringify(migrated));
+        }
+      } catch (e) {}
+    }
+    loadCatData();
+
+    /* ── Helpers ── */
+    function escHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function hexToRgba(hex, alpha) {
+      if (!hex || !/^#[0-9a-fA-F]{6}$/.test(hex)) return null;
+      var r = parseInt(hex.slice(1, 3), 16);
+      var g = parseInt(hex.slice(3, 5), 16);
+      var b = parseInt(hex.slice(5, 7), 16);
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+    }
+
+    /* Default icon map — keyed by slug keywords */
+    var ICON_MAP = {
+      prayer: '🤲', salat: '🤲', dua: '🤲',
+      faith: '☪', iman: '☪', tawheed: '☪', belief: '☪',
+      purification: '💧', tahara: '💧', wudu: '💧',
+      zakat: '💰', charity: '💰', sadaqah: '💰',
+      fasting: '🌙', ramadan: '🌙', sawm: '🌙',
+      hajj: '🕋', pilgrimage: '🕋', mecca: '🕋',
+      quran: '📖', recitation: '📖',
+      knowledge: '📚', learning: '📚', education: '📚',
+      character: '⭐', manners: '⭐', akhlaq: '⭐', etiquette: '⭐',
+      family: '👨‍👩‍👧', marriage: '👨‍👩‍👧', children: '👨‍👩‍👧',
+      business: '🤝', trade: '🤝', finance: '🤝',
+      governance: '⚖', justice: '⚖', leadership: '⚖',
+      jihad: '🛡', striving: '🛡',
+      paradise: '✨', heaven: '✨', jannah: '✨',
+      death: '🌿', afterlife: '🌿', grave: '🌿',
+      food: '🍽', drink: '🍽', eating: '🍽',
+      medicine: '🌿', health: '🌿', healing: '🌿',
+      dream: '🌙', travel: '🧭', journey: '🧭',
+      remembrance: '💫', dhikr: '💫', tasbih: '💫'
+    };
+
+    function defaultIcon(slug) {
+      var s = (slug || '').toLowerCase();
+      for (var k in ICON_MAP) {
+        if (s.indexOf(k) !== -1) return ICON_MAP[k];
+      }
+      return '📿';
+    }
+
+    /* ── Sort categories: sort_order ASC (nulls last) → featured → alpha ── */
+    function sortCats(cats) {
+      return cats.slice().sort(function(a, b) {
+        var da = catData[a.slug] || {};
+        var db = catData[b.slug] || {};
+
+        var soA = (da.sort_order !== undefined && da.sort_order !== '')
+          ? Number(da.sort_order) : Infinity;
+        var soB = (db.sort_order !== undefined && db.sort_order !== '')
+          ? Number(db.sort_order) : Infinity;
+        if (soA !== soB) return soA - soB;
+
+        var featA = (da.is_featured === true || da.is_featured === 'true') ? 0 : 1;
+        var featB = (db.is_featured === true || db.is_featured === 'true') ? 0 : 1;
+        if (featA !== featB) return featA - featB;
+
+        var tA = ((da.title || a.title || '')).toLowerCase();
+        var tB = ((db.title || b.title || '')).toLowerCase();
+        return tA < tB ? -1 : tA > tB ? 1 : 0;
+      });
+    }
+
+    /* ── Build a category card element ── */
     function buildCard(cat, index) {
-      var pills = (PILLS[cat.slug] || []).slice(0,3);
-      var pillsHtml = pills.map(function(p){ return '<span class="subcat">'+p+'</span>'; }).join('');
+      var d = catData[cat.slug] || {};
       var delay = Math.min(index * 0.05, 0.4);
+
+      var title      = d.title       || cat.title || '';
+      var count      = d.hadith_count !== undefined && d.hadith_count !== ''
+                         ? Number(d.hadith_count) : (cat.count || 0);
+      var shortLabel = d.short_label  || (count + ' Hadiths');
+      var desc       = d.description  || '';
+      var tag        = d.tag          || '';
+      var icon       = d.icon         || '';
+      var accent     = (d.accent_color && /^#[0-9a-fA-F]{6}$/i.test(d.accent_color))
+                         ? d.accent_color : '';
+      var ctaText    = d.cta_text     || 'Explore';
+      var isFeatured = (d.is_featured === true || d.is_featured === 'true');
+
       var el = document.createElement('a');
-      el.className = 'card';
-      el.href = 'category.html?cat=' + cat.slug;
-      el.setAttribute('role','listitem');
-      el.setAttribute('aria-label', cat.title + ' — ' + (cat.count||0) + ' hadiths');
+      el.className = 'cat-card' + (isFeatured ? ' is-featured' : '');
+      el.href = 'category.html?cat=' + encodeURIComponent(cat.slug);
+      el.setAttribute('role', 'listitem');
+      el.setAttribute('aria-label', title + ' — ' + count + ' hadiths');
       el.style.animationDelay = delay + 's';
+
+      if (accent) {
+        el.style.setProperty('--card-accent', accent);
+        var rgba = hexToRgba(accent, 0.12);
+        if (rgba) el.style.setProperty('--card-accent-bg', rgba);
+      }
+
+      var tagHtml  = tag
+        ? '<span class="cat-card-tag">' + escHtml(tag) + '</span>'
+        : '';
+      var iconContent = icon ? escHtml(icon) : defaultIcon(cat.slug);
+      var descHtml = desc
+        ? '<p class="cat-card-desc">' + escHtml(desc) + '</p>'
+        : '<p class="cat-card-desc" style="opacity:0.4">No description added yet.</p>';
+
       el.innerHTML =
-        '<p class="card-category">' + (cat.count||0) + ' Hadiths</p>' +
-        '<h3>' + cat.title + '</h3>' +
-        '<p class="card-desc">' + cat.desc + '</p>' +
-        '<div class="subcategories">' + pillsHtml + '</div>' +
-        '<div class="card-plus" aria-hidden="true">' +
-          '<svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>' +
+        '<div class="cat-card-bar"></div>' +
+        '<div class="cat-card-body">' +
+          '<div class="cat-card-top">' +
+            '<div class="cat-card-icon" aria-hidden="true">' + iconContent + '</div>' +
+            '<div class="cat-card-badges">' +
+              tagHtml +
+              '<span class="cat-card-feat">Featured</span>' +
+            '</div>' +
+          '</div>' +
+          '<p class="cat-card-label">' + escHtml(shortLabel) + '</p>' +
+          '<h3 class="cat-card-title">' + escHtml(title) + '</h3>' +
+          descHtml +
+          '<div class="cat-card-footer">' +
+            '<span class="cat-card-count">' + count + ' hadiths</span>' +
+            '<span class="cat-card-cta">' + escHtml(ctaText) +
+              '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+                '<line x1="5" y1="12" x2="19" y2="12"/>' +
+                '<polyline points="12 5 19 12 12 19"/>' +
+              '</svg>' +
+            '</span>' +
+          '</div>' +
         '</div>';
+
       return el;
     }
 
+    /* ── Render current page ── */
     function renderPage() {
       var track = document.getElementById('cards-track');
       track.classList.add('fading');
@@ -819,13 +775,11 @@
       var dotsWrap = document.getElementById('pagination-dots');
       var prev = document.getElementById('btn-prev');
       var next = document.getElementById('btn-next');
-      var note = document.getElementById('results-count');
       var start = currentPage * PER_PAGE + 1;
       var end   = Math.min((currentPage + 1) * PER_PAGE, total);
 
-      note.textContent = total;
       document.getElementById('results-note').innerHTML =
-        'Showing <strong>' + (total ? start + '–' + end : 0) + '</strong> of ' + total + ' topics';
+        'Showing <strong>' + (total ? start + '\u2013' + end : 0) + '</strong> of ' + total + ' topics';
 
       prev.disabled = (currentPage === 0);
       next.disabled = (currentPage >= pages - 1);
@@ -835,10 +789,12 @@
         (function(idx) {
           var dot = document.createElement('button');
           dot.className = 'p-dot' + (idx === currentPage ? ' active' : '');
-          dot.setAttribute('role','listitem');
-          dot.setAttribute('aria-label','Page ' + (idx+1));
-          if (idx === currentPage) dot.setAttribute('aria-current','page');
-          dot.onclick = function() { if (idx !== currentPage) { currentPage = idx; renderPage(); } };
+          dot.setAttribute('role', 'listitem');
+          dot.setAttribute('aria-label', 'Page ' + (idx + 1));
+          if (idx === currentPage) dot.setAttribute('aria-current', 'page');
+          dot.onclick = function() {
+            if (idx !== currentPage) { currentPage = idx; renderPage(); }
+          };
           dotsWrap.appendChild(dot);
         })(i);
       }
@@ -848,20 +804,22 @@
     }
 
     function applySearch(q) {
-      q = (q || '').trim().toLowerCase();
-      currentPage = 0;
+      q = q.trim().toLowerCase();
       if (!q) {
-        filteredCats = allCats.slice();
+        filteredCats = sortCats(allCats);
       } else {
         filteredCats = allCats.filter(function(cat) {
-          return (
-            cat.title.toLowerCase().indexOf(q) !== -1 ||
-            cat.desc.toLowerCase().indexOf(q)  !== -1 ||
-            cat.slug.replace(/-/g,' ').indexOf(q) !== -1 ||
-            (PILLS[cat.slug]||[]).join(' ').toLowerCase().indexOf(q) !== -1
-          );
+          var d = catData[cat.slug] || {};
+          return (cat.title || '').toLowerCase().indexOf(q) !== -1 ||
+                 cat.slug.replace(/-/g, ' ').toLowerCase().indexOf(q) !== -1 ||
+                 (cat.arabicTitle || '').indexOf(q) !== -1 ||
+                 (cat.keywords || []).join(' ').toLowerCase().indexOf(q) !== -1 ||
+                 (d.description || '').toLowerCase().indexOf(q) !== -1 ||
+                 (d.tag || '').toLowerCase().indexOf(q) !== -1 ||
+                 (typeof PILLS !== 'undefined' && PILLS[cat.slug] || []).join(' ').toLowerCase().indexOf(q) !== -1;
         });
       }
+      currentPage = 0;
       renderPage();
     }
 
@@ -871,15 +829,28 @@
       if (next >= 0 && next < pages) {
         currentPage = next;
         renderPage();
-        window.scrollTo({top: 0, behavior: 'smooth'});
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
 
-    /* ── Init ── */
     document.addEventListener('DOMContentLoaded', function() {
-      allCats = TH.categories;
-      filteredCats = allCats.slice();
-      renderPage();
+      var track = document.getElementById('cards-track');
+      if (track) {
+        track.innerHTML =
+          '<div class="no-results" role="status" aria-live="polite">' +
+            '<h3 style="font-size:17px;font-weight:500">Loading categories\u2026</h3>' +
+          '</div>';
+      }
+
+      TH.init().then(function() {
+        allCats = Object.values(TH.categories);
+        filteredCats = sortCats(allCats);
+        renderPage();
+      }).catch(function() {
+        if (track) track.innerHTML =
+          '<div class="no-results" role="alert"><h3>Could not load categories</h3>' +
+          '<p>Please check your connection and refresh.</p></div>';
+      });
 
       document.getElementById('cat-search').addEventListener('input', function() {
         applySearch(this.value);
@@ -891,5 +862,8 @@
   })();
   </script>
 
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
+  <!-- End Cloudflare Web Analytics -->
 </body>
 </html>
