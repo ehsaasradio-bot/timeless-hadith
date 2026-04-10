@@ -1,16 +1,20 @@
 # Timeless Hadith — robots.txt
 # https://timelesshadith.com/robots.txt
+# Updated 2026-04-10 — M-03: Removed admin paths (security hardening)
+# Admin paths are now protected by Cloudflare edge middleware — no need to list here
 
 User-agent: *
 Allow: /
 
-Disallow: /404.html
+# Disallow internal/clutter pages only — NOT admin pages (M-03: don't expose admin paths)
 Disallow: /apple-sa-landing.html
 Disallow: /audit-confluence-report.html
+Disallow: /audit-report.html
+Disallow: /audit-report-v2.html
+Disallow: /audit-report-v3.html
+Disallow: /audit-seo-report-v4.html
 Disallow: /firebase-integration-guide.html
 Disallow: /mac-lineup.html
-Disallow: /admin.html
-Disallow: /admin-backup.html
-Disallow: /cms.html
+Disallow: /sample-dark-hero.html
 
 Sitemap: https://timelesshadith.com/sitemap.xml
