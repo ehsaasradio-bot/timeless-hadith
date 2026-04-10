@@ -499,7 +499,192 @@
       .modal-share-options { grid-template-columns: 1fr 1fr; }
       .featured-hadith-card { padding: 28px 24px; }
       .hero-actions { flex-direction: column; width: 100%; }
+      .ai-search-card { padding: 18px 16px 20px; }
+      .ai-search-input { font-size: 15px; }
+      .ai-send-btn { width: 40px; height: 40px; }
+      .ai-examples { gap: 8px; }
+      .ai-example { font-size: 12.5px; padding: 9px 14px; }
+      .hero-mark img { width: 48px; height: 48px; }
     }
+
+    /* ═══════════════════════════════════════════════════════════════
+       Animated Hero Mark (favicon above title)
+       ═══════════════════════════════════════════════════════════════ */
+    .hero-mark {
+      display: flex; justify-content: center; align-items: center;
+      margin-bottom: 22px;
+      filter: drop-shadow(0 6px 24px rgba(var(--accent-raw), 0.35));
+    }
+    .hero-mark img {
+      width: 56px; height: 56px;
+      animation:
+        hero-mark-float 3.6s ease-in-out infinite,
+        hero-mark-glow  3.6s ease-in-out infinite;
+      transform-origin: center;
+      will-change: transform, filter;
+    }
+    @keyframes hero-mark-float {
+      0%, 100% { transform: translateY(0) rotate(-0.5deg); }
+      50%      { transform: translateY(-7px) rotate(0.5deg); }
+    }
+    @keyframes hero-mark-glow {
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(var(--accent-raw), 0.28)); }
+      50%      { filter: drop-shadow(0 0 22px rgba(var(--accent-raw), 0.55)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-mark img { animation: none; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       AI Search Card (replaces keyword search)
+       ═══════════════════════════════════════════════════════════════ */
+    .ai-search-card {
+      width: 100%;
+      max-width: 720px;
+      margin: 6px auto 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 22px 22px 26px;
+      box-shadow: var(--card-shadow);
+      transition:
+        background 0.35s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.2s ease;
+    }
+    .ai-search-card:focus-within {
+      border-color: rgba(var(--accent-raw), 0.45);
+      box-shadow:
+        0 0 0 4px rgba(var(--accent-raw), 0.12),
+        0 18px 48px -16px rgba(var(--accent-raw), 0.35);
+      transform: translateY(-1px);
+    }
+    .ai-search-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 6px 4px 6px 6px;
+    }
+    .ai-sparkle {
+      flex-shrink: 0;
+      width: 22px; height: 22px;
+      overflow: visible;
+      filter: drop-shadow(0 0 8px rgba(var(--accent-raw), 0.35));
+      animation: ai-sparkle-pulse 2.8s ease-in-out infinite;
+    }
+    .ai-sparkle path,
+    .ai-sparkle circle {
+      fill: url(#aiSparkleGradient);
+    }
+    @keyframes ai-sparkle-pulse {
+      0%, 100% { opacity: 0.9; transform: scale(1); }
+      50%      { opacity: 1;   transform: scale(1.08); }
+    }
+    .ai-search-input {
+      flex: 1;
+      border: none; background: transparent;
+      font-family: var(--font);
+      font-size: 16px; font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -0.1px;
+      outline: none;
+      min-width: 0;
+      padding: 14px 0;
+    }
+    .ai-search-input::placeholder { color: var(--muted); }
+    .ai-send-btn {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      border: none; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+      color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 18px -4px rgba(var(--accent-raw), 0.55);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+    .ai-send-btn:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 12px 28px -6px rgba(var(--accent-raw), 0.65);
+    }
+    .ai-send-btn:active { transform: translateY(0) scale(0.98); }
+    .ai-send-btn svg {
+      width: 18px; height: 18px;
+      stroke: #fff; fill: none;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .ai-examples-label {
+      display: block;
+      margin: 26px 0 12px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: left;
+    }
+    .ai-examples {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+    .ai-example {
+      text-align: left;
+      padding: 14px 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-family: var(--font);
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.1px;
+      line-height: 1.4;
+      cursor: pointer;
+      transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+    }
+    .ai-example:hover {
+      background: rgba(var(--accent-raw), 0.06);
+      border-color: rgba(var(--accent-raw), 0.5);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+    [data-theme="dark"] .ai-example:hover {
+      background: rgba(var(--accent-raw), 0.12);
+    }
+
+    /* Inline toast shown on submit (AI backend not yet wired) */
+    .ai-toast {
+      display: none;
+      margin: 14px auto 0;
+      padding: 10px 18px;
+      max-width: 720px;
+      background: rgba(var(--accent-raw), 0.08);
+      border: 1px solid rgba(var(--accent-raw), 0.35);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      text-align: center;
+      letter-spacing: -0.1px;
+    }
+    .ai-toast.visible {
+      display: block;
+      animation: ai-toast-fade 0.35s ease-out;
+    }
+    @keyframes ai-toast-fade {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hide legacy keyword search — replaced by AI search card */
+    .search-wrap { display: none !important; }
   </style>
 </head>
 <body>
@@ -612,6 +797,19 @@
 
   <!-- ── Hero ── -->
   <section class="hero">
+    <!-- SVG gradient defs for sparkle icon -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <linearGradient id="aiSparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"  stop-color="#4f72f8" />
+          <stop offset="100%" stop-color="#7c5ce6" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="hero-mark" aria-hidden="true">
+      <img src="favicon-32.png" alt="" width="56" height="56" />
+    </div>
     <div class="hero-eyebrow">
       <span aria-hidden="true"></span>
       Prophetic Wisdom
@@ -628,7 +826,38 @@
       <a href="#featured" class="btn-secondary">Daily Hadith</a>
     </div>
 
-    <!-- Search -->
+    <!-- ── AI Search Card ── -->
+    <div class="ai-search-card" role="search">
+      <div class="ai-search-input-wrap">
+        <svg class="ai-sparkle" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2 L13.8 9.2 L21 11 L13.8 12.8 L12 20 L10.2 12.8 L3 11 L10.2 9.2 Z"/>
+          <circle cx="19" cy="5" r="1.2" />
+          <circle cx="5" cy="19" r="1" />
+        </svg>
+        <label for="aiSearchInput" class="sr-only">Ask AI a question about hadiths</label>
+        <input id="aiSearchInput"
+               class="ai-search-input"
+               type="text"
+               placeholder="Ask AI about any hadith, topic, or prophetic teaching…"
+               autocomplete="off" />
+        <button class="ai-send-btn" id="aiSendBtn" type="button" aria-label="Ask">
+          <svg viewBox="0 0 24 24">
+            <line x1="12" y1="19" x2="12" y2="5"/>
+            <polyline points="5 12 12 5 19 12"/>
+          </svg>
+        </button>
+      </div>
+      <span class="ai-examples-label">Get started with an example</span>
+      <div class="ai-examples">
+        <button class="ai-example" type="button">What does Islam say about patience?</button>
+        <button class="ai-example" type="button">Hadiths about kindness to parents</button>
+        <button class="ai-example" type="button">The morning and evening adhkar</button>
+        <button class="ai-example" type="button">The Prophet's teachings on gratitude</button>
+      </div>
+    </div>
+    <div class="ai-toast" id="aiToast" role="status" aria-live="polite"></div>
+
+    <!-- Legacy keyword search (hidden; retained for JS compatibility) -->
     <div class="search-wrap">
       <div class="search-bar">
         <label for="searchInput" class="sr-only">Search hadiths, topics, or categories</label>
@@ -1311,6 +1540,52 @@
       banner.classList.remove('show');
     });
 
+  })();
+  </script>
+
+  <!-- AI search card wiring (front-end only; backend coming soon) -->
+  <script>
+  (function () {
+    var input   = document.getElementById('aiSearchInput');
+    var chips   = document.querySelectorAll('.ai-example');
+    var sendBtn = document.getElementById('aiSendBtn');
+    var toast   = document.getElementById('aiToast');
+    if (!input || !sendBtn) return;
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        input.value = chip.textContent.trim();
+        input.focus();
+      });
+    });
+
+    var toastTimer = null;
+    function showToast(msg) {
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.add('visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () {
+        toast.classList.remove('visible');
+      }, 4200);
+    }
+
+    function handleSubmit() {
+      var q = (input.value || '').trim();
+      if (!q) { input.focus(); return; }
+      showToast('AI search is launching soon — browse topics below for now.');
+      var cats = document.getElementById('categories');
+      if (cats && cats.scrollIntoView) {
+        setTimeout(function () {
+          cats.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 320);
+      }
+    }
+
+    sendBtn.addEventListener('click', handleSubmit);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); handleSubmit(); }
+    });
   })();
   </script>
 
