@@ -21,28 +21,6 @@
     burger.setAttribute('aria-expanded', drawer.classList.contains('open'));
   });
 
-  /* ── Cookie ── */
-  var banner  = document.getElementById('cookieBanner');
-  var accept  = document.getElementById('cookieAccept');
-  var decline = document.getElementById('cookieDecline');
-  var store = {
-    get: function(k) { try { return localStorage.getItem(k); } catch(e) { return null; } },
-    set: function(k,v) { try { localStorage.setItem(k,v); } catch(e) {} }
-  };
-  if (banner && !store.get('th_cookie_consent')) {
-    setTimeout(function() { banner.classList.add('show'); }, 1500);
-  }
-  if (accept) accept.addEventListener('click', function() {
-    store.set('th_cookie_consent','accepted');
-    store.set('th_cookie_consent_date', new Date().toISOString());
-    banner.classList.remove('show');
-  });
-  if (decline) decline.addEventListener('click', function() {
-    store.set('th_cookie_consent','declined');
-    store.set('th_cookie_consent_date', new Date().toISOString());
-    banner.classList.remove('show');
-  });
-
   /* ── Helper: Get hadith by ID ── */
   function _getH(id) {
     var r = TH.findHadith(id);

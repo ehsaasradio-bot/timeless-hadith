@@ -1,4 +1,4 @@
-/* Timeless Hadith — shared page chrome wiring (theme toggle, hamburger, cookie banner).
+/* Timeless Hadith — shared page chrome wiring (theme toggle, hamburger).
  * Used by static pages: about, privacy, terms.
  */
 (function () {
@@ -26,25 +26,4 @@
       burger.setAttribute('aria-expanded', drawer.classList.contains('open'));
     });
   }
-
-  /* ── Cookie banner ── */
-  var banner  = document.getElementById('cookieBanner');
-  var accept  = document.getElementById('cookieAccept');
-  var decline = document.getElementById('cookieDecline');
-  var store = {
-    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
-    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
-  };
-  if (banner && !store.get('th_cookie_consent')) {
-    setTimeout(function () { banner.classList.add('show'); }, 1500);
-  }
-  if (accept) accept.addEventListener('click', function () {
-    store.set('th_cookie_consent', 'accepted');
-    store.set('th_cookie_consent_date', new Date().toISOString());
-    if (banner) banner.classList.remove('show');
-  });
-  if (decline) decline.addEventListener('click', function () {
-    store.set('th_cookie_consent', 'declined');
-    if (banner) banner.classList.remove('show');
-  });
 })();

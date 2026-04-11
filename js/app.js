@@ -15,8 +15,6 @@
 
 const APP_KEY = {
   THEME:    'th_theme',
-  CONSENT:  'th_cookie_consent',
-  CONSENT_DATE: 'th_cookie_consent_date',
   USER:     'th_user',
   BOOKMARKS:'th_bookmarks',
   LOGO_URL: 'th_custom_logo_url',
@@ -911,50 +909,6 @@ const TH_SHARE_TEXT = (() => {
 })();
 
 /* ═══════════════════════════════════════════════════════════════════
-   COOKIE CONSENT  (PDPL)
-═══════════════════════════════════════════════════════════════════ */
-
-const TH_COOKIE = (() => {
-  function hasConsent() {
-    return !!localStorage.getItem(APP_KEY.CONSENT);
-  }
-
-  function accept() {
-    localStorage.setItem(APP_KEY.CONSENT, 'accepted');
-    localStorage.setItem(APP_KEY.CONSENT_DATE, new Date().toISOString());
-    _hide();
-  }
-
-  function decline() {
-    localStorage.setItem(APP_KEY.CONSENT, 'declined');
-    localStorage.setItem(APP_KEY.CONSENT_DATE, new Date().toISOString());
-    _hide();
-  }
-
-  function _hide() {
-    const banner = document.getElementById('cookie-banner');
-    if (banner) {
-      banner.style.transform = 'translateY(calc(100% + 2rem))';
-      banner.style.opacity   = '0';
-      setTimeout(() => banner.remove(), 500);
-    }
-  }
-
-  function init() {
-    if (hasConsent()) return;
-    setTimeout(() => {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) {
-        banner.style.transform = 'translateY(0)';
-        banner.style.opacity   = '1';
-      }
-    }, 1500);
-  }
-
-  return { hasConsent, accept, decline, init };
-})();
-
-/* ═══════════════════════════════════════════════════════════════════
    LIKES (localStorage-based heart/like count per hadith)
 ═══════════════════════════════════════════════════════════════════ */
 
@@ -1059,7 +1013,6 @@ const TH_INTERACTIONS = (() => {
   document.addEventListener('DOMContentLoaded', () => {
     TH_AUTH.init();
     TH_BOOKMARKS.init();
-    TH_COOKIE.init();
     TH_INTERACTIONS.initCards();
     TH_LIKES.syncPage();
   });

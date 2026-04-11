@@ -144,7 +144,6 @@
       .page-header { padding: 88px 20px 36px; }
       .page-wrap { padding: 32px 20px 60px; }
       footer { padding: 32px 20px; }
-      .cookie-banner { bottom: 12px; right: 12px; left: 12px; width: auto; }
     }
   </style>
 </head>
@@ -229,7 +228,7 @@
     </div>
 
     <div class="highlight-box">
-      <p><strong>Plain-language summary:</strong> Timeless Hadith is a static informational website. We do not collect, process, or store personal data on our servers. The only data stored is your theme preference and cookie consent choice, saved locally on your own device via <code>localStorage</code>.</p>
+      <p><strong>Plain-language summary:</strong> Timeless Hadith is a static informational website. We do not collect, process, or store personal data on our servers. We do not set any cookies. The only data stored is your theme preference and bookmarks, saved locally on your own device via <code>localStorage</code>.</p>
     </div>
 
     <!-- 1 -->
@@ -256,10 +255,9 @@
       <p>When you interact with our site, your browser may store the following values <strong>locally on your own device only</strong>:</p>
       <ul>
         <li><code>th_theme</code> — your chosen display mode (light or dark)</li>
-        <li><code>th_cookie_consent</code> — your consent choice (accepted or declined)</li>
-        <li><code>th_cookie_consent_date</code> — the date you made that choice</li>
         <li><code>th_bookmarks</code> — hadith IDs you have bookmarked (if signed in)</li>
       </ul>
+      <p>We do <strong>not</strong> set any HTTP cookies of any kind — no essential, preference, analytics, or tracking cookies.</p>
       <p>These values never leave your device and are never transmitted to us or any third party.</p>
 
       <h3>2.3 Hosting provider data</h3>
@@ -272,7 +270,6 @@
       <p>The local storage values described above are collected for the following purposes:</p>
       <ul>
         <li><strong>Theme preference</strong> — to restore your display preference on repeat visits, improving usability</li>
-        <li><strong>Cookie consent</strong> — to record your consent decision as required by the PDPL, ensuring we do not prompt you repeatedly</li>
         <li><strong>Bookmarks</strong> — to save hadiths you have marked for personal reference, stored entirely on your own device</li>
       </ul>
     </section>
@@ -283,9 +280,9 @@
       <p>Under the PDPL (Articles 5 and 6), personal data must not be processed without a valid legal basis. Because Timeless Hadith does not process personal data on any server, the PDPL's consent requirements for personal data processing do not apply to our core functionality.</p>
       <p>For the limited use of <code>localStorage</code> on your device:</p>
       <ul>
-        <li>We seek your <strong>explicit consent</strong> via the cookie banner before storing non-essential preference data</li>
-        <li>If you decline, no preference data is stored (the site remains fully functional with default settings)</li>
-        <li>You may withdraw consent at any time by clearing your browser's local storage</li>
+        <li>Only strictly necessary preference data (theme and bookmarks) is stored, which qualifies as functional storage exempt from explicit consent requirements under most privacy frameworks</li>
+        <li>The site remains fully functional with default settings if your browser blocks <code>localStorage</code></li>
+        <li>You may remove stored data at any time by clearing your browser's local storage</li>
       </ul>
       <div class="highlight-box">
         <p>Timeless Hadith complies with PDPL Article 4 (data minimisation), Article 5 (purpose limitation), and Article 11 (transparency) by collecting only what is strictly necessary, for clearly stated purposes, and disclosing this policy openly.</p>
@@ -330,7 +327,7 @@
         <li><strong>Right of access</strong> — you can view your stored data by opening your browser's DevTools → Local Storage</li>
         <li><strong>Right to rectification</strong> — stored values are auto-generated preferences; you can reset them by clearing local storage</li>
         <li><strong>Right to erasure</strong> — clear your browser's local storage at any time (see Section 5)</li>
-        <li><strong>Right to restrict processing</strong> — decline cookies via our consent banner or clear local storage</li>
+        <li><strong>Right to restrict processing</strong> — clear your browser's local storage at any time</li>
         <li><strong>Right to data portability</strong> — not applicable (no personal data held by us)</li>
         <li><strong>Right to object</strong> — contact us at the address below</li>
       </ul>
@@ -402,19 +399,6 @@
       <p class="footer-copy">&copy; 2026 Timeless Hadith</p>
     </div>
   </footer>
-
-  <!-- ══ COOKIE BANNER ══ -->
-  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie consent">
-    <p class="cookie-banner-title">Your privacy matters</p>
-    <p>We store your theme preference locally on your device. No tracking, no ads, no servers.
-      <a href="privacy.html">Privacy Policy</a>
-    </p>
-    <div class="cookie-banner-btns">
-      <button class="cookie-btn accept"  id="cookieAccept">Accept</button>
-      <button class="cookie-btn decline" id="cookieDecline">Decline</button>
-    </div>
-    <p class="cookie-pdpl-note">PDPL compliant · Regulation No. M/19, 2021</p>
-  </div>
 
   <!-- ══ SCRIPTS ══ -->
   <script defer src="js/supabase-data.js?v=2"></script>
