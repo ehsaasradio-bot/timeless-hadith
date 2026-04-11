@@ -2,28 +2,37 @@
    Timeless Hadith — AI Search  (Cloudflare Pages Function)
    Route: POST /api/ai-search
 
-   Environment variables (set in Cloudflare Pages → Settings → Env):
-     OPENAI_API_KEY   — required (secret)
-     SUPABASE_ANON_KEY — optional (falls back to the public anon key)
+   Role: thin proxy that forwards the browser's query to the upgraded
+   Cloudflare Worker (`/api/chat`) which performs vector retrieval over
+   Sahih al-Bukhari and generates a grounded answer.
 
-   Flow:
-     1. Accept { query } from the browser
-     2. Search Supabase hadiths table with ilike (top 5)
-     3. Send question + context to GPT-4o-mini
-     4. Return { answer, hadiths[] }
+   The frontend widget (js/ai-search.js) sends:
+     { query: "..." }
+   and expects:
+     { answer: "...", hadiths: [{id, english, arabic, narrator, source, chapter}] }
+
+   The Worker sends/receives a slightly different shape:
+     request:  { question: "..." }
+     response: { answer: "...", citations: [...], latency_ms: 1234 }
+
+   This function is responsible for translating between those two shapes
+   so the existing frontend widget never has to change.
+
+   Environment variables (optional — set in Cloudflare Pages → Settings → Env):
+     WORKER_URL — override the default Worker base URL if needed
 ───────────────────────────────────────────────────────────────── */
 
-/* ── Supabase public anon key (safe to hard-code — read-only) ── */
-var SB_URL  = 'https://dwcsledifvnyrunxejzd.supabase.co';
-var SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3Y3NsZWRpZnZueXJ1bnhlanpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTgwNzgsImV4cCI6MjA5MDUzNDA3OH0.Aww8QcExJF1tPwMPvqP5q0_avc3YJclqsFJcXptlnZo';
+/* ── Default Worker endpoint (public URL, safe to hard-code) ── */
+var DEFAULT_WORKER_URL = 'https://timeless-hadith-worker.ehsaasradio.workers.dev';
 
 /* ── CORS helper ── */
-function _cors(body, status) {
+function _json(body, status) {
   return new Response(JSON.stringify(body), {
     status: status || 200,
     headers: {
-      'Content-Type':                'application/json',
-      'Access-Control-Allow-Origin': '*'
+      'Content-Type':                'application/json; charset=utf-8',
+      'Access-Control-Allow-Origin': '*',
+      'Cache-Control':               'no-store'
     }
   });
 }
@@ -40,124 +49,84 @@ export async function onRequestOptions() {
   });
 }
 
+/* ── Reshape a single Worker citation → frontend hadith card ── */
+function _toHadithCard(c) {
+  var hadithNumber = c.hadith_number ? ' #' + c.hadith_number : '';
+  var source       = (c.source || 'Sahih al-Bukhari') + hadithNumber;
+
+  /* The Worker now returns full `content` (not just preview).
+     The content may include leading "Chapter: ..." / "Narrator: ..." lines
+     that we already surface via the dedicated fields — strip them from the
+     body so the card is clean. */
+  var body = String(c.content || c.preview || '')
+    .replace(/^Chapter:\s.*\n?/i, '')
+    .replace(/^Narrator:\s.*\n?/i, '')
+    .trim();
+
+  return {
+    id:       String(c.chunk_id || ''),
+    english:  body,
+    arabic:   '', /* vector chunks are English-only for MVP */
+    narrator: c.narrator || '',
+    source:   source,
+    chapter:  c.chapter || ''
+  };
+}
+
 /* ── Handle POST ── */
 export async function onRequestPost(context) {
   var env = context.env;
 
-  /* 0. Parse request body */
+  /* 1. Parse request body */
   var body;
   try { body = await context.request.json(); }
-  catch (e) { return _cors({ error: 'Invalid JSON body.' }, 400); }
+  catch (e) { return _json({ error: 'Invalid JSON body.' }, 400); }
 
   var query = String(body.query || '').trim();
-  if (!query)          return _cors({ error: 'query is required.' }, 400);
-  if (query.length > 500) return _cors({ error: 'query too long (max 500 chars).' }, 400);
+  if (!query)              return _json({ error: 'query is required.' }, 400);
+  if (query.length > 500)  return _json({ error: 'query too long (max 500 chars).' }, 400);
 
-  /* 1. Resolve secrets */
-  var sbKey      = env.SUPABASE_ANON_KEY || SB_ANON;
-  var openaiKey  = env.OPENAI_API_KEY;
+  /* 2. Resolve Worker URL */
+  var workerBase = (env && env.WORKER_URL) || DEFAULT_WORKER_URL;
+  var workerUrl  = workerBase.replace(/\/$/, '') + '/api/chat';
 
-  if (!openaiKey) {
-    return _cors({ error: 'AI service not configured — OPENAI_API_KEY missing.' }, 503);
-  }
-
-  /* 2. Search Supabase for relevant hadiths (ilike, top 5) */
-  var sbHdr = { 'apikey': sbKey, 'Authorization': 'Bearer ' + sbKey };
-  var sbPath =
-    '/rest/v1/hadiths' +
-    '?or=(text_en.ilike.*' + encodeURIComponent(query) + '*' +
-         ',narrator.ilike.*' + encodeURIComponent(query) + '*)' +
-    '&select=id,hadith_number,chapter_en,narrator,text_en,text_ar,book_name_en,in_book_ref' +
-    '&order=id.asc&limit=5';
-
-  var hadiths = [];
+  /* 3. Forward to Worker */
+  var workerRes;
   try {
-    var sbRes = await fetch(SB_URL + sbPath, { headers: sbHdr });
-    if (sbRes.ok) hadiths = await sbRes.json();
-  } catch (e) {
-    /* non-fatal — proceed with empty context */
-  }
-
-  /* 3. Build GPT context */
-  var contextText;
-  if (hadiths.length > 0) {
-    contextText = hadiths.map(function (h, i) {
-      return (
-        '[' + (i + 1) + '] ' +
-        (h.book_name_en || 'Sahih al-Bukhari') +
-        (h.hadith_number ? ' #' + h.hadith_number : '') +
-        (h.chapter_en    ? ' — ' + h.chapter_en    : '') +
-        '\nNarrated by ' + (h.narrator || 'Unknown') + ': ' +
-        (h.text_en || '(text unavailable)')
-      );
-    }).join('\n\n');
-  } else {
-    contextText = 'No hadiths were found in the database matching this exact query.';
-  }
-
-  /* 4. Call OpenAI GPT-4o-mini */
-  var systemPrompt =
-    'You are a respectful Islamic scholar assistant specialising in Sahih al-Bukhari. ' +
-    'Answer the user\'s question using ONLY the hadith context provided — ' +
-    'do not invent or paraphrase hadith text. ' +
-    'Keep your answer concise (2–4 sentences). ' +
-    'Reference hadith numbers when helpful (e.g. "Hadith #6"). ' +
-    'If the context does not contain relevant information, say so honestly and suggest ' +
-    'trying different search terms.';
-
-  var userPrompt = 'Question: ' + query + '\n\nRelevant hadiths:\n\n' + contextText;
-
-  var oaRes;
-  try {
-    oaRes = await fetch('https://api.openai.com/v1/chat/completions', {
+    workerRes = await fetch(workerUrl, {
       method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + openaiKey,
-        'Content-Type':  'application/json'
-      },
-      body: JSON.stringify({
-        model:       'gpt-4o-mini',
-        max_tokens:  420,
-        temperature: 0.3,
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user',   content: userPrompt   }
-        ]
-      })
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ question: query })
     });
   } catch (e) {
-    return _cors({ error: 'OpenAI request failed: ' + e.message }, 502);
+    return _json({
+      error: 'AI service is unreachable. Please try again in a moment.'
+    }, 502);
   }
 
-  if (!oaRes.ok) {
-    var errText = await oaRes.text().catch(function () { return ''; });
-    return _cors({ error: 'OpenAI error ' + oaRes.status + ': ' + errText }, 502);
+  /* 4. Parse Worker response */
+  var workerData;
+  try {
+    workerData = await workerRes.json();
+  } catch (e) {
+    return _json({ error: 'AI service returned an invalid response.' }, 502);
   }
 
-  var oaData;
-  try { oaData = await oaRes.json(); }
-  catch (e) { return _cors({ error: 'OpenAI response parse error.' }, 502); }
+  /* 5. Surface Worker errors verbatim (with safe status) */
+  if (!workerRes.ok || workerData.error) {
+    return _json(
+      { error: workerData.error || ('AI service error: ' + workerRes.status) },
+      workerRes.ok ? 502 : workerRes.status
+    );
+  }
 
-  var answer = (
-    oaData.choices &&
-    oaData.choices[0] &&
-    oaData.choices[0].message &&
-    oaData.choices[0].message.content
-  ) || 'Unable to generate an answer.';
+  /* 6. Reshape Worker citations → frontend hadith cards */
+  var citations = Array.isArray(workerData.citations) ? workerData.citations : [];
+  var hadiths   = citations.map(_toHadithCard);
 
-  /* 5. Return answer + source hadiths */
-  return _cors({
-    answer: answer,
-    hadiths: hadiths.map(function (h) {
-      return {
-        id:       String(h.id || ''),
-        english:  h.text_en  || '',
-        arabic:   h.text_ar  || '',
-        narrator: h.narrator || '',
-        source:   (h.book_name_en || 'Sahih al-Bukhari') +
-                  (h.hadith_number ? ' #' + h.hadith_number : ''),
-        chapter:  h.chapter_en || ''
-      };
-    })
+  /* 7. Return the shape the existing widget expects */
+  return _json({
+    answer:  workerData.answer || 'Unable to generate an answer.',
+    hadiths: hadiths
   });
 }
