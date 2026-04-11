@@ -6,7 +6,7 @@
  *  - Skip: Supabase API calls, Cloudflare Insights, Google Fonts CSS (let browser handle)
  */
 
-const VERSION = 'th-v1-2026-04-10';
+const VERSION = 'th-v2-2026-04-11';
 const CORE_CACHE = `${VERSION}-core`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -24,7 +24,6 @@ const CORE_ASSETS = [
   '/js/supabase-data.js?v=2',
   '/js/app.js',
   '/js/supabase-auth.js',
-  '/js/ai-search.js',
   '/manifest.json',
   '/favicon-16.png',
   '/favicon-32.png',
