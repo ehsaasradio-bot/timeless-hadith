@@ -8,15 +8,6 @@
   var burger=document.getElementById('hamburger'), drawer=document.getElementById('navDrawer');
   burger.addEventListener('click',function(){ drawer.classList.toggle('open'); burger.setAttribute('aria-expanded',drawer.classList.contains('open')); });
 
-  /* ── Cookie ── */
-  var store={get:function(k){try{return localStorage.getItem(k);}catch(e){return null;}},set:function(k,v){try{localStorage.setItem(k,v);}catch(e){}}};
-  var banner=document.getElementById('cookieBanner');
-  if(banner && !store.get('th_cookie_consent')) setTimeout(function(){banner.classList.add('show');},1500);
-  var cookieAcc=document.getElementById('cookieAccept');
-  var cookieDec=document.getElementById('cookieDecline');
-  if(cookieAcc) cookieAcc.addEventListener('click',function(){store.set('th_cookie_consent','accepted');store.set('th_cookie_consent_date',new Date().toISOString());banner.classList.remove('show');});
-  if(cookieDec) cookieDec.addEventListener('click',function(){store.set('th_cookie_consent','declined');store.set('th_cookie_consent_date',new Date().toISOString());banner.classList.remove('show');});
-
   /* ── Page state ── */
   var PER_PAGE=9, currentPage=0, _authFilter='', _narFilter='', _query='';
   var _slug='', _cat=null, _hadiths=[], _filtered=[];
