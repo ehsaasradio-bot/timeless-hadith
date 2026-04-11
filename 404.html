@@ -706,51 +706,53 @@
         <h2 id="trending-heading">Trending topics</h2>
         <p>Popular places to begin your journey.</p>
       </header>
-      <div class="trending-grid">
-        <a class="topic-card" href="category.html?cat=faith-belief">
-          <span class="num">01 / Faith</span>
-          <h3>Faith &amp; Belief</h3>
-          <p>Strengthen your connection with Allah through authentic hadiths on iman.</p>
+      <div class="trending-grid" id="trendingGrid">
+        <!-- Slugs use book-N which category.html resolves to real books via TH.getCat's
+             book-number fallback. Titles are enhanced from TH.categories on load. -->
+        <a class="topic-card" href="category.html?cat=book-2" data-book="2">
+          <span class="num">01 / Iman</span>
+          <h3 data-field="title">Belief</h3>
+          <p data-field="desc">Strengthen your connection with Allah through the foundations of faith (iman).</p>
           <span class="meta">Explore
             <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
         </a>
-        <a class="topic-card" href="category.html?cat=character-conduct">
-          <span class="num">02 / Character</span>
-          <h3>Character &amp; Conduct</h3>
-          <p>Live with purpose and excellent character, as taught by the Prophet (PBUH).</p>
+        <a class="topic-card" href="category.html?cat=book-3" data-book="3">
+          <span class="num">02 / Ilm</span>
+          <h3 data-field="title">Knowledge</h3>
+          <p data-field="desc">Seek sacred knowledge from the cradle to the grave, as the Prophet (PBUH) taught.</p>
           <span class="meta">Explore
             <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
         </a>
-        <a class="topic-card" href="category.html?cat=prayer-worship">
-          <span class="num">03 / Worship</span>
-          <h3>Prayer &amp; Worship</h3>
-          <p>Deepen devotion through consistent prayer and mindful worship.</p>
+        <a class="topic-card" href="category.html?cat=book-8" data-book="8">
+          <span class="num">03 / Salat</span>
+          <h3 data-field="title">Prayers</h3>
+          <p data-field="desc">Deepen your devotion through consistent prayer and mindful worship.</p>
           <span class="meta">Explore
             <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
         </a>
-        <a class="topic-card" href="category.html?cat=patience-gratitude">
-          <span class="num">04 / Patience</span>
-          <h3>Patience &amp; Gratitude</h3>
-          <p>Find strength in patience and thankfulness during trials and blessings alike.</p>
+        <a class="topic-card" href="category.html?cat=book-30" data-book="30">
+          <span class="num">04 / Sawm</span>
+          <h3 data-field="title">Fasting</h3>
+          <p data-field="desc">Fast with your whole being and discover the spiritual depth of Ramadan.</p>
           <span class="meta">Explore
             <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
         </a>
-        <a class="topic-card" href="category.html?cat=family-relations">
-          <span class="num">05 / Family</span>
-          <h3>Family &amp; Relations</h3>
-          <p>Build a home rooted in mercy, love, and prophetic guidance.</p>
+        <a class="topic-card" href="category.html?cat=book-78" data-book="78">
+          <span class="num">05 / Adab</span>
+          <h3 data-field="title">Good Manners</h3>
+          <p data-field="desc">Live with purpose and excellent character, as modelled by the Prophet (PBUH).</p>
           <span class="meta">Explore
             <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
         </a>
-        <a class="topic-card" href="category.html?cat=supplication-dua">
-          <span class="num">06 / Dua</span>
-          <h3>Supplication &amp; Dua</h3>
-          <p>Call upon Allah with authentic supplications from the Sunnah.</p>
+        <a class="topic-card" href="category.html?cat=tawheed" data-book="97">
+          <span class="num">06 / Tawheed</span>
+          <h3 data-field="title">Oneness of Allah</h3>
+          <p data-field="desc">Affirm the oneness and uniqueness of Allah &mdash; the foundation of Islamic belief.</p>
           <span class="meta">Explore
             <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
@@ -836,7 +838,45 @@
         }
       } catch (e) {}
     })();
+
+    // ── Dynamic enhancement: replace hardcoded trending titles with
+    //    real book names from Supabase once TH.init() resolves. Uses
+    //    data-book="N" on each card to match TH.categories by bookNumber.
+    //    Falls back silently to hardcoded content if Supabase is unreachable.
+    (function () {
+      function enhance() {
+        if (!window.TH || typeof TH.init !== 'function') return;
+        TH.init().then(function () {
+          if (!Array.isArray(TH.categories) || TH.categories.length === 0) return;
+          var cards = document.querySelectorAll('#trendingGrid .topic-card[data-book]');
+          cards.forEach(function (card) {
+            var bookNum = parseInt(card.getAttribute('data-book'), 10);
+            var cat = TH.categories.find(function (c) { return c.bookNumber === bookNum; });
+            if (!cat) return;
+            var titleEl = card.querySelector('[data-field="title"]');
+            var descEl  = card.querySelector('[data-field="desc"]');
+            if (titleEl && cat.title) titleEl.textContent = cat.title;
+            if (descEl  && (cat.desc || cat.shortDescription)) {
+              descEl.textContent = cat.desc || cat.shortDescription;
+            }
+            // Keep href pointing at the known-working slug (book-N or tawheed).
+            // If TH built a nicer canonical slug, prefer it.
+            if (cat.slug && cat.slug !== 'book-' + bookNum) {
+              card.setAttribute('href', 'category.html?cat=' + encodeURIComponent(cat.slug));
+            }
+          });
+        }).catch(function () { /* silent: keep hardcoded fallback */ });
+      }
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        enhance();
+      } else {
+        document.addEventListener('DOMContentLoaded', enhance);
+      }
+    })();
   </script>
+
+  <!-- Supabase data layer (for dynamic trending enhancement) -->
+  <script defer src="js/supabase-data.js?v=2"></script>
 
   <!-- Cloudflare Web Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
