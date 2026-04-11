@@ -39,6 +39,11 @@ dist/
 build/
 .cache/
 .parcel-cache/
+.wrangler/
+
+# ── Local scratch (Worker test responses, ad-hoc output) ──
+worker/output.txt
+*.scratch
 
 # ── Logs ──────────────────────────────────────────────────
 logs/
