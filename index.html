@@ -875,27 +875,16 @@
         <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
       <div class="most-viewed-tags" id="mvTags">
-        <a href="category.html?cat=faith-belief"           class="tag">Faith &amp; Belief</a>
-        <a href="category.html?cat=character-conduct"      class="tag">Character &amp; Conduct</a>
-        <a href="category.html?cat=prayer-worship"         class="tag">Prayer &amp; Worship</a>
-        <a href="category.html?cat=family-relations"       class="tag">Family &amp; Relations</a>
-        <a href="category.html?cat=knowledge-learning"     class="tag">Knowledge &amp; Learning</a>
-        <a href="category.html?cat=patience-gratitude"     class="tag">Patience &amp; Gratitude</a>
-        <a href="category.html?cat=charity-generosity"     class="tag">Charity &amp; Generosity</a>
-        <a href="category.html?cat=honesty-truthfulness"   class="tag">Honesty &amp; Truthfulness</a>
-        <a href="category.html?cat=repentance-forgiveness" class="tag">Repentance &amp; Forgiveness</a>
-        <a href="category.html?cat=health-body"            class="tag">Health &amp; Body</a>
-        <a href="category.html?cat=neighbours-community"   class="tag">Neighbours &amp; Community</a>
-        <a href="category.html?cat=death-afterlife"        class="tag">Death &amp; Afterlife</a>
-        <a href="category.html?cat=remembrance-allah"      class="tag">Remembrance of Allah</a>
-        <a href="category.html?cat=wealth-livelihood"      class="tag">Wealth &amp; Livelihood</a>
-        <a href="category.html?cat=justice-fairness"       class="tag">Justice &amp; Fairness</a>
-        <a href="category.html?cat=intentions-actions"     class="tag">Intentions &amp; Actions</a>
-        <a href="category.html?cat=fasting-ramadan"        class="tag">Fasting &amp; Ramadan</a>
-        <a href="category.html?cat=humility-pride"         class="tag">Humility &amp; Pride</a>
-        <a href="category.html?cat=love-brotherhood"       class="tag">Love &amp; Brotherhood</a>
-        <a href="category.html?cat=supplication-dua"       class="tag">Supplication &amp; Dua</a>
-        <a href="category.html?cat=trust-allah"            class="tag">Trust in Allah</a>
+        <!-- Safe fallback pills using book-N slugs (resolvable against live
+             Supabase data via TH.getCat's book-number fallback). These are
+             replaced at runtime with the full real category list from
+             TH.categories once TH.init() resolves. -->
+        <a href="category.html?cat=book-2"  class="tag" data-book="2">Belief</a>
+        <a href="category.html?cat=book-3"  class="tag" data-book="3">Knowledge</a>
+        <a href="category.html?cat=book-8"  class="tag" data-book="8">Prayers</a>
+        <a href="category.html?cat=book-30" class="tag" data-book="30">Fasting</a>
+        <a href="category.html?cat=book-78" class="tag" data-book="78">Good Manners</a>
+        <a href="category.html?cat=tawheed" class="tag" data-book="97">Oneness of Allah</a>
       </div>
       <button class="mv-arrow" id="mvNext" aria-label="Scroll right">
         <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>

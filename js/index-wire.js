@@ -279,6 +279,37 @@
   mvTags.addEventListener('scroll', updateMvArrows);
   updateMvArrows();
 
+  /* ── Rehydrate Most Viewed pills from live Supabase categories ──
+     The hardcoded pills (book-2, book-3, book-8, book-30, book-78,
+     tawheed) are a safe fallback. Once TH.init() resolves we replace
+     them with the full real category list so every pill links to an
+     actual book and displays the real title. If Supabase is down,
+     the hardcoded fallback pills stay on screen. */
+  if (window.TH && typeof TH.init === 'function') {
+    TH.init().then(() => {
+      if (!Array.isArray(TH.categories) || TH.categories.length === 0) return;
+
+      /* Prefer meaningful pills: skip books with zero hadiths, cap at 18
+         so the pill bar doesn't overflow on mobile. */
+      const pool = TH.categories
+        .filter(c => (c.count == null) || c.count > 0)
+        .slice(0, 18);
+
+      if (pool.length === 0) return;
+
+      mvTags.innerHTML = pool.map(c => {
+        const slug = c.slug || ('book-' + c.bookNumber);
+        const title = (c.title || c.h1 || ('Book ' + c.bookNumber))
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return '<a href="category.html?cat=' + encodeURIComponent(slug) +
+               '" class="tag" data-book="' + c.bookNumber + '">' + title + '</a>';
+      }).join('');
+
+      /* Recalculate arrow state now that content changed */
+      updateMvArrows();
+    }).catch(() => { /* silent: keep fallback pills */ });
+  }
+
   /* ────────────────────────────────────────────
      CATEGORIES CAROUSEL — dynamic from Supabase
   ──────────────────────────────────────────── */
