@@ -55,7 +55,8 @@
     <img src="favicon-32.png" alt="" width="72" height="72" />
     <h1>You&rsquo;re offline</h1>
     <p>Timeless Hadith needs a connection to fetch new content. Any pages you&rsquo;ve already visited are still available from cache.</p>
-    <button type="button" onclick="location.reload()">Try again</button>
+    <button type="button" id="btn-reload">Try again</button>
+    <script>document.getElementById('btn-reload').addEventListener('click',function(){location.reload();});</script>
   </main>
 </body>
 </html>
