@@ -107,6 +107,7 @@
 
   <!-- Page styles moved to css/styles.css for cacheability -->
   <style>/* Page styles in css/styles.css for cacheability — this block intentionally left empty */
+    .hero { text-align: center; }
     .hero h1 {
       font-size: clamp(28px, 4.5vw, 52px);
       font-weight: 700; line-height: 1.08;
@@ -1116,6 +1117,18 @@
   <!-- Cloudflare Web Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
   <!-- End Cloudflare Web Analytics -->
+
+
+
+<!-- ── Urdu Translation Toggle ── -->
+<script>
+function thUrduToggle(btn) {
+  var body = btn.nextElementSibling;
+  var isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+}
+</script>
 </body>
 </html>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             

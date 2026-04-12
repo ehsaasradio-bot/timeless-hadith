@@ -592,3 +592,88 @@ div[dir="rtl"] {
 }
 
 /* ═══════════════════════════�
+
+/* ══════════════════════════════════════════════════════════════
+   Urdu Translation — Inline Accordion
+   ══════════════════════════════════════════════════════════════ */
+
+/* Button */
+.urdu-trans-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 14px;
+  background: transparent;
+  border: 1px solid rgba(79,114,248,0.3);
+  border-radius: 100px;
+  font-size: 12.5px;
+  font-weight: 500;
+  font-family: "Cairo Play", sans-serif;
+  color: var(--accent);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  margin-left: auto;
+  margin-top: 12px;
+}
+.urdu-trans-btn:hover {
+  background: rgba(79,114,248,0.08);
+  border-color: rgba(79,114,248,0.55);
+}
+.urdu-trans-btn.open {
+  background: rgba(79,114,248,0.1);
+  border-color: rgba(79,114,248,0.5);
+}
+[data-theme="dark"] .urdu-trans-btn {
+  border-color: rgba(100,130,255,0.3);
+  color: #7a9aff;
+}
+[data-theme="dark"] .urdu-trans-btn:hover,
+[data-theme="dark"] .urdu-trans-btn.open {
+  background: rgba(79,114,248,0.15);
+  border-color: rgba(100,130,255,0.55);
+}
+
+/* Accordion body */
+.urdu-inline-body {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.38s cubic-bezier(0.4,0,0.2,1),
+              opacity 0.28s ease,
+              margin-top 0.28s ease;
+  margin-top: 0;
+}
+.urdu-inline-body.open {
+  max-height: 400px;
+  opacity: 1;
+  margin-top: 14px;
+}
+.urdu-inline-inner {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.urdu-inline-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+  font-family: var(--font);
+}
+.urdu-inline-text {
+  font-family: "Cairo Play", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 2.1;
+  color: var(--ink);
+  direction: rtl;
+  text-align: right;
+}
+.urdu-inline-empty {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  padding: 10px 0;
+  font-family: var(--font);
+}

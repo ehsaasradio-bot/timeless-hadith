@@ -46,8 +46,8 @@ const TH = {
         id:'fb-001',
         arabic:'إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى',
         english:'Actions are judged by intentions, and each person will have what they intended.',
-        narrator:'Umar ibn al-Khattab (RA)', source:'Sahih al-Bukhari', number:'1',
-        authenticity:'Sahih', subcategory:'Iman'
+        narrator:'Umar ibn al-Khattab (RA)', source:'Sahih al-Bukhari', number:'1', urdu:'اعمال کا دارومدار نیتوں پر ہے، اور ہر شخص کو وہی ملتا ہے جس کی اس نے نیت کی۔',
+        authenticity:'Sahih', subcategory:'Iman', urdu:'اعمال کا دارومدار نیتوں پر ہے، اور ہر شخص کو وہی ملتا ہے جس کی اس نے نیت کی۔'
       },
       {
         id:'fb-002',
@@ -61,21 +61,21 @@ const TH = {
         arabic:'الإِيمَانُ أَنْ تُؤْمِنَ بِاللَّهِ، وَمَلاَئِكَتِهِ، وَكُتُبِهِ، وَرُسُلِهِ، وَالْيَوْمِ الآخِرِ، وَتُؤْمِنَ بِالْقَدَرِ خَيْرِهِ وَشَرِّهِ',
         english:'Faith is to believe in Allah, His angels, His Books, His Messengers, the Last Day, and to believe in divine decree — both the good and the evil of it.',
         narrator:'Umar ibn al-Khattab (RA)', source:'Sahih Muslim', number:'8',
-        authenticity:'Sahih', subcategory:'Iman'
+        authenticity:'Sahih', subcategory:'Iman', urdu:'اعمال کا دارومدار نیتوں پر ہے، اور ہر شخص کو وہی ملتا ہے جس کی اس نے نیت کی۔'
       },
       {
         id:'fb-004',
         arabic:'لاَ يُؤْمِنُ أَحَدُكُمْ حَتَّى أَكُونَ أَحَبَّ إِلَيْهِ مِنْ وَالِدِهِ وَوَلَدِهِ وَالنَّاسِ أَجْمَعِينَ',
         english:'None of you truly believes until I am more beloved to him than his father, his son, and all of mankind.',
         narrator:'Anas ibn Malik (RA)', source:'Sahih al-Bukhari', number:'15',
-        authenticity:'Sahih', subcategory:'Iman'
+        authenticity:'Sahih', subcategory:'Iman', urdu:'اعمال کا دارومدار نیتوں پر ہے، اور ہر شخص کو وہی ملتا ہے جس کی اس نے نیت کی۔'
       },
       {
         id:'fb-005',
         arabic:'الإِيمَانُ بِضْعٌ وَسَبْعُونَ شُعْبَةً، فَأَفْضَلُهَا قَوْلُ لاَ إِلَهَ إِلاَّ اللَّهُ، وَأَدْنَاهَا إِمَاطَةُ الأَذَى عَنِ الطَّرِيقِ',
         english:'Faith has seventy-odd branches. The highest is the statement "There is no god but Allah," and the lowest is removing something harmful from the road.',
         narrator:'Abu Huraira (RA)', source:'Sahih al-Bukhari', number:'9',
-        authenticity:'Sahih', subcategory:'Iman'
+        authenticity:'Sahih', subcategory:'Iman', urdu:'اعمال کا دارومدار نیتوں پر ہے، اور ہر شخص کو وہی ملتا ہے جس کی اس نے نیت کی۔'
       },
     ],
 
@@ -392,7 +392,7 @@ const TH = {
         id:'ia-001',
         arabic:'إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى',
         english:'Actions are judged by intentions, and each person will have what they intended.',
-        narrator:'Umar ibn al-Khattab (RA)', source:'Sahih al-Bukhari', number:'1',
+        narrator:'Umar ibn al-Khattab (RA)', source:'Sahih al-Bukhari', number:'1', urdu:'اعمال کا دارومدار نیتوں پر ہے، اور ہر شخص کو وہی ملتا ہے جس کی اس نے نیت کی۔',
         authenticity:'Sahih', subcategory:'Niyyah'
       },
       {
