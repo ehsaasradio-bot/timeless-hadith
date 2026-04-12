@@ -111,17 +111,17 @@
       font-size: clamp(28px, 4.5vw, 52px);
       font-weight: 700; line-height: 1.08;
       letter-spacing: -0.04em; color: var(--ink);
-      max-width: 860px; margin-bottom: 14px;
+      max-width: 860px; margin: 0 auto 14px;
     }
     .hero h1 em { font-style: normal; color: var(--accent); }
     .hero .hero-sub {
       font-size: clamp(15px, 1.6vw, 18px);
       font-weight: 400; color: var(--muted);
       max-width: 540px; line-height: 1.6;
-      letter-spacing: -0.01em; margin-bottom: 28px;
+      letter-spacing: -0.01em; margin: 0 auto 28px;
     }
     .hero-actions {
-      display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
+      display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 28px;
     }
     .btn-primary {
       display: inline-flex; align-items: center; gap: 8px;
@@ -616,7 +616,7 @@
       .cards-track { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 680px) {
-      .hero { padding: 76px 20px 40px; }
+      .hero { padding: 76px 20px 40px; text-align: center; }
       .hero h1 { letter-spacing: -0.03em; }
       .search-btn-label { display: none; }
       .cards-section { padding: 0 20px 56px; }
