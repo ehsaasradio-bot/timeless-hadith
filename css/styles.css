@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-/* ── Fonts: Inter loaded above (comment must come after @import) ── */
+/* ── Fonts: Inter loaded via <link> in HTML (removed @import to avoid double-fetch) ── */
 
 /* ── Accessibility ── */
 .skip-link {
@@ -31,7 +30,7 @@
 :root {
   --font: "Inter", -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
   --font-display: "Inter", -apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
-  --font-arabic: "Noto Kufi Arabic", "Segoe UI Arabic", "Tahoma", serif;
+  --font-arabic: "Cairo Play", "Segoe UI Arabic", "Tahoma", sans-serif;
   --radius: 16px;
   --bg:       #ffffff;
   --surface:  #f5f5f7;
@@ -552,7 +551,7 @@ footer {
 }
 
 /* ──────────────────────────────────────────────────────────────
-   Arabic typography — Noto Kufi Arabic (global)
+   Arabic typography — Cairo Play (global)
    Applies to every Arabic surface: hadith body, modal, featured,
    search matches, any [lang="ar"] or [dir="rtl"] container, and
    the legacy .arabic-text / .hadith-arabic / .modal-hadith-arabic
@@ -569,6 +568,8 @@ footer {
 .category-arabic,
 .book-title-ar {
   font-family: var(--font-arabic) !important;
+  font-size: 1rem !important;
+  font-weight: 450 !important;
   font-feature-settings: "kern", "liga", "calt", "ss01";
   font-variant-ligatures: common-ligatures contextual;
   -webkit-font-smoothing: antialiased;
@@ -584,3 +585,5 @@ footer {
   direction: rtl;
   text-align: right;
 }
+
+/* ═══════════════════════════�
