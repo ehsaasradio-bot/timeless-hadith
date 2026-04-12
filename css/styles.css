@@ -566,7 +566,12 @@ footer {
 .modal-hadith-arabic,
 .featured-hadith-arabic,
 .category-arabic,
-.book-title-ar {
+.book-title-ar,
+.fc-arabic,
+[data-arabic],
+p[dir="rtl"],
+span[dir="rtl"],
+div[dir="rtl"] {
   font-family: var(--font-arabic) !important;
   font-size: 1rem !important;
   font-weight: 450 !important;
