@@ -197,7 +197,7 @@
           '<button class="share-text-btn" onclick="TH_SHARE_TEXT&&TH_SHARE_TEXT.share(_getH(\''+h.id+'\'),\''+catTitle.replace(/\'/g,"\\\'")+'\')">↗ Share</button>'+
         '</div>'+
       '</div>'+
-      '<button class="urdu-trans-btn" onclick="thUrduToggle(this)" aria-label="Urdu translation">اردو ترجمہ</button>'+
+      '<button class="urdu-trans-btn" aria-label="Urdu translation">اردو ترجمہ</button>'+
       '<div class="urdu-inline-body">'+
         '<div class="urdu-inline-inner">'+
           '<div class="urdu-inline-label">اردو ترجمہ</div>'+
