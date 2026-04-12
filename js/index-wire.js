@@ -35,7 +35,9 @@
   });
 
   /* ────────────────────────────────────────────
-     FEATURED HADITHS
+     FEATURED HADITHS — Two-Card Glass Layout
+     Card 1: Hadith of the Day (date-deterministic rotation)
+     Card 2: Most Read (highest reads count)
   ──────────────────────────────────────────── */
   const FEATURED = [
     {
@@ -43,116 +45,86 @@
       text: '"Actions are but by intentions, and every person will get what they intended."',
       meta: 'Narrated by Umar ibn al-Khattab (RA) — ',
       source: 'Sahih al-Bukhari 1',
-      category: 'Intentions & Actions'
+      category: 'Intentions & Actions',
+      title: 'The Foundation of Every Deed',
+      reads: 1247
     },
     {
       arabic: 'لا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ',
       text: '"None of you will have faith until he loves for his brother what he loves for himself."',
       meta: 'Narrated by Anas ibn Malik (RA) — ',
       source: 'Sahih al-Bukhari 13',
-      category: 'Love & Brotherhood'
+      category: 'Love & Brotherhood',
+      title: 'The Measure of True Faith',
+      reads: 983
     },
     {
       arabic: 'الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ',
       text: '"A Muslim is the one from whose tongue and hands the Muslims are safe."',
       meta: 'Narrated by Abdullah ibn Amr (RA) — ',
       source: 'Sahih al-Bukhari 10',
-      category: 'Character & Conduct'
+      category: 'Character & Conduct',
+      title: 'The Mark of a True Muslim',
+      reads: 762
     },
     {
       arabic: 'خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ',
       text: '"The best of you are those who learn the Quran and teach it."',
       meta: 'Narrated by Uthman ibn Affan (RA) — ',
       source: 'Sahih al-Bukhari 5027',
-      category: 'Knowledge & Learning'
+      category: 'Knowledge & Learning',
+      title: 'The Noblest Pursuit of Knowledge',
+      reads: 891
     },
     {
       arabic: 'الدُّنْيَا سِجْنُ الْمُؤْمِنِ وَجَنَّةُ الْكَافِرِ',
       text: '"This world is a prison for the believer and a paradise for the disbeliever."',
       meta: 'Narrated by Abu Huraira (RA) — ',
       source: 'Sahih Muslim 2956',
-      category: 'Faith & Belief'
+      category: 'Faith & Belief',
+      title: 'Perspective on This World',
+      reads: 654
     }
   ];
 
-  let currentFeatured = 0;
+  /* ── Hadith of the Day — pick by day-of-year so it changes daily ── */
+  (function renderDailyCard() {
+    var now   = new Date();
+    var start = new Date(now.getFullYear(), 0, 0);
+    var doy   = Math.floor((now - start) / 86400000);
+    var h     = FEATURED[doy % FEATURED.length];
 
-  function renderFeatured(idx) {
-    const h = FEATURED[idx];
-    document.getElementById('featuredArabic').textContent = h.arabic;
-    document.getElementById('featuredText').textContent   = h.text;
-    const meta = document.getElementById('featuredMeta');
-    meta.innerHTML = h.meta + '<span>' + h.source + '</span> — ' + h.category;
-
-    // Update dots
-    document.querySelectorAll('.f-dot').forEach((d, i) =>
-      d.classList.toggle('active', i === idx)
-    );
-  }
-
-  function buildFeaturedDots() {
-    const container = document.getElementById('featuredDots');
-    container.innerHTML = '';
-    FEATURED.forEach((_, i) => {
-      const d = document.createElement('span');
-      d.className = 'f-dot' + (i === 0 ? ' active' : '');
-      d.setAttribute('aria-label', 'Hadith ' + (i + 1));
-      d.addEventListener('click', () => { currentFeatured = i; renderFeatured(i); });
-      container.appendChild(d);
-    });
-  }
-
-  buildFeaturedDots();
-  renderFeatured(0);
-
-  /* ── Load live featured hadiths from Supabase ── */
-  if (window.TH && typeof TH.getFeatured === 'function') {
-    TH.getFeatured(10).then(function(live) {
-      if (!live || live.length === 0) return;
-      /* Only show hadiths with 120 words or fewer — ensures complete display */
-      var filtered = live.filter(function(h) {
-        return h.text && h.text.trim().split(/\s+/).length <= 120;
-      }).slice(0, 5);
-      if (filtered.length === 0) return;
-      FEATURED.length = 0;
-      filtered.forEach(function(h) { FEATURED.push(h); });
-      currentFeatured = 0;
-      buildFeaturedDots();
-      renderFeatured(0);
-    }).catch(function() { /* keep static fallback silently */ });
-  }
-
-  // Prev / Next buttons
-  document.getElementById('featuredPrev').addEventListener('click', () => {
-    currentFeatured = (currentFeatured - 1 + FEATURED.length) % FEATURED.length;
-    renderFeatured(currentFeatured);
-  });
-  document.getElementById('featuredNext').addEventListener('click', () => {
-    currentFeatured = (currentFeatured + 1) % FEATURED.length;
-    renderFeatured(currentFeatured);
-  });
-
-  // Touch swipe support for mobile
-  (function() {
-    const card = document.getElementById('featuredCard');
-    let startX = 0;
-    card.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-    card.addEventListener('touchend', e => {
-      const diff = startX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40) {
-        currentFeatured = diff > 0
-          ? (currentFeatured + 1) % FEATURED.length
-          : (currentFeatured - 1 + FEATURED.length) % FEATURED.length;
-        renderFeatured(currentFeatured);
-      }
-    }, { passive: true });
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    document.getElementById('fcDailyDate').textContent   = now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
+    document.getElementById('fcDailyTitle').textContent  = h.title || '';
+    document.getElementById('fcDailyText').textContent   = h.text;
+    document.getElementById('fcDailyArabic').textContent = h.arabic;
+    document.getElementById('fcDailyMeta').textContent   = h.meta;
+    document.getElementById('fcDailySource').textContent = h.source;
+    document.getElementById('fcDailyCat').textContent    = h.category;
   })();
 
-  // Auto-rotate featured
-  setInterval(() => {
-    currentFeatured = (currentFeatured + 1) % FEATURED.length;
-    renderFeatured(currentFeatured);
-  }, 7000);
+  /* ── Most Read — highest reads count ── */
+  (function renderPopularCard() {
+    var popular = FEATURED.slice().sort(function(a, b) { return (b.reads || 0) - (a.reads || 0); })[0];
+
+    document.getElementById('fcPopularText').textContent   = popular.text;
+    document.getElementById('fcPopularArabic').textContent = popular.arabic;
+    document.getElementById('fcPopularMeta').textContent   = popular.meta;
+    document.getElementById('fcPopularSource').textContent = popular.source;
+    document.getElementById('fcPopularCat').textContent    = popular.category;
+
+    // Animate read count counter
+    var target  = popular.reads || 0;
+    var el      = document.getElementById('fcReadsNum');
+    var current = 0;
+    var step    = Math.max(1, Math.floor(target / 60));
+    var timer   = setInterval(function() {
+      current += step;
+      if (current >= target) { current = target; clearInterval(timer); }
+      el.textContent = current.toLocaleString();
+    }, 20);
+  })();
 
   /* ────────────────────────────────────────────
      SEARCH & FILTER
@@ -544,13 +516,7 @@
     return lines;
   }
 
-  // Featured share buttons
-  document.getElementById('featuredShareText').addEventListener('click', () => {
-    doShareText(FEATURED[currentFeatured]);
-  });
-  document.getElementById('featuredShareImage').addEventListener('click', () => {
-    doShareImage(FEATURED[currentFeatured]);
-  });
+  // Featured share buttons — removed with old carousel UI
 
   // Modal share buttons
   document.getElementById('shareAsText').addEventListener('click', () => {
@@ -576,6 +542,7 @@
     chip.addEventListener('click', function () {
       input.value = chip.textContent.trim();
       input.focus();
+      handleSubmit();
     });
   });
 
@@ -593,12 +560,12 @@
   function handleSubmit() {
     var q = (input.value || '').trim();
     if (!q) { input.focus(); return; }
-    showToast('AI search is launching soon — browse topics below for now.');
-    var cats = document.getElementById('categories');
-    if (cats && cats.scrollIntoView) {
-      setTimeout(function () {
-        cats.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 320);
+
+    if (window.TH_AI && typeof window.TH_AI.ask === 'function') {
+      window.TH_AI.ask(q);
+      input.value = '';
+    } else {
+      showToast('AI search is not ready yet — please try again in a moment.');
     }
   }
 
