@@ -450,5 +450,17 @@
   <script defer src="js/sw-register.js"></script>
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
   <!-- End Cloudflare Web Analytics -->
+
+
+
+<!-- ── Urdu Translation Toggle ── -->
+<script>
+function thUrduToggle(btn) {
+  var body = btn.nextElementSibling;
+  var isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+}
+</script>
 </body>
 </html>

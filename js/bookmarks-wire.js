@@ -81,6 +81,16 @@
             '<span class="card-source">' + (h.source || '') + '</span>' +
           '</div>' +
         '</div>' +
+        '<button class="urdu-trans-btn" onclick="thUrduToggle(this)" aria-label="Urdu translation">اردو ترجمہ</button>' +
+        '<div class="urdu-inline-body">' +
+          '<div class="urdu-inline-inner">' +
+            '<div class="urdu-inline-label">اردو ترجمہ</div>' +
+            (h.urdu
+              ? '<p class="urdu-inline-text">' + h.urdu + '</p>'
+              : '<p class="urdu-inline-empty">اردو ترجمہ جلد دستیاب ہوگا</p>'
+            ) +
+          '</div>' +
+        '</div>' +
       '</div>'
     );
   }
