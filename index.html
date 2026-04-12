@@ -29,26 +29,80 @@
   <link rel="manifest"         href="manifest.json" />
   <!-- Shared styles -->
   <link rel="stylesheet" href="css/styles.css" />
-  <!-- Arabic font for Canvas share images -->
+  <!-- Fonts: preconnect first, then Inter critical, Arabic non-blocking -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="dns-prefetch" href="https://dwcsledifvnyrunxejzd.supabase.co" />
+  <link rel="dns-prefetch" href="https://timeless-hadith-worker.ehsaasradio.workers.dev" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" />
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" />
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self' https://accounts.google.com https://fonts.googleapis.com https://static.cloudflareinsights.com; script-src-attr 'unsafe-inline'; worker-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://dwcsledifvnyrunxejzd.supabase.co https://cloudflareinsights.com https://accounts.google.com; manifest-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Timeless Hadith",
-    "url": "https://timelesshadith.com/",
-    "description": "Authentic, searchable hadiths from Prophet Muhammad (PBUH).",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://timelesshadith.com/?q={search_term_string}",
-      "query-input": "required name=search_term_string"
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Timeless Hadith",
+      "url": "https://timelesshadith.com/",
+      "description": "Authentic, searchable hadiths from Prophet Muhammad (PBUH).",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://timelesshadith.com/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Timeless Hadith",
+      "url": "https://timelesshadith.com/",
+      "logo": "https://timelesshadith.com/timelesshadith-logo.png",
+      "description": "A free Islamic reference platform offering authentic, searchable hadiths from Prophet Muhammad (peace be upon him).",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "availableLanguage": ["English", "Arabic"]
+      },
+      "sameAs": ["https://timelesshadith.com/"]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Timeless Hadith?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Timeless Hadith is a free Islamic reference platform providing thousands of authentic hadiths — prophetic sayings of Prophet Muhammad (peace be upon him) — organised by topic and searchable in English and Arabic."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are the hadiths on Timeless Hadith authentic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. All hadiths on Timeless Hadith are sourced from the six major hadith collections (Kutub al-Sittah) including Sahih al-Bukhari, Sahih Muslim, Sunan Abu Dawud, Jami at-Tirmidhi, Sunan an-Nasa'i, and Sunan Ibn Majah."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I search hadiths by topic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Timeless Hadith allows you to browse and search hadiths by topic, category, and keyword — in both English and Arabic — making it easy to find relevant prophetic guidance on any subject."
+          }
+        }
+      ]
     }
-  }
+  ]
   </script>
 
   <style>
@@ -785,7 +839,7 @@
   <!-- ── Navigation ── -->
   <nav class="main-nav" aria-label="Main navigation">
     <a href="index.html" class="nav-logo" aria-label="Timeless Hadith — Home">
-      <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="48" /></picture>
+      <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="48" width="160" fetchpriority="high" decoding="async" /></picture>
     </a>
     <ul class="nav-links">
       <li><a href="categories.html">Browse</a></li>
