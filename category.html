@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -325,8 +325,8 @@
         </button>
       </li>
       <li id="nav-auth-item">
-        <button id="btn-login" onclick="TH_AUTH && TH_AUTH.showLoginModal('Sign in to save hadiths.')">Sign in</button>
-        <button id="btn-logout" onclick="TH_AUTH && TH_AUTH.logout()">Sign out</button>
+        <button id="btn-login" >Sign in</button>
+        <button id="btn-logout" >Sign out</button>
         <div id="nav-avatar-wrap" role="button" tabindex="0" aria-label="User account">
           <div class="nav-avatar"><img id="nav-avatar-img" src="" alt="" /><span id="nav-avatar-initial"></span></div>
         </div>
@@ -402,12 +402,12 @@
   <!-- ══ PAGINATION ══ -->
   <div class="pagination-wrap">
     <nav class="pagination" id="pagination" aria-label="Page navigation">
-      <button class="pagination-btn" id="btn-prev" onclick="changePage(-1)" aria-label="Previous page">
+      <button class="pagination-btn" id="btn-prev" aria-label="Previous page">
         <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         Previous
       </button>
       <div class="pagination-dots" id="pagination-dots" role="list"></div>
-      <button class="pagination-btn" id="btn-next" onclick="changePage(1)" aria-label="Next page">
+      <button class="pagination-btn" id="btn-next" aria-label="Next page">
         Next
         <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
       </button>

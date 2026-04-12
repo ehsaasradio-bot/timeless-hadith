@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +7,17 @@
   <meta name="description" content="View your saved hadiths on Timeless Hadith. Access your personal collection of bookmarked prophetic guidance." />
   <meta name="robots" content="noindex, nofollow" />
   <link rel="canonical" href="https://timelesshadith.com/bookmarks.html" />
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://timelesshadith.com/bookmarks.html" />
+  <meta property="og:title"       content="My Saved Hadiths — Timeless Hadith" />
+  <meta property="og:description" content="View your saved hadiths on Timeless Hadith. Access your personal collection of bookmarked prophetic guidance." />
+  <meta property="og:image"       content="https://timelesshadith.com/og-image.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="My Saved Hadiths — Timeless Hadith" />
+  <meta name="twitter:description" content="View your saved hadiths on Timeless Hadith. Access your personal collection of bookmarked prophetic guidance." />
+  <meta name="twitter:image"       content="https://timelesshadith.com/og-image.png" />
   <link rel="icon"             type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="icon"             type="image/png" sizes="16x16" href="favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180"              href="apple-touch-icon.png" />
@@ -47,8 +58,8 @@
         <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
       <div id="nav-auth-item">
-        <button id="btn-login" onclick="TH_AUTH&&TH_AUTH.showLoginModal('Sign in to view your bookmarks.')">Sign in</button>
-        <button id="btn-logout" onclick="TH_AUTH&&TH_AUTH.logout()">Sign out</button>
+        <button id="btn-login" >Sign in</button>
+        <button id="btn-logout" >Sign out</button>
         <div id="nav-avatar-wrap">
           <div class="nav-avatar" id="nav-avatar">
             <img id="nav-avatar-img" src="" alt="User avatar" />
@@ -85,7 +96,7 @@
           <h1>Saved Hadiths</h1>
           <p class="page-sub" id="page-sub">Sign in to save hadiths</p>
         </div>
-        <button class="btn-clear" id="btn-clear" onclick="confirmClearAll()">Clear all</button>
+        <button class="btn-clear" id="btn-clear" >Clear all</button>
       </div>
     </div>
   </header>
