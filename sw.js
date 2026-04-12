@@ -6,7 +6,7 @@
  *  - Skip: Supabase API calls, Cloudflare Insights, Google Fonts CSS (let browser handle)
  */
 
-const VERSION = 'th-v3-2026-04-11';
+const VERSION = 'th-v8-2026-04-11';
 const CORE_CACHE = `${VERSION}-core`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 

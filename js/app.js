@@ -209,6 +209,7 @@ const TH_AUTH = (() => {
       if (avatarWrap) avatarWrap.style.display = 'flex';
 
       if (avatarImg) {
+        avatarImg.alt = (user.name || 'User') + ' avatar';
         if (user.picture) {
           avatarImg.src = user.picture;
           avatarImg.style.display = 'block';
@@ -1015,11 +1016,50 @@ const TH_INTERACTIONS = (() => {
     TH_BOOKMARKS.init();
     TH_INTERACTIONS.initCards();
     TH_LIKES.syncPage();
+
+    /* ── Wire up auth nav buttons (replaces inline onclick attrs) ── */
+    var _btnLogin  = document.getElementById('btn-login');
+    var _btnLogout = document.getElementById('btn-logout');
+    if (_btnLogin)  _btnLogin.addEventListener('click',  function() {
+      if (window.TH_AUTH) TH_AUTH.showLoginModal('Sign in to bookmark your favourite hadiths.');
+    });
+    if (_btnLogout) _btnLogout.addEventListener('click', function() {
+      if (window.TH_AUTH) TH_AUTH.logout();
+    });
+
+    /* ── Wire up offline page reload button ── */
+    var _btnReload = document.getElementById('btn-reload');
+    if (_btnReload) _btnReload.addEventListener('click', function() { location.reload(); });
+
+    /* ── Wire up bookmarks clear-all button ── */
+    var _btnClear = document.getElementById('btn-clear');
+    if (_btnClear) _btnClear.addEventListener('click', function() {
+      if (typeof confirmClearAll === 'function') confirmClearAll();
+    });
+
+    /* ── Wire up categories.html search button (replaces dispatchEvent onclick) ── */
+    var _catSearchBtn = document.querySelector('.search-btn[aria-label="Search"]');
+    var _catSearch    = document.getElementById('cat-search');
+    if (_catSearchBtn && _catSearch) {
+      _catSearchBtn.addEventListener('click', function() {
+        _catSearch.dispatchEvent(new Event('input'));
+      });
+    }
+
+    /* ── Wire up pagination buttons (replaces onclick="changePage(...)") ── */
+    var _btnPrev = document.getElementById('btn-prev');
+    var _btnNext = document.getElementById('btn-next');
+    if (_btnPrev) _btnPrev.addEventListener('click', function() {
+      if (typeof changePage === 'function') changePage(-1);
+    });
+    if (_btnNext) _btnNext.addEventListener('click', function() {
+      if (typeof changePage === 'function') changePage(1);
+    });
   });
 })();
 
 /* ═══════════════════════════════════════════════════════════════════
-   GLOBAL CONVENIENCE  (called from inline HTML onclick)
+   GLOBAL CONVENIENCE  (called from inline HTML onclick — legacy)
 ═══════════════════════════════════════════════════════════════════ */
 
 // Google GIS global callback

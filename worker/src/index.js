@@ -183,6 +183,10 @@ function buildGroundedPrompt(question, matches) {
     source: m.source || 'Sahih al-Bukhari',
     content: m.content || '',
     preview: (m.content || '').slice(0, 220),
+    // Pass through metadata fields needed to build internal Timeless Hadith
+    // deep links (category.html?cat=book-<N>&h=<id>).
+    source_row_id: m?.metadata?.source_row_id || null,
+    book_number:   m?.metadata?.book_number   || null,
   }));
 
   const contextBlock = matches
