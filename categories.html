@@ -15,13 +15,38 @@
   <meta property="og:description" content="Browse all hadith topics and categories. Explore authentic sayings of Prophet Muhammad (PBUH) organized by theme — from faith and prayer to family and character." />
   <meta property="og:image"       content="https://timelesshadith.com/og-image.png" />
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Timeless Hadith",
-    "url": "https://timelesshadith.com/",
-    "description": "Browse all hadith topics and categories. Explore authentic sayings of Prophet Muhammad (PBUH)."
-  }
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Browse Hadith Topics — Timeless Hadith",
+      "url": "https://timelesshadith.com/categories.html",
+      "description": "Browse all hadith topics and categories. Explore authentic sayings of Prophet Muhammad (PBUH) organised by theme — from faith and prayer to family and character.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Timeless Hadith",
+        "url": "https://timelesshadith.com/"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://timelesshadith.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Browse Topics",
+          "item": "https://timelesshadith.com/categories.html"
+        }
+      ]
+    }
+  ]
   </script>
   <link rel="icon"             type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="icon"             type="image/png" sizes="16x16" href="favicon-16.png" />
@@ -31,7 +56,10 @@
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="dns-prefetch" href="https://dwcsledifvnyrunxejzd.supabase.co" />
+  <link rel="dns-prefetch" href="https://timeless-hadith-worker.ehsaasradio.workers.dev" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" />
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" />
 
   <!-- Theme initialiser — must run before paint -->
   <script src="js/theme-init.js"></script>
@@ -390,7 +418,7 @@
   <!-- ══ NAV ══ -->
   <nav class="main-nav" aria-label="Main navigation">
     <a href="index.html" class="nav-logo" aria-label="Timeless Hadith — Home">
-      <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="48" /></picture>
+      <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="48" width="160" fetchpriority="high" decoding="async" /></picture>
     </a>
     <ul class="nav-links">
       <li><a href="categories.html" class="active" aria-current="page">Browse</a></li>
