@@ -7,7 +7,7 @@
  *  - Fonts: self-hosted woff2 files precached with core assets
  */
 
-const VERSION = 'th-v10-2026-04-13';
+const VERSION = 'th-v11-2026-04-13';
 const CORE_CACHE = `${VERSION}-core`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -36,7 +36,9 @@ const CORE_ASSETS = [
   '/fonts/inter-latin.woff2',
   '/fonts/inter-latin-ext.woff2',
   '/fonts/cairoplay-arabic.woff2',
-  '/fonts/cairoplay-latin.woff2'
+  '/fonts/cairoplay-latin.woff2',
+  '/fonts/gulzar-arabic.woff2',
+  '/fonts/gulzar-latin.woff2'
 ];
 
 self.addEventListener('install', (event) => {
