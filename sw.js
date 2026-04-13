@@ -3,10 +3,11 @@
  * Strategy:
  *  - Precache: core shell (HTML, CSS, manifest, icons, offline page)
  *  - Runtime: stale-while-revalidate for same-origin GETs
- *  - Skip: Supabase API calls, Cloudflare Insights, Google Fonts CSS (let browser handle)
+ *  - Skip: Supabase API calls, Cloudflare Insights (let browser handle)
+ *  - Fonts: self-hosted woff2 files precached with core assets
  */
 
-const VERSION = 'th-v9-2026-04-13';
+const VERSION = 'th-v10-2026-04-13';
 const CORE_CACHE = `${VERSION}-core`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -31,7 +32,11 @@ const CORE_ASSETS = [
   '/icon-192.png',
   '/icon-512.png',
   '/timelesshadith-logo.png',
-  '/og-image.png'
+  '/og-image.png',
+  '/fonts/inter-latin.woff2',
+  '/fonts/inter-latin-ext.woff2',
+  '/fonts/cairoplay-arabic.woff2',
+  '/fonts/cairoplay-latin.woff2'
 ];
 
 self.addEventListener('install', (event) => {
@@ -66,9 +71,7 @@ self.addEventListener('fetch', (event) => {
   if (
     url.hostname.includes('supabase.co') ||
     url.hostname.includes('cloudflareinsights.com') ||
-    url.hostname.includes('accounts.google.com') ||
-    url.hostname.includes('fonts.googleapis.com') ||
-    url.hostname.includes('fonts.gstatic.com')
+    url.hostname.includes('accounts.google.com')
   ) {
     return;
   }
