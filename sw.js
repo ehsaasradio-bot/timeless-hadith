@@ -6,7 +6,7 @@
  *  - Skip: Supabase API calls, Cloudflare Insights, Google Fonts CSS (let browser handle)
  */
 
-const VERSION = 'th-v8-2026-04-11';
+const VERSION = 'th-v9-2026-04-13';
 const CORE_CACHE = `${VERSION}-core`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -62,11 +62,13 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(req.url);
 
-  // Skip cross-origin APIs we don't want to cache
+  // Skip cross-origin requests — let the browser handle them directly
   if (
     url.hostname.includes('supabase.co') ||
     url.hostname.includes('cloudflareinsights.com') ||
-    url.hostname.includes('accounts.google.com')
+    url.hostname.includes('accounts.google.com') ||
+    url.hostname.includes('fonts.googleapis.com') ||
+    url.hostname.includes('fonts.gstatic.com')
   ) {
     return;
   }
@@ -104,14 +106,6 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Cross-origin fonts (Google): cache-first
-  if (url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com')) {
-    event.respondWith(
-      caches.match(req).then((cached) => cached || fetch(req).then((res) => {
-        const copy = res.clone();
-        caches.open(RUNTIME_CACHE).then((c) => c.put(req, copy));
-        return res;
-      }))
-    );
-  }
+  // All other cross-origin requests: let browser handle
+
 });
