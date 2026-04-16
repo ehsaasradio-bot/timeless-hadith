@@ -48,7 +48,29 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="categories.html">Browse</a></li>
       <li><a href="bookmarks.html" class="active">Bookmarks<span class="bm-badge" id="nav-bm-badge" data-count="0" aria-label="bookmarks count"></span></a></li>
-      <li><a href="about.html">About</a></li>
+      
+    <!-- ── Nav Widgets: Makkah Time · Weather · Next Prayer ── -->
+    <div class="nav-widgets">
+      <div class="nav-widget" id="widget-time" title="Current time in Makkah al-Mukarramah">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <strong id="makkah-time">--:--</strong>
+      </div>
+      <span class="nav-sep"></span>
+      <div class="nav-widget" id="widget-weather" title="Local weather">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+        <span id="weather-val">…</span>
+      </div>
+      <span class="nav-sep"></span>
+      <div class="nav-widget" id="widget-prayer" title="Next prayer (your location)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span class="prayer-name" id="prayer-name">—</span>
+        <span class="prayer-time" id="prayer-time">—</span>
+      </div>
+      <div class="nav-divider"></div>
+    </div>
+    <li><a href="about.html">About</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="prayer-times.html">Prayer Times</a></li>
     </ul>
     <div style="display:flex;align-items:center;gap:16px;">
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -117,6 +139,8 @@
         <li><a href="categories.html">Browse</a></li>
         <li><a href="bookmarks.html">Bookmarks<span class="bm-badge" id="footer-bm-badge" data-count="0" aria-label="bookmarks count"></span></a></li>
         <li><a href="about.html">About</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="prayer-times.html">Prayer Times</a></li>
         <li><a href="privacy.html">Privacy</a></li>
         <li><a href="terms.html">Terms</a></li>
       </ul>
@@ -139,5 +163,6 @@
 
 
 <script defer src="js/urdu-toggle.js"></script>
+    <script src="js/nav-widgets.js" defer></script>
 </body>
 </html>
