@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Prayer Times & Zakat Calculator — Timeless Hadith</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Kufi+Arabic:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --font:"Inter",-apple-system,sans-serif;
+  --font-arabic:"Noto Kufi Arabic","Segoe UI Arabic",sans-serif;
+  --bg:#ffffff;
+  --surface:#f5f5f7;
+  --border:#e0e0e0;
+  --ink:#1d1d1f;
+  --muted:#6e6e73;
+  --nav-bg:rgba(255,255,255,0.85);
+  --accent:#4f72f8;
+  --accent2:#7c5ce6;
+  --radius:18px;
+  --card-shadow:0 2px 16px rgba(79,114,248,0.06),0 1px 3px rgba(0,0,0,0.05);
+}
+[data-theme="dark"] {
+  --bg:#060c1a; --surface:#0d1629;
+  --border:rgba(255,255,255,0.10); --ink:#f0f4ff;
+  --muted:#9aa9c7; --nav-bg:rgba(6,12,26,0.88);
+  --accent:#6b8bff; --accent2:#9c7aff;
+  --card-shadow:0 2px 16px rgba(0,0,0,0.4);
+}
+
+html { scroll-behavior:smooth; }
+body {
+  font-family:var(--font); color:var(--ink);
+  background:linear-gradient(150deg,#eef2ff 0%,#f8f8ff 45%,#f3eeff 100%) fixed;
+  min-height:100vh; padding-top:64px;
+  transition:background 0.35s ease,color 0.35s ease;
+}
+[data-theme="dark"] body {
+  background:#060c1a;
+}
+[data-theme="dark"] body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);
+  background-size:52px 52px;
+}
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200; height:64px;
+  background:var(--nav-bg);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 32px; transition:background 0.35s,border-color 0.35s;
+}
+.nav-logo { font-size:16px; font-weight:700; color:var(--ink); text-decoration:none; letter-spacing:-0.03em; display:flex; align-items:center; gap:8px; }
+.nav-logo-dot { width:8px; height:8px; border-radius:50%; background:var(--accent); }
+.nav-links { display:flex; gap:24px; list-style:none; }
+.nav-links a { font-size:14px; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.nav-links a:hover,.nav-links a.active { color:var(--ink); }
+.nav-right { display:flex; align-items:center; gap:10px; }
+.theme-toggle { width:42px; height:24px; border-radius:100px; background:var(--surface); border:1px solid var(--border); cursor:pointer; position:relative; transition:background 0.3s; }
+.theme-toggle::after { content:''; position:absolute; top:3px; left:3px; width:16px; height:16px; border-radius:50%; background:var(--ink); transition:transform 0.3s,background 0.3s; }
+[data-theme="dark"] .theme-toggle::after { transform:translateX(18px); background:#f0f4ff; }
+
+/* ── LAYOUT ── */
+.page { max-width:900px; margin:0 auto; padding:48px 24px 80px; position:relative; z-index:1; }
+
+.page-header { margin-bottom:48px; }
+.page-eyebrow { font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:10px; }
+.page-title { font-size:36px; font-weight:800; letter-spacing:-0.04em; line-height:1.15; color:var(--ink); margin-bottom:10px; }
+.page-sub { font-size:15px; color:var(--muted); line-height:1.7; max-width:520px; }
+
+/* ── GLASS CARD ── */
+.glass-card {
+  background:rgba(255,255,255,0.72);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid rgba(255,255,255,0.88);
+  border-radius:var(--radius);
+  box-shadow:var(--card-shadow);
+}
+[data-theme="dark"] .glass-card {
+  background:rgba(13,22,41,0.75);
+  border-color:rgba(255,255,255,0.08);
+  box-shadow:0 2px 16px rgba(0,0,0,0.4);
+}
+
+/* ── SCRIPTURE CARDS ROW ── */
+.scripture-row {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:16px; margin-bottom:48px;
+}
+@media(max-width:640px){ .scripture-row { grid-template-columns:1fr; } }
+
+.scripture-card {
+  padding:24px; display:flex; flex-direction:column;
+  border-top:3px solid transparent;
+  position:relative; overflow:hidden;
+}
+.scripture-card.hadith { border-top-color:var(--accent); }
+.scripture-card.quran  { border-top-color:var(--accent2); }
+
+.scripture-card::before {
+  content:''; position:absolute; top:0; right:0;
+  width:100px; height:100px; border-radius:50%;
+  filter:blur(40px); pointer-events:none; opacity:0.18;
+}
+.scripture-card.hadith::before { background:var(--accent); }
+.scripture-card.quran::before  { background:var(--accent2); }
+
+.sc-type {
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:10px; font-weight:700; letter-spacing:0.12em;
+  text-transform:uppercase; margin-bottom:14px;
+}
+.sc-type svg { opacity:0.8; }
+.hadith .sc-type { color:var(--accent); }
+.quran  .sc-type { color:var(--accent2); }
+
+.sc-arabic {
+  font-family:var(--font-arabic); font-size:1.05rem; font-weight:600;
+  direction:rtl; text-align:right; line-height:2.2;
+  color:var(--ink); margin-bottom:14px;
+  border-bottom:1px solid var(--border); padding-bottom:12px;
+}
+.sc-english {
+  font-size:13.5px; line-height:1.75; color:var(--ink);
+  flex:1; font-style:normal; margin-bottom:12px;
+}
+.sc-english em { color:var(--accent); font-style:normal; font-weight:600; }
+.quran .sc-english em { color:var(--accent2); }
+
+.sc-ref {
+  font-size:11px; font-weight:600; color:var(--muted);
+  border-top:1px solid var(--border); padding-top:10px;
+  margin-top:auto;
+}
+
+/* ── PRAYER TIMES TABLE ── */
+.section-title {
+  font-size:20px; font-weight:700; letter-spacing:-0.03em; color:var(--ink);
+  margin-bottom:20px; display:flex; align-items:center; gap:10px;
+  flex-wrap:nowrap;
+}
+.section-title .pill {
+  font-size:11px; font-weight:600; padding:5px 12px; border-radius:100px;
+  background:rgba(79,114,248,0.10); color:var(--accent);
+  border:1px solid rgba(79,114,248,0.22); letter-spacing:0.04em;
+  white-space:nowrap; flex-shrink:0;
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+}
+
+/* ── Prayer grid ── */
+.prayer-grid {
+  display:grid; grid-template-columns:repeat(6,1fr);
+  gap:12px; margin-bottom:48px;
+}
+@media(max-width:720px){ .prayer-grid { grid-template-columns:repeat(3,1fr); } }
+@media(max-width:420px){ .prayer-grid { grid-template-columns:repeat(2,1fr); } }
+
+/* Glass card — site theme */
+.prayer-card {
+  padding:22px 14px 18px;
+  border-radius:20px; text-align:center;
+  background:rgba(255,255,255,0.70);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border:1px solid rgba(255,255,255,0.88);
+  box-shadow:0 2px 16px rgba(79,114,248,0.06), 0 1px 3px rgba(0,0,0,0.04);
+  position:relative; overflow:hidden;
+  transition:transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  cursor:default;
+}
+[data-theme="dark"] .prayer-card {
+  background:rgba(13,22,41,0.72);
+  border-color:rgba(255,255,255,0.08);
+  box-shadow:0 2px 16px rgba(0,0,0,0.35);
+}
+.prayer-card:hover {
+  transform:translateY(-4px);
+  box-shadow:0 10px 32px rgba(79,114,248,0.10), 0 2px 8px rgba(0,0,0,0.06);
+}
+[data-theme="dark"] .prayer-card:hover {
+  box-shadow:0 10px 36px rgba(0,0,0,0.45);
+}
+
+/* Colour accent top bar per prayer */
+.prayer-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  border-radius:20px 20px 0 0;
+}
+.prayer-card[data-prayer="Fajr"]::before    { background:linear-gradient(90deg,#7c5ce6,#a29bfe); }
+.prayer-card[data-prayer="Sunrise"]::before { background:linear-gradient(90deg,#f9a825,#ffd54f); }
+.prayer-card[data-prayer="Dhuhr"]::before   { background:linear-gradient(90deg,#ff9800,#ffcc02); }
+.prayer-card[data-prayer="Asr"]::before     { background:linear-gradient(90deg,#00b09b,#43e97b); }
+.prayer-card[data-prayer="Maghrib"]::before { background:linear-gradient(90deg,#f7971e,#e84393); }
+.prayer-card[data-prayer="Isha"]::before    { background:linear-gradient(90deg,#4f72f8,#7c5ce6); }
+
+/* NEXT highlight */
+.prayer-card.next-prayer {
+  border-color:rgba(79,114,248,0.40) !important;
+  box-shadow:0 0 0 2px rgba(79,114,248,0.12),
+             0 8px 28px rgba(79,114,248,0.12) !important;
+}
+.next-badge {
+  display:none; position:absolute; top:10px; right:10px;
+  font-size:8px; font-weight:800; letter-spacing:0.10em;
+  color:#fff; background:var(--accent);
+  border-radius:100px; padding:2px 7px;
+}
+.prayer-card.next-prayer .next-badge { display:block; }
+.prayer-card.next-prayer .prayer-time-val { color:var(--accent); }
+.prayer-card.next-prayer .prayer-label { color:var(--accent); }
+
+/* Label */
+.prayer-label {
+  font-size:10px; font-weight:800; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--muted);
+  margin-bottom:10px; margin-top:6px;
+  transition:color 0.2s;
+}
+
+/* Time */
+.prayer-time-val {
+  font-size:19px; font-weight:700; color:var(--ink);
+  letter-spacing:-0.03em; line-height:1;
+  transition:color 0.2s;
+}
+.prayer-time-val.loading {
+  font-size:13px; color:var(--muted); font-weight:400;
+  animation:pulse-load 1.4s ease-in-out infinite;
+}
+@keyframes pulse-load { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+.location-bar {
+  display:flex; align-items:center; gap:8px; margin-bottom:20px;
+  font-size:13px; color:var(--muted);
+}
+.location-bar svg { flex-shrink:0; color:var(--accent); }
+#location-text { font-weight:500; color:var(--ink); }
+
+/* ── ZAKAT CALCULATOR ── */
+.zakat-card { padding:32px; margin-bottom:32px; }
+
+.zakat-header { margin-bottom:28px; }
+.zakat-title { font-size:20px; font-weight:700; letter-spacing:-0.03em; color:var(--ink); margin-bottom:6px; }
+.zakat-sub { font-size:13px; color:var(--muted); line-height:1.6; }
+
+.zakat-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px; }
+@media(max-width:560px){ .zakat-grid { grid-template-columns:1fr; } }
+
+/* Input group */
+.input-group { display:flex; flex-direction:column; gap:8px; }
+.input-label {
+  font-size:12px; font-weight:700; letter-spacing:0.08em;
+  text-transform:uppercase; color:var(--muted);
+}
+.input-wrap {
+  display:flex; align-items:center; gap:0;
+  background:rgba(255,255,255,0.85);
+  border:1.5px solid var(--border); border-radius:12px;
+  overflow:hidden; transition:border-color 0.2s;
+}
+[data-theme="dark"] .input-wrap {
+  background:rgba(255,255,255,0.05);
+  border-color:rgba(255,255,255,0.12);
+}
+.input-wrap:focus-within { border-color:var(--accent); }
+.input-prefix {
+  padding:0 14px; font-size:14px; font-weight:600;
+  color:var(--muted); background:rgba(79,114,248,0.06);
+  border-right:1.5px solid var(--border);
+  height:48px; display:flex; align-items:center; flex-shrink:0;
+  transition:background 0.2s;
+}
+[data-theme="dark"] .input-prefix { border-right-color:rgba(255,255,255,0.1); }
+.input-wrap:focus-within .input-prefix { color:var(--accent); background:rgba(79,114,248,0.10); }
+.input-field {
+  flex:1; height:48px; padding:0 16px;
+  font-size:16px; font-weight:600; font-family:var(--font);
+  color:var(--ink); background:transparent; border:none; outline:none;
+}
+
+/* Slider group (full-width) */
+.slider-group { grid-column:1/-1; display:flex; flex-direction:column; gap:10px; }
+.slider-top { display:flex; justify-content:space-between; align-items:baseline; }
+.slider-val { font-size:22px; font-weight:800; letter-spacing:-0.03em; color:var(--accent); }
+.slider-val span { font-size:14px; font-weight:500; color:var(--muted); }
+
+/* Custom range */
+input[type=range] {
+  -webkit-appearance:none; appearance:none;
+  width:100%; height:6px; border-radius:100px;
+  background:linear-gradient(to right, var(--accent) 0%, var(--accent) var(--pct,50%), rgba(79,114,248,0.15) var(--pct,50%), rgba(79,114,248,0.15) 100%);
+  outline:none; cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:22px; height:22px; border-radius:50%;
+  background:#fff; border:2.5px solid var(--accent);
+  box-shadow:0 2px 8px rgba(79,114,248,0.3);
+  cursor:pointer; transition:transform 0.15s;
+}
+input[type=range]::-webkit-slider-thumb:hover { transform:scale(1.15); }
+input[type=range]::-moz-range-thumb {
+  width:22px; height:22px; border-radius:50%; border:2.5px solid var(--accent);
+  background:#fff; box-shadow:0 2px 8px rgba(79,114,248,0.3); cursor:pointer;
+}
+
+/* Currency selector */
+.currency-tabs {
+  display:flex; gap:6px; margin-bottom:24px;
+}
+.curr-btn {
+  padding:7px 16px; border-radius:100px; font-size:13px; font-weight:600;
+  border:1.5px solid var(--border); background:transparent; color:var(--muted);
+  cursor:pointer; transition:all 0.2s;
+}
+.curr-btn.active {
+  background:var(--accent); color:#fff; border-color:var(--accent);
+}
+
+/* Result */
+.zakat-result {
+  background:linear-gradient(135deg,rgba(79,114,248,0.08),rgba(124,92,230,0.08));
+  border:1.5px solid rgba(79,114,248,0.20);
+  border-radius:14px; padding:24px 28px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:16px;
+}
+[data-theme="dark"] .zakat-result {
+  background:linear-gradient(135deg,rgba(79,114,248,0.12),rgba(124,92,230,0.12));
+  border-color:rgba(100,140,255,0.25);
+}
+.result-left {}
+.result-label { font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+.result-amount { font-size:34px; font-weight:800; letter-spacing:-0.04em; color:var(--accent); }
+.result-note { font-size:12px; color:var(--muted); margin-top:4px; }
+.result-badge {
+  padding:10px 20px; border-radius:100px; font-size:13px; font-weight:700;
+  border:1.5px solid rgba(79,114,248,0.3); color:var(--accent);
+  background:rgba(79,114,248,0.08);
+}
+
+/* Nisab info */
+.nisab-info {
+  display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;
+}
+.nisab-pill {
+  padding:6px 14px; border-radius:100px; font-size:12px; font-weight:600;
+  border:1px solid var(--border); color:var(--muted);
+  background:rgba(255,255,255,0.5);
+}
+[data-theme="dark"] .nisab-pill { background:rgba(255,255,255,0.06); }
+.nisab-pill strong { color:var(--ink); }
+.above-nisab { color:#34c759 !important; border-color:#34c759 !important; background:rgba(52,199,89,0.08) !important; }
+.below-nisab { color:#ff453a !important; border-color:#ff453a !important; background:rgba(255,69,58,0.08) !important; }
+
+/* Section divider */
+.divider { height:1px; background:var(--border); margin:40px 0; }
+
+/* Input label row with info icon */
+.input-label-row {
+  font-size:12px; font-weight:700; letter-spacing:0.08em;
+  text-transform:uppercase; color:var(--muted);
+  display:flex; align-items:center; gap:6px;
+}
+.info-icon {
+  position:relative; cursor:help; display:inline-flex; align-items:center;
+  color:var(--accent); opacity:0.65; transition:opacity 0.2s;
+  flex-shrink:0;
+}
+.info-icon:hover, .info-icon:focus { opacity:1; outline:none; }
+.info-tooltip {
+  display:none; position:absolute; bottom:calc(100% + 8px); left:50%;
+  transform:translateX(-50%); width:230px; padding:10px 14px;
+  background:rgba(10,15,35,0.94); color:#e8eeff;
+  font-size:11.5px; font-weight:400; line-height:1.65;
+  border-radius:10px; border:1px solid rgba(255,255,255,0.10);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  z-index:100; letter-spacing:0; text-transform:none;
+  box-shadow:0 6px 24px rgba(0,0,0,0.35);
+  pointer-events:none; white-space:normal;
+}
+.info-icon:hover .info-tooltip,
+.info-icon:focus .info-tooltip { display:block; }
+
+/* Live rate hint below gold/silver inputs */
+.input-rate-hint {
+  font-size:11.5px; color:var(--accent); opacity:0.75;
+  font-weight:500; min-height:18px; margin-top:-2px;
+  transition:opacity 0.3s;
+}
+.input-rate-hint.loading { opacity:0.35; color:var(--muted); }
+
+/* Disclaimer */
+.zakat-disclaimer {
+  display:flex; gap:16px; align-items:flex-start;
+  background:rgba(245,158,11,0.06);
+  border:1px solid rgba(245,158,11,0.22);
+  border-radius:14px; padding:20px 22px;
+  position:relative; z-index:1;
+}
+[data-theme="dark"] .zakat-disclaimer {
+  background:rgba(245,158,11,0.04);
+  border-color:rgba(245,158,11,0.16);
+}
+.disclaimer-icon { flex-shrink:0; color:#f59e0b; margin-top:2px; opacity:0.85; }
+.disclaimer-body { flex:1; }
+.disclaimer-title {
+  font-size:12.5px; font-weight:700; letter-spacing:0.05em;
+  text-transform:uppercase; color:#b45309;
+  margin-bottom:9px;
+}
+[data-theme="dark"] .disclaimer-title { color:#fbbf24; }
+.disclaimer-body p {
+  font-size:12.5px; line-height:1.72; color:var(--muted);
+  margin-bottom:8px;
+}
+.disclaimer-body p:last-child { margin-bottom:0; }
+
+@media(max-width:640px){
+  nav { padding:0 16px; }
+  .nav-links { display:none; }
+  .page { padding:32px 16px 60px; }
+  .page-title { font-size:26px; }
+  .info-tooltip { left:0; transform:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <a href="#" class="nav-logo"><span class="nav-logo-dot"></span>Timeless Hadith</a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Browse</a></li>
+    <li><a href="#">Blog</a></li>
+    <li><a href="#" class="active">Prayer Times</a></li>
+    <li><a href="#">Bookmarks</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"></button>
+  </div>
+</nav>
+
+<!-- ══ PAGE ══ -->
+<div class="page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="page-eyebrow">Prayer Times & Zakat</div>
+    <h1 class="page-title">Stay on time.<br>Give what is due.</h1>
+    <p class="page-sub">Live prayer times based on your location using the Umm al-Qura method. Zakat calculator with live gold/silver nisab.</p>
+  </div>
+
+  <!-- ══ PRAYER TIMES ══ -->
+  <div class="section-title">
+    Prayer Times
+    <span class="pill" id="method-pill">Umm al-Qura</span>
+  </div>
+
+  <div class="location-bar">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    <span id="location-text">Detecting your location…</span>
+  </div>
+
+  <div class="prayer-grid" id="prayer-grid">
+    <!-- Generated by JS -->
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══ SCRIPTURE CARDS ══ -->
+  <div class="scripture-row">
+
+    <!-- Hadith on Zakat -->
+    <div class="glass-card scripture-card hadith">
+      <div class="sc-type">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Hadith on Zakat
+      </div>
+      <div class="sc-arabic">إِنَّ اللَّهَ فَرَضَ عَلَيْهِمْ صَدَقَةً تُؤْخَذُ مِنْ أَغْنِيَائِهِمْ وَتُرَدُّ عَلَى فُقَرَائِهِمْ</div>
+      <div class="sc-english">
+        "Indeed, Allah has made Zakat obligatory upon them. It is to be taken from their <em>wealthy</em> and returned to their <em>poor</em>."
+      </div>
+      <div class="sc-ref">Sahih al-Bukhari 1395 · Narrated by Ibn Abbas (RA)</div>
+    </div>
+
+    <!-- Quran Verse on Zakat -->
+    <div class="glass-card scripture-card quran">
+      <div class="sc-type">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Quranic Verse
+      </div>
+      <div class="sc-arabic">وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَمَا تُقَدِّمُوا لِأَنفُسِكُم مِّنْ خَيْرٍ تَجِدُوهُ عِندَ اللَّهِ</div>
+      <div class="sc-english">
+        "And establish prayer and give <em>Zakat</em>, and whatever good you put forward for yourselves — you will find it with <em>Allah</em>."
+      </div>
+      <div class="sc-ref">Surah Al-Baqarah · Quran 2:110</div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══ ZAKAT CALCULATOR ══ -->
+  <div class="section-title">Zakat Calculator</div>
+
+  <div class="glass-card zakat-card">
+    <div class="zakat-header">
+      <div class="zakat-title">Calculate your Zakat</div>
+      <div class="zakat-sub">Zakat is obligatory at 2.5% of net zakatable wealth held above the nisab threshold for one full lunar year (hawl). Gold nisab: 85g · Silver nisab: 595g.</div>
+    </div>
+
+    <!-- Currency -->
+    <div class="currency-tabs">
+      <button class="curr-btn active" onclick="setCurrency(this,'$','USD')">$ USD</button>
+      <button class="curr-btn" onclick="setCurrency(this,'﷼','SAR')">﷼ SAR</button>
+      <button class="curr-btn" onclick="setCurrency(this,'£','GBP')">£ GBP</button>
+      <button class="curr-btn" onclick="setCurrency(this,'€','EUR')">€ EUR</button>
+      <button class="curr-btn" onclick="setCurrency(this,'₹','INR')">₹ INR</button>
+    </div>
+
+    <!-- Inputs + Sliders -->
+    <div class="zakat-grid">
+
+      <!-- Cash slider (full width) -->
+      <div class="input-group slider-group">
+        <div class="input-label">Cash &amp; Savings</div>
+        <div class="slider-top">
+          <span class="input-label" style="font-size:11px;opacity:0.7">Drag to set amount</span>
+          <span class="slider-val"><span id="curr-sym">$</span><span id="slider-display">10,000</span></span>
+        </div>
+        <input type="range" id="savings-slider" min="0" max="500000" step="500" value="10000"
+               oninput="onSlider(this)" style="--pct:2%"/>
+      </div>
+
+      <!-- Gold grams -->
+      <div class="input-group">
+        <div class="input-label-row">
+          Gold Owned (grams)
+          <span class="info-icon" tabindex="0" aria-label="Gold rate info">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span class="info-tooltip">Live gold price fetched daily (USD/troy oz via metals.live). 1 troy oz = 31.1035g. Value converted to your selected currency.</span>
+          </span>
+        </div>
+        <div class="input-wrap">
+          <span class="input-prefix" id="pfx-gold-g">g</span>
+          <input class="input-field" type="number" id="gold-grams" value="0" min="0" step="0.1" placeholder="0" oninput="calcZakat()"/>
+        </div>
+        <div class="input-rate-hint" id="gold-rate-hint">Loading live rate…</div>
+      </div>
+
+      <!-- Silver grams -->
+      <div class="input-group">
+        <div class="input-label-row">
+          Silver Owned (grams)
+          <span class="info-icon" tabindex="0" aria-label="Silver rate info">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span class="info-tooltip">Live silver price fetched daily (USD/troy oz via metals.live). 1 troy oz = 31.1035g. Value converted to your selected currency.</span>
+          </span>
+        </div>
+        <div class="input-wrap">
+          <span class="input-prefix" id="pfx-silver-g">g</span>
+          <input class="input-field" type="number" id="silver-grams" value="0" min="0" step="0.1" placeholder="0" oninput="calcZakat()"/>
+        </div>
+        <div class="input-rate-hint" id="silver-rate-hint">Loading live rate…</div>
+      </div>
+
+      <!-- Business / investments -->
+      <div class="input-group">
+        <div class="input-label-row">Business &amp; Investments</div>
+        <div class="input-wrap">
+          <span class="input-prefix" id="pfx-biz">$</span>
+          <input class="input-field" type="number" id="biz-val" value="0" min="0" placeholder="0" oninput="calcZakat()"/>
+        </div>
+      </div>
+
+      <!-- Debts -->
+      <div class="input-group">
+        <div class="input-label-row">Debts &amp; Liabilities</div>
+        <div class="input-wrap">
+          <span class="input-prefix" id="pfx-debt">− $</span>
+          <input class="input-field" type="number" id="debt-val" value="0" min="0" placeholder="0" oninput="calcZakat()"/>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Nisab info -->
+    <div class="nisab-info">
+      <div class="nisab-pill">Nisab · Gold (85g): <strong id="nisab-gold-val">Loading…</strong></div>
+      <div class="nisab-pill">Nisab · Silver (595g): <strong id="nisab-silver-val">Loading…</strong></div>
+      <div class="nisab-pill" id="nisab-status">Status: <strong>Calculating…</strong></div>
+    </div>
+
+    <!-- Divider -->
+    <div style="height:1px;background:var(--border);margin:24px 0;"></div>
+
+    <!-- Result -->
+    <div class="zakat-result">
+      <div class="result-left">
+        <div class="result-label">Zakat Due (2.5%)</div>
+        <div class="result-amount" id="zakat-result">$0.00</div>
+        <div class="result-note" id="zakat-note">Enter your assets to calculate</div>
+      </div>
+      <div class="result-badge" id="result-badge">2.5% of Net Zakatable Wealth</div>
+    </div>
+
+  </div>
+
+  <!-- ══ DISCLAIMER ══ -->
+  <div class="zakat-disclaimer">
+    <div class="disclaimer-icon">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <div class="disclaimer-body">
+      <div class="disclaimer-title">Important Notice</div>
+      <p>The figures presented by this calculator are intended solely as an indicative estimate to assist in your initial Zakat planning. They are based on live spot prices for gold and silver and widely accepted nisab thresholds (85g gold / 595g silver), in accordance with the scholarly consensus of the four major madhabs.</p>
+      <p>This tool does not constitute a fatwa, a formal Zakat assessment, or a substitute for qualified Islamic financial advice. The obligation of Zakat carries significant religious and legal weight, and its precise calculation — particularly with respect to the valuation of mixed assets, business inventory, agricultural produce, livestock, and outstanding debts — must be performed in strict accordance with established Islamic jurisprudence and under the guidance of a qualified scholar or certified Islamic finance authority.</p>
+      <p>Gold and silver spot prices are retrieved daily and are approximate. Currency conversion rates are indicative only. Timeless Hadith accepts no liability for reliance upon these figures.</p>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+/* ── Theme ── */
+var html = document.documentElement;
+function setTheme(t){ html.setAttribute('data-theme',t); localStorage.setItem('th_theme',t); }
+setTheme(localStorage.getItem('th_theme')||'light');
+document.getElementById('themeToggle').addEventListener('click',function(){
+  setTheme(html.getAttribute('data-theme')==='dark'?'light':'dark');
+});
+
+/* ── Prayer Times ── */
+var PRAYERS = ['Fajr','Sunrise','Dhuhr','Asr','Maghrib','Isha'];
+
+(function(){
+  var grid = document.getElementById('prayer-grid');
+  PRAYERS.forEach(function(p){
+    var div = document.createElement('div');
+    div.className = 'prayer-card';
+    div.id = 'pc-' + p;
+    div.setAttribute('data-prayer', p);
+    div.innerHTML =
+      '<span class="next-badge">NEXT</span>' +
+      '<div class="prayer-label">' + p + '</div>' +
+      '<div class="prayer-time-val loading" id="pt-' + p + '">—</div>';
+    grid.appendChild(div);
+  });
+})();
+
+function timeToMins(str){
+  var m=str.match(/(\d+):(\d+)/);
+  return m ? parseInt(m[1])*60+parseInt(m[2]) : 0;
+}
+function fmt12(str){
+  var m=str.match(/(\d+):(\d+)/);
+  if(!m) return str;
+  var h=parseInt(m[1]), min=m[2], ampm=h>=12?'pm':'am';
+  h=h%12||12;
+  return h+':'+min+' '+ampm;
+}
+
+function fetchPrayers(lat,lon,name){
+  if(name) document.getElementById('location-text').textContent=name;
+  var d=new Date();
+  var url='https://api.aladhan.com/v1/timings/'+
+    d.getDate()+'-'+(d.getMonth()+1)+'-'+d.getFullYear()+
+    '?latitude='+lat+'&longitude='+lon+'&method=4';
+  fetch(url)
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var t=data.data.timings;
+      var now=new Date(), nowM=now.getHours()*60+now.getMinutes();
+      var nextP=null;
+      PRAYERS.forEach(function(p){
+        if(!t[p]) return;
+        var el=document.getElementById('pt-'+p);
+        if(el){ el.textContent=fmt12(t[p]); el.classList.remove('loading'); }
+        var m=timeToMins(t[p]);
+        if(!nextP && m>nowM) nextP=p;
+      });
+      if(!nextP) nextP='Fajr';
+      var nc=document.getElementById('pc-'+nextP);
+      if(nc) nc.classList.add('next-prayer');
+    })
+    .catch(function(){
+      PRAYERS.forEach(function(p){
+        var el=document.getElementById('pt-'+p);
+        if(el){ el.textContent='—'; el.classList.remove('loading'); }
+      });
+      document.getElementById('location-text').textContent='Could not load prayer times';
+    });
+}
+
+if(navigator.geolocation){
+  navigator.geolocation.getCurrentPosition(
+    function(pos){
+      var lat=pos.coords.latitude, lon=pos.coords.longitude;
+      fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat='+lat+'&lon='+lon)
+        .then(function(r){return r.json();})
+        .then(function(d){
+          var city=d.address.city||d.address.town||d.address.village||'Your Location';
+          var country=d.address.country_code?d.address.country_code.toUpperCase():'';
+          fetchPrayers(lat,lon,city+(country?' · '+country:''));
+        })
+        .catch(function(){ fetchPrayers(lat,lon,'Your Location'); });
+    },
+    function(){ fetchPrayers(21.3891,39.8579,'Makkah al-Mukarramah · SA'); },
+    {timeout:8000}
+  );
+} else {
+  fetchPrayers(21.3891,39.8579,'Makkah al-Mukarramah · SA');
+}
+
+/* ── Zakat Calculator ── */
+var currency='$', currCode='USD';
+
+/* Islamic nisab thresholds */
+var NISAB_GOLD_G  = 85;    /* grams of gold  — scholarly consensus */
+var NISAB_SILVER_G = 595;  /* grams of silver — scholarly consensus */
+var TROY_OZ_TO_G  = 31.1035;
+
+/* Live spot prices in USD/troy oz — populated from metals.live */
+var goldSpotUSD   = 0;
+var silverSpotUSD = 0;
+var pricesLoaded  = false;
+
+/* Approximate FX rates (updated periodically) */
+var RATES = {USD:1, SAR:3.75, GBP:0.79, EUR:0.92, INR:83.5};
+
+function pricePerGram(spotOz){ return spotOz / TROY_OZ_TO_G; }
+
+function fmtCurrency(val){
+  return currency + val.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+/* Update the live rate hint labels under each input */
+function updateRateHints(){
+  var r = RATES[currCode] || 1;
+  var gph = document.getElementById('gold-rate-hint');
+  var sph = document.getElementById('silver-rate-hint');
+  if(goldSpotUSD > 0){
+    var gpg = pricePerGram(goldSpotUSD) * r;
+    gph.textContent = '~' + currency + gpg.toFixed(2) + ' per gram · live';
+    gph.classList.remove('loading');
+  } else {
+    gph.textContent = 'Fetching live rate…';
+    gph.classList.add('loading');
+  }
+  if(silverSpotUSD > 0){
+    var spg = pricePerGram(silverSpotUSD) * r;
+    sph.textContent = '~' + currency + spg.toFixed(2) + ' per gram · live';
+    sph.classList.remove('loading');
+  } else {
+    sph.textContent = 'Fetching live rate…';
+    sph.classList.add('loading');
+  }
+}
+
+/* Update the nisab pills with live values */
+function updateNisabDisplay(){
+  var r = RATES[currCode] || 1;
+  if(goldSpotUSD > 0){
+    var nisabGoldAmt = pricePerGram(goldSpotUSD) * r * NISAB_GOLD_G;
+    document.getElementById('nisab-gold-val').textContent =
+      currency + Math.round(nisabGoldAmt).toLocaleString();
+  }
+  if(silverSpotUSD > 0){
+    var nisabSilverAmt = pricePerGram(silverSpotUSD) * r * NISAB_SILVER_G;
+    document.getElementById('nisab-silver-val').textContent =
+      currency + Math.round(nisabSilverAmt).toLocaleString();
+  }
+}
+
+/* Fetch live gold & silver spot prices (free, no API key) */
+fetch('https://api.metals.live/v1/spot')
+  .then(function(res){ return res.json(); })
+  .then(function(arr){
+    if(Array.isArray(arr)){
+      arr.forEach(function(item){
+        if(item.gold)   goldSpotUSD   = parseFloat(item.gold);
+        if(item.silver) silverSpotUSD = parseFloat(item.silver);
+      });
+    }
+    pricesLoaded = true;
+    updateRateHints();
+    updateNisabDisplay();
+    calcZakat();
+  })
+  .catch(function(){
+    /* Graceful fallback — approximate current values */
+    goldSpotUSD   = 3300;
+    silverSpotUSD = 33;
+    pricesLoaded  = true;
+    updateNisabDisplay();
+    /* Mark hints as estimates */
+    var r = RATES[currCode] || 1;
+    var gh = document.getElementById('gold-rate-hint');
+    var sh = document.getElementById('silver-rate-hint');
+    if(gh){ gh.textContent = '~' + currency + (pricePerGram(goldSpotUSD)*r).toFixed(2) + ' per gram · est.'; gh.classList.remove('loading'); }
+    if(sh){ sh.textContent = '~' + currency + (pricePerGram(silverSpotUSD)*r).toFixed(2) + ' per gram · est.'; sh.classList.remove('loading'); }
+    calcZakat();
+  });
+
+function setCurrency(btn, sym, code){
+  currency = sym; currCode = code;
+  document.querySelectorAll('.curr-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('curr-sym').textContent = sym;
+  /* Only biz + debt prefixes change; gold/silver stay as "g" */
+  var pfxBiz  = document.getElementById('pfx-biz');
+  var pfxDebt = document.getElementById('pfx-debt');
+  if(pfxBiz)  pfxBiz.textContent  = sym;
+  if(pfxDebt) pfxDebt.textContent = '− ' + sym;
+  updateRateHints();
+  updateNisabDisplay();
+  updateSliderDisplay(document.getElementById('savings-slider').value);
+  calcZakat();
+}
+
+function onSlider(el){
+  var val = parseInt(el.value);
+  el.style.setProperty('--pct', (val/parseInt(el.max)*100) + '%');
+  updateSliderDisplay(val);
+  calcZakat();
+}
+function updateSliderDisplay(val){
+  document.getElementById('slider-display').textContent = Number(val).toLocaleString();
+}
+
+function calcZakat(){
+  var r = RATES[currCode] || 1;
+
+  /* Calculate live nisab values in selected currency */
+  var nisabGoldAmt   = pricePerGram(goldSpotUSD)   * r * NISAB_GOLD_G;
+  var nisabSilverAmt = pricePerGram(silverSpotUSD)  * r * NISAB_SILVER_G;
+  /* Scholarly majority: use the lower nisab (silver) — more inclusive for payers */
+  var nisab = pricesLoaded ? Math.min(nisabGoldAmt, nisabSilverAmt) : 0;
+
+  /* Read asset inputs */
+  var savings     = parseFloat(document.getElementById('savings-slider').value) || 0;
+  var goldGrams   = parseFloat(document.getElementById('gold-grams').value)     || 0;
+  var silverGrams = parseFloat(document.getElementById('silver-grams').value)   || 0;
+  var biz         = parseFloat(document.getElementById('biz-val').value)        || 0;
+  var debt        = parseFloat(document.getElementById('debt-val').value)       || 0;
+
+  /* Convert grams to currency value */
+  var goldVal   = goldGrams   * pricePerGram(goldSpotUSD)   * r;
+  var silverVal = silverGrams * pricePerGram(silverSpotUSD) * r;
+
+  var total = savings + goldVal + silverVal + biz - debt;
+  var zakat = (pricesLoaded && nisab > 0 && total >= nisab) ? total * 0.025 : 0;
+
+  /* Update result display */
+  document.getElementById('zakat-result').textContent =
+    currency + (zakat > 0
+      ? zakat.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})
+      : '0.00');
+
+  var statusEl = document.getElementById('nisab-status');
+  var badge    = document.getElementById('result-badge');
+  var note     = document.getElementById('zakat-note');
+
+  if(!pricesLoaded){
+    statusEl.className = 'nisab-pill';
+    statusEl.innerHTML = 'Status: <strong>Loading prices…</strong>';
+    note.textContent   = 'Fetching live gold and silver prices';
+    badge.textContent  = '2.5% of Net Zakatable Wealth';
+  } else if(total <= 0){
+    statusEl.className = 'nisab-pill';
+    statusEl.innerHTML = 'Status: <strong>Enter your assets</strong>';
+    note.textContent   = 'Enter your assets to calculate';
+    badge.textContent  = '2.5% of Net Zakatable Wealth';
+  } else if(total >= nisab){
+    statusEl.className = 'nisab-pill above-nisab';
+    statusEl.innerHTML = 'Zakat is <strong>due</strong> on ' +
+      currency + total.toLocaleString('en-US',{maximumFractionDigits:0});
+    note.textContent  = 'Held for one lunar year · 2.5% of ' +
+      currency + total.toLocaleString('en-US',{maximumFractionDigits:0}) + ' net wealth';
+    badge.textContent = 'Alhamdulillah — Pay Zakat';
+  } else {
+    statusEl.className = 'nisab-pill below-nisab';
+    statusEl.innerHTML = 'Below nisab — Zakat <strong>not required</strong>';
+    note.textContent   = 'Your net wealth is below the nisab threshold';
+    badge.textContent  = 'Below Nisab';
+  }
+}
+
+/* Init */
+calcZakat();
+</script>
+</body>
+</html>
