@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Early theme: prevents flash of wrong theme on load -->
+  <script src="js/theme-init.js"></script>
+  <title>Timeless Hadith — Prophetic Guidance for Every Heart</title>
+  <meta name="description" content="Authentic, searchable hadiths from Prophet Muhammad (PBUH). Explore timeless guidance by topic, beautifully organised." />
+  <link rel="canonical" href="https://timelesshadith.com/" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#060c1a" media="(prefers-color-scheme: dark)" />
+  <meta name="color-scheme" content="light dark" />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://timelesshadith.com/" />
+  <meta property="og:title"       content="Timeless Hadith — Prophetic Guidance for Every Heart" />
+  <meta property="og:description" content="Authentic, searchable hadiths from Prophet Muhammad (PBUH). Explore timeless guidance by topic, beautifully organised." />
+  <meta property="og:image"       content="https://timelesshadith.com/og-image.png" />
+  <meta property="og:site_name"   content="Timeless Hadith" />
+  <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Timeless Hadith — Prophetic Guidance for Every Heart" />
+  <meta name="twitter:description" content="Authentic, searchable hadiths from Prophet Muhammad (PBUH). Explore timeless guidance by topic, beautifully organised." />
+  <meta name="twitter:image"       content="https://timelesshadith.com/og-image.png" />
+  <link rel="icon"             type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon"             type="image/png" sizes="16x16" href="favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180"              href="apple-touch-icon.png" />
+  <link rel="manifest"         href="manifest.json" />
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <!-- Fonts: self-hosted (Inter + Noto Kufi Arabic) via @font-face in styles.css -->
+  <link rel="dns-prefetch" href="https://dwcsledifvnyrunxejzd.supabase.co" />
+  <link rel="dns-prefetch" href="https://timeless-hadith-worker.ehsaasradio.workers.dev" />
+  <!-- CSP is enforced via _headers file on Cloudflare Pages (removed meta tag to avoid double-enforcement conflicts) -->
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Timeless Hadith",
+      "url": "https://timelesshadith.com/",
+      "description": "Authentic, searchable hadiths from Prophet Muhammad (PBUH).",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://timelesshadith.com/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Timeless Hadith",
+      "url": "https://timelesshadith.com/",
+      "logo": "https://timelesshadith.com/timelesshadith-logo.png",
+      "description": "A free Islamic reference platform offering authentic, searchable hadiths from Prophet Muhammad (peace be upon him).",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "availableLanguage": ["English", "Arabic"]
+      },
+      "sameAs": ["https://timelesshadith.com/"]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Timeless Hadith?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Timeless Hadith is a free Islamic reference platform providing thousands of authentic hadiths — prophetic sayings of Prophet Muhammad (peace be upon him) — organised by topic and searchable in English and Arabic."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are the hadiths on Timeless Hadith authentic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. All hadiths on Timeless Hadith are sourced from the six major hadith collections (Kutub al-Sittah) including Sahih al-Bukhari, Sahih Muslim, Sunan Abu Dawud, Jami at-Tirmidhi, Sunan an-Nasa'i, and Sunan Ibn Majah."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I search hadiths by topic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Timeless Hadith allows you to browse and search hadiths by topic, category, and keyword — in both English and Arabic — making it easy to find relevant prophetic guidance on any subject."
+          }
+        }
+      ]
+    }
+  ]
+  </script>
+
+  <!-- Page styles moved to css/styles.css for cacheability -->
+  <style>/* Page styles in css/styles.css for cacheability — this block intentionally left empty */
+    .hero { text-align: center; }
+    .hero h1 {
+      font-size: clamp(28px, 4.5vw, 52px);
+      font-weight: 700; line-height: 1.08;
+      letter-spacing: -0.04em; color: var(--ink);
+      max-width: 860px; margin: 0 auto 14px;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero .hero-sub {
+      font-size: clamp(15px, 1.6vw, 18px);
+      font-weight: 400; color: var(--muted);
+      max-width: 540px; line-height: 1.6;
+      letter-spacing: -0.01em; margin: 0 auto 28px;
+    }
+    .hero-actions {
+      display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 28px;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 26px; background: var(--accent); color: #fff;
+      border-radius: 100px; font-size: 15px; font-weight: 500;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 26px; background: var(--surface); color: var(--ink);
+      border-radius: 100px; font-size: 15px; font-weight: 500;
+      text-decoration: none; border: 1px solid var(--border); cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .btn-secondary:hover { background: var(--surface2); border-color: var(--ink); transform: translateY(-1px); }
+
+    /* Dark mode: unify hero action buttons.
+       Browse Topics (btn-primary) should match Daily Hadith (btn-secondary)
+       visually in dark mode — subtle surface + border, no solid accent fill. */
+    [data-theme="dark"] .hero-actions .btn-primary {
+      background: var(--surface);
+      color: var(--ink);
+      border: 1px solid var(--border);
+    }
+    [data-theme="dark"] .hero-actions .btn-primary:hover {
+      background: var(--surface2);
+      border-color: var(--ink);
+      transform: translateY(-1px);
+    }
+
+    /* ── Search ── */
+    .search-wrap {
+      position: relative; width: 100%;
+      max-width: 580px; margin-top: 0;
+    }
+    .search-bar {
+      display: flex; align-items: center;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 100px; padding: 6px 6px 6px 20px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.35s ease;
+    }
+    .search-bar:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(var(--accent-raw),0.12);
+    }
+    [data-theme="dark"] .search-bar:focus-within {
+      box-shadow: 0 0 0 3px rgba(var(--accent-raw),0.18);
+    }
+    .search-icon {
+      flex-shrink: 0; width: 16px; height: 16px;
+      stroke: var(--muted); fill: none; stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
+      margin-right: 10px; transition: stroke 0.2s ease;
+    }
+    .search-bar:focus-within .search-icon { stroke: var(--accent); }
+    .search-input {
+      flex: 1; border: none; background: transparent;
+      font-family: var(--font); font-size: 14px; font-weight: 400;
+      color: var(--ink); letter-spacing: -0.1px; outline: none; min-width: 0; padding: 6px 0;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-btn {
+      flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 18px; background: var(--accent); color: #fff;
+      border: none; border-radius: 100px; font-family: var(--font);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      letter-spacing: -0.1px; transition: opacity 0.2s ease, background 0.35s ease, color 0.35s ease;
+      min-height: 40px;
+    }
+    .search-btn:hover { opacity: 0.75; }
+    .search-btn svg {
+      width: 13px; height: 13px; stroke: #fff; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.35s ease;
+    }
+    /* Search dropdown */
+    .search-dropdown {
+      position: absolute; top: calc(100% + 8px);
+      left: 0; right: 0; background: var(--bg);
+      border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      display: none; z-index: 50;
+      transition: background 0.35s ease, border-color 0.35s ease;
+    }
+    .search-dropdown.open { display: block; }
+    .dropdown-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 13px 16px; font-size: 13px; font-weight: 400;
+      color: var(--muted); cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+      border: none; background: transparent; width: 100%;
+      text-align: left; font-family: var(--font); letter-spacing: -0.1px; min-height: 44px;
+    }
+    .dropdown-item:hover, .dropdown-item.active { background: var(--surface); color: var(--ink); }
+    .dropdown-item svg {
+      width: 13px; height: 13px; stroke: var(--muted); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0;
+    }
+    .dropdown-item:hover svg, .dropdown-item.active svg { stroke: var(--accent); }
+    .dropdown-empty { padding: 14px 16px; font-size: 13px; color: var(--muted); text-align: center; }
+
+    /* ── Topics Section (formerly inline "Most Viewed") ── */
+    .topics-section {
+      max-width: 1100px; margin: 56px auto 0; padding: 0 40px;
+    }
+    .topics-section .section-label { margin-bottom: 16px; text-align: left; }
+    .most-viewed {
+      display: flex; align-items: center; gap: 8px;
+      width: 100%;
+    }
+    .mv-arrow {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      border: 1px solid var(--border); background: var(--bg); color: var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+    }
+    .mv-arrow:hover { background: var(--surface); border-color: var(--ink); }
+    .mv-arrow:disabled { opacity: 0.3; cursor: default; }
+    .mv-arrow svg { width: 12px; height: 12px; stroke: var(--ink); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.35s ease; }
+    .most-viewed-tags {
+      display: flex; flex-wrap: nowrap; gap: 6px;
+      overflow-x: auto; scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .most-viewed-tags::-webkit-scrollbar { display: none; }
+    .tag {
+      display: inline-flex; align-items: center; white-space: nowrap;
+      flex-shrink: 0; padding: 7px 14px; min-height: 36px;
+      background: transparent; border: 1px solid var(--border);
+      border-radius: 100px; font-size: 13px; font-weight: 400;
+      color: var(--muted); text-decoration: none; letter-spacing: -0.1px;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+    .tag:hover { border-color: var(--ink); color: var(--ink); background: var(--surface); }
+    .tag.active { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-raw),0.06); }
+    [data-theme="dark"] .tag.active { background: rgba(var(--accent-raw),0.1); }
+
+    /* ── Section Divider ── */
+    .section-divider {
+      width: 100%; max-width: 1100px;
+      margin: 0 auto; height: 1px;
+      background: var(--border); transition: background 0.35s ease;
+    }
+
+    /* ── Featured Hadith Section — Two-Card Glass Layout ── */
+    .featured-section {
+      max-width: 1100px; margin: 56px auto;
+      padding: 0 40px;
+    }
+    .section-label {
+      font-size: 12px; font-weight: 600; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 24px;
+    }
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    /* Glass card base */
+    .glass-card {
+      position: relative;
+      border-radius: 24px;
+      padding: 32px 28px 28px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: rgba(var(--accent-raw), 0.03);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
+      border: 1px solid rgba(var(--accent-raw), 0.10);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    [data-theme="dark"] .glass-card {
+      background: rgba(13,22,41,0.60);
+      border: 1px solid rgba(var(--accent-raw), 0.16);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    .glass-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(var(--accent-raw), 0.10), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    [data-theme="dark"] .glass-card:hover {
+      box-shadow: 0 16px 48px rgba(var(--accent-raw), 0.14), inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    /* Decorative glow orb */
+    .glass-card::before {
+      content: "";
+      position: absolute; width: 180px; height: 180px;
+      border-radius: 50%; filter: blur(72px);
+      opacity: 0.13; pointer-events: none; z-index: 0;
+    }
+    .glass-card.card-daily::before  { top: -50px; left: -30px; background: var(--accent); }
+    .glass-card.card-popular::before { bottom: -50px; right: -30px; background: var(--accent-2); }
+    /* Quotation watermark */
+    .glass-card::after {
+      content: "\201C";
+      position: absolute; top: -14px; left: 18px;
+      font-size: 100px; font-weight: 700; line-height: 1;
+      color: var(--accent); opacity: 0.07;
+      font-family: Georgia, serif; pointer-events: none; z-index: 0;
+    }
+    /* Shimmer top edge */
+    .glass-shimmer {
+      position: absolute; top: 0; left: 0; right: 0; height: 1px; z-index: 2;
+      background: linear-gradient(90deg,
+        transparent 0%, rgba(var(--accent-raw),.28) 25%,
+        rgba(var(--accent-2-raw),.36) 50%,
+        rgba(var(--accent-raw),.28) 75%, transparent 100%);
+      background-size: 200% 100%;
+      animation: fh-shimmer 4s ease-in-out infinite;
+    }
+    @keyframes fh-shimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position:  200% 0; }
+    }
+    /* Card header row */
+    .fc-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px; position: relative; z-index: 1;
+    }
+    .fc-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 13px; border-radius: 100px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+    .fc-badge svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .card-daily .fc-badge {
+      background: rgba(var(--accent-raw),.10); color: var(--accent);
+      border: 1px solid rgba(var(--accent-raw),.18);
+    }
+    .card-popular .fc-badge {
+      background: rgba(var(--accent-2-raw),.10); color: var(--accent-2);
+      border: 1px solid rgba(var(--accent-2-raw),.18);
+    }
+    .fc-date { font-size: 11px; color: var(--muted); font-weight: 500; opacity: .75; }
+    /* Read-count balloon */
+    .fc-reads {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      color: #fff; padding: 5px 13px; border-radius: 100px;
+      font-size: 12px; font-weight: 700;
+      box-shadow: 0 4px 14px rgba(var(--accent-2-raw),.32);
+      animation: fc-pulse 2.6s ease-in-out infinite;
+    }
+    .fc-reads svg { width: 12px; height: 12px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    @keyframes fc-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+    /* Title */
+    .fc-title {
+      font-size: 15px; font-weight: 700; color: var(--ink);
+      margin-bottom: 12px; position: relative; z-index: 1; line-height: 1.45;
+    }
+    /* English text */
+    .fc-text {
+      font-size: 17px; font-weight: 400; color: var(--ink);
+      line-height: 1.7; letter-spacing: -.01em;
+      margin-bottom: 14px; position: relative; z-index: 1; opacity: .92;
+    }
+    /* Arabic */
+    .fc-arabic {
+      font-family: var(--font-arabic, 'Noto Kufi Arabic'), sans-serif;
+      font-size: 1.15rem; font-weight: 600; color: var(--ink);
+      direction: rtl; text-align: right;
+      line-height: 2.1; margin-bottom: 14px;
+      position: relative; z-index: 1; opacity: .88;
+    }
+    /* Meta row */
+    .fc-meta {
+      font-size: 12.5px; color: var(--muted); font-weight: 500; line-height: 1.5;
+      position: relative; z-index: 1;
+      border-top: 1px solid rgba(var(--accent-raw),.08); padding-top: 14px;
+    }
+    .fc-meta .fc-source { color: var(--accent); font-weight: 600; }
+    .fc-cat {
+      display: inline-block; margin-top: 7px;
+      padding: 3px 10px; border-radius: 100px;
+      font-size: 11px; font-weight: 600; letter-spacing: .3px;
+      background: rgba(var(--accent-raw),.08); color: var(--accent);
+    }
+    /* Share buttons (kept for modal integration) */
+    .hadith-share-btns { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .share-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 18px; border-radius: 100px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      transition: all 0.2s ease; font-family: var(--font); letter-spacing: -0.1px;
+      border: 1px solid var(--border); background: var(--bg); color: var(--ink);
+    }
+    .share-btn:hover { background: var(--surface2); border-color: var(--ink); transform: translateY(-1px); }
+    .share-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .share-btn.as-image { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .share-btn.as-image:hover { opacity: 0.8; }
+    [data-theme="dark"] .share-btn.as-image { background: var(--accent); color: #fff; }
+    /* Mobile: stack vertically */
+    @media (max-width: 680px) {
+      .featured-grid { grid-template-columns: 1fr; gap: 18px; }
+      .featured-section { padding: 0 20px; }
+      .glass-card { padding: 26px 22px 24px; }
+    }
+
+    /* ── Categories Section ── */
+    .cards-section {
+      padding: 48px 40px 80px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .categories-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .category-filters {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .filter-pill {
+      display: inline-flex; align-items: center;
+      padding: 6px 14px; border-radius: 100px;
+      font-size: 13px; font-weight: 400;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--muted); cursor: pointer; font-family: var(--font);
+      transition: all 0.2s ease;
+    }
+    .filter-pill:hover, .filter-pill.active { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-raw),0.06); }
+    [data-theme="dark"] .filter-pill.active { background: rgba(var(--accent-raw),0.1); }
+
+    /* ── Cards Grid ── */
+    .carousel-wrap { position: relative; }
+    .cards-track {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px; transition: opacity 0.3s ease;
+      align-items: stretch;
+    }
+    .cards-track.fading { opacity: 0; }
+
+    .card {
+      background: var(--surface); border-radius: 20px;
+      padding: 28px 28px 80px;
+      display: flex; flex-direction: column; position: relative;
+      transition: box-shadow 0.25s ease, transform 0.25s ease, background 0.35s ease;
+      cursor: pointer; overflow: hidden;
+    }
+    .card::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 60%, rgba(0,0,0,0.02));
+      border-radius: 20px; pointer-events: none;
+    }
+    [data-theme="dark"] .card::after { background: linear-gradient(135deg, transparent 60%, rgba(255,255,255,0.01)); }
+    .card:hover {
+      box-shadow: var(--card-shadow-hover);
+      transform: translateY(-4px) scale(1.005);
+    }
+    .card-category {
+      font-size: 13px; font-weight: 500; color: var(--accent);
+      letter-spacing: -0.1px; margin-bottom: 8px; transition: color 0.35s ease;
+    }
+    .card h3 {
+      font-size: 20px; font-weight: 700; letter-spacing: -0.4px;
+      color: var(--ink); line-height: 1.25; margin-bottom: 10px;
+    }
+    .card .card-desc {
+      font-size: 13px; font-weight: 400; color: var(--muted);
+      line-height: 1.6; letter-spacing: -0.1px; margin-bottom: 14px;
+    }
+    /* Subcategories */
+    .subcategories {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;
+    }
+    .subcat {
+      display: inline-flex; align-items: center;
+      padding: 4px 10px; border-radius: 100px;
+      font-size: 11px; font-weight: 500;
+      background: var(--surface2); color: var(--muted);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease; white-space: nowrap;
+    }
+    .subcat:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    [data-theme="dark"] .subcat:hover { background: var(--accent); }
+
+    /* Card arrow button */
+    .card-plus {
+      position: absolute; bottom: 24px; right: 24px;
+      width: 44px; height: 44px; background: var(--accent);
+      color: #fff; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.35s ease, color 0.35s ease;
+    }
+    .card-plus svg {
+      width: 16px; height: 16px; stroke: #fff; fill: none;
+      stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.35s ease, transform 0.2s ease;
+    }
+    .card-plus:hover { transform: scale(1.1); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+    .card-plus:hover svg { transform: translateX(2px); }
+    [data-theme="dark"] .card-plus:hover { box-shadow: 0 4px 16px rgba(255,255,255,0.1); }
+
+    /* Carousel nav */
+    .carousel-nav {
+      display: flex; align-items: center; justify-content: space-between; margin-top: 28px;
+    }
+    .carousel-dots { display: flex; gap: 6px; }
+    .carousel-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--border); transition: background 0.2s ease, transform 0.2s ease; cursor: pointer;
+    }
+    .carousel-dot.active { background: var(--accent); transform: scale(1.3); }
+    .carousel-btns { display: flex; gap: 8px; }
+    .carousel-btn {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1px solid var(--border); background: var(--bg); color: var(--ink);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease; font-family: var(--font);
+    }
+    .carousel-btn:hover:not(:disabled) { background: var(--surface); border-color: var(--ink); }
+    .carousel-btn:disabled { opacity: 0.3; cursor: default; }
+    .carousel-btn svg {
+      width: 16px; height: 16px; stroke: var(--ink); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.35s ease;
+    }
+
+    /* ── Share Modal ── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--bg); border-radius: 24px;
+      padding: 36px; max-width: 540px; width: 100%;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.25);
+      transform: scale(0.95) translateY(12px);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), background 0.35s ease;
+    }
+    .modal-overlay.open .modal { transform: scale(1) translateY(0); }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .modal-title {
+      font-size: 17px; font-weight: 600; color: var(--ink); letter-spacing: -0.3px;
+    }
+    .modal-close {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--surface); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .modal-close:hover { background: var(--surface2); transform: rotate(90deg); }
+    .modal-close svg { width: 14px; height: 14px; stroke: var(--muted); fill: none; stroke-width: 2.5; stroke-linecap: round; }
+
+    .modal-hadith-preview {
+      background: var(--surface); border-radius: 16px;
+      padding: 24px; margin-bottom: 24px;
+      transition: background 0.35s ease;
+    }
+    .modal-hadith-arabic {
+      font-size: 18px; font-weight: 600; color: var(--ink);
+      direction: rtl; text-align: right; line-height: 1.8;
+      margin-bottom: 12px;
+    }
+    .modal-hadith-text {
+      font-size: 17px; color: var(--ink); line-height: 1.65; font-style: normal;
+      margin-bottom: 8px;
+    }
+    .modal-hadith-meta {
+      font-size: 12px; color: var(--muted); font-weight: 500;
+    }
+    .modal-share-options {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .share-option {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px; padding: 20px 16px; border-radius: 16px;
+      background: var(--surface); border: 1.5px solid var(--border);
+      cursor: pointer; transition: all 0.2s ease;
+      font-family: var(--font); font-size: 14px; font-weight: 500;
+      color: var(--ink);
+    }
+    .share-option:hover { border-color: var(--accent); background: var(--surface2); transform: translateY(-2px); }
+    .share-option svg { width: 24px; height: 24px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .share-option span { font-size: 12px; color: var(--muted); font-weight: 400; text-align: center; }
+
+    /* canvas for image generation */
+    #shareCanvas { display: none; }
+
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .cards-track { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 680px) {
+      .hero { padding: 76px 20px 40px; text-align: center; }
+      .hero h1 { letter-spacing: -0.03em; }
+      .search-btn-label { display: none; }
+      .cards-section { padding: 0 20px 56px; }
+      .topics-section { padding: 0 20px; margin: 40px auto 0; }
+      .featured-section { padding: 0 20px; margin: 40px auto; }
+      .cards-track { grid-template-columns: 1fr; }
+      .section-divider { margin: 0 20px; width: auto; }
+      .modal-share-options { grid-template-columns: 1fr 1fr; }
+      .featured-hadith-card { padding: 28px 24px; }
+      .hero-actions { flex-direction: column; width: 100%; }
+      .ai-search-card { padding: 18px 16px 20px; }
+      .ai-search-input { font-size: 15px; }
+      .ai-send-btn { width: 40px; height: 40px; }
+      .ai-examples { gap: 8px; }
+      .ai-example { font-size: 12.5px; padding: 9px 14px; }
+      .hero-mark img { width: 48px; height: 48px; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       Animated Hero Mark (favicon above title)
+       ═══════════════════════════════════════════════════════════════ */
+    .hero-mark {
+      display: flex; justify-content: center; align-items: center;
+      margin-bottom: 22px;
+      filter: drop-shadow(0 6px 24px rgba(var(--accent-raw), 0.35));
+    }
+    .hero-mark img {
+      width: 56px; height: 56px;
+      animation:
+        hero-mark-float 3.6s ease-in-out infinite,
+        hero-mark-glow  3.6s ease-in-out infinite;
+      transform-origin: center;
+      will-change: transform, filter;
+    }
+    @keyframes hero-mark-float {
+      0%, 100% { transform: translateY(0) rotate(-0.5deg); }
+      50%      { transform: translateY(-7px) rotate(0.5deg); }
+    }
+    @keyframes hero-mark-glow {
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(var(--accent-raw), 0.28)); }
+      50%      { filter: drop-shadow(0 0 22px rgba(var(--accent-raw), 0.55)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-mark img { animation: none; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       AI Search Card (replaces keyword search)
+       ═══════════════════════════════════════════════════════════════ */
+    .ai-search-card {
+      width: 100%;
+      max-width: 720px;
+      margin: 6px auto 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 22px 22px 26px;
+      box-shadow: var(--card-shadow);
+      transition:
+        background 0.35s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.2s ease;
+    }
+    .ai-search-card:focus-within {
+      border-color: rgba(var(--accent-raw), 0.45);
+      box-shadow:
+        0 0 0 4px rgba(var(--accent-raw), 0.12),
+        0 18px 48px -16px rgba(var(--accent-raw), 0.35);
+      transform: translateY(-1px);
+    }
+    .ai-search-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 6px 4px 6px 6px;
+    }
+    .ai-sparkle {
+      flex-shrink: 0;
+      width: 22px; height: 22px;
+      overflow: visible;
+      filter: drop-shadow(0 0 8px rgba(var(--accent-raw), 0.35));
+      animation: ai-sparkle-pulse 2.8s ease-in-out infinite;
+    }
+    .ai-sparkle path,
+    .ai-sparkle circle {
+      fill: url(#aiSparkleGradient);
+    }
+    @keyframes ai-sparkle-pulse {
+      0%, 100% { opacity: 0.9; transform: scale(1); }
+      50%      { opacity: 1;   transform: scale(1.08); }
+    }
+    .ai-search-input {
+      flex: 1;
+      border: none; background: transparent;
+      font-family: var(--font);
+      font-size: 16px; font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -0.1px;
+      outline: none;
+      min-width: 0;
+      padding: 14px 0;
+    }
+    .ai-search-input::placeholder { color: var(--muted); }
+    .ai-send-btn {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      border: none; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+      color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 18px -4px rgba(var(--accent-raw), 0.55);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+    .ai-send-btn:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 12px 28px -6px rgba(var(--accent-raw), 0.65);
+    }
+    .ai-send-btn:active { transform: translateY(0) scale(0.98); }
+    .ai-send-btn svg {
+      width: 18px; height: 18px;
+      stroke: #fff; fill: none;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .ai-examples-label {
+      display: block;
+      margin: 26px 0 12px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: left;
+    }
+    .ai-examples {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+    .ai-example {
+      text-align: left;
+      padding: 14px 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-family: var(--font);
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.1px;
+      line-height: 1.4;
+      cursor: pointer;
+      transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+    }
+    .ai-example:hover {
+      background: rgba(var(--accent-raw), 0.06);
+      border-color: rgba(var(--accent-raw), 0.5);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+    [data-theme="dark"] .ai-example:hover {
+      background: rgba(var(--accent-raw), 0.12);
+    }
+
+    /* Inline toast shown on submit (AI backend not yet wired) */
+    .ai-toast {
+      display: none;
+      margin: 14px auto 0;
+      padding: 10px 18px;
+      max-width: 720px;
+      background: rgba(var(--accent-raw), 0.08);
+      border: 1px solid rgba(var(--accent-raw), 0.35);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      text-align: center;
+      letter-spacing: -0.1px;
+    }
+    .ai-toast.visible {
+      display: block;
+      animation: ai-toast-fade 0.35s ease-out;
+    }
+    @keyframes ai-toast-fade {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hide legacy keyword search — replaced by AI search card */
+    .search-wrap { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- Skip Nav -->
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- ── Navigation ── -->
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Timeless Hadith — Home">
+      <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="48" width="160" fetchpriority="high" decoding="async" /></picture>
+    </a>
+    <ul class="nav-links">
+      <li><a href="categories.html">Browse</a></li>
+      <li><a href="bookmarks.html">Bookmarks<span class="bm-badge" id="nav-bm-badge" data-count="0" aria-label="bookmarks count"></span></a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </li>
+      <!-- Auth: Sign in button / Avatar -->
+      <li id="nav-auth-item" style="display:flex;align-items:center;gap:.5rem">
+        <button id="btn-login"
+          style="display:inline-flex;align-items:center;padding:8px 18px;background:var(--accent);color:#fff;border:none;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s,transform .15s;font-family:inherit;"
+          onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'" >
+          Sign in
+        </button>
+        <button id="btn-logout"
+          style="display:none;background:none;border:1px solid var(--border);padding:6px 14px;border-radius:100px;font-size:12px;color:var(--muted);cursor:pointer;font-family:inherit;" >Sign out</button>
+        <div id="nav-avatar-wrap" style="display:none;align-items:center;gap:.4rem;cursor:pointer"
+          role="button" tabindex="0" aria-label="User account">
+          <div id="nav-avatar"
+            style="width:30px;height:30px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#fff;overflow:hidden;border:2px solid var(--border);">
+            <img id="nav-avatar-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:none;" />
+            <span id="nav-avatar-initial"></span>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <nav class="nav-drawer" id="navDrawer" aria-label="Mobile navigation">
+    <a href="categories.html">Browse Categories</a>
+    <a href="bookmarks.html">My Bookmarks</a>
+    <a href="about.html">About</a>
+    <button class="theme-toggle" id="themeToggleDrawer" aria-label="Toggle dark mode" style="margin-top:8px;align-self:flex-start;">
+      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </nav>
+
+  <!-- ── Share Modal ── -->
+  <div class="modal-overlay" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Share Hadith</h3>
+        <button class="modal-close" id="modalClose" aria-label="Close modal">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-hadith-preview">
+        <p class="modal-hadith-arabic" id="modalArabic"></p>
+        <p class="modal-hadith-text" id="modalText"></p>
+        <p class="modal-hadith-meta" id="modalMeta"></p>
+      </div>
+      <div class="modal-share-options">
+        <button class="share-option" id="shareAsText">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Share as Text
+          <span>Copy to clipboard</span>
+        </button>
+        <button class="share-option" id="shareAsImage">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Share as Image
+          <span>Download card</span>
+        </button>
+      </div>
+      <canvas id="shareCanvas" width="1200" height="630"></canvas>
+    </div>
+  </div>
+
+  <!-- ── Main Content ── -->
+  <main id="main-content">
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <!-- SVG gradient defs for sparkle icon -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <linearGradient id="aiSparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"  stop-color="#4f72f8" />
+          <stop offset="100%" stop-color="#7c5ce6" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="hero-mark" aria-hidden="true">
+      <picture><source srcset="icon-192.webp?v=2" type="image/webp" /><img src="icon-192.png?v=2" alt="" width="56" height="56" decoding="async" /></picture>
+    </div>
+    <div class="hero-eyebrow">
+      <span aria-hidden="true"></span>
+      Prophetic Wisdom
+    </div>
+    <h1>Guidance from the Prophet ﷺ<br>Timeless, Authentic Hadiths</h1>
+    <p class="hero-sub">
+      Explore the words of Prophet Muhammad (PBUH) — searchable, beautifully organised, and always close to your heart.
+    </p>
+    <!-- ── AI Search Card ── -->
+    <div class="ai-search-card" role="search">
+      <div class="ai-search-input-wrap">
+        <svg class="ai-sparkle" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2 L13.8 9.2 L21 11 L13.8 12.8 L12 20 L10.2 12.8 L3 11 L10.2 9.2 Z"/>
+          <circle cx="19" cy="5" r="1.2" />
+          <circle cx="5" cy="19" r="1" />
+        </svg>
+        <label for="aiSearchInput" class="sr-only">Ask AI a question about hadiths</label>
+        <input id="aiSearchInput"
+               class="ai-search-input"
+               type="text"
+               placeholder="Ask AI about any hadith, topic, or prophetic teaching…"
+               autocomplete="off" />
+        <button class="ai-send-btn" id="aiSendBtn" type="button" aria-label="Ask">
+          <svg viewBox="0 0 24 24">
+            <line x1="12" y1="19" x2="12" y2="5"/>
+            <polyline points="5 12 12 5 19 12"/>
+          </svg>
+        </button>
+      </div>
+      <span class="ai-examples-label">Get started with an example</span>
+      <div class="ai-examples">
+        <button class="ai-example" type="button">What does Islam say about patience?</button>
+        <button class="ai-example" type="button">Hadiths about kindness to parents</button>
+        <button class="ai-example" type="button">The morning and evening adhkar</button>
+        <button class="ai-example" type="button">The Prophet's teachings on gratitude</button>
+      </div>
+    </div>
+    <div class="ai-toast" id="aiToast" role="status" aria-live="polite"></div>
+
+    <!-- Legacy keyword search (hidden; retained for JS compatibility) -->
+    <div class="search-wrap">
+      <div class="search-bar">
+        <label for="searchInput" class="sr-only">Search hadiths, topics, or categories</label>
+        <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="search-input" id="searchInput" type="search" placeholder="Search hadiths, topics, or categories…" autocomplete="off" aria-label="Search hadiths" />
+        <button class="search-btn" id="searchBtn" aria-label="Search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span class="search-btn-label">Search</span>
+        </button>
+      </div>
+      <div class="search-dropdown" id="searchDropdown" role="listbox" aria-label="Search suggestions"></div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Featured Hadiths — Two-Card Glass ── -->
+  <section class="featured-section" id="featured" aria-labelledby="featured-heading">
+    <h2 class="section-label" id="featured-heading">Featured Hadiths</h2>
+    <div class="featured-grid">
+
+      <!-- Card 1: Hadith of the Day -->
+      <article class="glass-card card-daily" aria-label="Hadith of the Day">
+        <div class="glass-shimmer"></div>
+        <div class="fc-header">
+          <span class="fc-badge">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            Hadith of the Day
+          </span>
+          <span class="fc-date" id="fcDailyDate"></span>
+        </div>
+        <p class="fc-title" id="fcDailyTitle"></p>
+        <p class="fc-text" id="fcDailyText"></p>
+        <p class="fc-arabic" id="fcDailyArabic"></p>
+        <div class="fc-meta">
+          <span id="fcDailyMeta"></span><span class="fc-source" id="fcDailySource"></span>
+          <br><span class="fc-cat" id="fcDailyCat"></span>
+        </div>
+      </article>
+
+      <!-- Card 2: Most Read Hadith -->
+      <article class="glass-card card-popular" aria-label="Most Read Hadith">
+        <div class="glass-shimmer"></div>
+        <div class="fc-header">
+          <span class="fc-badge">
+            <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            Most Read Hadith
+          </span>
+          <span class="fc-reads">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span id="fcReadsNum">0</span> reads
+          </span>
+        </div>
+        <p class="fc-text" id="fcPopularText"></p>
+        <p class="fc-arabic" id="fcPopularArabic"></p>
+        <div class="fc-meta">
+          <span id="fcPopularMeta"></span><span class="fc-source" id="fcPopularSource"></span>
+          <br><span class="fc-cat" id="fcPopularCat"></span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Topics (formerly "Most Viewed") ── -->
+  <section class="topics-section" id="topics" aria-labelledby="topics-heading">
+    <h2 class="section-label" id="topics-heading">Topics</h2>
+    <div class="most-viewed">
+      <button class="mv-arrow" id="mvPrev" aria-label="Scroll left" disabled>
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="most-viewed-tags" id="mvTags">
+        <!-- Safe fallback pills using book-N slugs (resolvable against live
+             Supabase data via TH.getCat's book-number fallback). These are
+             replaced at runtime with the full real category list from
+             TH.categories once TH.init() resolves. -->
+        <a href="category.html?cat=book-2"  class="tag" data-book="2">Belief</a>
+        <a href="category.html?cat=book-3"  class="tag" data-book="3">Knowledge</a>
+        <a href="category.html?cat=book-8"  class="tag" data-book="8">Prayers</a>
+        <a href="category.html?cat=book-30" class="tag" data-book="30">Fasting</a>
+        <a href="category.html?cat=book-78" class="tag" data-book="78">Good Manners</a>
+        <a href="category.html?cat=tawheed" class="tag" data-book="97">Oneness of Allah</a>
+      </div>
+      <button class="mv-arrow" id="mvNext" aria-label="Scroll right">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Categories / Cards Section ── -->
+  <section class="cards-section" id="categories" aria-labelledby="cards-heading">
+    <div class="categories-header">
+      <h2 class="section-label" id="cards-heading">Explore by Topic</h2>
+    </div>
+
+    <div class="carousel-wrap">
+      <div class="cards-track" id="cardsTrack">
+        <p style="color:var(--muted);text-align:center;padding:40px 0;grid-column:1/-1" id="cards-loading">Loading categories…</p>
+      </div><!-- /cards-track -->
+      </div><!-- /cards-track -->
+    </div><!-- /carousel-wrap -->
+
+    <!-- Carousel Nav -->
+    <div class="carousel-nav">
+      <div class="carousel-dots" id="carouselDots"></div>
+      <div class="carousel-btns">
+        <button class="carousel-btn" id="prevBtn" aria-label="Previous page" disabled>
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="carousel-btn" id="nextBtn" aria-label="Next page">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">
+        <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="32" loading="lazy" decoding="async" /></picture>
+      </a>
+      <ul class="footer-links">
+        <li><a href="categories.html">Browse</a></li>
+        <li><a href="bookmarks.html">Bookmarks</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Use</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 Timeless Hadith. All rights reserved.</p>
+    </div>
+  </footer>
+
+  </main><!-- /#main-content -->
+
+  <noscript>
+    <p style="text-align:center;padding:40px;font-family:sans-serif;">
+      This site works best with JavaScript enabled.
+      <a href="index.html">Return to homepage</a>.
+    </p>
+  </noscript>
+
+  <script defer src="js/supabase-data.js?v=2"></script>
+  <script defer src="js/app.js"></script>
+  <script defer src="js/supabase-auth.js"></script>
+  <script defer src="js/index-wire.js"></script>
+  <script defer src="js/ai-search.js"></script>
+
+  <!-- Service worker registration (stale-while-revalidate + offline fallback) -->
+  <script defer src="js/sw-register.js"></script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+
+
+
+<script defer src="js/urdu-toggle.js"></script>
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            

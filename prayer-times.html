@@ -432,18 +432,23 @@ input[type=range]::-moz-range-thumb {
   .info-tooltip { left:0; transform:none; }
 }
 </style>
+  <meta property="og:title" content="Prayer Times & Zakat Calculator — Timeless Hadith"/>
+  <meta property="og:description" content="Live prayer times using the Umm al-Qura method and a Zakat calculator backed by Islamic law with live gold and silver prices."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://timelesshadith.com/prayer-times.html"/>
+  <meta name="twitter:card" content="summary_large_image"/>
 </head>
 <body>
 
 <!-- ══ NAV ══ -->
 <nav>
-  <a href="#" class="nav-logo"><span class="nav-logo-dot"></span>Timeless Hadith</a>
+  <a href="index.html" class="nav-logo"><span class="nav-logo-dot"></span>Timeless Hadith</a>
   <ul class="nav-links">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">Browse</a></li>
-    <li><a href="#">Blog</a></li>
-    <li><a href="#" class="active">Prayer Times</a></li>
-    <li><a href="#">Bookmarks</a></li>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="categories.html">Browse</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="prayer-times.html" class="active">Prayer Times</a></li>
+    <li><a href="bookmarks.html">Bookmarks</a></li>
   </ul>
   <div class="nav-right">
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"></button>
@@ -899,5 +904,19 @@ function calcZakat(){
 /* Init */
 calcZakat();
 </script>
+
+<footer style="background:var(--surface);border-top:1px solid var(--border);padding:32px 24px;margin-top:60px;text-align:center;">
+  <nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:20px;margin-bottom:16px;font-size:13px;">
+    <a href="index.html" style="color:var(--muted);text-decoration:none;">Home</a>
+    <a href="categories.html" style="color:var(--muted);text-decoration:none;">Browse</a>
+    <a href="blog.html" style="color:var(--muted);text-decoration:none;">Blog</a>
+    <a href="prayer-times.html" style="color:var(--muted);text-decoration:none;">Prayer Times</a>
+    <a href="bookmarks.html" style="color:var(--muted);text-decoration:none;">Bookmarks</a>
+    <a href="about.html" style="color:var(--muted);text-decoration:none;">About</a>
+    <a href="privacy.html" style="color:var(--muted);text-decoration:none;">Privacy</a>
+    <a href="terms.html" style="color:var(--muted);text-decoration:none;">Terms</a>
+  </nav>
+  <p style="font-size:12px;color:var(--muted);">&copy; 2026 Timeless Hadith. All rights reserved.</p>
+</footer>
 </body>
 </html>

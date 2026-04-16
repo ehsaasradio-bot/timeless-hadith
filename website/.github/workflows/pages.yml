@@ -1,0 +1,34 @@
+name: CI — Validate
+
+# Cloudflare Pages handles all deployment automatically on push to main.
+# GitHub Pages deployment has been replaced by Cloudflare Pages.
+# Live at: https://timelesshadith.com (via Cloudflare Pages)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate static site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check core HTML files exist
+        run: |
+          echo "Checking core HTML files..."
+          test -f index.html && echo "✓ index.html"
+          test -f about.html && echo "✓ about.html"
+          test -f categories.html && echo "✓ categories.html"
+          test -f bookmarks.html && echo "✓ bookmarks.html"
+          test -f manifest.json && echo "✓ manifest.json"
+          test -f robots.txt && echo "✓ robots.txt"
+          test -f sitemap.xml && echo "✓ sitemap.xml"
+          echo "All core files present. Cloudflare Pages handles deployment automatically."

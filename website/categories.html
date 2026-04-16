@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse Hadith Topics — Timeless Hadith</title>
+  <meta name="description" content="Browse all hadith topics and categories. Explore authentic sayings of Prophet Muhammad (PBUH) organized by theme — from faith and prayer to family and character." />
+  <link rel="canonical" href="https://timelesshadith.com/categories.html" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#060c1a" />
+  <meta name="color-scheme" content="dark light" />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://timelesshadith.com/categories.html" />
+  <meta property="og:title"       content="Browse Hadith Topics — Timeless Hadith" />
+  <meta property="og:description" content="Browse all hadith topics and categories. Explore authentic sayings of Prophet Muhammad (PBUH) organized by theme — from faith and prayer to family and character." />
+  <meta property="og:image"       content="https://timelesshadith.com/og-image.png" />
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Browse Hadith Topics — Timeless Hadith",
+      "url": "https://timelesshadith.com/categories.html",
+      "description": "Browse all hadith topics and categories. Explore authentic sayings of Prophet Muhammad (PBUH) organised by theme — from faith and prayer to family and character.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Timeless Hadith",
+        "url": "https://timelesshadith.com/"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://timelesshadith.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Browse Topics",
+          "item": "https://timelesshadith.com/categories.html"
+        }
+      ]
+    }
+  ]
+  </script>
+  <link rel="icon"             type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon"             type="image/png" sizes="16x16" href="favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180"              href="apple-touch-icon.png" />
+  <link rel="manifest"         href="manifest.json" />
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <!-- Fonts: self-hosted via @font-face in styles.css -->
+  <link rel="dns-prefetch" href="https://dwcsledifvnyrunxejzd.supabase.co" />
+  <link rel="dns-prefetch" href="https://timeless-hadith-worker.ehsaasradio.workers.dev" />
+
+  <!-- Theme initialiser — must run before paint -->
+  <script src="js/theme-init.js"></script>
+
+  <style>
+
+    /* ── Page Header ── */
+    .page-header {
+      padding: 108px 40px 56px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .page-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.6px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px;
+    }
+    .page-eyebrow span {
+      display: inline-block; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--accent);
+    }
+    .page-header h1 {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700; line-height: 1.08;
+      letter-spacing: -0.04em; color: var(--ink);
+      margin-bottom: 14px;
+    }
+    .page-header .page-sub {
+      font-size: clamp(15px, 1.5vw, 17px);
+      font-weight: 400; color: var(--muted);
+      max-width: 600px; line-height: 1.6;
+      letter-spacing: -0.01em; margin-bottom: 32px;
+    }
+
+    /* ── Search ── */
+    .search-wrap {
+      position: relative;
+      max-width: 540px;
+    }
+    .search-bar {
+      display: flex; align-items: center;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 100px; padding: 6px 6px 6px 20px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.35s ease;
+    }
+    .search-bar:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(var(--accent-raw),0.12);
+    }
+    [data-theme="dark"] .search-bar:focus-within {
+      box-shadow: 0 0 0 3px rgba(var(--accent-raw),0.18);
+    }
+    .search-icon {
+      flex-shrink: 0; width: 16px; height: 16px;
+      stroke: var(--muted); fill: none; stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
+      margin-right: 10px; transition: stroke 0.2s ease;
+    }
+    .search-bar:focus-within .search-icon { stroke: var(--accent); }
+    .search-input {
+      flex: 1; border: none; background: transparent;
+      font-family: var(--font); font-size: 14px;
+      color: var(--ink); letter-spacing: -0.1px; outline: none;
+      min-width: 0; padding: 6px 0;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-btn {
+      flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 18px; background: var(--accent); color: #fff;
+      border: none; border-radius: 100px; font-family: var(--font);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      letter-spacing: -0.1px;
+      transition: opacity 0.2s ease, background 0.35s ease, color 0.35s ease;
+      min-height: 40px;
+    }
+    .search-btn:hover { opacity: 0.75; }
+
+    /* ── Section Divider ── */
+    .section-divider {
+      width: 100%; max-width: 1100px;
+      margin: 0 auto; height: 1px;
+      background: var(--border);
+      transition: background 0.35s ease;
+    }
+
+    /* ── Cards Section ── */
+    .cards-section {
+      padding: 40px 40px 80px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .cards-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 8px; flex-wrap: wrap; gap: 12px;
+    }
+    .section-label {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.5px;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .results-note {
+      font-size: 13px; color: var(--muted); letter-spacing: -0.1px;
+    }
+    .results-note strong { color: var(--ink); font-weight: 600; }
+
+    /* ── Grid ── */
+    .cards-track {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      transition: opacity 0.25s ease;
+      margin-top: 20px;
+    }
+    .cards-track.fading { opacity: 0; }
+
+    /* ── Category Card ── */
+    .cat-card {
+      background: var(--surface);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      transition: box-shadow 0.25s ease, transform 0.25s ease, background 0.35s ease, border-color 0.25s ease;
+    }
+    .cat-card:hover {
+      box-shadow: var(--card-shadow-hover);
+      transform: translateY(-4px);
+    }
+    .cat-card:hover .cat-card-cta {
+      background: var(--card-accent, var(--accent));
+      color: #fff;
+      border-color: transparent;
+    }
+    .cat-card:hover .cat-card-cta svg { transform: translateX(2px); }
+
+    /* Accent bar */
+    .cat-card-bar {
+      height: 3px;
+      background: var(--card-accent, var(--accent));
+      flex-shrink: 0;
+    }
+
+    /* Card body */
+    .cat-card-body {
+      padding: 22px 22px 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 10px;
+    }
+
+    /* Top row: icon + badges */
+    .cat-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    /* Icon */
+    .cat-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--card-accent-bg, rgba(var(--accent-raw),0.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+      line-height: 1;
+      transition: background 0.35s ease;
+    }
+
+    /* Badges */
+    .cat-card-badges {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+    .cat-card-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      background: var(--surface2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      transition: background 0.35s ease, border-color 0.35s ease;
+    }
+    .cat-card-feat {
+      display: none;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      background: var(--card-accent, var(--accent));
+      color: #fff;
+    }
+    .cat-card.is-featured .cat-card-feat { display: inline-flex; }
+
+    /* Label */
+    .cat-card-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      color: var(--card-accent, var(--accent));
+    }
+
+    /* Title */
+    .cat-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: var(--ink);
+      line-height: 1.25;
+      transition: color 0.35s ease;
+    }
+
+    /* Description */
+    .cat-card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      letter-spacing: -0.1px;
+      flex: 1;
+    }
+
+    /* Footer */
+    .cat-card-footer {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transition: border-color 0.35s ease;
+    }
+    .cat-card-count {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: -0.1px;
+    }
+    .cat-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 13px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1.5px solid var(--border);
+      color: var(--ink);
+      background: transparent;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+    }
+    .cat-card-cta svg {
+      width: 10px;
+      height: 10px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.2s ease;
+    }
+
+    /* ── No Results ── */
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center; padding: 60px 20px;
+      color: var(--muted);
+    }
+    .no-results-icon { font-size: 40px; margin-bottom: 12px; }
+    .no-results h3 {
+      font-size: 17px; font-weight: 600; color: var(--ink);
+      letter-spacing: -0.3px; margin-bottom: 6px;
+    }
+    .no-results p { font-size: 14px; }
+
+    /* ── Pagination ── */
+    .pagination {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 40px; padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .pagination-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 100px;
+      border: 1px solid var(--border); background: var(--bg);
+      font-family: var(--font); font-size: 14px; font-weight: 500;
+      color: var(--ink); cursor: pointer; letter-spacing: -0.1px;
+      transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+    }
+    .pagination-btn:hover:not(:disabled) {
+      background: var(--surface); border-color: var(--ink);
+      transform: translateY(-1px);
+    }
+    .pagination-btn:disabled { opacity: 0.3; cursor: default; transform: none; }
+    .pagination-btn svg {
+      width: 14px; height: 14px; stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .pagination-dots { display: flex; align-items: center; gap: 8px; }
+    .p-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--border); cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      border: none; padding: 0; flex-shrink: 0;
+    }
+    .p-dot:hover { background: var(--muted); }
+    .p-dot.active { background: var(--accent); transform: scale(1.35); cursor: default; }
+    .pagination-info {
+      font-size: 13px; color: var(--muted); letter-spacing: -0.1px;
+    }
+
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .cards-track { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 680px) {
+      .page-header { padding: 88px 20px 40px; }
+      .cards-section { padding: 32px 20px 60px; }
+      .cards-track { grid-template-columns: 1fr; }
+      .pagination { flex-wrap: wrap; justify-content: center; gap: 16px; }
+    }
+
+    /* ── Fade-up animation ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .cat-card { animation: fadeUp 0.4s ease both; }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- ══ NAV ══ -->
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Timeless Hadith — Home">
+      <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="48" width="160" fetchpriority="high" decoding="async" /></picture>
+    </a>
+    <ul class="nav-links">
+      <li><a href="categories.html" class="active" aria-current="page">Browse</a></li>
+      <li><a href="bookmarks.html">Bookmarks<span class="bm-badge" id="nav-bm-badge" data-count="0" aria-label="bookmarks count"></span></a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun"  viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </li>
+      <li id="nav-auth-item">
+        <button id="btn-login" >Sign in</button>
+        <button id="btn-logout" >Sign out</button>
+        <div id="nav-avatar-wrap" role="button" tabindex="0" aria-label="User account">
+          <div class="nav-avatar">
+            <img id="nav-avatar-img" src="" alt="" />
+            <span id="nav-avatar-initial"></span>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <nav class="nav-drawer" id="navDrawer" aria-label="Mobile navigation">
+    <a href="categories.html">Browse Categories</a>
+    <a href="bookmarks.html">My Bookmarks</a>
+    <a href="about.html">About</a>
+    <button class="theme-toggle" id="themeToggleDrawer" aria-label="Toggle dark mode" style="margin-top:8px;align-self:flex-start;">
+      <svg class="icon-sun"  viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </nav>
+
+  <!-- ══ PAGE HEADER ══ -->
+  <header>
+    <div class="page-header">
+      <p class="page-eyebrow"><span></span>Islamic Knowledge</p>
+      <h1>Authentic Hadith Collection</h1>
+      <p class="page-sub">Search and explore verified hadith organized by Islamic topics, from belief and worship to character and relationships.</p>
+      <div class="search-wrap" role="search">
+        <div class="search-bar">
+          <svg class="search-icon" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            id="cat-search"
+            class="search-input"
+            type="search"
+            placeholder="Search topics, themes, narrators…"
+            autocomplete="off"
+            autocorrect="off"
+            spellcheck="false"
+            aria-label="Search categories"
+          />
+          <button class="search-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:var(--bg);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span class="search-btn-label">Search</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ CARDS ══ -->
+  <main class="cards-section" id="main-content" aria-label="Hadith categories">
+    <div class="cards-header">
+      <span class="section-label">All Topics</span>
+      <span class="results-note" id="results-note" aria-live="polite">
+        Showing <strong id="results-count">21</strong> categories
+      </span>
+    </div>
+
+    <div class="cards-track" id="cards-track" role="list" aria-label="Category list">
+      <!-- JS populated -->
+    </div>
+
+    <!-- Pagination -->
+    <nav class="pagination" id="pagination" aria-label="Page navigation">
+      <button class="pagination-btn" id="btn-prev" aria-label="Previous page">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Previous
+      </button>
+      <div class="pagination-dots" id="pagination-dots" role="list" aria-label="Pages"></div>
+      <button class="pagination-btn" id="btn-next" aria-label="Next page">
+        Next
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </nav>
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">
+        <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="32" loading="lazy" decoding="async" /></picture>
+      </a>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html">Browse</a></li>
+        <li><a href="bookmarks.html">Bookmarks<span class="bm-badge" id="nav-bm-badge" data-count="0" aria-label="bookmarks count"></span></a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+      </ul>
+      <p class="footer-copy">&copy; 2026 Timeless Hadith</p>
+    </div>
+  </footer>
+
+  <!-- ══ SCRIPTS ══ -->
+  <script defer src="js/supabase-data.js?v=2"></script>
+  <script defer src="js/app.js"></script>
+  <script defer src="js/supabase-auth.js"></script>
+  <script defer src="js/ai-search.js"></script>
+
+  <script defer src="js/categories-wire.js"></script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="js/sw-register.js"></script>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+</body>
+</html>
