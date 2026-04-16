@@ -33,6 +33,19 @@
     <priority>0.4</priority>
   </url>
 
+  <url>
+    <loc>https://timelesshadith.com/blog.html</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://timelesshadith.com/prayer-times.html</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- ── Sahih al-Bukhari — 97 Books ── -->
   <url><loc>https://timelesshadith.com/category.html?cat=book-1</loc><lastmod>2026-04-12</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://timelesshadith.com/category.html?cat=book-2</loc><lastmod>2026-04-12</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>

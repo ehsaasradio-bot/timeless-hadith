@@ -61,10 +61,4 @@ audit-confluence-report.html
 apple-sa-landing.html
 mac-lineup.html
 
-# Large backup archives (exceed Cloudflare Pages 25MB limit)
-*.tar.gz
-*.zip
-*.bundle
-backups/
-BACKUP-*.bundle
-FILES-*.tar.gz
+# Large backup a

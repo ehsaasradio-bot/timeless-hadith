@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Timeless Hadith — Full Professional Website Audit | April 17, 2026</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI','Inter',-apple-system,sans-serif;color:#1a1a2e;background:#f8f9fc;line-height:1.7;padding:0}
+.cover{background:linear-gradient(135deg,#0a0f2c 0%,#1a1a3e 50%,#2d1b69 100%);color:#fff;padding:60px 40px;text-align:center}
+.cover h1{font-size:32px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
+.cover .sub{font-size:15px;color:rgba(255,255,255,.7);margin-bottom:6px}
+.cover .date{font-size:13px;color:rgba(255,255,255,.5)}
+.cover .url{font-size:14px;color:#6b8bff;margin-top:12px}
+.wrap{max-width:960px;margin:0 auto;padding:32px 24px 80px}
+h2{font-size:22px;font-weight:700;color:#0a0f2c;margin:48px 0 18px;padding-bottom:10px;border-bottom:2px solid #e0e4f0}
+h2 .num{color:#6b8bff;margin-right:8px}
+h3{font-size:17px;font-weight:600;color:#2d1b69;margin:28px 0 12px}
+p,li{font-size:14.5px;line-height:1.75;margin-bottom:10px}
+ul,ol{padding-left:24px;margin-bottom:16px}
+li{margin-bottom:6px}
+.score-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin:20px 0}
+.score-card{background:#fff;border:1px solid #e0e4f0;border-radius:14px;padding:20px 16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.score-card .val{font-size:32px;font-weight:800;margin-bottom:4px}
+.score-card .label{font-size:12px;color:#666;text-transform:uppercase;letter-spacing:.04em}
+.green{color:#22c55e} .yellow{color:#eab308} .red{color:#ef4444} .blue{color:#3b82f6}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+th{background:#f1f3f9;text-align:left;padding:10px 12px;font-weight:600;border-bottom:2px solid #d0d5e4}
+td{padding:9px 12px;border-bottom:1px solid #eee;vertical-align:top}
+tr:hover td{background:#f8f9fc}
+.tag{display:inline-block;padding:2px 10px;border-radius:100px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.tag-crit{background:#fde8e8;color:#c0392b}
+.tag-high{background:#fef3cd;color:#856404}
+.tag-med{background:#e0f0ff;color:#1a6fb5}
+.tag-low{background:#e8f5e9;color:#2e7d32}
+.tag-pass{background:#e8f5e9;color:#2e7d32}
+.tag-fail{background:#fde8e8;color:#c0392b}
+.tag-warn{background:#fef3cd;color:#856404}
+.finding{background:#fff;border:1px solid #e0e4f0;border-radius:12px;padding:18px 20px;margin:12px 0;box-shadow:0 1px 4px rgba(0,0,0,.03)}
+.finding .title{font-weight:700;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.finding p{margin:0;font-size:13.5px;color:#444}
+code{background:#f1f3f9;padding:2px 6px;border-radius:4px;font-size:12.5px;font-family:'SF Mono','Fira Code',monospace}
+pre{background:#1a1a2e;color:#e0e4f0;padding:16px 20px;border-radius:10px;overflow-x:auto;font-size:12.5px;margin:12px 0;line-height:1.6}
+.toc{background:#fff;border:1px solid #e0e4f0;border-radius:14px;padding:24px 28px;margin:24px 0}
+.toc h3{margin-top:0;font-size:16px}
+.toc ol{padding-left:20px}
+.toc li{margin-bottom:4px;font-size:13.5px}
+.toc a{color:#3b82f6;text-decoration:none}
+.toc a:hover{text-decoration:underline}
+.exec-box{background:linear-gradient(135deg,#f0f4ff,#faf5ff);border:1px solid #d0d5e4;border-radius:14px;padding:24px 28px;margin:20px 0}
+.roadmap-row{display:flex;gap:16px;margin:8px 0;align-items:flex-start}
+.roadmap-time{min-width:90px;font-weight:700;font-size:13px;color:#6b8bff;padding-top:2px}
+.roadmap-item{font-size:13.5px}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>Full Professional Website Audit</h1>
+  <div class="sub">Timeless Hadith — timelesshadith.com</div>
+  <div class="url">https://timelesshadith.com</div>
+  <div class="date">April 17, 2026 | Prepared for Syed</div>
+</div>
+
+<div class="wrap">
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+<h3>Table of Contents</h3>
+<ol>
+<li><a href="#s1">Executive Summary &amp; Final Scorecard</a></li>
+<li><a href="#s2">Performance Audit</a></li>
+<li><a href="#s3">SEO Audit</a></li>
+<li><a href="#s4">AI Search Readiness</a></li>
+<li><a href="#s5">Security Audit</a></li>
+<li><a href="#s6">Accessibility Audit (WCAG 2.2 AA)</a></li>
+<li><a href="#s7">Mobile Audit</a></li>
+<li><a href="#s8">Error Detection</a></li>
+<li><a href="#s9">Conversion / UX Audit</a></li>
+<li><a href="#s10">Compliance Audit</a></li>
+<li><a href="#s11">Tech Stack Assessment</a></li>
+<li><a href="#s12">Navigation Consistency Audit</a></li>
+<li><a href="#s13">Priority Fix Roadmap</a></li>
+<li><a href="#s14">Developer Action List</a></li>
+</ol>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="s1"><span class="num">1.</span> Executive Summary &amp; Final Scorecard</h2>
+
+<div class="score-grid">
+  <div class="score-card"><div class="val green">82</div><div class="label">Performance</div></div>
+  <div class="score-card"><div class="val yellow">68</div><div class="label">SEO</div></div>
+  <div class="score-card"><div class="val green">88</div><div class="label">Security</div></div>
+  <div class="score-card"><div class="val green">85</div><div class="label">Accessibility</div></div>
+  <div class="score-card"><div class="val yellow">72</div><div class="label">UX / Conversion</div></div>
+  <div class="score-card"><div class="val yellow">65</div><div class="label">AI Readiness</div></div>
+  <div class="score-card"><div class="val blue">77</div><div class="label">Overall</div></div>
+</div>
+
+<div class="exec-box">
+<h3>Biggest Risks</h3>
+<ol>
+<li><strong>CSP blocks critical APIs</strong> — Prayer times, Zakat gold/silver prices, weather widget, and geolocation reverse-geocoding ALL fail because <code>connect-src</code> in <code>_headers</code> doesn't whitelist <code>api.aladhan.com</code>, <code>api.metals.live</code>, <code>api.open-meteo.com</code>, or <code>nominatim.openstreetmap.org</code>. Four features are silently broken on production.</li>
+<li><strong>AI Search is down</strong> — OpenAI API key expired. Returns <code>server_error</code> to every user.</li>
+<li><strong>Inconsistent navigation</strong> — 3 different nav patterns across 10 pages. Blog &amp; prayer-times have no mobile menu at all.</li>
+<li><strong>Thin content on key pages</strong> — index.html (151 words), categories.html (62 words) — too thin for Google ranking.</li>
+</ol>
+
+<h3>Quick Wins (under 1 hour)</h3>
+<ol>
+<li>Add 4 API domains to CSP <code>connect-src</code> in <code>_headers</code> — fixes prayer times, zakat, weather, geolocation instantly</li>
+<li>Update OpenAI API key in Cloudflare Worker — fixes AI search</li>
+<li>Remove <code>https://accounts.google.com</code> from CSP (Firebase remnant)</li>
+<li>Add <code>fonts.googleapis.com</code> to CSP <code>style-src</code> (prayer-times.html loads Google Fonts)</li>
+</ol>
+
+<h3>Revenue / Growth Opportunities</h3>
+<ol>
+<li>AI Search is a killer feature — once the API key is fixed, it differentiates from every other hadith site</li>
+<li>Blog pages (12 cards) all link to non-existent slug pages — creating these would add 12 SEO-rich pages</li>
+<li>PWA is already configured — promote "Add to Home Screen" for mobile retention</li>
+<li>Social sharing cards are well-built — lean into hadith-of-the-day social strategy</li>
+</ol>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="s2"><span class="num">2.</span> Performance Audit</h2>
+
+<h3>Asset Inventory</h3>
+<table>
+<tr><th>Category</th><th>Count</th><th>Total Size</th><th>Notes</th></tr>
+<tr><td>JavaScript</td><td>15 files</td><td>192 KB</td><td>All deferred except theme-init.js (critical path)</td></tr>
+<tr><td>CSS</td><td>1 file</td><td>25 KB</td><td>Single stylesheet, well-organized</td></tr>
+<tr><td>Fonts (self-hosted)</td><td>11 files</td><td>557 KB</td><td>gulzar-arabic.woff2 alone is 209 KB</td></tr>
+<tr><td>Images</td><td>12 files</td><td>233 KB</td><td>WebP variants provided for all assets</td></tr>
+<tr><td>HTML pages</td><td>11 files</td><td>~350 KB total</td><td>prayer-times.html is largest (39 KB, inline CSS+JS)</td></tr>
+</table>
+
+<h3>Findings</h3>
+
+<div class="finding">
+<div class="title"><span class="tag tag-high">High</span> Font loading — no preload hints</div>
+<p>Inter and Noto Kufi Arabic are render-critical but not preloaded. Add <code>&lt;link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin&gt;</code> for the 3 most-used font files.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-med">Medium</span> Gulzar Arabic font is 209 KB</div>
+<p>This Urdu/Arabic decorative font is large. Consider subsetting to the Unicode ranges actually used, which could cut it to ~80 KB.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-med">Medium</span> data.js (33 KB) is loaded but may be unused</div>
+<p>The static <code>data.js</code> file exists alongside the Supabase data layer (<code>supabase-data.js</code>). If supabase-data.js fully replaces it, remove data.js to save 33 KB.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-low">Nice</span> prayer-times.html has ~600 lines of inline CSS + JS</div>
+<p>This page uses inline styles/scripts instead of the shared <code>css/styles.css</code>. Works but adds 20 KB of non-cacheable CSS per visit.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-pass">Pass</span> Strengths</div>
+<p>All scripts use <code>defer</code>. Single CSS file. WebP images with PNG fallback via <code>&lt;picture&gt;</code>. Service worker registered. Cloudflare CDN with edge caching. HTTP/3 + Brotli compression. Small DOM (~200 elements). <code>font-display: swap</code> on all fonts. Cache headers configured per file type.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="s3"><span class="num">3.</span> SEO Audit</h2>
+
+<h3>Page-by-Page Meta Analysis</h3>
+<table>
+<tr><th>Page</th><th>Title</th><th>Meta Desc</th><th>Canonical</th><th>OG Tags</th><th>Schema</th><th>Content</th></tr>
+<tr><td>index.html</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">WebSite+Org+FAQ</td><td><span class="tag tag-warn">Thin (151w)</span></td></tr>
+<tr><td>categories.html</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">Pass</td><td class="yellow">No og:image</td><td class="green">CollectionPage</td><td><span class="tag tag-warn">Thin (62w)</span></td></tr>
+<tr><td>category.html</td><td class="green">Dynamic</td><td class="green">Dynamic</td><td class="yellow">No ?cat= param</td><td class="green">Pass</td><td class="green">ItemList</td><td><span class="tag tag-warn">JS-rendered</span></td></tr>
+<tr><td>about.html</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">Organization</td><td class="green">675w</td></tr>
+<tr><td>blog.html</td><td class="green">Pass</td><td class="yellow">Missing</td><td class="red">Missing</td><td class="yellow">No og:image</td><td class="red">None</td><td class="green">12 cards</td></tr>
+<tr><td>prayer-times.html</td><td class="green">Pass</td><td class="red">Missing</td><td class="red">Missing</td><td class="yellow">No og:image</td><td class="red">None</td><td class="green">1368w</td></tr>
+<tr><td>bookmarks.html</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">Pass</td><td class="red">None</td><td class="green">Dynamic</td></tr>
+<tr><td>privacy.html</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">WebPage</td><td class="green">2000w+</td></tr>
+<tr><td>terms.html</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">Pass</td><td class="green">WebPage</td><td class="green">2000w+</td></tr>
+<tr><td>404.html</td><td class="green">Pass</td><td>N/A</td><td>N/A</td><td>N/A</td><td class="green">WebSite</td><td class="green">Custom</td></tr>
+</table>
+
+<h3>Critical SEO Issues</h3>
+
+<div class="finding">
+<div class="title"><span class="tag tag-crit">Critical</span> Blog post slug pages don't exist</div>
+<p>12 blog cards link to URLs like <code>/blog/sunnah-daily-habits</code>, <code>/blog/quran-hadith-relationship</code>, etc. These all return 404. This creates 12 broken internal links and wastes significant link equity. Either create these pages or remove the links.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-high">High</span> blog.html and prayer-times.html missing canonical tags</div>
+<p>Without canonical tags, search engines may treat URL variants (with/without trailing slash, query params) as duplicate content.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-high">High</span> category.html H1 renders as "Loading..." to crawlers</div>
+<p>Google sees the pre-render HTML which has <code>&lt;h1 id="cat-title"&gt;&lt;/h1&gt;</code> (empty) and the JS-rendered "Loading hadiths..." text. Consider server-side rendering or adding a fallback H1 in the HTML.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-med">Medium</span> Thin content on homepage and categories page</div>
+<p>index.html has only 151 words of body text; categories.html has 62 words. Google may classify these as thin content. Add introductory paragraphs (300+ words) to improve ranking potential.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-pass">Pass</span> Strengths</div>
+<p>Comprehensive sitemap.xml with 300+ URLs including parameterized category pages. Clean robots.txt. No duplicate titles. Strong schema markup on 7/10 pages (WebSite, Organization, FAQPage, CollectionPage, ItemList). Good URL structure. No redirect chains.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="s4"><span class="num">4.</span> AI Search Readiness</h2>
+
+<table>
+<tr><th>Signal</th><th>Status</th><th>Notes</th></tr>
+<tr><td>Schema.org structured data</td><td><span class="tag tag-pass">Pass</span></td><td>WebSite, Organization, FAQPage, CollectionPage present</td></tr>
+<tr><td>Entity clarity</td><td><span class="tag tag-pass">Pass</span></td><td>Clear site name, description, topic focus (hadith)</td></tr>
+<tr><td>FAQ extraction</td><td><span class="tag tag-pass">Pass</span></td><td>FAQPage schema on index.html with 5 Q&A pairs</td></tr>
+<tr><td>Author / trust signals</td><td><span class="tag tag-warn">Weak</span></td><td>No author schema, no authorship attribution on blog posts</td></tr>
+<tr><td>Semantic topical authority</td><td><span class="tag tag-warn">Medium</span></td><td>Good category structure but thin content on key pages</td></tr>
+<tr><td>Content citability</td><td><span class="tag tag-pass">Pass</span></td><td>Each hadith has unique URL, source citation, narrator attribution</td></tr>
+<tr><td>Freshness signals</td><td><span class="tag tag-fail">Missing</span></td><td>No datePublished/dateModified on pages. Blog has no dates.</td></tr>
+<tr><td>Multilingual support</td><td><span class="tag tag-pass">Pass</span></td><td>Arabic text with proper <code>lang="ar"</code> and <code>dir="rtl"</code> attributes</td></tr>
+</table>
+
+<div class="finding">
+<div class="title"><span class="tag tag-high">High</span> Add datePublished/dateModified to schema</div>
+<p>AI engines like Perplexity and ChatGPT strongly prefer content with clear date signals. Add <code>datePublished</code> and <code>dateModified</code> to existing JSON-LD on all pages.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-med">Medium</span> Add author schema for blog content</div>
+<p>Add <code>Person</code> or <code>Organization</code> as author in schema to build E-E-A-T (Experience, Expertise, Authoritativeness, Trust) signals that AI engines use for source selection.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="s5"><span class="num">5.</span> Security Audit</h2>
+
+<h3>Security Headers</h3>
+<table>
+<tr><th>Header</th><th>Status</th><th>Value</th></tr>
+<tr><td>HTTPS</td><td><span class="tag tag-pass">Pass</span></td><td>Enforced via Cloudflare</td></tr>
+<tr><td>HSTS</td><td><span class="tag tag-pass">Pass</span></td><td><code>max-age=31536000; includeSubDomains; preload</code></td></tr>
+<tr><td>X-Frame-Options</td><td><span class="tag tag-pass">Pass</span></td><td><code>DENY</code></td></tr>
+<tr><td>X-Content-Type-Options</td><td><span class="tag tag-pass">Pass</span></td><td><code>nosniff</code></td></tr>
+<tr><td>Referrer-Policy</td><td><span class="tag tag-pass">Pass</span></td><td><code>strict-origin-when-cross-origin</code></td></tr>
+<tr><td>Permissions-Policy</td><td><span class="tag tag-pass">Pass</span></td><td><code>geolocation=(), microphone=(), camera=(), payment=()</code></td></tr>
+<tr><td>Content-Security-Policy</td><td><span class="tag tag-warn">Partial</span></td><td>Present but has gaps (see findings)</td></tr>
+<tr><td>X-XSS-Protection</td><td><span class="tag tag-pass">Pass</span></td><td><code>1; mode=block</code></td></tr>
+</table>
+
+<h3>Critical Security Findings</h3>
+
+<div class="finding">
+<div class="title"><span class="tag tag-crit">Critical</span> CSP connect-src blocks 4 essential APIs</div>
+<p>The Content-Security-Policy <code>connect-src</code> directive only allows <code>'self'</code>, Supabase, the Worker, and Cloudflare Insights. It does NOT allow:</p>
+<ul>
+<li><code>https://api.aladhan.com</code> — Prayer times (broken on production)</li>
+<li><code>https://api.metals.live</code> — Gold/silver prices for Zakat calculator (broken)</li>
+<li><code>https://nominatim.openstreetmap.org</code> — Reverse geocoding (broken)</li>
+<li><code>https://api.open-meteo.com</code> — Weather widget (broken)</li>
+<li><code>https://fonts.googleapis.com</code> — Google Fonts on prayer-times.html (style-src)</li>
+</ul>
+<p><strong>Fix:</strong> Update <code>_headers</code> file to add these domains.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-high">High</span> CSP uses <code>unsafe-inline</code> for scripts</div>
+<p><code>script-src 'self' 'unsafe-inline'</code> weakens XSS protection significantly. Migrate to CSP nonces or hashes for inline scripts.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-med">Medium</span> Firebase/Google remnant in CSP</div>
+<p><code>script-src</code> still includes <code>https://accounts.google.com</code> from the old Firebase Auth. Remove it since auth has migrated to Supabase.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-med">Medium</span> Permissions-Policy blocks geolocation</div>
+<p><code>geolocation=()</code> blocks the Geolocation API entirely. But prayer-times.html uses <code>navigator.geolocation</code> for local prayer times. Change to <code>geolocation=(self)</code>.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-pass">Pass</span> Strengths</div>
+<p>No exposed secrets or API keys (Supabase anon key is intentionally public/read-only). Admin page protected by Supabase Auth with 2FA. Strong security headers overall. No mixed content. No known JS library vulnerabilities (vanilla JS, no frameworks). Cloudflare DDoS protection.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="s6"><span class="num">6.</span> Accessibility Audit (WCAG 2.2 AA)</h2>
+
+<div class="finding">
+<div class="title"><span class="tag tag-pass">Pass</span> Color contrast</div>
+<p>All color pairs exceed WCAG AA minimum (4.5:1). Light theme: ink #1d1d1f on #ffffff = 18:1. Dark theme: ink #f0f4ff on #060c1a = 17.5:1. Accent colors on surfaces also pass.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-pass">Pass</span> Semantic HTML</div>
+<p>Proper use of <code>&lt;main&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code> across all pages. ARIA landmarks and roles present. Skip-to-content link implemented correctly.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-pass">Pass</span> Keyboard navigation &amp; focus states</div>
+<p>Visible focus indicators on all interactive elements (buttons, links, inputs). <code>:focus-visible</code> with <code>outline: 2px solid var(--accent)</code>. Respects <code>prefers-reduced-motion: reduce</code>.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-med">Medium</span> Theme toggle button too small (26px)</div>
+<p>WCAG 2.2 requires 44x44px minimum tap target. The theme toggle is only 26x26px. Increase to at least 44x44px or add padding to the click area.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-low">Nice</span> Avatar alt text inconsistent</div>
+<p>6 pages have <code>alt=""</code> on the nav avatar image; bookmarks.html correctly uses <code>alt="User avatar"</code>. Standardize to <code>alt="User avatar"</code> across all pages.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="s7"><span class="num">7.</span> Mobile Audit</h2>
+
+<div class="finding">
+<div class="title"><span class="tag tag-crit">Critical</span> blog.html and prayer-times.html have no mobile navigation</div>
+<p>These two pages use a simplified nav bar that hides links with <code>display:none</code> on mobile. There is no hamburger menu or drawer. Users on mobile have NO way to navigate to other pages except the logo (home) link.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-pass">Pass</span> Viewport &amp; responsive</div>
+<p>All pages have <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code>. Two responsive breakpoints at 960px and 680px. No horizontal overflow issues. Font sizes appropriate on mobile.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-pass">Pass</span> Touch targets</div>
+<p>Primary interactive elements (buttons, cards, nav links) meet the 44x44px minimum. Only the theme toggle (26px) and some secondary elements are undersized.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="s8"><span class="num">8.</span> Error Detection</h2>
+
+<div class="finding">
+<div class="title"><span class="tag tag-crit">Critical</span> 12 broken blog post links (404s)</div>
+<p>Every blog card in blog.html links to a slug page that does not exist: <code>/blog/sunnah-daily-habits</code>, <code>/blog/quran-hadith-relationship</code>, <code>/blog/fasting-sunnah-guide</code>, etc. All return 404.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-crit">Critical</span> AI search returns server_error</div>
+<p>POST to <code>/api/ai-search</code> returns <code>{"error":"server_error"}</code> because the Cloudflare Worker's OpenAI API key is expired (401 Incorrect API key).</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-crit">Critical</span> 4 features broken by CSP</div>
+<p>Prayer times, Zakat calculator gold/silver prices, weather widget, and geolocation are all silently failing because CSP blocks their API domains.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-pass">Pass</span> No broken images, CSS, or internal page links</div>
+<p>All image <code>src</code> paths resolve. All CSS loads. All internal page-to-page <code>href</code> links point to existing files (except the blog slugs noted above).</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="s9"><span class="num">9.</span> Conversion / UX Audit</h2>
+
+<div class="finding">
+<div class="title"><span class="tag tag-pass">Pass</span> CTA clarity</div>
+<p>Clear primary CTAs on homepage: "Browse all categories", AI search input, featured hadith cards. Good visual hierarchy and scannable layout.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-pass">Pass</span> Trust signals</div>
+<p>Source attribution on every hadith (Sahih al-Bukhari #xxx, Narrated by...). Explicit mention of "six major hadith collections." Professional design builds credibility.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-high">High</span> AI search error destroys trust</div>
+<p>The AI search prominently features "Ask AI about any hadith..." with example queries. When users try it and get "server_error", it severely damages trust and credibility. This is the #1 UX issue.</p>
+</div>
+
+<div class="finding">
+<div class="title"><span class="tag tag-med">Medium</span> Blog cards lead to 404</div>
+<p>Users clicking blog cards hit dead ends. This increases bounce rate and frustrates engaged visitors who wanted to read more.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="s10"><span class="num">10.</span> Compliance Audit</h2>
+
+<table>
+<tr><th>Requirement</th><th>Status</th><th>Notes</th></tr>
+<tr><td>Privacy Policy</td><td><span class="tag tag-pass">Pass</span></td><td>Comprehensive page at /privacy.html (2000+ words)</td></tr>
+<tr><td>Terms of Use</td><td><span class="tag tag-pass">Pass</span></td><td>Comprehensive page at /terms.html (2000+ words)</td></tr>
+<tr><td>Contact Information</td><td><span class="tag tag-pass">Pass</span></td><td>Email: contact@timelesshadith.com in about.html + schema</td></tr>
+<tr><td>Cookie Consent Banner</td><td><span class="tag tag-fail">Missing</span></td><td>No cookie banner. Site uses localStorage (technically not cookies, but best practice requires disclosure)</td></tr>
+<tr><td>GDPR Consent</td><td><span class="tag tag-warn">Partial</span></td><td>Privacy policy mentions data practices but no active consent mechanism for EU visitors</td></tr>
+<tr><td>Cloudflare Analytics Disclosure</td><td><span class="tag tag-warn">Partial</span></td><td>Cloudflare Web Analytics beacon loads on all pages; mentioned in privacy policy but no opt-out</td></tr>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="s11"><span class="num">11.</span> Tech Stack Assessment</h2>
+
+<table>
+<tr><th>Component</th><th>Technology</th><th>Notes</th></tr>
+<tr><td>Framework</td><td>Vanilla JS (no framework)</td><td>Lightweight, fast, no build step needed</td></tr>
+<tr><td>CSS</td><td>Custom CSS with CSS variables</td><td>Single file, light/dark theming via data attributes</td></tr>
+<tr><td>Database</td><td>Supabase PostgreSQL</td><td>7,277 hadiths, REST API with anon key</td></tr>
+<tr><td>Auth</td><td>Supabase Auth (migrating from Firebase)</td><td>Google OAuth + email/password</td></tr>
+<tr><td>AI</td><td>OpenAI GPT-4o-mini + text-embedding-3-small</td><td>RAG pipeline via Cloudflare Worker</td></tr>
+<tr><td>Hosting</td><td>Cloudflare Pages</td><td>Auto-deploy from GitHub, edge CDN, HTTP/3</td></tr>
+<tr><td>DNS/CDN</td><td>Cloudflare</td><td>DDoS protection, caching, SSL</td></tr>
+<tr><td>Analytics</td><td>Cloudflare Web Analytics</td><td>Privacy-friendly, no cookies</td></tr>
+<tr><td>Fonts</td><td>Self-hosted (Inter, Noto Kufi Arabic, Gulzar)</td><td>No Google Fonts dependency on main pages</td></tr>
+<tr><td>PWA</td><td>Service worker + manifest.json</td><td>Installable, offline-capable skeleton</td></tr>
+<tr><td>Version Control</td><td>GitHub (ehsaasradio-bot/timeless-hadith)</td><td>Auto-deploys on push to main</td></tr>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="s12"><span class="num">12.</span> Navigation Consistency Audit</h2>
+
+<table>
+<tr><th>Page</th><th>Logo</th><th>Nav Items</th><th>Widgets</th><th>Mobile Menu</th><th>Auth</th></tr>
+<tr><td>index.html</td><td>Image</td><td>Browse, Bookmarks, About, Blog, Prayer</td><td>Makkah, Weather, Prayer</td><td>Hamburger+Drawer</td><td>Yes</td></tr>
+<tr><td>categories.html</td><td>Image</td><td>Browse, Bookmarks, About, Blog, Prayer</td><td>Makkah, Weather, Prayer</td><td>Hamburger+Drawer</td><td>Yes</td></tr>
+<tr><td>category.html</td><td>Image</td><td>Browse, Bookmarks, About, Blog, Prayer</td><td>Makkah, Weather, Prayer</td><td>Hamburger+Drawer</td><td>Yes</td></tr>
+<tr><td>about.html</td><td>Image</td><td>Browse, Bookmarks, About, Blog, Prayer</td><td>Makkah, Weather, Prayer</td><td>Hamburger+Drawer</td><td>Yes</td></tr>
+<tr><td>bookmarks.html</td><td>Image</td><td>Home, Browse, Bookmarks, About, Blog, Prayer</td><td>Makkah, Weather, Prayer</td><td>Hamburger+Drawer</td><td>Yes</td></tr>
+<tr style="background:#fff3f3"><td>blog.html</td><td>Text only</td><td>Home, Browse, Blog, Prayer, Bookmarks</td><td>None</td><td>None (hidden on mobile!)</td><td>No</td></tr>
+<tr style="background:#fff3f3"><td>prayer-times.html</td><td>Text only</td><td>Home, Browse, Blog, Prayer, Bookmarks</td><td>None</td><td>None (hidden on mobile!)</td><td>No</td></tr>
+<tr style="background:#fffbe6"><td>privacy.html</td><td>Image</td><td>Browse, Bookmarks, About</td><td>None</td><td>Hamburger+Drawer</td><td>Yes</td></tr>
+<tr style="background:#fffbe6"><td>terms.html</td><td>Image</td><td>Browse, Bookmarks, About</td><td>None</td><td>Hamburger+Drawer</td><td>Yes</td></tr>
+</table>
+<p><strong style="color:#c0392b">Red rows</strong> = broken mobile nav (no way to navigate). <strong style="color:#856404">Yellow rows</strong> = missing Blog &amp; Prayer Times links.</p>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="s13"><span class="num">13.</span> Priority Fix Roadmap</h2>
+
+<h3>24-Hour Fixes (Critical)</h3>
+<div class="roadmap-row"><div class="roadmap-time">15 min</div><div class="roadmap-item">Update <code>_headers</code> CSP <code>connect-src</code> to add <code>api.aladhan.com</code>, <code>api.metals.live</code>, <code>api.open-meteo.com</code>, <code>nominatim.openstreetmap.org</code> — fixes 4 broken features</div></div>
+<div class="roadmap-row"><div class="roadmap-time">5 min</div><div class="roadmap-item">Update <code>_headers</code> <code>permissions-policy</code>: change <code>geolocation=()</code> to <code>geolocation=(self)</code></div></div>
+<div class="roadmap-row"><div class="roadmap-time">10 min</div><div class="roadmap-item">Update OpenAI API key in Cloudflare Worker secrets — fixes AI search</div></div>
+<div class="roadmap-row"><div class="roadmap-time">5 min</div><div class="roadmap-item">Remove <code>https://accounts.google.com</code> from CSP (Firebase remnant)</div></div>
+
+<h3>7-Day Fixes (High Priority)</h3>
+<div class="roadmap-row"><div class="roadmap-time">2 hours</div><div class="roadmap-item">Standardize navigation across all pages — replace blog.html and prayer-times.html nav with full Pattern A nav (image logo, all links, hamburger, drawer, widgets)</div></div>
+<div class="roadmap-row"><div class="roadmap-time">1 hour</div><div class="roadmap-item">Add Blog + Prayer Times links to privacy.html and terms.html nav</div></div>
+<div class="roadmap-row"><div class="roadmap-time">1 hour</div><div class="roadmap-item">Add canonical tags, meta descriptions, and og:image to blog.html and prayer-times.html</div></div>
+<div class="roadmap-row"><div class="roadmap-time">1 hour</div><div class="roadmap-item">Add font preload hints for Inter and Noto Kufi Arabic</div></div>
+
+<h3>30-Day Roadmap</h3>
+<div class="roadmap-row"><div class="roadmap-time">1 week</div><div class="roadmap-item">Create actual blog post pages for the 12 blog card slugs (or remove the links)</div></div>
+<div class="roadmap-row"><div class="roadmap-time">1 week</div><div class="roadmap-item">Add 300+ words of content to index.html and categories.html to fix thin content</div></div>
+<div class="roadmap-row"><div class="roadmap-time">3 days</div><div class="roadmap-item">Add datePublished/dateModified to all schema markup for AI search readiness</div></div>
+<div class="roadmap-row"><div class="roadmap-time">2 days</div><div class="roadmap-item">Add cookie/localStorage disclosure banner for GDPR compliance</div></div>
+<div class="roadmap-row"><div class="roadmap-time">1 day</div><div class="roadmap-item">Subset Gulzar Arabic font (209 KB → ~80 KB)</div></div>
+
+<h3>Growth Roadmap (60-90 days)</h3>
+<div class="roadmap-row"><div class="roadmap-time">Ongoing</div><div class="roadmap-item">Publish 2-3 blog posts per week to build topical authority</div></div>
+<div class="roadmap-row"><div class="roadmap-time">2 weeks</div><div class="roadmap-item">Migrate inline scripts to CSP nonces for enterprise-grade security</div></div>
+<div class="roadmap-row"><div class="roadmap-time">1 week</div><div class="roadmap-item">Add Twitter Card tags to all pages for social sharing optimization</div></div>
+<div class="roadmap-row"><div class="roadmap-time">1 week</div><div class="roadmap-item">Implement "Add to Home Screen" prompt for PWA adoption</div></div>
+<div class="roadmap-row"><div class="roadmap-time">Ongoing</div><div class="roadmap-item">Set up social media automation (Buffer/Make.com) for hadith-of-the-day posting</div></div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="s14"><span class="num">14.</span> Developer Action List</h2>
+
+<h3>Fix 1: CSP — Unblock APIs (Critical, 5 min)</h3>
+<pre>
+# In _headers, replace the connect-src line with:
+
+connect-src 'self'
+  https://dwcsledifvnyrunxejzd.supabase.co
+  https://timeless-hadith-worker.ehsaasradio.workers.dev
+  https://cloudflareinsights.com
+  https://api.aladhan.com
+  https://api.metals.live
+  https://api.open-meteo.com
+  https://nominatim.openstreetmap.org;
+</pre>
+
+<h3>Fix 2: CSP — Fix Permissions-Policy (5 min)</h3>
+<pre>
+# In _headers, change:
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+# To:
+  Permissions-Policy: geolocation=(self), microphone=(), camera=(), payment=()
+</pre>
+
+<h3>Fix 3: CSP — Remove Firebase remnant (2 min)</h3>
+<pre>
+# In _headers, remove "https://accounts.google.com" from script-src
+</pre>
+
+<h3>Fix 4: Add canonical + meta to blog.html</h3>
+<pre>
+&lt;link rel="canonical" href="https://timelesshadith.com/blog.html"/&gt;
+&lt;meta name="description" content="Explore authentic hadith articles, guides to Sunnah practices, and Islamic teachings backed by Sahih al-Bukhari and other authoritative collections."/&gt;
+&lt;meta property="og:image" content="https://timelesshadith.com/og-image.png"/&gt;
+</pre>
+
+<h3>Fix 5: Add canonical + meta to prayer-times.html</h3>
+<pre>
+&lt;link rel="canonical" href="https://timelesshadith.com/prayer-times.html"/&gt;
+&lt;meta name="description" content="Live prayer times based on your location using the Umm al-Qura method. Includes a Zakat calculator with real-time gold and silver nisab thresholds."/&gt;
+&lt;meta property="og:image" content="https://timelesshadith.com/og-image.png"/&gt;
+</pre>
+
+<h3>Fix 6: Font preload (add to &lt;head&gt; of all pages)</h3>
+<pre>
+&lt;link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin&gt;
+&lt;link rel="preload" href="/fonts/noto-kufi-arabic.woff2" as="font" type="font/woff2" crossorigin&gt;
+</pre>
+
+<h3>Fix 7: OpenAI API Key (Cloudflare Dashboard)</h3>
+<pre>
+Cloudflare Dashboard → Workers & Pages → timeless-hadith-worker
+→ Settings → Variables and Secrets → OPENAI_API_KEY → Update
+</pre>
+
+<!-- FINAL SCORECARD (repeated for emphasis) -->
+<h2>Final Scorecard</h2>
+<div class="score-grid">
+  <div class="score-card"><div class="val green">82</div><div class="label">Performance</div></div>
+  <div class="score-card"><div class="val yellow">68</div><div class="label">SEO</div></div>
+  <div class="score-card"><div class="val green">88</div><div class="label">Security</div></div>
+  <div class="score-card"><div class="val green">85</div><div class="label">Accessibility</div></div>
+  <div class="score-card"><div class="val yellow">72</div><div class="label">UX / Conversion</div></div>
+  <div class="score-card"><div class="val yellow">65</div><div class="label">AI Readiness</div></div>
+  <div class="score-card"><div class="val blue">77</div><div class="label">Overall</div></div>
+</div>
+
+<p style="text-align:center;color:#666;font-size:12px;margin-top:40px;padding-top:20px;border-top:1px solid #e0e4f0">
+  Audit prepared by Claude | April 17, 2026 | timelesshadith.com
+</p>
+
+</div><!-- /wrap -->
+</body>
+</html>

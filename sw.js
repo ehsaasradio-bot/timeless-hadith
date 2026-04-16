@@ -7,7 +7,7 @@
  *  - Fonts: self-hosted woff2 files precached with core assets
  */
 
-const VERSION = 'th-v11-2026-04-13';
+const VERSION = 'th-v12-2026-04-17';
 const CORE_CACHE = `${VERSION}-core`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -21,7 +21,7 @@ const CORE_ASSETS = [
   '/privacy.html',
   '/terms.html',
   '/offline.html',
-  '/css/styles.css',
+  '/css/styles.min.css',
   '/js/supabase-data.js?v=2',
   '/js/app.js',
   '/js/supabase-auth.js',
@@ -38,7 +38,11 @@ const CORE_ASSETS = [
   '/fonts/cairoplay-arabic.woff2',
   '/fonts/cairoplay-latin.woff2',
   '/fonts/gulzar-arabic.woff2',
-  '/fonts/gulzar-latin.woff2'
+  '/fonts/gulzar-latin.woff2',
+  '/fonts/noto-kufi-arabic.woff2',
+  '/fonts/Inter-Variable.woff2',
+  '/blog.html',
+  '/prayer-times.html'
 ];
 
 self.addEventListener('install', (event) => {

@@ -28,10 +28,13 @@
   <link rel="apple-touch-icon" sizes="180x180"              href="apple-touch-icon.png" />
   <link rel="manifest"         href="manifest.json" />
   <!-- Shared styles -->
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/styles.min.css" />
   <!-- Fonts: self-hosted (Inter + Noto Kufi Arabic) via @font-face in styles.css -->
-  <link rel="dns-prefetch" href="https://dwcsledifvnyrunxejzd.supabase.co" />
+  <link rel="preconnect" href="https://dwcsledifvnyrunxejzd.supabase.co" crossorigin />
   <link rel="dns-prefetch" href="https://timeless-hadith-worker.ehsaasradio.workers.dev" />
+  <!-- Preload critical fonts for faster LCP -->
+  <link rel="preload" as="font" href="fonts/inter-latin.woff2" type="font/woff2" crossorigin />
+  <link rel="preload" as="font" href="fonts/noto-kufi-arabic.woff2" type="font/woff2" crossorigin />
   <!-- CSP is enforced via _headers file on Cloudflare Pages (removed meta tag to avoid double-enforcement conflicts) -->
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <script type="application/ld+json">
@@ -1098,7 +1101,7 @@
   <footer>
     <div class="footer-inner">
       <a href="index.html" class="footer-logo">
-        <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="32" loading="lazy" decoding="async" /></picture>
+        <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="32" width="160" loading="lazy" decoding="async" /></picture>
       </a>
       <ul class="footer-links">
         <li><a href="categories.html">Browse</a></li>
