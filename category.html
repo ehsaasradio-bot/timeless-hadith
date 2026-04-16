@@ -209,7 +209,7 @@
 
     /* Arabic text */
     .arabic-text {
-      font-family: var(--font-arabic, 'Noto Kufi Arabic'), sans-serif;
+      font-family: var(--font-arabic, 'Cairo Play'), sans-serif;
       font-size: 1.3rem; line-height: 2.0;
       direction: rtl; text-align: right;
       color: var(--ink); margin-bottom: 8px;
@@ -302,6 +302,40 @@
       .hadith-list { padding: 16px 20px 0; }
       .pagination-wrap { padding: 32px 20px 56px; }
       .pagination { flex-wrap: wrap; justify-content: center; gap: 16px; }
+    }
+
+    /* ── Text truncation — 25-word expand/collapse ── */
+    .th-trunc-wrap {
+      overflow: hidden;
+      max-height: 76px; /* ~3 lines English at 14px/1.7lh */
+      transition: max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .th-trunc-wrap.th-trunc-rtl {
+      max-height: 100px; /* ~3 lines Urdu at 16px/2.0lh */
+    }
+    .th-trunc-wrap.th-expanded {
+      max-height: 2000px;
+    }
+    .th-toggle-btn {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      transition: opacity 0.2s ease;
+    }
+    .th-toggle-btn:hover { opacity: 0.65; }
+    .th-toggle-rtl {
+      font-family: var(--font-arabic);
+      font-size: 14px;
+      display: block;
+      text-align: right;
+      direction: rtl;
     }
   </style>
 </head>
@@ -453,3 +487,4 @@
 <script defer src="js/urdu-toggle.js"></script>
 </body>
 </html>
+      

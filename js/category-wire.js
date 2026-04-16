@@ -183,11 +183,11 @@
       (h.quick_read
         ? '<p class="quick-read-text">&#8220;'+h.quick_read+'&#8221;</p>'+
           '<div class="full-read-wrap" style="display:none">'+
-            '<p class="english-text">&#8220;'+(h.english||'')+'&#8221;</p>'+
+            _truncHtml(h.english||'', 'english-text', false, true)+
             '<p class="arabic-text" lang="ar" dir="rtl">'+(h.arabic||'')+'</p>'+
           '</div>'+
           '<button class="full-read-btn" onclick="toggleFullRead(this)">Full Read</button>'
-        : '<p class="english-text">&#8220;'+(h.english||'')+'&#8221;</p>'+
+        : _truncHtml(h.english||'', 'english-text', false, true)+
           '<p class="arabic-text" lang="ar" dir="rtl">'+(h.arabic||'')+'</p>'
       )+
       '<div class="card-ref">'+
@@ -202,7 +202,7 @@
         '<div class="urdu-inline-inner">'+
           '<div class="urdu-inline-label">اردو ترجمہ</div>'+
           (h.urdu
-            ? '<p class="urdu-inline-text">'+h.urdu+'</p>'
+            ? _truncHtml(h.urdu, 'urdu-inline-text', true, false)
             : '<p class="urdu-inline-empty">اردو ترجمہ جلد دستیاب ہوگا</p>'
           )+
         '</div>'+
@@ -284,12 +284,50 @@
     if(next>=0&&next<pages){ currentPage=next; renderPage(); window.scrollTo({top:0,behavior:'smooth'}); }
   }
 
+  /* ── Text truncation (25-word limit) ── */
+  var TRUNC_LIMIT = 25;
+
+  function _wordCount(text) {
+    return text ? text.trim().split(/\s+/).length : 0;
+  }
+
+  /* Returns HTML string for a truncatable text block.
+     isRtl = true for Urdu, false for English */
+  function _truncHtml(text, pClass, isRtl, quoteWrap) {
+    if (!text) return '';
+    var content = quoteWrap ? '\u201c' + text + '\u201d' : text;
+    if (_wordCount(text) <= TRUNC_LIMIT) {
+      return '<p class="' + pClass + '">' + content + '</p>';
+    }
+    var id = 'tht-' + Math.random().toString(36).substr(2, 9);
+    var wrapCls = 'th-trunc-wrap' + (isRtl ? ' th-trunc-rtl' : '');
+    var showLbl = isRtl ? '\u062a\u0645\u0627\u0645 \u062f\u06a9\u06be\u0627\u0626\u06cc\u06ba' : 'Show all';
+    return '<div class="' + wrapCls + '" id="' + id + '">' +
+             '<p class="' + pClass + '">' + content + '</p>' +
+           '</div>' +
+           '<button class="th-toggle-btn' + (isRtl ? ' th-toggle-rtl' : '') + '" ' +
+                   'id="' + id + '-btn" ' +
+                   'onclick="thToggleText(\'' + id + '\')">' + showLbl + '</button>';
+  }
+
   /* expose for inline event handlers and nav controls */
   window.setAuthFilter = setAuthFilter;
   window.setNarFilter  = setNarFilter;
   window.toggleFullRead = toggleFullRead;
   window.changePage = changePage;
   window._getH = _getH;
+
+  window.thToggleText = function(id) {
+    var wrap = document.getElementById(id);
+    var btn  = document.getElementById(id + '-btn');
+    if (!wrap || !btn) return;
+    var expanded = wrap.classList.contains('th-expanded');
+    wrap.classList.toggle('th-expanded', !expanded);
+    var isRtl = wrap.classList.contains('th-trunc-rtl');
+    btn.textContent = expanded
+      ? (isRtl ? '\u062a\u0645\u0627\u0645 \u062f\u06a9\u06be\u0627\u0626\u06cc\u06ba' : 'Show all')
+      : (isRtl ? '\u06a9\u0645 \u062f\u06a9\u06be\u0627\u0626\u06cc\u06ba'             : 'Show less');
+  };
 
   initPage();
 })();
