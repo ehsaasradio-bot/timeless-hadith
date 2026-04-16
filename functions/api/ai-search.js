@@ -176,13 +176,26 @@ export async function onRequestPost(context) {
     return _json({ error: 'AI service returned an invalid response.' }, 502, req);
   }
 
-  /* 5. Surface Worker errors verbatim (with safe status) */
+  /* 5. Surface Worker errors with user-friendly messages */
   if (!workerRes.ok || workerData.error) {
-    return _json(
-      { error: workerData.error || ('AI service error: ' + workerRes.status) },
-      workerRes.ok ? 502 : workerRes.status,
-      req
-    );
+    var rawError = workerData.error || '';
+    var rawMsg   = workerData.message || '';
+    var userMsg;
+
+    if (rawMsg.indexOf('openai_embeddings_failed: 401') !== -1 ||
+        rawMsg.indexOf('openai_chat_failed: 401') !== -1) {
+      userMsg = 'AI service authentication error. The site admin needs to update the API key.';
+    } else if (rawError === 'server_misconfigured') {
+      userMsg = 'AI search is not fully configured yet. Please check back soon.';
+    } else if (workerRes.status === 429) {
+      userMsg = 'Too many requests. Please wait a moment before searching again.';
+    } else if (rawMsg.indexOf('supabase_rpc_failed') !== -1) {
+      userMsg = 'Could not search the hadith database. Please try again in a moment.';
+    } else {
+      userMsg = 'AI search encountered an error. Please try again later.';
+    }
+
+    return _json({ error: userMsg }, workerRes.ok ? 502 : workerRes.status, req);
   }
 
   /* 6. Reshape Worker citations → frontend hadith cards */
