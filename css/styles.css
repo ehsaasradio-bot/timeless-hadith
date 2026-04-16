@@ -16,29 +16,12 @@
   unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
-<<<<<<< HEAD
-  font-family: 'Cairo Play';
-  src: url('/fonts/cairoplay-arabic.woff2') format('woff2');
-  font-weight: 200 700;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFF;
-}
-@font-face {
-  font-family: 'Cairo Play';
-  src: url('/fonts/cairoplay-latin.woff2') format('woff2');
-  font-weight: 200 700;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-=======
   font-family: 'Noto Kufi Arabic';
   src: url('/fonts/noto-kufi-arabic.woff2') format('woff2');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
   unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
->>>>>>> origin/main
 }
 
 @font-face {
@@ -88,11 +71,7 @@
 :root {
   --font: "Inter", -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
   --font-display: "Inter", -apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
-<<<<<<< HEAD
-  --font-arabic: "Cairo Play", "Segoe UI Arabic", "Tahoma", sans-serif;
-=======
   --font-arabic: "Noto Kufi Arabic", "Segoe UI Arabic", "Tahoma", sans-serif;
->>>>>>> origin/main
   --font-urdu: "Gulzar", "Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", serif;
   --radius: 16px;
   --bg:       #ffffff;
@@ -155,8 +134,6 @@ body {
   transition: background 0.35s ease, color 0.35s ease;
 }
 
-<<<<<<< HEAD
-=======
 /* ── Light theme: soft gradient canvas so glass cards have visible depth ── */
 [data-theme="light"] body {
   background: linear-gradient(150deg, #eef2ff 0%, #f8f8ff 42%, #f3eeff 100%) fixed;
@@ -181,8 +158,6 @@ body {
   border-color: rgba(79,114,248,0.18);
   box-shadow: 0 8px 36px rgba(79,114,248,0.10), 0 2px 8px rgba(0,0,0,0.06);
 }
-
->>>>>>> origin/main
 /* ── Dark theme: grid background ── */
 [data-theme="dark"] body::before {
   content: '';
@@ -587,15 +562,12 @@ footer {
   border-radius: 18px;
   transition: background 0.35s ease, border-color 0.35s ease;
 }
-<<<<<<< HEAD
-=======
 [data-theme="light"] .hadith-index-block {
   background: rgba(255,255,255,0.65);
   backdrop-filter: blur(16px) saturate(160%);
   -webkit-backdrop-filter: blur(16px) saturate(160%);
   border-color: rgba(255,255,255,0.80);
 }
->>>>>>> origin/main
 [data-theme="dark"] .hadith-index-block {
   background: rgba(13,22,41,0.60);
   backdrop-filter: blur(10px);
@@ -651,11 +623,7 @@ footer {
 }
 
 /* ──────────────────────────────────────────────────────────────
-<<<<<<< HEAD
-   Arabic typography — Cairo Play (global)
-=======
    Arabic typography — Noto Kufi Arabic (global)
->>>>>>> origin/main
    Applies to every Arabic surface: hadith body, modal, featured,
    search matches, any [lang="ar"] or [dir="rtl"] container, and
    the legacy .arabic-text / .hadith-arabic / .modal-hadith-arabic
@@ -712,11 +680,7 @@ div[dir="rtl"] {
   border-radius: 100px;
   font-size: 15px;
   font-weight: 500;
-<<<<<<< HEAD
-  font-family: "Gulzar", "Cairo Play", sans-serif;
-=======
   font-family: "Gulzar", "Noto Kufi Arabic", sans-serif;
->>>>>>> origin/main
   color: var(--accent);
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;

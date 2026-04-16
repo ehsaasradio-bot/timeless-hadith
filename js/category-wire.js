@@ -183,21 +183,12 @@
       (h.quick_read
         ? '<p class="quick-read-text">&#8220;'+h.quick_read+'&#8221;</p>'+
           '<div class="full-read-wrap" style="display:none">'+
-<<<<<<< HEAD
-            '<p class="english-text">&#8220;'+(h.english||'')+'&#8221;</p>'+
-            '<p class="arabic-text" lang="ar" dir="rtl">'+(h.arabic||'')+'</p>'+
-          '</div>'+
-          '<button class="full-read-btn" onclick="toggleFullRead(this)">Full Read</button>'
-        : '<p class="english-text">&#8220;'+(h.english||'')+'&#8221;</p>'+
-          '<p class="arabic-text" lang="ar" dir="rtl">'+(h.arabic||'')+'</p>'
-=======
             _truncHtml(h.english||'', 'english-text', false, true)+
             _truncHtml(h.arabic||'', 'arabic-text', 'ar', false)+
           '</div>'+
           '<button class="full-read-btn" onclick="toggleFullRead(this)">Full Read</button>'
         : _truncHtml(h.english||'', 'english-text', false, true)+
           _truncHtml(h.arabic||'', 'arabic-text', 'ar', false)
->>>>>>> origin/main
       )+
       '<div class="card-ref">'+
         '<span class="card-narrator">'+(h.narrator?'Narrated by <strong>'+h.narrator+'</strong>':''  )+'</span>'+
@@ -206,29 +197,16 @@
           '<button class="share-text-btn" onclick="TH_SHARE_TEXT&&TH_SHARE_TEXT.share(_getH(\''+h.id+'\'),\''+catTitle.replace(/\'/g,"\\\'")+'\')">↗ Share</button>'+
         '</div>'+
       '</div>'+
-<<<<<<< HEAD
-      '<button class="urdu-trans-btn" aria-label="Urdu translation">اردو ترجمہ</button>'+
-      '<div class="urdu-inline-body">'+
-        '<div class="urdu-inline-inner">'+
-          '<div class="urdu-inline-label">اردو ترجمہ</div>'+
-          (h.urdu
-            ? '<p class="urdu-inline-text">'+h.urdu+'</p>'
-            : '<p class="urdu-inline-empty">اردو ترجمہ جلد دستیاب ہوگا</p>'
-          )+
-        '</div>'+
-      '</div>';
-=======
       (h.urdu
-        ? '<button class="urdu-trans-btn" aria-label="Urdu translation">اردو ترجمہ</button>'+
+        ? '<button class="urdu-trans-btn" aria-label="Urdu translation">\u0627\u0631\u062f\u0648 \u062a\u0631\u062c\u0645\u06c1</button>'+
           '<div class="urdu-inline-body">'+
             '<div class="urdu-inline-inner">'+
-              '<div class="urdu-inline-label">اردو ترجمہ</div>'+
+              '<div class="urdu-inline-label">\u0627\u0631\u062f\u0648 \u062a\u0631\u062c\u0645\u06c1</div>'+
               _truncHtml(h.urdu, 'urdu-inline-text', true, false)+
             '</div>'+
           '</div>'
         : ''
       );
->>>>>>> origin/main
     return card;
   }
 
@@ -306,8 +284,6 @@
     if(next>=0&&next<pages){ currentPage=next; renderPage(); window.scrollTo({top:0,behavior:'smooth'}); }
   }
 
-<<<<<<< HEAD
-=======
   /* ── Text truncation (25-word limit) ── */
   var TRUNC_LIMIT = 25;
 
@@ -332,8 +308,8 @@
     var wrapCls = 'th-trunc-wrap' + (isRtl ? ' th-trunc-rtl' : '');
     var pExtra  = isAr ? ' lang="ar" dir="rtl"' : '';
     var btnCls  = 'th-toggle-btn' + (isRtl === true ? ' th-toggle-rtl' : '') + (isAr ? ' th-toggle-ar' : '');
-    var showLbl = isAr  ? '\u0627\u0644\u0645\u0632\u064a\u062f'                                     /* المزيد */
-                : isRtl ? '\u062a\u0645\u0627\u0645 \u062f\u06a9\u06be\u0627\u0626\u06cc\u06ba'     /* تمام دکھائیں */
+    var showLbl = isAr  ? '\u0627\u0644\u0645\u0632\u064a\u062f'
+                : isRtl ? '\u062a\u0645\u0627\u0645 \u062f\u06a9\u06be\u0627\u0626\u06cc\u06ba'
                         : 'Show all';
     return '<div class="' + wrapCls + '" id="' + id + '">' +
              '<p class="' + pClass + '"' + pExtra + '>' + content + '</p>' +
@@ -344,7 +320,6 @@
            '</button>';
   }
 
->>>>>>> origin/main
   /* expose for inline event handlers and nav controls */
   window.setAuthFilter = setAuthFilter;
   window.setNarFilter  = setNarFilter;
@@ -352,8 +327,6 @@
   window.changePage = changePage;
   window._getH = _getH;
 
-<<<<<<< HEAD
-=======
   window.thToggleText = function(id) {
     var wrap = document.getElementById(id);
     var btn  = document.getElementById(id + '-btn');
@@ -374,6 +347,5 @@
     btn.innerHTML = lbl + (expanded ? CHEVRON_DN : CHEVRON_UP);
   };
 
->>>>>>> origin/main
   initPage();
 })();
