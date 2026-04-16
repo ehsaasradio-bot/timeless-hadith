@@ -134,6 +134,31 @@ body {
   transition: background 0.35s ease, color 0.35s ease;
 }
 
+/* ── Light theme: soft gradient canvas so glass cards have visible depth ── */
+[data-theme="light"] body {
+  background: linear-gradient(150deg, #eef2ff 0%, #f8f8ff 42%, #f3eeff 100%) fixed;
+  min-height: 100vh;
+}
+
+/* ── Light theme: glassmorphism cards and surfaces ── */
+[data-theme="light"] .card,
+[data-theme="light"] .cat-card,
+[data-theme="light"] .hadith-card,
+[data-theme="light"] .bm-card {
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.85);
+  box-shadow: 0 2px 16px rgba(79,114,248,0.06), 0 1px 3px rgba(0,0,0,0.05);
+}
+[data-theme="light"] .cat-card:hover,
+[data-theme="light"] .card:hover,
+[data-theme="light"] .hadith-card:hover {
+  background: rgba(255,255,255,0.88);
+  border-color: rgba(79,114,248,0.18);
+  box-shadow: 0 8px 36px rgba(79,114,248,0.10), 0 2px 8px rgba(0,0,0,0.06);
+}
+
 /* ── Dark theme: grid background ── */
 [data-theme="dark"] body::before {
   content: '';
@@ -537,6 +562,12 @@ footer {
   border: 1px solid var(--border);
   border-radius: 18px;
   transition: background 0.35s ease, border-color 0.35s ease;
+}
+[data-theme="light"] .hadith-index-block {
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-color: rgba(255,255,255,0.80);
 }
 [data-theme="dark"] .hadith-index-block {
   background: rgba(13,22,41,0.60);

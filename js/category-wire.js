@@ -197,16 +197,16 @@
           '<button class="share-text-btn" onclick="TH_SHARE_TEXT&&TH_SHARE_TEXT.share(_getH(\''+h.id+'\'),\''+catTitle.replace(/\'/g,"\\\'")+'\')">↗ Share</button>'+
         '</div>'+
       '</div>'+
-      '<button class="urdu-trans-btn" aria-label="Urdu translation">اردو ترجمہ</button>'+
-      '<div class="urdu-inline-body">'+
-        '<div class="urdu-inline-inner">'+
-          '<div class="urdu-inline-label">اردو ترجمہ</div>'+
-          (h.urdu
-            ? _truncHtml(h.urdu, 'urdu-inline-text', true, false)
-            : '<p class="urdu-inline-empty">اردو ترجمہ جلد دستیاب ہوگا</p>'
-          )+
-        '</div>'+
-      '</div>';
+      (h.urdu
+        ? '<button class="urdu-trans-btn" aria-label="Urdu translation">اردو ترجمہ</button>'+
+          '<div class="urdu-inline-body">'+
+            '<div class="urdu-inline-inner">'+
+              '<div class="urdu-inline-label">اردو ترجمہ</div>'+
+              _truncHtml(h.urdu, 'urdu-inline-text', true, false)+
+            '</div>'+
+          '</div>'
+        : ''
+      );
     return card;
   }
 
