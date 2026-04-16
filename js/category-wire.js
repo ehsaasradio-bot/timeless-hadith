@@ -184,11 +184,11 @@
         ? '<p class="quick-read-text">&#8220;'+h.quick_read+'&#8221;</p>'+
           '<div class="full-read-wrap" style="display:none">'+
             _truncHtml(h.english||'', 'english-text', false, true)+
-            '<p class="arabic-text" lang="ar" dir="rtl">'+(h.arabic||'')+'</p>'+
+            _truncHtml(h.arabic||'', 'arabic-text', 'ar', false)+
           '</div>'+
           '<button class="full-read-btn" onclick="toggleFullRead(this)">Full Read</button>'
         : _truncHtml(h.english||'', 'english-text', false, true)+
-          '<p class="arabic-text" lang="ar" dir="rtl">'+(h.arabic||'')+'</p>'
+          _truncHtml(h.arabic||'', 'arabic-text', 'ar', false)
       )+
       '<div class="card-ref">'+
         '<span class="card-narrator">'+(h.narrator?'Narrated by <strong>'+h.narrator+'</strong>':''  )+'</span>'+
@@ -292,22 +292,32 @@
   }
 
   /* Returns HTML string for a truncatable text block.
-     isRtl = true for Urdu, false for English */
+     isRtl = true (Urdu) | 'ar' (Arabic) | false (English) */
+  var CHEVRON_DN = '<svg class="th-chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>';
+  var CHEVRON_UP = '<svg class="th-chev th-chev-up" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>';
+
   function _truncHtml(text, pClass, isRtl, quoteWrap) {
     if (!text) return '';
     var content = quoteWrap ? '\u201c' + text + '\u201d' : text;
     if (_wordCount(text) <= TRUNC_LIMIT) {
-      return '<p class="' + pClass + '">' + content + '</p>';
+      var extra = isRtl === 'ar' ? ' lang="ar" dir="rtl"' : '';
+      return '<p class="' + pClass + '"' + extra + '>' + content + '</p>';
     }
     var id = 'tht-' + Math.random().toString(36).substr(2, 9);
+    var isAr  = isRtl === 'ar';
     var wrapCls = 'th-trunc-wrap' + (isRtl ? ' th-trunc-rtl' : '');
-    var showLbl = isRtl ? '\u062a\u0645\u0627\u0645 \u062f\u06a9\u06be\u0627\u0626\u06cc\u06ba' : 'Show all';
+    var pExtra  = isAr ? ' lang="ar" dir="rtl"' : '';
+    var btnCls  = 'th-toggle-btn' + (isRtl === true ? ' th-toggle-rtl' : '') + (isAr ? ' th-toggle-ar' : '');
+    var showLbl = isAr  ? '\u0627\u0644\u0645\u0632\u064a\u062f'                                     /* المزيد */
+                : isRtl ? '\u062a\u0645\u0627\u0645 \u062f\u06a9\u06be\u0627\u0626\u06cc\u06ba'     /* تمام دکھائیں */
+                        : 'Show all';
     return '<div class="' + wrapCls + '" id="' + id + '">' +
-             '<p class="' + pClass + '">' + content + '</p>' +
+             '<p class="' + pClass + '"' + pExtra + '>' + content + '</p>' +
            '</div>' +
-           '<button class="th-toggle-btn' + (isRtl ? ' th-toggle-rtl' : '') + '" ' +
-                   'id="' + id + '-btn" ' +
-                   'onclick="thToggleText(\'' + id + '\')">' + showLbl + '</button>';
+           '<button class="' + btnCls + '" id="' + id + '-btn" ' +
+                   'onclick="thToggleText(\'' + id + '\')">' +
+                   showLbl + CHEVRON_DN +
+           '</button>';
   }
 
   /* expose for inline event handlers and nav controls */
@@ -324,9 +334,17 @@
     var expanded = wrap.classList.contains('th-expanded');
     wrap.classList.toggle('th-expanded', !expanded);
     var isRtl = wrap.classList.contains('th-trunc-rtl');
-    btn.textContent = expanded
-      ? (isRtl ? '\u062a\u0645\u0627\u0645 \u062f\u06a9\u06be\u0627\u0626\u06cc\u06ba' : 'Show all')
-      : (isRtl ? '\u06a9\u0645 \u062f\u06a9\u06be\u0627\u0626\u06cc\u06ba'             : 'Show less');
+    var isAr  = btn.classList.contains('th-toggle-ar');
+    var CHEVRON_DN = '<svg class="th-chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>';
+    var CHEVRON_UP = '<svg class="th-chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>';
+    var lbl = expanded
+      ? (isAr  ? '\u0627\u0644\u0645\u0632\u064a\u062f'
+        : isRtl ? '\u062a\u0645\u0627\u0645 \u062f\u06a9\u06be\u0627\u0626\u06cc\u06ba'
+                : 'Show all')
+      : (isAr  ? '\u0623\u0642\u0644'
+        : isRtl ? '\u06a9\u0645 \u062f\u06a9\u06be\u0627\u0626\u06cc\u06ba'
+                : 'Show less');
+    btn.innerHTML = lbl + (expanded ? CHEVRON_DN : CHEVRON_UP);
   };
 
   initPage();
