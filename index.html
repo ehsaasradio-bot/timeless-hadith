@@ -4,7 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Early theme: prevents flash of wrong theme on load -->
-  <script src="js/theme-init.js"></script>
+  <script>(function () {
+  try {
+    var MIGRATION_KEY = 'th_theme_default_v3';
+    var migrated = localStorage.getItem(MIGRATION_KEY);
+    if (!migrated) {
+      // One-time: clear any forced dark preference from the previous era.
+      try { localStorage.removeItem('th_theme'); } catch (_) {}
+      localStorage.setItem(MIGRATION_KEY, '1');
+    }
+    var saved = localStorage.getItem('th_theme');
+    document.documentElement.setAttribute('data-theme', saved || 'light');
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();</script>
   <title>Timeless Hadith — Prophetic Guidance for Every Heart</title>
   <meta name="description" content="Authentic, searchable hadiths from Prophet Muhammad (PBUH). Explore timeless guidance by topic, beautifully organised." />
   <link rel="canonical" href="https://timelesshadith.com/" />
@@ -1135,7 +1149,7 @@
   <script defer src="js/sw-register.js"></script>
 
   <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
+  <script async src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
   <!-- End Cloudflare Web Analytics -->
 
 

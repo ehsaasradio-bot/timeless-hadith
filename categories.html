@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Browse Hadith Topics — Timeless Hadith</title>
+  <title>Browse Authentic Hadith Topics by Islamic Theme — Timeless Hadith</title>
   <meta name="description" content="Browse all hadith topics and categories. Explore authentic sayings of Prophet Muhammad (PBUH) organized by theme — from faith and prayer to family and character." />
   <link rel="canonical" href="https://timelesshadith.com/categories.html" />
   <meta name="robots" content="index, follow" />
@@ -11,15 +11,19 @@
   <meta name="color-scheme" content="dark light" />
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://timelesshadith.com/categories.html" />
-  <meta property="og:title"       content="Browse Hadith Topics — Timeless Hadith" />
+  <meta property="og:title"       content="Browse Authentic Hadith Topics by Islamic Theme — Timeless Hadith" />
   <meta property="og:description" content="Browse all hadith topics and categories. Explore authentic sayings of Prophet Muhammad (PBUH) organized by theme — from faith and prayer to family and character." />
   <meta property="og:image"       content="https://timelesshadith.com/og-image.png" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Browse Authentic Hadith Topics by Islamic Theme — Timeless Hadith" />
+  <meta name="twitter:description" content="Browse all hadith topics and categories. Explore authentic sayings of Prophet Muhammad (PBUH) organized by theme." />
+  <meta name="twitter:image"       content="https://timelesshadith.com/og-image.png" />
   <script type="application/ld+json">
   [
     {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "name": "Browse Hadith Topics — Timeless Hadith",
+      "name": "Browse Authentic Hadith Topics by Islamic Theme — Timeless Hadith",
       "url": "https://timelesshadith.com/categories.html",
       "description": "Browse all hadith topics and categories. Explore authentic sayings of Prophet Muhammad (PBUH) organised by theme — from faith and prayer to family and character.",
       "isPartOf": {
@@ -61,7 +65,21 @@
   <link rel="preload" as="font" href="fonts/noto-kufi-arabic.woff2" type="font/woff2" crossorigin />
 
   <!-- Theme initialiser — must run before paint -->
-  <script src="js/theme-init.js"></script>
+  <script>(function () {
+  try {
+    var MIGRATION_KEY = 'th_theme_default_v3';
+    var migrated = localStorage.getItem(MIGRATION_KEY);
+    if (!migrated) {
+      // One-time: clear any forced dark preference from the previous era.
+      try { localStorage.removeItem('th_theme'); } catch (_) {}
+      localStorage.setItem(MIGRATION_KEY, '1');
+    }
+    var saved = localStorage.getItem('th_theme');
+    document.documentElement.setAttribute('data-theme', saved || 'light');
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();</script>
 
   <style>
 
