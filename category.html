@@ -3,24 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hadith by Topic — Timeless Hadith</title>
+  <title>Explore Hadiths by Topic — Verified Prophetic Guidance | Timeless Hadith</title>
   <meta name="description" content="Explore authentic hadiths organized by Islamic topic. Verified sayings of the Prophet Muhammad (PBUH) from Sahih al-Bukhari, Sahih Muslim, and more." />
   <link rel="canonical" id="canonical-tag" href="https://timelesshadith.com/category.html" />
+  <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#060c1a" />
   <meta name="color-scheme" content="dark light" />
   <meta property="og:type" content="website" />
   <meta property="og:url" id="og-url-tag" content="https://timelesshadith.com/category.html" />
   <script src="js/category-head.js"></script>
-  <meta property="og:title"       content="Hadith by Topic — Timeless Hadith" />
+  <meta property="og:title"       content="Explore Hadiths by Topic — Verified Prophetic Guidance | Timeless Hadith" />
   <meta property="og:description" content="Explore authentic hadiths organized by Islamic topic. Verified sayings of the Prophet Muhammad (PBUH) from Sahih al-Bukhari, Sahih Muslim, and more." />
   <meta property="og:image"       content="https://timelesshadith.com/og-image.png" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Explore Hadiths by Topic — Verified Prophetic Guidance | Timeless Hadith" />
+  <meta name="twitter:description" content="Explore authentic hadiths organized by Islamic topic. Verified sayings of the Prophet Muhammad (PBUH) from Sahih al-Bukhari, Sahih Muslim, and more." />
+  <meta name="twitter:image"       content="https://timelesshadith.com/og-image.png" />
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Timeless Hadith",
-    "url": "https://timelesshadith.com/"
-  }
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Explore Hadiths by Topic",
+      "url": "https://timelesshadith.com/category.html",
+      "description": "Explore authentic hadiths organized by Islamic topic. Verified sayings of the Prophet Muhammad (PBUH) from Sahih al-Bukhari, Sahih Muslim, and more.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Timeless Hadith",
+        "url": "https://timelesshadith.com/"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://timelesshadith.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Browse Topics",
+          "item": "https://timelesshadith.com/categories.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Topic",
+          "item": "https://timelesshadith.com/category.html"
+        }
+      ]
+    }
+  ]
   </script>
   <link rel="icon"             type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="icon"             type="image/png" sizes="16x16" href="favicon-16.png" />
@@ -34,7 +71,21 @@
   <link rel="preload" as="font" href="fonts/inter-latin.woff2" type="font/woff2" crossorigin />
   <link rel="preload" as="font" href="fonts/noto-kufi-arabic.woff2" type="font/woff2" crossorigin />
 
-  <script src="js/theme-init.js"></script>
+  <script>(function () {
+  try {
+    var MIGRATION_KEY = 'th_theme_default_v3';
+    var migrated = localStorage.getItem(MIGRATION_KEY);
+    if (!migrated) {
+      // One-time: clear any forced dark preference from the previous era.
+      try { localStorage.removeItem('th_theme'); } catch (_) {}
+      localStorage.setItem(MIGRATION_KEY, '1');
+    }
+    var saved = localStorage.getItem('th_theme');
+    document.documentElement.setAttribute('data-theme', saved || 'light');
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();</script>
 
   <style>
 
@@ -415,9 +466,12 @@
   </nav>
 
   <nav class="nav-drawer" id="navDrawer" aria-label="Mobile navigation">
-    <a href="categories.html">Browse Categories</a>
+    <a href="index.html">Home</a>
+    <a href="categories.html" class="active">Browse Categories</a>
     <a href="bookmarks.html">My Bookmarks</a>
     <a href="about.html">About</a>
+    <a href="blog.html">Blog</a>
+    <a href="prayer-times.html">Prayer Times</a>
     <button class="theme-toggle" id="themeToggleDrawer" aria-label="Toggle dark mode" style="margin-top:8px;align-self:flex-start;">
       <svg class="icon-sun"  viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>

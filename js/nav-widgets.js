@@ -13,10 +13,10 @@
   setInterval(updateMakkahTime, 1000);
 
   /* ── 2. Weather via Open-Meteo (free, no key) ── */
-  var WX = {0:'☀',1:'🌤',2:'⛅',3:'☁',45:'🌫',48:'🌫',
-    51:'🌦',53:'🌦',55:'🌧',61:'🌧',63:'🌧',65:'🌧',
-    71:'🌨',73:'🌨',75:'🌨',80:'🌦',81:'🌧',82:'⛈',
-    95:'⛈',96:'⛈',99:'⛈'};
+  var WX = {0:'Clear',1:'Clear',2:'Partly Cloudy',3:'Cloudy',45:'Fog',48:'Fog',
+    51:'Drizzle',53:'Drizzle',55:'Drizzle',61:'Rain',63:'Rain',65:'Rain',
+    71:'Snow',73:'Snow',75:'Snow',80:'Showers',81:'Rain',82:'Showers',
+    95:'Thunderstorm',96:'Thunderstorm',99:'Thunderstorm'};
 
   function fetchWeather(lat,lon){
     fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+
@@ -24,9 +24,9 @@
       .then(function(r){return r.json();})
       .then(function(d){
         var t=Math.round(d.current_weather.temperature);
-        var icon=WX[d.current_weather.weathercode]||'🌡';
+        var desc=WX[d.current_weather.weathercode]||'—';
         var el=document.getElementById('weather-val');
-        if(el) el.innerHTML=icon+' <strong>'+t+'°C</strong>';
+        if(el) el.innerHTML='<strong>'+t+'°C</strong>, '+desc;
       })
       .catch(function(){
         var el=document.getElementById('weather-val');

@@ -7,7 +7,7 @@
  *  - Fonts: self-hosted woff2 files precached with core assets
  */
 
-const VERSION = 'th-v12-2026-04-17';
+const VERSION = 'th-v13-2026-04-17';
 const CORE_CACHE = `${VERSION}-core`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -35,8 +35,6 @@ const CORE_ASSETS = [
   '/og-image.png',
   '/fonts/inter-latin.woff2',
   '/fonts/inter-latin-ext.woff2',
-  '/fonts/cairoplay-arabic.woff2',
-  '/fonts/cairoplay-latin.woff2',
   '/fonts/gulzar-arabic.woff2',
   '/fonts/gulzar-latin.woff2',
   '/fonts/noto-kufi-arabic.woff2',
