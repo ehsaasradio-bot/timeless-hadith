@@ -425,6 +425,9 @@ input[type=range]::-moz-range-thumb {
   <meta name="twitter:title" content="Prayer Times & Zakat Calculator — Timeless Hadith"/>
   <meta name="twitter:description" content="Accurate daily prayer times for your location and a Zakat calculator backed by Islamic law. Free tool from Timeless Hadith."/>
   <meta name="twitter:image" content="https://timelesshadith.com/og-image.png"/>
+  <meta property="og:site_name"    content="Timeless Hadith" />
+  <meta name="twitter:site"        content="@TimelessHadith" />
+  <meta name="author"              content="Timeless Hadith" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png"/>
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
@@ -452,7 +455,30 @@ input[type=range]::-moz-range-thumb {
     }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://timelesshadith.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Prayer Times & Zakat Calculator",
+        "item": "https://timelesshadith.com/prayer-times.html"
+      }
+    ]
+  }
+  </script>
   <script>(function(){try{var m='th_theme_default_v3';if(!localStorage.getItem(m)){try{localStorage.removeItem('th_theme');}catch(_){}localStorage.setItem(m,'1');}var s=localStorage.getItem('th_theme');document.documentElement.setAttribute('data-theme',s||'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})()</script>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <!-- Google Analytics 4 — replace G-XXXXXXXXXX in js/analytics.js with your Measurement ID -->
+  <script src="js/analytics.js" defer></script>
 </head>
 <body>
 <a href="#main-content" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:9999;padding:8px 16px;background:var(--accent);color:#fff;border-radius:0 0 8px 8px;font-size:14px;font-weight:600;text-decoration:none;">Skip to content</a>
