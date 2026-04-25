@@ -7,7 +7,7 @@
  *  - Fonts: self-hosted woff2 files precached with core assets
  */
 
-const VERSION = 'th-v13-2026-04-17';
+const VERSION = 'th-v14-2026-04-25'; // SEO: GA4 + meta tags + schema updates
 const CORE_CACHE = `${VERSION}-core`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -75,8 +75,16 @@ self.addEventListener('fetch', (event) => {
   if (
     url.hostname.includes('supabase.co') ||
     url.hostname.includes('cloudflareinsights.com') ||
-    url.hostname.includes('accounts.google.com')
+    url.hostname.includes('accounts.google.com') ||
+    url.hostname.includes('googletagmanager.com') ||
+    url.hostname.includes('google-analytics.com') ||
+    url.hostname.includes('analytics.google.com')
   ) {
+    return;
+  }
+
+  // Skip analytics.js itself — always fetch fresh so GA ID updates propagate immediately
+  if (url.pathname === '/js/analytics.js') {
     return;
   }
 
