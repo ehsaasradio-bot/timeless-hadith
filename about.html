@@ -266,8 +266,15 @@
   </style>
 
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
-  <!-- Google Analytics 4 — replace G-XXXXXXXXXX in js/analytics.js with your Measurement ID -->
-  <script src="js/analytics.js" defer></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6JL045YKG3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6JL045YKG3');
+    window.gaEvent = function(e, p){ gtag('event', e, p || {}); };
+  </script>
 </head>
 <body>
 
