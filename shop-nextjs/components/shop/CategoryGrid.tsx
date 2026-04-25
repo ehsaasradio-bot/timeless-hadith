@@ -3,12 +3,13 @@
 // components/shop/CategoryGrid.tsx
 // Featured categories grid — hover animated, image-optimized
 
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { CATEGORIES } from '@/lib/shop-data';
 
-const CATEGORY_ICONS: Record<string, JSX.Element> = {
+const CATEGORY_ICONS: Record<string, React.ReactElement> = {
   'wall-art': (
     <svg viewBox="0 0 20 20" fill="none" width="20" height="20" aria-hidden="true">
       <rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="1.4" />
