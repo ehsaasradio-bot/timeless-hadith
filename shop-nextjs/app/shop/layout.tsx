@@ -1,6 +1,8 @@
 // app/shop/layout.tsx
 // Shop layout — sets up fonts and base styles for the shop route segment
 
+export const runtime = 'edge';
+
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import './shop.css';

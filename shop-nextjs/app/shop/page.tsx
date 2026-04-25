@@ -1,7 +1,9 @@
 // app/shop/page.tsx
 // Timeless Hadith — Premium Islamic Merchandise Page
 // Next.js 14+ App Router | TypeScript | Tailwind | Framer Motion
-// Static generation — no server-side data fetching required
+
+export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
