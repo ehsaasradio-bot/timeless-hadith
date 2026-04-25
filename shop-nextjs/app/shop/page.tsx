@@ -67,9 +67,6 @@ export const metadata: Metadata = {
     site: '@timelesshadith',
     images: ['https://timelesshadith.com/og-shop.jpg'],
   },
-  alternates: {
-    canonical: 'https://timelesshadith.com/shop',
-  },
   robots: {
     index: true,
     follow: true,
