@@ -1,0 +1,164 @@
+/* app/shop/shop.css
+   Shop-specific global styles and design tokens
+   Import this ONLY in the shop layout — keeps it scoped */
+
+/* ─── Design tokens ──────────────────────────────────────────────────────────── */
+:root {
+  /* Palette */
+  --color-ivory: #FAF7F2;
+  --color-sand: #F0E8DC;
+  --color-sand-dark: #E0D0BC;
+  --color-charcoal: #1C1C1E;
+  --color-charcoal-soft: #3A3A3C;
+  --color-emerald: #0D4A3C;
+  --color-emerald-light: #1A6B54;
+  --color-gold: #C9A84C;
+  --color-gold-light: #E8C96A;
+  --color-border: #E8DDD0;
+
+  /* Typography */
+  --font-sans: var(--font-inter, ui-sans-serif, system-ui, sans-serif);
+  --font-serif: var(--font-playfair, ui-serif, Georgia, serif);
+
+  /* Spacing */
+  --section-padding-y: clamp(4rem, 8vw, 6rem);
+  --container-max: 80rem;
+  --container-pad: clamp(1rem, 4vw, 2rem);
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(13,74,60,0.06), 0 2px 6px rgba(0,0,0,0.04);
+  --shadow-lg: 0 12px 40px rgba(13,74,60,0.10), 0 4px 16px rgba(0,0,0,0.04);
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+}
+
+/* ─── Base reset for shop ────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Hide scrollbar for category filter strip */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Typography scale ───────────────────────────────────────────────────────── */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* ─── Focus ring — consistent brand ─────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-emerald);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─── Smooth scrolling ───────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Product image hover scale — defined here for performance ────────────────── */
+.group:hover .group-hover\:scale-108 {
+  transform: scale(1.08);
+}
+
+/* ─── Reduced motion — respect user preference ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Accessibility: visually-hidden utility ────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.focus\:not-sr-only:focus {
+  position: fixed;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ─── Loading skeleton pulse ─────────────────────────────────────────────────── */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.skeleton {
+  animation: skeleton-pulse 1.8s ease-in-out infinite;
+  background: linear-gradient(
+    90deg,
+    var(--color-sand) 0%,
+    var(--color-ivory) 50%,
+    var(--color-sand) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* ─── Islamic geometric decorative element (reusable) ───────────────────────── */
+.geo-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpolygon points='30,4 36,22 54,22 40,32 45,50 30,40 15,50 20,32 6,22 24,22' fill='none' stroke='%230D4A3C' stroke-width='0.8' opacity='0.1'/%3E%3C/svg%3E");
+  background-size: 60px 60px;
+}
+
+/* ─── Gold shimmer on hover (for premium buttons) ──────────────────────────── */
+@keyframes gold-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.gold-shimmer:hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.25) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: gold-shimmer 0.8s ease-in-out;
+  border-radius: inherit;
+  pointer-events: none;
+}
