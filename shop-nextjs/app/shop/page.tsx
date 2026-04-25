@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     'Islamic books',
   ],
   authors: [{ name: 'Timeless Hadith', url: 'https://timelesshadith.com' }],
-  canonical: 'https://timelesshadith.com/shop',
+  alternates: { canonical: 'https://timelesshadith.com/shop' },
   openGraph: {
     title: 'Islamic Gifts & Premium Muslim Merchandise | Timeless Hadith',
     description:
