@@ -13,7 +13,7 @@
  *   3. Verify via Google Analytics (easiest method once GA4 is live)
  * ───────────────────────────────────────────────────────────────── */
 
-var GA_ID = 'G-XXXXXXXXXX'; // ← REPLACE THIS
+var GA_ID = 'G-6JL045YKG3';
 
 (function () {
   // Load the gtag.js library
