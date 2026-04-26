@@ -2,7 +2,35 @@
   "permissions": {
     "allow": [
       "Bash(gh pr:*)",
-      "Bash(where gh:*)"
+      "Bash(where gh:*)",
+      "Read(//c/Users/mubas/Documents/Claude/Projects/Project Quran/src/lib/**)",
+      "Read(//c/Users/mubas/Documents/Claude/Projects/Project Quran/src/components/**)",
+      "Read(//c/Users/mubas/Documents/Claude/Projects/Project Quran/**)",
+      "Bash(npx --no-install tsc --noEmit)",
+      "Bash(npx --prefix \"C:/Users/mubas/Documents/Claude/Projects/Project Quran\" --no-install tsc -p \"C:/Users/mubas/Documents/Claude/Projects/Project Quran/tsconfig.json\" --noEmit)",
+      "Bash(echo \"EXIT=$?\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; npx --no-install tsc --noEmit; Write-Host \"TYPECHECK_EXIT=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; npx --no-install next build 2>&1 | Select-Object -Last 80; Write-Host \"BUILD_EXIT=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; npx --no-install next build 2>&1 | Select-Object -Last 60; Write-Host \"BUILD_EXIT=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; npx --no-install next build 2>&1 | Select-Object -Last 40; Write-Host \"BUILD_EXIT=$LASTEXITCODE\")",
+      "Bash(node -e ' *)",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; npx --no-install next build 2>&1 | Select-Object -Last 30; Write-Host \"BUILD_EXIT=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; npx --no-install tsc --noEmit; Write-Host \"TC=$LASTEXITCODE\"; npx --no-install next build 2>&1 | Select-Object -Last 10; Write-Host \"BUILD=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; npx --no-install tsc --noEmit; Write-Host \"TC=$LASTEXITCODE\"; npx --no-install next build 2>&1 | Select-Object -Last 5; Write-Host \"BUILD=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; npx --no-install tsc --noEmit; Write-Host \"TC=$LASTEXITCODE\"; npx --no-install next build 2>&1 | Select-Object -Last 6; Write-Host \"BUILD=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; npm install 2>&1 | Select-Object -Last 10; Write-Host \"EXIT=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; npx --no-install tsc --noEmit; Write-Host \"TC=$LASTEXITCODE\"; npx --no-install next build 2>&1 | Select-Object -Last 15; Write-Host \"BUILD=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; npx --no-install tsc --noEmit; Write-Host \"TC=$LASTEXITCODE\"; npx --no-install next build 2>&1 | Select-Object -Last 20; Write-Host \"BUILD=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; if \\(Test-Path .next\\) { Remove-Item -Recurse -Force .next }; npx --no-install next build 2>&1 | Select-Object -Last 15; Write-Host \"BUILD=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; if \\(Test-Path .next\\) { Remove-Item -Recurse -Force .next }; npx --no-install tsc --noEmit; Write-Host \"TC=$LASTEXITCODE\"; npx --no-install next build 2>&1 | Select-Object -Last 25; Write-Host \"BUILD=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; if \\(Test-Path .next\\) { Remove-Item -Recurse -Force .next }; npx --no-install tsc --noEmit; Write-Host \"TC=$LASTEXITCODE\"; npx --no-install next build 2>&1 | Select-Object -Last 10; Write-Host \"BUILD=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; if \\(Test-Path .next\\) { Remove-Item -Recurse -Force .next }; npx --no-install tsc --noEmit; Write-Host \"TC=$LASTEXITCODE\"; npx --no-install next build 2>&1 | Select-Object -Last 8; Write-Host \"BUILD=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; if \\(Test-Path .next\\) { Remove-Item -Recurse -Force .next }; npx --no-install tsc --noEmit; Write-Host \"TC=$LASTEXITCODE\"; npx --no-install next build 2>&1 | Select-Object -Last 15; Write-Host \"BUILD=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; npx --no-install tsc --noEmit; Write-Host \"TC=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; if \\(Test-Path .next\\) { Remove-Item -Recurse -Force .next }; npx --no-install tsc --noEmit; Write-Host \"TC=$LASTEXITCODE\"; npx --no-install next build 2>&1 | Select-Object -Last 20; Write-Host \"BUILD=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force; Start-Sleep -Seconds 1; if \\(Test-Path .next\\) { Remove-Item -Recurse -Force .next }; if \\(Test-Path node_modules\\\\.cache\\) { Remove-Item -Recurse -Force node_modules\\\\.cache }; Start-Sleep -Seconds 1; npx --no-install next build 2>&1 | Select-Object -Last 25; Write-Host \"BUILD=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force; Start-Sleep -Seconds 1; if \\(Test-Path .next\\) { Remove-Item -Recurse -Force .next }; if \\(Test-Path node_modules\\\\.cache\\) { Remove-Item -Recurse -Force node_modules\\\\.cache }; Start-Sleep -Seconds 1; npx --no-install tsc --noEmit; Write-Host \"TC=$LASTEXITCODE\"; npx --no-install next build 2>&1 | Select-Object -Last 25; Write-Host \"BUILD=$LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\mubas\\\\Documents\\\\Claude\\\\Projects\\\\Project Quran\"; Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force; Start-Sleep -Seconds 1; if \\(Test-Path .next\\) { Remove-Item -Recurse -Force .next }; if \\(Test-Path node_modules\\\\.cache\\) { Remove-Item -Recurse -Force node_modules\\\\.cache }; Start-Sleep -Seconds 1; npx --no-install tsc --noEmit; Write-Host \"TC=$LASTEXITCODE\"; npx --no-install next build 2>&1 | Select-Object -Last 18; Write-Host \"BUILD=$LASTEXITCODE\")"
     ]
   }
 }
