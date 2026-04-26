@@ -119,7 +119,7 @@ export default function Newsletter() {
                     className={`px-4 py-1.5 rounded-full text-[12px] font-medium transition-all duration-200 ${
                       selectedInterests.includes(interest)
                         ? 'bg-[#C9A84C] text-[#1C1C1E]'
-                        : 'bg-white/08 text-white/60 border border-white/10 hover:border-white/20 hover:text-white/80'
+                        : 'bg-white/[0.08] text-white/60 border border-white/10 hover:border-white/20 hover:text-white/80'
                     }`}
                   >
                     {interest}
@@ -148,7 +148,7 @@ export default function Newsletter() {
                       aria-required="true"
                       aria-describedby={errorMsg ? 'nl-error' : undefined}
                       aria-invalid={!!errorMsg}
-                      className="w-full px-5 py-3.5 bg-white/08 border border-white/12 text-white placeholder:text-white/35 rounded-xl text-[14px] focus:outline-none focus:ring-2 focus:ring-[#C9A84C]/60 focus:border-[#C9A84C]/40 transition-all disabled:opacity-50"
+                      className="w-full px-5 py-3.5 bg-white/[0.08] border border-white/[0.12] text-white placeholder:text-white/35 rounded-xl text-[14px] focus:outline-none focus:ring-2 focus:ring-[#C9A84C]/60 focus:border-[#C9A84C]/40 transition-all disabled:opacity-50"
                     />
                   </div>
 

@@ -1,6 +1,6 @@
 // app/shop/page.tsx
-// Timeless Hadith — Premium Islamic Merchandise Page
-// Next.js 14+ App Router | TypeScript | Tailwind | Framer Motion
+// Timeless Hadith — Premium Rare Coin & Bullion Shop
+// Next.js 15 App Router | TypeScript | Tailwind | Framer Motion
 
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
@@ -12,7 +12,6 @@ import { Suspense } from 'react';
 import HeroSection from '@/components/shop/HeroSection';
 import CategoryGrid from '@/components/shop/CategoryGrid';
 import BestSellers from '@/components/shop/BestSellers';
-import RamadanBanner from '@/components/shop/RamadanBanner';
 import WhyShopWithUs from '@/components/shop/WhyShopWithUs';
 import Testimonials from '@/components/shop/Testimonials';
 import Newsletter from '@/components/shop/Newsletter';
@@ -22,32 +21,32 @@ import ShopHeader from '@/components/shop/ShopHeader';
 // ─── SEO Metadata ─────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
-  title: 'Islamic Gifts & Premium Muslim Merchandise | Timeless Hadith Shop',
+  title: 'Premium Rare Coins & Bullion | Timeless Hadith Coin Shop',
   description:
-    'Shop premium Islamic gifts, Quran gifts, Muslim merchandise, Ramadan gifts, and Eid gifts. Wall art, prayer essentials, journals, and more — ethically made and shipped worldwide.',
+    'Shop premium rare coins and bullion — silver eagles, gold maple leafs, copper rounds, and collectible numismatic coins. Authenticated, certified, and shipped worldwide.',
   keywords: [
-    'Islamic gifts',
-    'Quran gifts',
-    'Muslim merchandise',
-    'Islamic decor',
-    'premium Islamic products',
-    'Ramadan gifts',
-    'Eid gifts',
-    'Hadith wall art',
-    'Islamic journals',
-    'prayer essentials',
-    'Muslim gifts',
-    'Islamic home decor',
-    'modest fashion',
-    'Muslim kids learning',
-    'Islamic books',
+    'rare coins',
+    'silver coins',
+    'gold coins',
+    'bullion coins',
+    'silver eagles',
+    'gold maple leaf',
+    'copper rounds',
+    'bronze coins',
+    'numismatic coins',
+    'collectible coins',
+    'coin shop',
+    'silver bullion',
+    'gold bullion',
+    'investment coins',
+    'certified coins',
   ],
   authors: [{ name: 'Timeless Hadith', url: 'https://timelesshadith.com' }],
   alternates: { canonical: 'https://timelesshadith.com/shop' },
   openGraph: {
-    title: 'Islamic Gifts & Premium Muslim Merchandise | Timeless Hadith',
+    title: 'Premium Rare Coins & Bullion | Timeless Hadith Coin Shop',
     description:
-      'Discover premium Islamic gifts, Quran gifts, prayer essentials, journals, and wall art. Ethically made, shipped worldwide.',
+      'Discover premium rare coins and bullion — silver eagles, gold maple leafs, copper rounds, and collectibles. Authenticated and shipped worldwide.',
     url: 'https://timelesshadith.com/shop',
     siteName: 'Timeless Hadith',
     type: 'website',
@@ -57,15 +56,15 @@ export const metadata: Metadata = {
         url: 'https://timelesshadith.com/og-shop.jpg',
         width: 1200,
         height: 630,
-        alt: 'Timeless Hadith Shop — Premium Islamic Merchandise',
+        alt: 'Timeless Hadith Coin Shop — Premium Rare Coins & Bullion',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Islamic Gifts & Premium Muslim Merchandise | Timeless Hadith',
+    title: 'Premium Rare Coins & Bullion | Timeless Hadith Coin Shop',
     description:
-      'Discover premium Islamic gifts, Quran gifts, prayer essentials, journals, and wall art. Ethically made, shipped worldwide.',
+      'Discover premium rare coins and bullion — silver eagles, gold maple leafs, copper rounds, and collectibles. Authenticated and shipped worldwide.',
     site: '@timelesshadith',
     images: ['https://timelesshadith.com/og-shop.jpg'],
   },
@@ -106,7 +105,7 @@ const organizationSchema = {
   url: 'https://timelesshadith.com',
   logo: 'https://timelesshadith.com/timelesshadith-logo.png',
   description:
-    'Premium Islamic merchandise — wall art, journals, prayer essentials, books, and more. Ethically made and shipped worldwide.',
+    'Premium rare coins and bullion — silver, gold, copper, and bronze. Authenticated, certified, and shipped worldwide.',
   sameAs: [
     'https://instagram.com/timelesshadith',
     'https://facebook.com/timelesshadith',
@@ -127,7 +126,7 @@ const breadcrumbSchema = {
     {
       '@type': 'ListItem',
       position: 2,
-      name: 'Shop',
+      name: 'Coin Shop',
       item: 'https://timelesshadith.com/shop',
     },
   ],
@@ -136,33 +135,29 @@ const breadcrumbSchema = {
 const shopSchema = {
   '@context': 'https://schema.org',
   '@type': 'Store',
-  name: 'Timeless Hadith Shop',
+  name: 'Timeless Hadith Coin Shop',
   url: 'https://timelesshadith.com/shop',
   image: 'https://timelesshadith.com/og-shop.jpg',
   description:
-    'Premium Islamic gifts, Quran gifts, Muslim merchandise, and prayer essentials. Ramadan and Eid collections available.',
-  priceRange: '$12 - $149',
+    'Premium rare coins and bullion — silver eagles, gold maple leafs, copper rounds, and collectible numismatic coins.',
+  priceRange: '$30 - $500',
   currenciesAccepted: 'USD',
-  paymentAccepted: 'Credit Card, PayPal, Apple Pay',
+  paymentAccepted: 'Credit Card, Apple Pay, Google Pay',
   openingHours: 'Mo-Su 00:00-24:00',
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
-    name: 'Islamic Merchandise',
+    name: 'Rare Coins & Bullion',
     itemListElement: [
-      { '@type': 'OfferCatalog', name: 'Wall Art' },
-      { '@type': 'OfferCatalog', name: 'Journals' },
-      { '@type': 'OfferCatalog', name: 'Prayer Essentials' },
-      { '@type': 'OfferCatalog', name: 'Books' },
-      { '@type': 'OfferCatalog', name: 'Apparel' },
-      { '@type': 'OfferCatalog', name: 'Kids Learning' },
-      { '@type': 'OfferCatalog', name: 'Home Decor' },
-      { '@type': 'OfferCatalog', name: 'Digital Products' },
+      { '@type': 'OfferCatalog', name: 'Silver Coins' },
+      { '@type': 'OfferCatalog', name: 'Gold Coins' },
+      { '@type': 'OfferCatalog', name: 'Copper Rounds' },
+      { '@type': 'OfferCatalog', name: 'Bronze Coins' },
     ],
   },
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.9',
-    reviewCount: '847',
+    reviewCount: '312',
     bestRating: '5',
     worstRating: '1',
   },
@@ -174,42 +169,42 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'Do you ship internationally?',
+      name: 'Do you ship coins internationally?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes — we ship to over 80 countries. Digital products are delivered instantly by email. Physical orders over $75 qualify for free shipping.',
+        text: 'Yes — we ship to over 50 countries. All coins are packaged in protective capsules and insured during transit. Orders over $200 qualify for free shipping.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Are your products ethically made?',
+      name: 'Are your coins authenticated and certified?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Every physical product is sourced from ethical suppliers with fair-labor standards. We audit our supply chain annually.',
+        text: 'Every coin we sell is authenticated. Many are NGC or PCGS certified. Certification details and coin grades are listed on each product page.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What Islamic gifts are best for Eid?',
+      name: 'What is the purity of your silver and gold coins?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Our most popular Eid gifts are the Eid Gift Bundle, Ayat Al-Kursi framed art print, Ramadan Reflection Journal, and the Heritage Prayer Mat. All are available in our Eid Gifts collection.',
+        text: 'Our silver coins are .999 fine silver (99.9% pure) or .9999 fine silver. Our gold coins are .9999 fine gold (24-karat). Exact purity is listed on every product.',
       },
     },
     {
       '@type': 'Question',
-      name: 'How do I receive digital products?',
+      name: 'How are coins packaged for shipping?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'After checkout you receive a secure download link by email. Files are available for 7 days and can be downloaded up to 5 times.',
+        text: 'Each coin is shipped in an airtight protective capsule, padded envelope or rigid mailer, with full insurance on the package value.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What is your return policy?',
+      name: 'What is your return policy on coins?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'We offer a 30-day no-questions-asked return on all physical products in original condition. Digital downloads are non-refundable once accessed.',
+        text: 'We accept returns within 14 days for coins in original, undamaged condition and original packaging. Contact us before returning any item.',
       },
     },
   ],
@@ -219,7 +214,7 @@ const faqSchema = {
 
 function SectionSkeleton({ className = '' }: { className?: string }) {
   return (
-    <div className={`animate-pulse bg-[#F0E8DC] rounded-2xl ${className}`} aria-hidden="true" />
+    <div className={`animate-pulse bg-blue-50 rounded-2xl ${className}`} aria-hidden="true" />
   );
 }
 
@@ -253,7 +248,7 @@ export default function ShopPage() {
       {/* Skip to main content — accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[#0D4A3C] focus:text-white focus:rounded-xl focus:text-sm focus:font-semibold"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-xl focus:text-sm focus:font-semibold"
       >
         Skip to main content
       </a>
@@ -268,7 +263,7 @@ export default function ShopPage() {
       >
         <ol className="flex items-center gap-2 text-[12px] text-[#AAA]" role="list">
           <li>
-            <a href="/" className="hover:text-[#0D4A3C] transition-colors focus:outline-none focus:underline">
+            <a href="/" className="hover:text-blue-600 transition-colors focus:outline-none focus:underline">
               Home
             </a>
           </li>
@@ -278,8 +273,8 @@ export default function ShopPage() {
             </svg>
           </li>
           <li>
-            <span className="text-[#0D4A3C] font-medium" aria-current="page">
-              Shop
+            <span className="text-blue-600 font-medium" aria-current="page">
+              Coin Shop
             </span>
           </li>
         </ol>
@@ -303,28 +298,23 @@ export default function ShopPage() {
           <BestSellers />
         </Suspense>
 
-        {/* 4. Ramadan / Eid Collection Banner */}
-        <Suspense fallback={<SectionSkeleton className="h-80 mx-4 my-8" />}>
-          <RamadanBanner />
-        </Suspense>
-
-        {/* 5. Why Shop With Us */}
+        {/* 4. Why Shop With Us */}
         <Suspense fallback={<SectionSkeleton className="h-80 mx-4 my-8" />}>
           <WhyShopWithUs />
         </Suspense>
 
-        {/* 6. Customer Reviews */}
+        {/* 5. Customer Reviews */}
         <Suspense fallback={<SectionSkeleton className="h-96 mx-4 my-8" />}>
           <Testimonials />
         </Suspense>
 
-        {/* 7. Newsletter */}
+        {/* 6. Newsletter */}
         <Suspense fallback={<SectionSkeleton className="h-64 mx-4 my-8" />}>
           <Newsletter />
         </Suspense>
       </main>
 
-      {/* 8. Footer */}
+      {/* Footer */}
       <ShopFooter />
     </>
   );

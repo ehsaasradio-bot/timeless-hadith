@@ -1,42 +1,46 @@
 /* app/shop/shop.css
-   Shop-specific global styles and design tokens
-   Import this ONLY in the shop layout — keeps it scoped */
+   Premium Coin Shop — Light-blue glassmorphism design tokens
+   Import ONLY in shop layout — keeps styles scoped */
 
-/* ─── Design tokens ──────────────────────────────────────────────────────────── */
+/* ─── Design tokens ──────────────────────────────────────────────────────── */
 :root {
-  /* Palette */
-  --color-ivory: #FAF7F2;
-  --color-sand: #F0E8DC;
-  --color-sand-dark: #E0D0BC;
-  --color-charcoal: #1C1C1E;
-  --color-charcoal-soft: #3A3A3C;
-  --color-emerald: #0D4A3C;
-  --color-emerald-light: #1A6B54;
+  /* Light-blue glassmorphism palette (matches coin shop design) */
+  --color-bg: #EEF4FF;
+  --color-bg-alt: #F5F8FF;
+  --glass-card: rgba(255, 255, 255, 0.65);
+  --glass-card-hover: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(200, 217, 245, 0.6);
+  --glass-blur: blur(12px);
+
+  --color-text: #0F1B35;
+  --color-text-muted: #5A6A8A;
+  --color-text-light: #8FA0C0;
+
+  --color-blue: #3471FF;
+  --color-blue-light: #5B8EFF;
+  --color-blue-dark: #1042B3;
+
   --color-gold: #C9A84C;
   --color-gold-light: #E8C96A;
-  --color-border: #E8DDD0;
 
-  /* Typography */
+  --color-silver: #A8B8C8;
+  --color-border: rgba(180, 205, 240, 0.5);
+
   --font-sans: var(--font-inter, ui-sans-serif, system-ui, sans-serif);
   --font-serif: var(--font-playfair, ui-serif, Georgia, serif);
 
-  /* Spacing */
   --section-padding-y: clamp(4rem, 8vw, 6rem);
   --container-max: 80rem;
-  --container-pad: clamp(1rem, 4vw, 2rem);
 
-  /* Radius */
   --radius-sm: 0.75rem;
   --radius-md: 1rem;
   --radius-lg: 1.5rem;
   --radius-xl: 2rem;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 16px rgba(13,74,60,0.06), 0 2px 6px rgba(0,0,0,0.04);
-  --shadow-lg: 0 12px 40px rgba(13,74,60,0.10), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-glass: 0 8px 32px rgba(31, 75, 180, 0.08);
+  --shadow-glass-lg: 0 16px 48px rgba(31, 75, 180, 0.14);
+  --shadow-card: 0 4px 16px rgba(52, 113, 255, 0.06), 0 1px 4px rgba(0,0,0,0.04);
 
-  /* Motion */
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --duration-fast: 150ms;
@@ -44,47 +48,69 @@
   --duration-slow: 400ms;
 }
 
-/* ─── Base reset for shop ────────────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
+/* ─── Base ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Hide scrollbar for category filter strip */
+/* ─── Glassmorphism card ─────────────────────────────────────────────────── */
+.glass-card {
+  background: var(--glass-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+}
+
+.glass-card:hover {
+  background: var(--glass-card-hover);
+  box-shadow: var(--shadow-glass-lg);
+}
+
+/* ─── Hero gradient ──────────────────────────────────────────────────────── */
+.hero-gradient {
+  background: linear-gradient(135deg, #dce9ff 0%, #eef4ff 40%, #e8f0fe 70%, #d6e4ff 100%);
+}
+
+/* ─── Scrollbar hide ─────────────────────────────────────────────────────── */
 .scrollbar-hide {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
+.scrollbar-hide::-webkit-scrollbar { display: none; }
 
-/* ─── Typography scale ───────────────────────────────────────────────────────── */
-.font-serif {
-  font-family: var(--font-serif);
-}
-
-.font-sans {
-  font-family: var(--font-sans);
-}
-
-/* ─── Focus ring — consistent brand ─────────────────────────────────────────── */
+/* ─── Focus ring ─────────────────────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid var(--color-emerald);
+  outline: 2px solid var(--color-blue);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-/* ─── Smooth scrolling ───────────────────────────────────────────────────────── */
-html {
-  scroll-behavior: smooth;
+/* ─── Skeleton shimmer ───────────────────────────────────────────────────── */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.skeleton {
+  animation: skeleton-pulse 1.8s ease-in-out infinite;
+  background: linear-gradient(90deg, #dce9ff 0%, #eef4ff 50%, #dce9ff 100%);
+  background-size: 200% 100%;
 }
 
-/* ─── Product image hover scale — defined here for performance ────────────────── */
-.group:hover .group-hover\:scale-108 {
-  transform: scale(1.08);
+/* ─── Gold shimmer effect ────────────────────────────────────────────────── */
+@keyframes gold-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }
 
-/* ─── Reduced motion — respect user preference ──────────────────────────────── */
+/* ─── Reduced motion ─────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -94,71 +120,20 @@ html {
   }
 }
 
-/* ─── Accessibility: visually-hidden utility ────────────────────────────────── */
+/* ─── Sr-only ────────────────────────────────────────────────────────────── */
 .sr-only {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip: rect(0,0,0,0);
   white-space: nowrap;
   border-width: 0;
 }
-
 .focus\:not-sr-only:focus {
   position: fixed;
-  width: auto;
-  height: auto;
-  padding: inherit;
-  margin: inherit;
-  overflow: visible;
-  clip: auto;
+  width: auto; height: auto;
+  padding: inherit; margin: inherit;
+  overflow: visible; clip: auto;
   white-space: normal;
-}
-
-/* ─── Loading skeleton pulse ─────────────────────────────────────────────────── */
-@keyframes skeleton-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.skeleton {
-  animation: skeleton-pulse 1.8s ease-in-out infinite;
-  background: linear-gradient(
-    90deg,
-    var(--color-sand) 0%,
-    var(--color-ivory) 50%,
-    var(--color-sand) 100%
-  );
-  background-size: 200% 100%;
-}
-
-/* ─── Islamic geometric decorative element (reusable) ───────────────────────── */
-.geo-pattern {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpolygon points='30,4 36,22 54,22 40,32 45,50 30,40 15,50 20,32 6,22 24,22' fill='none' stroke='%230D4A3C' stroke-width='0.8' opacity='0.1'/%3E%3C/svg%3E");
-  background-size: 60px 60px;
-}
-
-/* ─── Gold shimmer on hover (for premium buttons) ──────────────────────────── */
-@keyframes gold-shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-.gold-shimmer:hover::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255,255,255,0.25) 50%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  animation: gold-shimmer 0.8s ease-in-out;
-  border-radius: inherit;
-  pointer-events: none;
 }

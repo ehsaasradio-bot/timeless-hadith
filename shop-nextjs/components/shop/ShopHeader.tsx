@@ -1,7 +1,7 @@
 'use client';
 
 // components/shop/ShopHeader.tsx
-// Sticky premium shop header with smart search + category filters
+// Sticky premium coin-shop header — light-blue glassmorphism
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
@@ -9,24 +9,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import type { SortOption, FilterState } from '@/types/shop';
 
 const SORT_OPTIONS: { value: SortOption; label: string }[] = [
-  { value: 'popular', label: 'Most Popular' },
-  { value: 'newest', label: 'Newest First' },
-  { value: 'price-asc', label: 'Price: Low to High' },
-  { value: 'price-desc', label: 'Price: High to Low' },
-  { value: 'rating', label: 'Highest Rated' },
+  { value: 'popular',    label: 'Most Popular'       },
+  { value: 'newest',     label: 'Newest First'        },
+  { value: 'price-asc',  label: 'Price: Low to High'  },
+  { value: 'price-desc', label: 'Price: High to Low'  },
+  { value: 'rating',     label: 'Highest Rated'       },
 ];
 
-const CATEGORY_FILTERS = [
-  'All',
-  'Wall Art',
-  'Journals',
-  'Prayer Essentials',
-  'Books',
-  'Apparel',
-  'Kids Learning',
-  'Home Decor',
-  'Digital Products',
-];
+const CATEGORY_FILTERS = ['All', 'Silver', 'Gold', 'Copper', 'Bronze'];
 
 interface ShopHeaderProps {
   onFilterChange?: (filters: FilterState) => void;
@@ -35,12 +25,12 @@ interface ShopHeaderProps {
 }
 
 export default function ShopHeader({ onFilterChange, cartCount = 0, wishlistCount = 0 }: ShopHeaderProps) {
-  const [scrolled, setScrolled] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [scrolled, setScrolled]           = useState(false);
+  const [searchOpen, setSearchOpen]       = useState(false);
+  const [searchQuery, setSearchQuery]     = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
-  const [sortOpen, setSortOpen] = useState(false);
-  const [activeSort, setActiveSort] = useState<SortOption>('popular');
+  const [sortOpen, setSortOpen]           = useState(false);
+  const [activeSort, setActiveSort]       = useState<SortOption>('popular');
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -80,37 +70,28 @@ export default function ShopHeader({ onFilterChange, cartCount = 0, wishlistCoun
     <motion.header
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? 'bg-[#FAF7F2]/95 backdrop-blur-md shadow-sm border-b border-[#E8DDD0]'
-          : 'bg-[#FAF7F2]'
+          ? 'bg-white/90 backdrop-blur-xl shadow-sm border-b border-blue-100'
+          : 'bg-[#F8FAFF]'
       }`}
       initial={false}
     >
       {/* Top bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
+
           {/* Logo / Back to site */}
           <Link
             href="/"
             className="flex items-center gap-2 group"
             aria-label="Back to Timeless Hadith"
           >
-            <svg
-              viewBox="0 0 28 28"
-              width="28"
-              height="28"
-              fill="none"
-              aria-hidden="true"
-              className="text-[#0D4A3C] group-hover:opacity-80 transition-opacity"
-            >
-              <path
-                d="M14 2C7.373 2 2 7.373 2 14s5.373 12 12 12 12-5.373 12-12S20.627 2 14 2z"
-                fill="currentColor"
-                opacity="0.12"
-              />
-              <path
-                d="M14 6a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2h-6v6a1 1 0 1 1-2 0v-6H7a1 1 0 1 1 0-2h6V7a1 1 0 0 1 1-1z"
-                fill="currentColor"
-              />
+            {/* Coin icon */}
+            <svg viewBox="0 0 28 28" width="28" height="28" fill="none" aria-hidden="true"
+              className="text-blue-600 group-hover:opacity-80 transition-opacity">
+              <circle cx="14" cy="14" r="12" stroke="currentColor" strokeWidth="1.8" opacity="0.25" />
+              <circle cx="14" cy="14" r="8" stroke="currentColor" strokeWidth="1.4" />
+              <text x="14" y="18.5" textAnchor="middle" fontSize="9" fontWeight="700"
+                fill="currentColor" fontFamily="system-ui">₵</text>
             </svg>
             <span className="text-[15px] font-semibold text-[#1C1C1E] tracking-tight">
               Timeless Hadith
@@ -118,8 +99,8 @@ export default function ShopHeader({ onFilterChange, cartCount = 0, wishlistCoun
           </Link>
 
           {/* Center: Shop label */}
-          <span className="hidden sm:block text-[13px] font-medium text-[#0D4A3C] tracking-widest uppercase">
-            Shop
+          <span className="hidden sm:block text-[13px] font-medium text-blue-600 tracking-widest uppercase">
+            Coin Shop
           </span>
 
           {/* Right: Search, Wishlist, Cart */}
@@ -127,7 +108,7 @@ export default function ShopHeader({ onFilterChange, cartCount = 0, wishlistCoun
             {/* Search toggle */}
             <button
               onClick={() => setSearchOpen((v) => !v)}
-              className="relative p-2.5 rounded-xl hover:bg-[#E8DDD0] transition-colors"
+              className="relative p-2.5 rounded-xl hover:bg-blue-50 transition-colors"
               aria-label="Open search"
             >
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
@@ -139,7 +120,7 @@ export default function ShopHeader({ onFilterChange, cartCount = 0, wishlistCoun
             {/* Wishlist */}
             <Link
               href="/shop/wishlist"
-              className="relative p-2.5 rounded-xl hover:bg-[#E8DDD0] transition-colors"
+              className="relative p-2.5 rounded-xl hover:bg-blue-50 transition-colors"
               aria-label={`Wishlist (${wishlistCount} items)`}
             >
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
@@ -160,7 +141,7 @@ export default function ShopHeader({ onFilterChange, cartCount = 0, wishlistCoun
             {/* Cart */}
             <Link
               href="/shop/cart"
-              className="relative flex items-center gap-2 px-4 py-2 bg-[#0D4A3C] text-white text-[13px] font-semibold rounded-xl hover:bg-[#1A6B54] transition-colors ml-1"
+              className="relative flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-[13px] font-semibold rounded-xl hover:bg-blue-700 transition-colors ml-1"
               aria-label={`Cart (${cartCount} items)`}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -193,15 +174,12 @@ export default function ShopHeader({ onFilterChange, cartCount = 0, wishlistCoun
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
-            className="overflow-hidden border-t border-[#E8DDD0]"
+            className="overflow-hidden border-t border-blue-100"
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
               <div className="relative">
                 <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
+                  width="16" height="16" viewBox="0 0 16 16" fill="none"
                   className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999]"
                   aria-hidden="true"
                 >
@@ -213,9 +191,9 @@ export default function ShopHeader({ onFilterChange, cartCount = 0, wishlistCoun
                   type="search"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search for prayer mats, journals, wall art..."
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-[#E8DDD0] rounded-xl text-[14px] text-[#1C1C1E] placeholder:text-[#999] focus:outline-none focus:ring-2 focus:ring-[#0D4A3C]/20 focus:border-[#0D4A3C] transition-all"
-                  aria-label="Search products"
+                  placeholder="Search silver eagles, maple leafs, gold bullion..."
+                  className="w-full pl-10 pr-4 py-3 bg-white border border-blue-100 rounded-xl text-[14px] text-[#1C1C1E] placeholder:text-[#999] focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition-all"
+                  aria-label="Search coins"
                 />
               </div>
             </div>
@@ -224,14 +202,14 @@ export default function ShopHeader({ onFilterChange, cartCount = 0, wishlistCoun
       </AnimatePresence>
 
       {/* Category filter strip + Sort */}
-      <div className="border-t border-[#E8DDD0]">
+      <div className="border-t border-blue-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-4">
             {/* Category pills — scrollable on mobile */}
             <div
               className="flex items-center gap-1 overflow-x-auto py-3 scrollbar-hide flex-1"
               role="list"
-              aria-label="Filter by category"
+              aria-label="Filter by metal"
             >
               {CATEGORY_FILTERS.map((cat) => (
                 <button
@@ -241,8 +219,8 @@ export default function ShopHeader({ onFilterChange, cartCount = 0, wishlistCoun
                   aria-pressed={activeCategory === cat}
                   className={`flex-shrink-0 px-4 py-1.5 rounded-full text-[12px] font-medium transition-all duration-200 ${
                     activeCategory === cat
-                      ? 'bg-[#0D4A3C] text-white'
-                      : 'bg-[#F0E8DC] text-[#3A3A3C] hover:bg-[#E0D0BC]'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-blue-50 text-[#3A3A3C] hover:bg-blue-100'
                   }`}
                 >
                   {cat}
@@ -254,7 +232,7 @@ export default function ShopHeader({ onFilterChange, cartCount = 0, wishlistCoun
             <div className="relative flex-shrink-0">
               <button
                 onClick={() => setSortOpen((v) => !v)}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-[#3A3A3C] hover:bg-[#E8DDD0] rounded-lg transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-[#3A3A3C] hover:bg-blue-50 rounded-lg transition-colors"
                 aria-haspopup="listbox"
                 aria-expanded={sortOpen}
               >
@@ -263,10 +241,7 @@ export default function ShopHeader({ onFilterChange, cartCount = 0, wishlistCoun
                 </svg>
                 Sort
                 <svg
-                  width="10"
-                  height="10"
-                  viewBox="0 0 10 10"
-                  fill="none"
+                  width="10" height="10" viewBox="0 0 10 10" fill="none"
                   className={`transition-transform ${sortOpen ? 'rotate-180' : ''}`}
                   aria-hidden="true"
                 >
@@ -281,7 +256,7 @@ export default function ShopHeader({ onFilterChange, cartCount = 0, wishlistCoun
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -4, scale: 0.97 }}
                     transition={{ duration: 0.14 }}
-                    className="absolute right-0 top-full mt-1 w-52 bg-white border border-[#E8DDD0] rounded-2xl shadow-xl overflow-hidden"
+                    className="absolute right-0 top-full mt-1 w-52 bg-white border border-blue-100 rounded-2xl shadow-xl overflow-hidden"
                     role="listbox"
                     aria-label="Sort options"
                   >
@@ -293,8 +268,8 @@ export default function ShopHeader({ onFilterChange, cartCount = 0, wishlistCoun
                         aria-selected={activeSort === opt.value}
                         className={`w-full text-left px-4 py-3 text-[13px] transition-colors ${
                           activeSort === opt.value
-                            ? 'bg-[#F0E8DC] text-[#0D4A3C] font-semibold'
-                            : 'text-[#3A3A3C] hover:bg-[#FAF7F2]'
+                            ? 'bg-blue-50 text-blue-600 font-semibold'
+                            : 'text-[#3A3A3C] hover:bg-[#F8FAFF]'
                         }`}
                       >
                         {opt.label}

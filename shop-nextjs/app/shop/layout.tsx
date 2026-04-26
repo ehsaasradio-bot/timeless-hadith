@@ -1,5 +1,5 @@
 // app/shop/layout.tsx
-// Shop layout — sets up fonts and base styles for the shop route segment
+// Shop layout — light-blue glassmorphism coin shop
 
 export const runtime = 'edge';
 
@@ -28,7 +28,8 @@ export const metadata: Metadata = {
 export default function ShopLayout({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className={`${inter.variable} ${playfair.variable} min-h-screen bg-[#FAF7F2] font-sans antialiased`}
+      className={`${inter.variable} ${playfair.variable} min-h-screen font-sans antialiased`}
+      style={{ background: 'var(--color-bg)' }}
     >
       {children}
     </div>

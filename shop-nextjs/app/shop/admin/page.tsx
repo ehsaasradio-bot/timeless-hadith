@@ -16,7 +16,7 @@ interface Stats {
 
 function StatCard({ label, value, sub, color = 'emerald' }: { label: string; value: string; sub?: string; color?: 'emerald' | 'gold' | 'red' }) {
   const colors = {
-    emerald: 'bg-[#0D4A3C]/08 text-[#0D4A3C]',
+    emerald: 'bg-[#0D4A3C]/[0.08] text-[#0D4A3C]',
     gold: 'bg-[#C9A84C]/10 text-[#8B6B20]',
     red: 'bg-red-50 text-red-700',
   };

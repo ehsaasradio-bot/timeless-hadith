@@ -151,7 +151,7 @@ export default function WhyShopWithUs() {
               className="group flex flex-col items-start gap-4 p-6 bg-[#FAF7F2] rounded-2xl border border-[#E8DDD0] hover:border-[#C9A84C]/40 hover:bg-white hover:shadow-md hover:shadow-[#C9A84C]/06 transition-all duration-300"
             >
               {/* Icon */}
-              <div className="w-12 h-12 bg-[#0D4A3C]/08 rounded-2xl flex items-center justify-center text-[#0D4A3C] group-hover:bg-[#0D4A3C] group-hover:text-white transition-all duration-300">
+              <div className="w-12 h-12 bg-[#0D4A3C]/[0.08] rounded-2xl flex items-center justify-center text-[#0D4A3C] group-hover:bg-[#0D4A3C] group-hover:text-white transition-all duration-300">
                 {feature.icon}
               </div>
 

@@ -6,6 +6,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { addToCart } from '@/lib/cart';
 import { motion } from 'framer-motion';
 import type { Product } from '@/types/shop';
 
@@ -68,10 +69,9 @@ export default function ProductCard({ product, variant = 'default', priority = f
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    addToCart(product, 1); // persists to localStorage + dispatches 'cart:updated'
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);
-    // dispatch add-to-cart event or call cart context
-    window.dispatchEvent(new CustomEvent('shop:add-to-cart', { detail: { productId: product.id } }));
   };
 
   const handleWishlist = (e: React.MouseEvent) => {
@@ -87,7 +87,7 @@ export default function ProductCard({ product, variant = 'default', priority = f
     <motion.article
       whileHover={{ y: -4 }}
       transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
-      className="group relative bg-white rounded-2xl border border-[#E8DDD0] overflow-hidden hover:shadow-xl hover:shadow-[#0D4A3C]/08 hover:border-[#D4C4B0] transition-all duration-300"
+      className="group relative bg-white rounded-2xl border border-[#E8DDD0] overflow-hidden hover:shadow-xl hover:shadow-[#0D4A3C]/[0.08] hover:border-[#D4C4B0] transition-all duration-300"
     >
       <Link
         href={`/shop/product/${product.slug}`}

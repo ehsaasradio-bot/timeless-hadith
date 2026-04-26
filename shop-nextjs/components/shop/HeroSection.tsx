@@ -135,7 +135,7 @@ export default function HeroSection() {
             >
               <Link
                 href="#collection"
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#0D4A3C] text-white text-[14px] font-semibold rounded-2xl hover:bg-[#1A6B54] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-emerald-900/20 focus:outline-none focus:ring-2 focus:ring-[#0D4A3C] focus:ring-offset-2"
+                className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#0D4A3C] text-white text-[14px] font-semibold rounded-2xl hover:bg-[#1A6B54] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-green-900/20 focus:outline-none focus:ring-2 focus:ring-[#0D4A3C] focus:ring-offset-2"
               >
                 Shop Collection
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">

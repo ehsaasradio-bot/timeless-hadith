@@ -1,7 +1,7 @@
 // types/shop.ts
-// Timeless Hadith — Shop Page Type Definitions
+// Timeless Hadith — Premium Coin Shop Type Definitions
 
-export type ProductBadge = 'bestseller' | 'new' | 'limited' | 'sale' | 'eid' | 'ramadan';
+export type ProductBadge = 'bestseller' | 'new' | 'limited' | 'sale';
 
 export interface ProductImage {
   src: string;
@@ -29,6 +29,13 @@ export interface Product {
   isDigital: boolean;
   freeShipping: boolean;
   sku: string;
+  // Coin-specific fields
+  metal?: string;        // 'Silver' | 'Gold' | 'Platinum'
+  weight?: string;       // '1 oz' | '1/2 oz' etc.
+  purity?: string;       // '.999' | '.9999' | '.9167 (22k)'
+  year?: number;
+  mintage?: string;      // e.g. '500,000' or 'Unlimited'
+  condition?: string;    // 'Brilliant Uncirculated' | 'Proof' | 'Antique Finish'
 }
 
 export interface Category {
