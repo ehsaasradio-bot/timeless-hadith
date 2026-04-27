@@ -324,18 +324,42 @@
 
   function buildCategoryCards(cats) {
     track.innerHTML = '';
-    cats.forEach(cat => {
+    cats.forEach((cat, i) => {
       const card = document.createElement('div');
       card.className = 'card';
+      card.style.animationDelay = Math.min(i * 0.06, 0.5) + 's';
+
+      const arabic  = (cat.arabicTitle && cat.arabicTitle !== cat.title)
+        ? '<span class="card-arabic">' + cat.arabicTitle + '</span>' : '';
+      const desc    = cat.desc || 'Explore authentic hadith in this category.';
+      const slug    = cat.slug;
+
       card.innerHTML =
-        '<p class="card-category">' + cat.title + '</p>' +
-        '<h3>' + cat.title + '</h3>' +
-        '<p class="card-desc">' + cat.count + ' hadiths</p>' +
-        '<a href="category.html?cat=' + cat.slug + '" class="card-plus" aria-label="Explore ' + cat.title + '">' +
-          '<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>' +
-        '</a>';
-      card.querySelector('.card-plus').addEventListener('click', e => e.stopPropagation());
-      card.addEventListener('click', () => { window.location.href = 'category.html?cat=' + cat.slug; });
+        '<div class="card-inner">' +
+          '<div class="card-top">' +
+            '<span class="card-count-pill">' +
+              '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+                '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>' +
+                '<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>' +
+              '</svg>' +
+              cat.count + ' Hadith' +
+            '</span>' +
+            arabic +
+          '</div>' +
+          '<h3>' + cat.title + '</h3>' +
+          '<p class="card-desc">' + desc + '</p>' +
+          '<div class="card-footer">' +
+            '<span class="card-explore">Explore</span>' +
+            '<div class="card-arrow" aria-hidden="true">' +
+              '<svg viewBox="0 0 24 24">' +
+                '<line x1="5" y1="12" x2="19" y2="12"/>' +
+                '<polyline points="12 5 19 12 12 19"/>' +
+              '</svg>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+      card.addEventListener('click', () => { window.location.href = 'category.html?cat=' + slug; });
       track.appendChild(card);
     });
     cardEls = Array.from(track.querySelectorAll('.card'));
