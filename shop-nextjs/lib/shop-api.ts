@@ -678,3 +678,116 @@ export async function adminUpdateSettings(settings: Record<string, unknown>) {
   if (error) throw new Error(error.message);
   return data;
 }
+
+// ─── Admin — Analytics ────────────────────────────────────────────────────────
+
+export interface AnalyticsPeriod {
+  gross_revenue: number;
+  refunds: number;
+  coupons: number;
+  taxes: number;
+  shipping: number;
+  net_revenue: number;
+  order_count: number;
+}
+
+export interface DailyStat {
+  date: string;
+  orders: number;
+  gross_revenue: number;
+  refunds: number;
+  coupons: number;
+  taxes: number;
+  shipping: number;
+  net_revenue: number;
+}
+
+function buildPeriod(rows: { total: number; status: string; shipping_cost: number; discount_amount: number }[]): AnalyticsPeriod {
+  let gross = 0, refunds = 0, coupons = 0, shipping = 0;
+  for (const r of rows) {
+    if (r.status === 'refunded') { refunds += Number(r.total); continue; }
+    if (r.status === 'cancelled') continue;
+    gross    += Number(r.total);
+    coupons  += Number(r.discount_amount);
+    shipping += Number(r.shipping_cost);
+  }
+  return {
+    gross_revenue: gross,
+    refunds,
+    coupons,
+    taxes: 0,
+    shipping,
+    net_revenue: gross - refunds - coupons,
+    order_count: rows.filter(r => r.status !== 'cancelled').length,
+  };
+}
+
+export async function adminGetAnalytics(from: string, to: string) {
+  const supabase = getSupabaseAdmin();
+
+  // Calculate previous period (same duration, shifted back)
+  const fromDate = new Date(from);
+  const toDate   = new Date(to);
+  const duration = toDate.getTime() - fromDate.getTime();
+  const prevTo   = new Date(fromDate.getTime() - 1).toISOString();
+  const prevFrom = new Date(fromDate.getTime() - duration).toISOString();
+
+  const [currRes, prevRes, dailyRes] = await Promise.all([
+    // Current period totals
+    supabase.from('shop_orders')
+      .select('total, status, shipping_cost, discount_amount')
+      .gte('created_at', from).lte('created_at', to),
+
+    // Previous period totals
+    supabase.from('shop_orders')
+      .select('total, status, shipping_cost, discount_amount')
+      .gte('created_at', prevFrom).lte('created_at', prevTo),
+
+    // Daily breakdown for current period
+    supabase.from('shop_orders')
+      .select('total, status, shipping_cost, discount_amount, created_at')
+      .gte('created_at', from).lte('created_at', to)
+      .order('created_at', { ascending: true }),
+  ]);
+
+  // Build daily stats map
+  const dayMap = new Map<string, { orders: number; gross: number; refunds: number; coupons: number; shipping: number }>();
+
+  // Pre-fill all dates in range so chart has no gaps
+  const cursor = new Date(from);
+  while (cursor <= toDate) {
+    const key = cursor.toISOString().slice(0, 10);
+    dayMap.set(key, { orders: 0, gross: 0, refunds: 0, coupons: 0, shipping: 0 });
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  for (const r of dailyRes.data ?? []) {
+    const key = r.created_at.slice(0, 10);
+    const d   = dayMap.get(key) ?? { orders: 0, gross: 0, refunds: 0, coupons: 0, shipping: 0 };
+    if (r.status === 'cancelled') { dayMap.set(key, d); continue; }
+    if (r.status === 'refunded') { d.refunds += Number(r.total); dayMap.set(key, d); continue; }
+    d.orders++;
+    d.gross    += Number(r.total);
+    d.coupons  += Number(r.discount_amount);
+    d.shipping += Number(r.shipping_cost);
+    dayMap.set(key, d);
+  }
+
+  const daily: DailyStat[] = Array.from(dayMap.entries()).map(([date, d]) => ({
+    date,
+    orders: d.orders,
+    gross_revenue: d.gross,
+    refunds: d.refunds,
+    coupons: d.coupons,
+    taxes: 0,
+    shipping: d.shipping,
+    net_revenue: d.gross - d.refunds - d.coupons,
+  }));
+
+  return {
+    current:  buildPeriod(currRes.data ?? []),
+    previous: buildPeriod(prevRes.data ?? []),
+    daily,
+    range: { from, to, prevFrom, prevTo },
+  };
+}

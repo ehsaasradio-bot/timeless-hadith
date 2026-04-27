@@ -99,6 +99,16 @@ const NAV_ITEMS = [
     ),
   },
   {
+    label: 'Analytics',
+    href: '/shop/admin/analytics',
+    icon: (
+      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
+        <polyline points="1,13 5,8 8,10 11,5 15,3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M1 13h14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
     label: 'Products',
     href: '/shop/admin/products',
     icon: (
