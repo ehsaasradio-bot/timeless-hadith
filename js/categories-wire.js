@@ -124,66 +124,69 @@
     });
   }
 
-  /* ── Build a category card element ── */
+  /* ── Build a category card element (glassmorphism redesign) ── */
   function buildCard(cat, index) {
-    var d = catData[cat.slug] || {};
-    var delay = Math.min(index * 0.05, 0.4);
+    var d         = catData[cat.slug] || {};
+    var delay     = Math.min(index * 0.06, 0.5);
 
-    var title      = d.title       || cat.title || '';
-    var count      = d.hadith_count !== undefined && d.hadith_count !== ''
+    var title      = d.title || cat.title || '';
+    var count      = (d.hadith_count !== undefined && d.hadith_count !== '')
                        ? Number(d.hadith_count) : (cat.count || 0);
-    var shortLabel = d.short_label  || (count + ' Hadiths');
-    var desc       = d.description  || '';
-    var tag        = d.tag          || '';
-    var icon       = d.icon         || '';
-    var accent     = (d.accent_color && /^#[0-9a-fA-F]{6}$/i.test(d.accent_color))
-                       ? d.accent_color : '';
-    var ctaText    = d.cta_text     || 'Explore';
+    var desc       = d.description || cat.desc || 'Explore authentic hadith in this category.';
+    var arabic     = cat.arabicTitle || '';
     var isFeatured = (d.is_featured === true || d.is_featured === 'true');
+    var ctaText    = d.cta_text || 'Explore';
 
     var el = document.createElement('a');
     el.className = 'cat-card' + (isFeatured ? ' is-featured' : '');
-    el.href = 'category.html?cat=' + encodeURIComponent(cat.slug);
+    el.href      = 'category.html?cat=' + encodeURIComponent(cat.slug);
     el.setAttribute('role', 'listitem');
-    el.setAttribute('aria-label', title + ' — ' + count + ' hadiths');
+    el.setAttribute('aria-label', title + ' — ' + count + ' hadith');
     el.style.animationDelay = delay + 's';
 
-    if (accent) {
-      el.style.setProperty('--card-accent', accent);
-      var rgba = hexToRgba(accent, 0.12);
-      if (rgba) el.style.setProperty('--card-accent-bg', rgba);
-    }
+    /* Count pill HTML */
+    var countPillHtml =
+      '<span class="cat-card-count-pill">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+          '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>' +
+          '<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>' +
+        '</svg>' +
+        count + ' Hadith' +
+      '</span>';
 
-    var tagHtml  = tag
-      ? '<span class="cat-card-tag">' + escHtml(tag) + '</span>'
-      : '';
-    var iconContent = icon ? escHtml(icon) : defaultIcon(cat.slug);
-    var descHtml = desc
-      ? '<p class="cat-card-desc">' + escHtml(desc) + '</p>'
-      : '<p class="cat-card-desc" style="opacity:0.4">No description added yet.</p>';
+    /* Arabic badge (only if non-empty and different from title) */
+    var arabicHtml = (arabic && arabic !== title)
+      ? '<span class="cat-card-arabic">' + escHtml(arabic) + '</span>'
+      : (isFeatured
+          ? '<span class="cat-card-feat-pill">Featured</span>'
+          : '');
 
     el.innerHTML =
-      '<div class="cat-card-bar"></div>' +
-      '<div class="cat-card-body">' +
+      '<div class="cat-card-inner">' +
+
+        /* Top row */
         '<div class="cat-card-top">' +
-          '<div class="cat-card-icon" aria-hidden="true">' + iconContent + '</div>' +
-          '<div class="cat-card-badges">' +
-            tagHtml +
-            '<span class="cat-card-feat">Featured</span>' +
-          '</div>' +
+          countPillHtml +
+          arabicHtml +
         '</div>' +
-        '<p class="cat-card-label">' + escHtml(shortLabel) + '</p>' +
+
+        /* Title */
         '<h3 class="cat-card-title">' + escHtml(title) + '</h3>' +
-        descHtml +
+
+        /* Description */
+        '<p class="cat-card-desc">' + escHtml(desc) + '</p>' +
+
+        /* Footer */
         '<div class="cat-card-footer">' +
-          '<span class="cat-card-count">' + count + ' hadiths</span>' +
-          '<span class="cat-card-cta">' + escHtml(ctaText) +
-            '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+          '<span class="cat-card-explore">' + escHtml(ctaText) + '</span>' +
+          '<div class="cat-card-arrow" aria-hidden="true">' +
+            '<svg viewBox="0 0 24 24">' +
               '<line x1="5" y1="12" x2="19" y2="12"/>' +
               '<polyline points="12 5 19 12 12 19"/>' +
             '</svg>' +
-          '</span>' +
+          '</div>' +
         '</div>' +
+
       '</div>';
 
     return el;
