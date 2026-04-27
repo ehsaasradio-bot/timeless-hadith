@@ -23,15 +23,17 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://timelesshadith.com'),
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
 };
 
 export default function ShopLayout({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className={`${inter.variable} ${playfair.variable} min-h-screen font-sans antialiased`}
-      style={{ background: 'var(--color-bg)' }}
-    >
-      {children}
-    </div>
-  );
-}
+      className={`${inter.variable} ${playfair.variable} min-h-s
