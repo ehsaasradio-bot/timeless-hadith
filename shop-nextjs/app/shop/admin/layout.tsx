@@ -110,6 +110,15 @@ const NAV_ITEMS = [
     ),
   },
   {
+    label: 'Categories',
+    href: '/shop/admin/categories',
+    icon: (
+      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
+        <path d="M1 4h14M1 8h14M1 12h14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
     label: 'Orders',
     href: '/shop/admin/orders',
     icon: (
@@ -121,11 +130,42 @@ const NAV_ITEMS = [
     ),
   },
   {
+    label: 'Customers',
+    href: '/shop/admin/customers',
+    icon: (
+      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
+        <circle cx="8" cy="5" r="3" stroke="currentColor" strokeWidth="1.4" />
+        <path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
     label: 'Reviews',
     href: '/shop/admin/reviews',
     icon: (
       <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
         <path d="M8 1l2 4 4.5.7-3.3 3.2.8 4.5L8 11.3 4 13.4l.8-4.5L1.5 5.7 6 5z" stroke="currentColor" strokeWidth="1.3" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Coupons',
+    href: '/shop/admin/coupons',
+    icon: (
+      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
+        <rect x="1" y="4" width="14" height="8" rx="1" stroke="currentColor" strokeWidth="1.4" />
+        <path d="M5 4V3M8 4V3M11 4V3M5 12v1M8 12v1M11 12v1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+        <path d="M1 8h14" stroke="currentColor" strokeWidth="1.4" strokeDasharray="2 1.5" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Settings',
+    href: '/shop/admin/settings',
+    icon: (
+      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" strokeWidth="1.4" />
+        <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.1 3.1l1.4 1.4M11.5 11.5l1.4 1.4M3.1 12.9l1.4-1.4M11.5 4.5l1.4-1.4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -257,40 +297,4 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           aria-hidden={!drawerOpen}
         >
           <button
-            onClick={() => setDrawerOpen(false)}
-            className="absolute top-4 right-4 p-1.5 text-white/30 hover:text-white transition-colors"
-            aria-label="Close navigation"
-          >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            </svg>
-          </button>
-          <SidebarContent pathname={pathname} onLogout={handleLogout} onNavClick={() => setDrawerOpen(false)} />
-        </aside>
-
-        {/* Main */}
-        <div className="flex-1 flex flex-col min-w-0 overflow-auto">
-          {/* Mobile top bar */}
-          <header className="md:hidden flex items-center gap-3 px-4 py-3 bg-[#111111] border-b border-white/[0.06] flex-shrink-0">
-            <button
-              onClick={() => setDrawerOpen(true)}
-              className="p-2 text-white/50 hover:text-white transition-colors"
-              aria-label="Open navigation"
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M1 3.5h14M1 8h14M1 12.5h14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-              </svg>
-            </button>
-            <span className="text-[11px] font-bold tracking-[0.18em] text-white uppercase">Admin Panel</span>
-          </header>
-
-          <main className="flex-1">
-            <div className="max-w-6xl mx-auto px-6 py-8">
-              {children}
-            </div>
-          </main>
-        </div>
-      </div>
-    </AdminAuthContext.Provider>
-  );
-}
+            onClick={() => setDr

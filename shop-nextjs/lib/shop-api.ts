@@ -524,3 +524,157 @@ export async function adminGetDashboardStats() {
     }, {}),
   };
 }
+
+// ─── Admin — Categories ───────────────────────────────────────────────────────
+
+export async function adminGetAllCategories() {
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from('shop_categories')
+    .select('*, shop_products(count)')
+    .order('sort_order');
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function adminUpsertCategory(category: Record<string, unknown>) {
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from('shop_categories')
+    .upsert(category)
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function adminDeleteCategory(categoryId: string) {
+  const supabase = getSupabaseAdmin();
+  const { error } = await supabase.from('shop_categories').delete().eq('id', categoryId);
+  if (error) throw new Error(error.message);
+}
+
+// ─── Admin — Reviews ──────────────────────────────────────────────────────────
+
+export async function adminGetAllReviews(filter?: 'pending' | 'approved') {
+  const supabase = getSupabaseAdmin();
+  let query = supabase
+    .from('shop_reviews')
+    .select('*, shop_products(title, slug)')
+    .order('created_at', { ascending: false });
+  if (filter === 'pending')  query = query.eq('is_approved', false);
+  if (filter === 'approved') query = query.eq('is_approved', true);
+  const { data, error } = await query;
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function adminUpdateReview(reviewId: string, fields: Record<string, unknown>) {
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from('shop_reviews')
+    .update(fields)
+    .eq('id', reviewId)
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function adminDeleteReview(reviewId: string) {
+  const supabase = getSupabaseAdmin();
+  const { error } = await supabase.from('shop_reviews').delete().eq('id', reviewId);
+  if (error) throw new Error(error.message);
+}
+
+// ─── Admin — Customers ────────────────────────────────────────────────────────
+
+export async function adminGetCustomers(search?: string, limit = 50, offset = 0) {
+  const supabase = getSupabaseAdmin();
+  let query = supabase
+    .from('shop_orders')
+    .select('customer_email, customer_name, total, created_at', { count: 'exact' })
+    .order('created_at', { ascending: false });
+  if (search) query = query.ilike('customer_email', `%${search}%`);
+  const { data, error, count } = await query.range(offset, offset + limit - 1);
+  if (error) throw new Error(error.message);
+
+  // Group by email
+  const map = new Map<string, { name: string; email: string; orderCount: number; totalSpent: number; lastOrder: string }>();
+  for (const row of data ?? []) {
+    const existing = map.get(row.customer_email);
+    if (existing) {
+      existing.orderCount++;
+      existing.totalSpent += Number(row.total);
+      if (row.created_at > existing.lastOrder) existing.lastOrder = row.created_at;
+    } else {
+      map.set(row.customer_email, {
+        name: row.customer_name,
+        email: row.customer_email,
+        orderCount: 1,
+        totalSpent: Number(row.total),
+        lastOrder: row.created_at,
+      });
+    }
+  }
+  return { data: Array.from(map.values()), total: count ?? 0 };
+}
+
+export async function adminGetCustomerOrders(email: string) {
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from('shop_orders')
+    .select('*, shop_order_items(*)')
+    .eq('customer_email', email)
+    .order('created_at', { ascending: false });
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+// ─── Admin — Coupons ──────────────────────────────────────────────────────────
+
+export async function adminGetAllCoupons() {
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from('shop_discount_codes')
+    .select('*')
+    .order('created_at', { ascending: false });
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function adminUpsertCoupon(coupon: Record<string, unknown>) {
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from('shop_discount_codes')
+    .upsert(coupon)
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function adminDeleteCoupon(couponId: string) {
+  const supabase = getSupabaseAdmin();
+  const { error } = await supabase.from('shop_discount_codes').delete().eq('id', couponId);
+  if (error) throw new Error(error.message);
+}
+
+// ─── Admin — Settings ─────────────────────────────────────────────────────────
+
+export async function adminGetSettings() {
+  const supabase = getSupabaseAdmin();
+  const { data } = await supabase.from('shop_settings').select('*').eq('id', 1).single();
+  return data ?? {};
+}
+
+export async function adminUpdateSettings(settings: Record<string, unknown>) {
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from('shop_settings')
+    .upsert({ id: 1, ...settings, updated_at: new Date().toISOString() })
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return data;
+}
