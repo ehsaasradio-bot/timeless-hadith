@@ -33,7 +33,6 @@ function LoginGate({ onLogin }: { onLogin: () => void }) {
   return (
     <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center p-6" style={{ fontFamily: 'Inter, sans-serif' }}>
       <div className="w-full max-w-sm">
-        {/* Header */}
         <div className="mb-10">
           <div className="w-8 h-[3px] bg-[#CC0000] mb-6" />
           <div className="text-[10px] font-semibold tracking-[0.2em] text-white/40 uppercase mb-2">
@@ -76,7 +75,7 @@ function LoginGate({ onLogin }: { onLogin: () => void }) {
 
         <div className="mt-8 pt-6 border-t border-white/[0.06]">
           <Link href="/shop" className="text-[10px] tracking-[0.15em] text-white/30 uppercase hover:text-white/60 transition-colors">
-            ← Back to Shop
+            Back to Shop
           </Link>
         </div>
       </div>
@@ -180,15 +179,13 @@ function SidebarContent({ pathname, onLogout, onNavClick }: {
 }) {
   return (
     <div className="flex flex-col h-full" style={{ fontFamily: 'Inter, sans-serif' }}>
-      {/* Brand */}
       <div className="px-6 py-6 border-b border-white/[0.06]">
         <div className="w-6 h-[2px] bg-[#CC0000] mb-4" />
         <div className="text-[10px] font-semibold tracking-[0.2em] text-white/30 uppercase">Admin Panel</div>
         <div className="text-[13px] font-bold text-white mt-0.5 tracking-wide">TIMELESS HADITH</div>
       </div>
 
-      {/* Nav */}
-      <nav className="flex-1 px-3 py-5 space-y-px" aria-label="Admin navigation">
+      <nav className="flex-1 px-3 py-4 space-y-px overflow-y-auto" aria-label="Admin navigation">
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.href;
           return (
@@ -210,7 +207,6 @@ function SidebarContent({ pathname, onLogout, onNavClick }: {
         })}
       </nav>
 
-      {/* Bottom */}
       <div className="px-3 py-4 border-t border-white/[0.06] space-y-px">
         <Link
           href="/shop"
@@ -297,4 +293,40 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           aria-hidden={!drawerOpen}
         >
           <button
-            onClick={() => setDr
+            onClick={() => setDrawerOpen(false)}
+            className="absolute top-4 right-4 p-1.5 text-white/30 hover:text-white transition-colors"
+            aria-label="Close navigation"
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+            </svg>
+          </button>
+          <SidebarContent pathname={pathname} onLogout={handleLogout} onNavClick={() => setDrawerOpen(false)} />
+        </aside>
+
+        {/* Main */}
+        <div className="flex-1 flex flex-col min-w-0 overflow-auto">
+          {/* Mobile top bar */}
+          <header className="md:hidden flex items-center gap-3 px-4 py-3 bg-[#111111] border-b border-white/[0.06] flex-shrink-0">
+            <button
+              onClick={() => setDrawerOpen(true)}
+              className="p-2 text-white/50 hover:text-white transition-colors"
+              aria-label="Open navigation"
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M1 3.5h14M1 8h14M1 12.5h14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+              </svg>
+            </button>
+            <span className="text-[11px] font-bold tracking-[0.18em] text-white uppercase">Admin Panel</span>
+          </header>
+
+          <main className="flex-1">
+            <div className="max-w-6xl mx-auto px-6 py-8">
+              {children}
+            </div>
+          </main>
+        </div>
+      </div>
+    </AdminAuthContext.Provider>
+  );
+}
