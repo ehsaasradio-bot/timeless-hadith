@@ -1,61 +1,42 @@
 'use client';
 
 // components/shop/CategoryGrid.tsx
-// Featured categories grid — hover animated, image-optimized
+// Coin metal categories — light-blue glassmorphism
 
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { CATEGORIES } from '@/lib/shop-data';
 
+// Coin-appropriate icons keyed by category slug
 const CATEGORY_ICONS: Record<string, React.ReactElement> = {
-  'wall-art': (
+  silver: (
     <svg viewBox="0 0 20 20" fill="none" width="20" height="20" aria-hidden="true">
-      <rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M2 13l4-4 3 3 3-3 6 6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.4" />
+      <circle cx="10" cy="10" r="4.5" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+      <circle cx="10" cy="10" r="2"   fill="currentColor" opacity="0.3" />
     </svg>
   ),
-  journals: (
+  gold: (
     <svg viewBox="0 0 20 20" fill="none" width="20" height="20" aria-hidden="true">
-      <rect x="4" y="2" width="12" height="16" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M7 7h6M7 10h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.4" />
+      <circle cx="10" cy="10" r="4.5" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+      <text x="10" y="14" textAnchor="middle" fontSize="7" fontWeight="700"
+        fill="currentColor" fontFamily="system-ui">Au</text>
     </svg>
   ),
-  'prayer-essentials': (
+  copper: (
     <svg viewBox="0 0 20 20" fill="none" width="20" height="20" aria-hidden="true">
-      <path d="M10 2a7 7 0 0 1 7 7c0 3.5-3.5 7-7 9-3.5-2-7-5.5-7-9a7 7 0 0 1 7-7z" stroke="currentColor" strokeWidth="1.4" />
-      <circle cx="10" cy="9" r="2" stroke="currentColor" strokeWidth="1.4" />
+      <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.4" />
+      <circle cx="10" cy="10" r="4.5" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+      <text x="10" y="14" textAnchor="middle" fontSize="7" fontWeight="700"
+        fill="currentColor" fontFamily="system-ui">Cu</text>
     </svg>
   ),
-  books: (
+  bronze: (
     <svg viewBox="0 0 20 20" fill="none" width="20" height="20" aria-hidden="true">
-      <path d="M3 5a2 2 0 0 1 2-2h10v14H5a2 2 0 0 1-2-2V5z" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M7 2v14" stroke="currentColor" strokeWidth="1.4" />
-    </svg>
-  ),
-  apparel: (
-    <svg viewBox="0 0 20 20" fill="none" width="20" height="20" aria-hidden="true">
-      <path d="M2 6l4-3 1 3h6l1-3 4 3-3 2v9H5V8L2 6z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
-    </svg>
-  ),
-  'kids-learning': (
-    <svg viewBox="0 0 20 20" fill="none" width="20" height="20" aria-hidden="true">
-      <circle cx="10" cy="7" r="3" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M4 17c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  ),
-  'home-decor': (
-    <svg viewBox="0 0 20 20" fill="none" width="20" height="20" aria-hidden="true">
-      <path d="M2 9.5L10 3l8 6.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M5 10v7h10v-7" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
-      <rect x="8" y="13" width="4" height="4" stroke="currentColor" strokeWidth="1.3" />
-    </svg>
-  ),
-  'digital-products': (
-    <svg viewBox="0 0 20 20" fill="none" width="20" height="20" aria-hidden="true">
-      <rect x="3" y="4" width="14" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M7 18h6M10 14v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M7 10h6M10 7v6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" opacity="0.7" />
     </svg>
   ),
 };
@@ -66,8 +47,8 @@ const containerVariants = {
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  hidden:   { opacity: 0, y: 24 },
+  visible:  { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
 export default function CategoryGrid() {
@@ -85,7 +66,7 @@ export default function CategoryGrid() {
           >
             <span className="block w-8 h-[1.5px] bg-[#C9A84C]" aria-hidden="true" />
             <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#C9A84C]">
-              Browse by Category
+              Browse by Metal
             </span>
             <span className="block w-8 h-[1.5px] bg-[#C9A84C]" aria-hidden="true" />
           </motion.div>
@@ -98,9 +79,9 @@ export default function CategoryGrid() {
             transition={{ duration: 0.5, delay: 0.06 }}
             className="text-[clamp(1.8rem,3.5vw,2.8rem)] font-bold text-[#1C1C1E] tracking-tight leading-tight"
           >
-            Everything you need,
+            Every metal, every grade,
             <br />
-            <span className="text-[#0D4A3C]">crafted with intention.</span>
+            <span className="text-blue-600">certified and authentic.</span>
           </motion.h2>
         </div>
 
@@ -110,45 +91,48 @@ export default function CategoryGrid() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+          className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4"
           role="list"
-          aria-label="Product categories"
+          aria-label="Coin categories by metal"
         >
           {CATEGORIES.map((cat) => (
             <motion.div key={cat.id} variants={cardVariants} role="listitem">
               <Link
-                href={`/shop/category/${cat.slug}`}
-                className="group block relative bg-[#FAF7F2] rounded-2xl overflow-hidden border border-[#E8DDD0] hover:border-[#C9A84C] hover:shadow-lg hover:shadow-[#C9A84C]/08 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#0D4A3C] focus:ring-offset-2"
-                aria-label={`Shop ${cat.title} — ${cat.productCount} products`}
+                href={`/shop?category=${cat.slug}`}
+                className="group block relative bg-[#F8FAFF] rounded-2xl overflow-hidden border border-blue-100 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-600/08 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+                aria-label={`Shop ${cat.title} — ${cat.productCount} coins`}
               >
-                {/* Image */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-[#F0E8DC]">
-                  <Image
-                    src={cat.image.src}
-                    alt={cat.image.alt}
-                    fill
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-108"
-                  />
-                  {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1C1C1E]/30 via-transparent to-transparent" />
+                {/* Visual area */}
+                <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
+                  {/* Large coin illustration */}
+                  <svg viewBox="0 0 80 80" width="80" height="80" fill="none" aria-hidden="true"
+                    className="opacity-30 group-hover:opacity-50 transition-opacity duration-300">
+                    <circle cx="40" cy="40" r="36" stroke="#2563EB" strokeWidth="1.5" />
+                    <circle cx="40" cy="40" r="26" stroke="#2563EB" strokeWidth="1"   />
+                    <circle cx="40" cy="40" r="16" stroke="#2563EB" strokeWidth="0.8" />
+                  </svg>
 
                   {/* Icon badge */}
-                  <div className="absolute top-3 left-3 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center text-[#0D4A3C] border border-[#E8DDD0]">
+                  <div className="absolute top-3 left-3 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center text-blue-600 border border-blue-100">
                     {CATEGORY_ICONS[cat.slug] ?? null}
+                  </div>
+
+                  {/* Count badge */}
+                  <div className="absolute top-3 right-3 px-2 py-0.5 bg-white/80 backdrop-blur-sm rounded-full text-[10px] font-semibold text-blue-600 border border-blue-100">
+                    {cat.productCount}
                   </div>
                 </div>
 
                 {/* Text */}
                 <div className="p-4">
-                  <h3 className="text-[14px] font-semibold text-[#1C1C1E] group-hover:text-[#0D4A3C] transition-colors mb-0.5">
+                  <h3 className="text-[14px] font-semibold text-[#1C1C1E] group-hover:text-blue-600 transition-colors mb-0.5">
                     {cat.title}
                   </h3>
-                  <span className="text-[12px] text-[#888]">{cat.productCount} products</span>
+                  <span className="text-[12px] text-[#888]">{cat.productCount} coins</span>
                 </div>
 
                 {/* Arrow on hover */}
-                <div className="absolute bottom-4 right-4 w-7 h-7 bg-[#0D4A3C] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-200">
+                <div className="absolute bottom-4 right-4 w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-200">
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                     <path d="M2 6h8M6 2l4 4-4 4" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -156,25 +140,6 @@ export default function CategoryGrid() {
               </Link>
             </motion.div>
           ))}
-        </motion.div>
-
-        {/* View all link */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.3 }}
-          className="text-center mt-10"
-        >
-          <Link
-            href="/shop/categories"
-            className="inline-flex items-center gap-2 text-[14px] font-semibold text-[#0D4A3C] hover:text-[#1A6B54] transition-colors focus:outline-none focus:underline"
-          >
-            View all categories
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M2 7h10M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
         </motion.div>
       </div>
     </section>

@@ -108,7 +108,7 @@ const config: Config = {
   },
   plugins: [
     // Hides scrollbars while keeping scroll functionality (used in category filter strip)
-    require('tailwindcss-scrollbar-hide'),
+    require('tailwind-scrollbar-hide'),
   ],
 };
 

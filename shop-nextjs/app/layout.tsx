@@ -1,10 +1,10 @@
 // app/layout.tsx
 // Root layout — required by Next.js App Router
-// Minimal shell; actual font/style loading is in app/shop/layout.tsx
 
 export const runtime = 'edge';
 
 import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://timelesshadith.com'),
