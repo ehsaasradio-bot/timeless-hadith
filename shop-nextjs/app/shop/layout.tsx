@@ -36,4 +36,10 @@ export const metadata: Metadata = {
 export default function ShopLayout({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className={`${inter.variable} ${playfair.variable} min-h-s
+      className={`${inter.variable} ${playfair.variable} min-h-screen font-sans antialiased`}
+      style={{ background: 'var(--color-bg)' }}
+    >
+      {children}
+    </div>
+  );
+}
