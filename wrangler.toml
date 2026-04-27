@@ -1,0 +1,8 @@
+# wrangler.toml — Timeless Hadith (main static site)
+# Cloudflare Pages root config — serves static HTML from repo root
+# The shop (shop-nextjs/) has its own separate wrangler.toml and Pages project.
+
+name = "timeless-hadith"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "."
