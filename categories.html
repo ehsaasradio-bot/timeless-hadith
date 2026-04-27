@@ -442,6 +442,19 @@
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
+    /* ── Override global styles.min.css cat-card rules ── */
+    .cat-card {
+      background: rgba(255, 255, 255, 0.70) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.65) !important;
+      border-radius: 22px !important;
+    }
+    [data-theme="dark"] .cat-card {
+      background: rgba(28, 30, 42, 0.72) !important;
+      border-color: rgba(255, 255, 255, 0.07) !important;
+    }
   </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6JL045YKG3"></script>
