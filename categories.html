@@ -424,6 +424,50 @@
       transform: translateX(2px);
     }
 
+    /* ── Cards section background — needed so glassmorphism is visible ── */
+    .cards-section {
+      background: linear-gradient(135deg, #e8f0fe 0%, #f0f4ff 40%, #e4edff 70%, #dce8ff 100%);
+      border-radius: 24px;
+      padding: 40px 40px 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    [data-theme="dark"] .cards-section {
+      background: linear-gradient(135deg, #0a0f1e 0%, #0d1629 50%, #0a1220 100%);
+    }
+
+    /* ── Pagination buttons ── */
+    .pagination {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 32px; flex-wrap: wrap; gap: 16px;
+    }
+    .pagination-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 100px;
+      font-size: 13px; font-weight: 600; font-family: var(--font);
+      background: var(--surface); color: var(--ink);
+      border: 1px solid var(--border); cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .pagination-btn:hover:not(:disabled) {
+      background: var(--accent); color: #fff; border-color: var(--accent);
+    }
+    .pagination-btn:disabled { opacity: 0.35; cursor: default; }
+    .pagination-btn svg {
+      width: 16px; height: 16px; stroke: currentColor;
+      fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .pagination-dots {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .p-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--border); border: none; cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease; padding: 0;
+    }
+    .p-dot:hover { background: var(--muted); }
+    .p-dot.active { background: var(--accent); transform: scale(1.35); cursor: default; }
+
     /* ── No Results ── */
     .no-results {
       grid-column: 1 / -1;
@@ -445,11 +489,16 @@
 
     /* ── Override global styles.min.css cat-card rules ── */
     .cat-card {
-      background: rgba(255, 255, 255, 0.70) !important;
+      background: rgba(255, 255, 255, 0.80) !important;
       backdrop-filter: blur(24px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.65) !important;
+      border: 1px solid rgba(180, 210, 255, 0.55) !important;
       border-radius: 22px !important;
+      box-shadow: 0 4px 24px rgba(52, 113, 255, 0.07) !important;
+    }
+    .cat-card:hover {
+      background: rgba(255, 255, 255, 0.96) !important;
+      box-shadow: 0 8px 40px rgba(52, 113, 255, 0.13) !important;
     }
     [data-theme="dark"] .cat-card {
       background: rgba(28, 30, 42, 0.72) !important;
@@ -623,11 +672,11 @@
 
   <!-- ══ SCRIPTS ══ -->
   <script defer src="js/supabase-data.js?v=2"></script>
-  <script defer src="js/app.js"></script>
+  <script defer src="js/app.js?v=2"></script>
   <script defer src="js/supabase-auth.js"></script>
   <script defer src="js/ai-search.js"></script>
 
-  <script defer src="js/categories-wire.js"></script>
+  <script defer src="js/categories-wire.js?v=4"></script>
 
   <!-- Cloudflare Web Analytics -->
   <script defer src="js/sw-register.js"></script>
