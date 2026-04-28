@@ -218,8 +218,15 @@ CREATE INDEX IF NOT EXISTS idx_products_badge       ON shop_products(badge) WHER
 CREATE INDEX IF NOT EXISTS idx_products_tags        ON shop_products USING GIN(tags);
 
 -- Full-text search on products
+-- Wrapper declared IMMUTABLE so it can be used in an expression index
+CREATE OR REPLACE FUNCTION shop_product_fts_doc(title text, description text, tags text[])
+RETURNS tsvector LANGUAGE sql IMMUTABLE AS $$
+  SELECT to_tsvector('english'::regconfig,
+    title || ' ' || COALESCE(description, '') || ' ' || COALESCE(array_to_string(tags, ' '), ''))
+$$;
+
 CREATE INDEX IF NOT EXISTS idx_products_fts ON shop_products
-  USING GIN(to_tsvector('english', title || ' ' || COALESCE(description, '') || ' ' || array_to_string(tags, ' ')));
+  USING GIN(shop_product_fts_doc(title, description, tags));
 
 CREATE INDEX IF NOT EXISTS idx_product_images_product ON shop_product_images(product_id);
 CREATE INDEX IF NOT EXISTS idx_inventory_product      ON shop_inventory(product_id);

@@ -52,7 +52,7 @@ Save this as `ADMIN_SECRET` — you'll need it to log in to the admin panel.
 4. Settings:
    - **Project name:** `timeless-hadith-shop`
    - **Production branch:** `main`
-   - **Root directory:** `shop-nextjs`
+   - **Root directory:** `admin-app`
    - **Build command:** `npx @cloudflare/next-on-pages`
    - **Build output directory:** `.vercel/output/static`
    - **Node.js version:** `20`
@@ -96,7 +96,7 @@ Go to: GitHub repo → Settings → Secrets → Actions → New secret
 ## Step 8: Local Development
 
 ```bash
-cd shop-nextjs
+cd admin-app
 
 # Install
 npm install
@@ -124,7 +124,7 @@ Push to main branch:
 
 ```powershell
 cd C:\Users\mubas\Documents\Claude\Projects\Haith
-git add shop-nextjs/
+git add admin-app/
 git commit -m "feat(shop): add Next.js shop with Supabase backend and Cloudflare Pages deployment"
 git push origin main
 ```

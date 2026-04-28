@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeless Hadith — Tech Stack & Architecture · April 2026</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff; --bg2: #f5f5f0; --bg3: #ebebE5; --bg4: #e2e1db;
+    --text: #1a1a18; --text2: #5f5e5a; --text3: #888780; --text4: #b4b2a9;
+    --border: rgba(0,0,0,0.09); --border2: rgba(0,0,0,0.15);
+    --blue-bg: #E6F1FB; --blue-text: #0C447C; --blue-mid: #378ADD; --blue-dark: #042C53;
+    --teal-bg: #E1F5EE; --teal-text: #085041; --teal-mid: #1D9E75; --teal-dark: #04342C;
+    --purple-bg: #EEEDFE; --purple-text: #3C3489; --purple-mid: #7F77DD; --purple-dark: #26215C;
+    --amber-bg: #FAEEDA; --amber-text: #633806; --amber-mid: #EF9F27;
+    --coral-bg: #FAECE7; --coral-text: #712B13; --coral-mid: #D85A30;
+    --red-bg: #FCEBEB; --red-text: #791F1F; --red-mid: #E24B4A;
+    --green-bg: #EAF3DE; --green-text: #27500A; --green-mid: #639922;
+    --gray-bg: #F1EFE8; --gray-text: #444441; --gray-mid: #888780;
+    --r8: 8px; --r12: 12px; --r16: 16px; --r20: 20px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a18; --bg2: #222220; --bg3: #2a2a27; --bg4: #323230;
+      --text: #f0efe8; --text2: #aaa99f; --text3: #72716a; --text4: #4a4a46;
+      --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.14);
+      --blue-bg: #071929; --blue-text: #85B7EB; --blue-mid: #378ADD;
+      --teal-bg: #042018; --teal-text: #5DCAA5; --teal-mid: #1D9E75;
+      --purple-bg: #120e36; --purple-text: #AFA9EC; --purple-mid: #7F77DD;
+      --amber-bg: #2a1a05; --amber-text: #FAC775; --amber-mid: #EF9F27;
+      --coral-bg: #2a100a; --coral-text: #F0997B; --coral-mid: #D85A30;
+      --red-bg: #280d0d; --red-text: #F09595; --red-mid: #E24B4A;
+      --green-bg: #0d1f05; --green-text: #C0DD97; --green-mid: #639922;
+      --gray-bg: #222220; --gray-text: #D3D1C7; --gray-mid: #888780;
+    }
+  }
+
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px; line-height: 1.65;
+    max-width: 860px; margin: 0 auto; padding: 52px 32px 80px;
+  }
+
+  /* ── Typography ── */
+  h1 { font-size: 30px; font-weight: 500; letter-spacing: -0.4px; color: var(--text); margin-bottom: 6px; }
+  h2 { font-size: 18px; font-weight: 500; color: var(--text); margin-bottom: 14px; }
+  h3 { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
+  p { color: var(--text2); line-height: 1.65; }
+  .kicker { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+  .sub { font-size: 14px; color: var(--text2); margin-bottom: 0; }
+
+  /* ── Layout ── */
+  .report-header { margin-bottom: 44px; padding-bottom: 32px; border-bottom: 0.5px solid var(--border); }
+  .section { margin-bottom: 44px; }
+  hr { border: none; border-top: 0.5px solid var(--border); margin: 44px 0; }
+
+  /* ── Badges / pills ── */
+  .pill { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; padding: 3px 9px; border-radius: 99px; white-space: nowrap; }
+  .pill-blue { background: var(--blue-bg); color: var(--blue-text); }
+  .pill-teal { background: var(--teal-bg); color: var(--teal-text); }
+  .pill-purple { background: var(--purple-bg); color: var(--purple-text); }
+  .pill-amber { background: var(--amber-bg); color: var(--amber-text); }
+  .pill-coral { background: var(--coral-bg); color: var(--coral-text); }
+  .pill-green { background: var(--green-bg); color: var(--green-text); }
+  .pill-gray { background: var(--gray-bg); color: var(--gray-text); }
+  .pill-red { background: var(--red-bg); color: var(--red-text); }
+
+  /* ── Architecture overview cards ── */
+  .arch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 0; }
+  @media (max-width: 600px) { .arch-grid { grid-template-columns: 1fr; } }
+  .arch-card { border: 0.5px solid var(--border); border-radius: var(--r16); padding: 20px; background: var(--bg); }
+  .arch-card-accent { border-left: 3px solid; }
+  .arch-card.blue { border-left-color: var(--blue-mid); }
+  .arch-card.teal { border-left-color: var(--teal-mid); }
+  .arch-card.purple { border-left-color: var(--purple-mid); }
+  .arch-card.coral { border-left-color: var(--coral-mid); }
+  .arch-card.amber { border-left-color: var(--amber-mid); }
+  .arch-card.green { border-left-color: var(--green-mid); }
+  .arch-icon { font-size: 22px; margin-bottom: 10px; }
+  .arch-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .arch-desc { font-size: 12px; color: var(--text2); line-height: 1.55; }
+  .arch-tag { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 5px; }
+
+  /* ── Data flow diagram (CSS) ── */
+  .flow-wrap { border: 0.5px solid var(--border); border-radius: var(--r16); padding: 24px; background: var(--bg); }
+  .flow-title { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-bottom: 20px; }
+  .flow-row { display: flex; align-items: center; gap: 0; margin-bottom: 8px; }
+  .flow-box { padding: 8px 14px; border-radius: var(--r8); font-size: 12px; font-weight: 500; text-align: center; flex-shrink: 0; white-space: nowrap; }
+  .flow-box.blue { background: var(--blue-bg); color: var(--blue-text); }
+  .flow-box.teal { background: var(--teal-bg); color: var(--teal-text); }
+  .flow-box.purple { background: var(--purple-bg); color: var(--purple-text); }
+  .flow-box.amber { background: var(--amber-bg); color: var(--amber-text); }
+  .flow-box.coral { background: var(--coral-bg); color: var(--coral-text); }
+  .flow-box.green { background: var(--green-bg); color: var(--green-text); }
+  .flow-box.gray { background: var(--gray-bg); color: var(--gray-text); }
+  .flow-box.wide { min-width: 140px; }
+  .flow-arrow { flex: 1; display: flex; align-items: center; padding: 0 4px; }
+  .flow-line { flex: 1; height: 1px; background: var(--border2); }
+  .flow-arrowhead { width: 0; height: 0; border-top: 4px solid transparent; border-bottom: 4px solid transparent; border-left: 6px solid var(--border2); }
+  .flow-label { font-size: 10px; color: var(--text3); text-align: center; margin: 0 6px; white-space: nowrap; }
+  .flow-col { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+
+  /* ── Layer stack (visual) ── */
+  .layer-stack { display: flex; flex-direction: column; gap: 4px; }
+  .layer-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--r12); border: 0.5px solid var(--border); background: var(--bg); }
+  .layer-color { width: 4px; height: 36px; border-radius: 2px; flex-shrink: 0; }
+  .layer-name { font-size: 13px; font-weight: 500; color: var(--text); min-width: 140px; }
+  .layer-detail { font-size: 12px; color: var(--text2); flex: 1; }
+  .layer-pills { display: flex; gap: 4px; flex-wrap: wrap; margin-left: auto; }
+
+  /* ── File tree ── */
+  .tree { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r12); padding: 18px 20px; font-family: "SF Mono", "Fira Code", "Consolas", monospace; font-size: 12px; line-height: 2; overflow-x: auto; }
+  .tree-dir { color: var(--blue-text); font-weight: 500; }
+  .tree-file { color: var(--text2); }
+  .tree-comment { color: var(--text3); }
+  .tree-indent { padding-left: 20px; display: block; }
+
+  /* ── Code block ── */
+  pre.code { font-family: "SF Mono", "Fira Code", "Consolas", monospace; font-size: 11.5px; background: var(--bg3); color: var(--text); border: 0.5px solid var(--border); border-radius: var(--r8); padding: 14px 16px; line-height: 1.75; overflow-x: auto; margin: 10px 0; white-space: pre; }
+  .code-inline { font-family: "SF Mono", "Fira Code", monospace; font-size: 11.5px; background: var(--bg3); color: var(--text); padding: 2px 6px; border-radius: 4px; }
+
+  /* ── Table ── */
+  .tbl-wrap { border: 0.5px solid var(--border); border-radius: var(--r16); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  thead { background: var(--bg2); }
+  th { padding: 10px 14px; text-align: left; font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); border-bottom: 0.5px solid var(--border); }
+  td { padding: 10px 14px; color: var(--text2); border-bottom: 0.5px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-family: "SF Mono", "Fira Code", monospace; font-size: 11px; color: var(--text); }
+  td strong { color: var(--text); font-weight: 500; }
+
+  /* ── Two-col layout ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+  .card { border: 0.5px solid var(--border); border-radius: var(--r16); padding: 20px; background: var(--bg); }
+
+  /* ── Route list ── */
+  .route-list { display: flex; flex-direction: column; gap: 2px; }
+  .route-row { display: flex; align-items: flex-start; gap: 10px; padding: 9px 14px; border-radius: var(--r8); }
+  .route-row:hover { background: var(--bg2); }
+  .method { font-family: "SF Mono","Fira Code",monospace; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; flex-shrink: 0; min-width: 42px; text-align: center; margin-top: 1px; }
+  .method.get { background: var(--green-bg); color: var(--green-text); }
+  .method.post { background: var(--blue-bg); color: var(--blue-text); }
+  .method.put { background: var(--amber-bg); color: var(--amber-text); }
+  .method.del { background: var(--red-bg); color: var(--red-text); }
+  .method.multi { background: var(--purple-bg); color: var(--purple-text); font-size: 9px; }
+  .route-path { font-family: "SF Mono","Fira Code",monospace; font-size: 11.5px; color: var(--text); flex-shrink: 0; min-width: 280px; line-height: 1.8; }
+  .route-desc { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+  /* ── DB tables ── */
+  .db-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  @media (max-width: 600px) { .db-grid { grid-template-columns: 1fr; } }
+  .db-card { border: 0.5px solid var(--border); border-radius: var(--r12); padding: 14px; background: var(--bg); }
+  .db-name { font-family: "SF Mono","Fira Code",monospace; font-size: 11.5px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
+  .db-field { font-size: 11px; color: var(--text3); line-height: 1.9; }
+  .db-field span.key { color: var(--blue-text); }
+  .db-field span.fk { color: var(--purple-text); }
+  .db-field span.type { color: var(--text4); }
+
+  /* ── Dep table styles ── */
+  .dep-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 600px) { .dep-grid { grid-template-columns: 1fr; } }
+
+  /* ── Env var list ── */
+  .env-list { display: flex; flex-direction: column; }
+  .env-row { display: flex; align-items: baseline; gap: 10px; padding: 8px 14px; border-bottom: 0.5px solid var(--border); }
+  .env-row:last-child { border-bottom: none; }
+  .env-key { font-family: "SF Mono","Fira Code",monospace; font-size: 11.5px; color: var(--text); min-width: 260px; flex-shrink: 0; }
+  .env-note { font-size: 12px; color: var(--text2); }
+
+  /* ── Footer ── */
+  .footer { margin-top: 60px; padding-top: 24px; border-top: 0.5px solid var(--border); font-size: 12px; color: var(--text3); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+  /* ── Section label ── */
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text3); margin-bottom: 14px; }
+
+  /* ── Number stat ── */
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 0; }
+  @media (max-width: 600px) { .stat-row { grid-template-columns: repeat(2, 1fr); } }
+  .stat-card { background: var(--bg2); border-radius: var(--r12); padding: 16px; }
+  .stat-num { font-size: 26px; font-weight: 500; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 11px; color: var(--text3); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header class="report-header">
+  <p class="kicker">Technical Architecture · April 2026</p>
+  <h1>Tech Stack & Architecture</h1>
+  <p class="sub">timelesshadith.com · Deep dive into every layer of the system</p>
+</header>
+
+<!-- ═══════════════════ STATS ROW ═══════════════════ -->
+<section class="section">
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Distinct codebases</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">7,277</div>
+      <div class="stat-label">Hadiths in Supabase</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">13</div>
+      <div class="stat-label">Database tables</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">21</div>
+      <div class="stat-label">API route handlers</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ HIGH-LEVEL ARCHITECTURE ═══════════════════ -->
+<section class="section">
+  <h2>System overview</h2>
+  <p style="margin-bottom:18px;">Timeless Hadith is a dual-stack platform — a fast static site for Islamic content discovery, and a full-featured e-commerce shop. Both deploy to Cloudflare Pages from a single GitHub repository and share the same Supabase PostgreSQL database, but they are architecturally independent.</p>
+
+  <div class="arch-grid" style="margin-bottom:12px;">
+    <div class="arch-card blue arch-card-accent">
+      <div class="arch-name">Static Hadith Site</div>
+      <div class="arch-desc">Vanilla JavaScript SPA served as static HTML from Cloudflare Pages. No build step. Data fetched client-side directly from Supabase PostgREST. All 7,277 hadiths, categories, bookmarks, search, and Urdu toggle.</div>
+      <div class="arch-tag">
+        <span class="pill pill-blue">Vanilla JS</span>
+        <span class="pill pill-gray">Cloudflare Pages</span>
+        <span class="pill pill-teal">Supabase REST</span>
+      </div>
+    </div>
+    <div class="arch-card teal arch-card-accent">
+      <div class="arch-name">E-Commerce Shop</div>
+      <div class="arch-desc">Next.js 15 App Router application with full edge runtime. All API routes run on Cloudflare's edge network. Stripe payments, inventory management, admin dashboard, and customer analytics.</div>
+      <div class="arch-tag">
+        <span class="pill pill-purple">Next.js 15</span>
+        <span class="pill pill-blue">Edge Runtime</span>
+        <span class="pill pill-coral">Stripe</span>
+        <span class="pill pill-teal">Supabase</span>
+      </div>
+    </div>
+    <div class="arch-card purple arch-card-accent">
+      <div class="arch-name">Database</div>
+      <div class="arch-desc">Single Supabase PostgreSQL instance hosting both the hadith corpus and the full shop schema. RLS enforced on all tables. Anon key for public reads, service role key only on the server.</div>
+      <div class="arch-tag">
+        <span class="pill pill-purple">PostgreSQL</span>
+        <span class="pill pill-gray">RLS</span>
+        <span class="pill pill-amber">Triggers</span>
+      </div>
+    </div>
+    <div class="arch-card coral arch-card-accent">
+      <div class="arch-name">Deployment</div>
+      <div class="arch-desc">Both apps deploy to Cloudflare Pages on every push to main. The static site deploys directly; the shop goes through a Cloudflare Pages build using @cloudflare/next-on-pages. Zero manual deployment steps.</div>
+      <div class="arch-tag">
+        <span class="pill pill-coral">Cloudflare Pages</span>
+        <span class="pill pill-gray">Auto-deploy</span>
+        <span class="pill pill-green">Edge CDN</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ DATA FLOW ═══════════════════ -->
+<section class="section">
+  <h2>Data flow diagrams</h2>
+
+  <!-- Hadith site flow -->
+  <div class="flow-wrap" style="margin-bottom:12px;">
+    <p class="flow-title">Static site — hadith data flow</p>
+    <div style="overflow-x:auto;">
+      <div style="display:flex;align-items:center;gap:0;min-width:560px;margin-bottom:8px;">
+        <div class="flow-box blue wide">Browser / User</div>
+        <div class="flow-arrow"><div class="flow-line"></div><div class="flow-label">HTML + JS</div><div class="flow-arrowhead"></div></div>
+        <div class="flow-box gray wide">Cloudflare CDN<br><span style="font-size:10px;opacity:0.7;">Edge cache</span></div>
+        <div class="flow-arrow"><div class="flow-line"></div><div class="flow-label">REST API</div><div class="flow-arrowhead"></div></div>
+        <div class="flow-box teal wide">Supabase PostgREST<br><span style="font-size:10px;opacity:0.7;">anon key · read-only</span></div>
+        <div class="flow-arrow"><div class="flow-line"></div><div class="flow-label">PostgreSQL</div><div class="flow-arrowhead"></div></div>
+        <div class="flow-box purple">hadiths table<br><span style="font-size:10px;opacity:0.7;">7,277 rows</span></div>
+      </div>
+      <div style="font-size:11px;color:var(--text3);padding:4px 2px;">Client-side JS (supabase-data.js) paginates at 1,000 rows per request using parallel fetches, then caches in-memory and localStorage.</div>
+    </div>
+  </div>
+
+  <!-- Shop payment flow -->
+  <div class="flow-wrap">
+    <p class="flow-title">Shop — payment & order flow</p>
+    <div style="overflow-x:auto;">
+      <div style="display:flex;align-items:center;gap:0;min-width:640px;margin-bottom:8px;">
+        <div class="flow-box blue">Customer</div>
+        <div class="flow-arrow"><div class="flow-line"></div><div class="flow-label">POST /api/checkout</div><div class="flow-arrowhead"></div></div>
+        <div class="flow-box teal">Edge API<br><span style="font-size:10px;opacity:0.7;">Fetch prices from DB</span></div>
+        <div class="flow-arrow"><div class="flow-line"></div><div class="flow-label">Create session</div><div class="flow-arrowhead"></div></div>
+        <div class="flow-box coral">Stripe</div>
+        <div class="flow-arrow"><div class="flow-line"></div><div class="flow-label">Webhook event</div><div class="flow-arrowhead"></div></div>
+        <div class="flow-box teal">POST /api/webhook<br><span style="font-size:10px;opacity:0.7;">Mark order paid</span></div>
+        <div class="flow-arrow"><div class="flow-line"></div><div class="flow-label">Write</div><div class="flow-arrowhead"></div></div>
+        <div class="flow-box purple">Supabase</div>
+      </div>
+      <div style="font-size:11px;color:var(--text3);padding:4px 2px;">Prices are always fetched server-side — the client cannot manipulate the amount charged. Webhook handler is idempotent (safe to replay).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ LAYER STACK ═══════════════════ -->
+<section class="section">
+  <h2>Architecture layers</h2>
+  <div class="layer-stack">
+    <div class="layer-item">
+      <div class="layer-color" style="background:var(--blue-mid);"></div>
+      <div class="layer-name">Presentation layer</div>
+      <div class="layer-detail">Vanilla JS (static site) + Next.js 15 App Router with React 19 (shop). Tailwind CSS 3.4 + Framer Motion 11 for animations. CSS custom properties for theming. Service worker for offline support.</div>
+      <div class="layer-pills"><span class="pill pill-blue">Vanilla JS</span><span class="pill pill-purple">Next.js 15</span><span class="pill pill-gray">Tailwind</span></div>
+    </div>
+    <div class="layer-item">
+      <div class="layer-color" style="background:var(--teal-mid);"></div>
+      <div class="layer-name">API layer</div>
+      <div class="layer-detail">21 Next.js edge route handlers. All use <span class="code-inline">export const runtime = 'edge'</span> — run on Cloudflare's global network. Separate public API, shop API, and admin API surfaces.</div>
+      <div class="layer-pills"><span class="pill pill-teal">Edge Runtime</span><span class="pill pill-gray">REST</span></div>
+    </div>
+    <div class="layer-item">
+      <div class="layer-color" style="background:var(--purple-mid);"></div>
+      <div class="layer-name">Auth layer</div>
+      <div class="layer-detail">Stateless HMAC-SHA256 sessions for admin (no session store). Anon + service-role split for Supabase. Constant-time comparison prevents timing attacks. Changing the secret instantly invalidates all sessions.</div>
+      <div class="layer-pills"><span class="pill pill-purple">HMAC-SHA256</span><span class="pill pill-gray">httpOnly cookie</span></div>
+    </div>
+    <div class="layer-item">
+      <div class="layer-color" style="background:var(--amber-mid);"></div>
+      <div class="layer-name">Data access layer</div>
+      <div class="layer-detail">lib/shop-api.ts (230+ lines) provides typed wrappers for every Supabase query. Public and admin APIs separated by function naming. Never exposes raw Supabase client to API routes.</div>
+      <div class="layer-pills"><span class="pill pill-amber">shop-api.ts</span><span class="pill pill-gray">TypeScript</span></div>
+    </div>
+    <div class="layer-item">
+      <div class="layer-color" style="background:var(--coral-mid);"></div>
+      <div class="layer-name">Database layer</div>
+      <div class="layer-detail">Supabase PostgreSQL at dwcsledifvnyrunxejzd.supabase.co. 13 shop tables + hadith corpus tables. Row-level security, auto-timestamp triggers, inventory reservation triggers, sequential order number generation.</div>
+      <div class="layer-pills"><span class="pill pill-coral">PostgreSQL</span><span class="pill pill-green">RLS</span><span class="pill pill-amber">Triggers</span></div>
+    </div>
+    <div class="layer-item">
+      <div class="layer-color" style="background:var(--green-mid);"></div>
+      <div class="layer-name">Infrastructure layer</div>
+      <div class="layer-detail">Cloudflare Pages for both codebases. Auto-deploy on git push. _headers for security headers + cache-control. _redirects for URL aliases. Global CDN edge delivery. No servers to manage.</div>
+      <div class="layer-pills"><span class="pill pill-green">Cloudflare Pages</span><span class="pill pill-gray">CDN</span><span class="pill pill-blue">Edge</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ STATIC SITE FILES ═══════════════════ -->
+<section class="section">
+  <h2>Static site — file map</h2>
+  <p style="margin-bottom:16px;">Pure HTML/CSS/JS. No build step, no framework, no bundler. Files are served as-is from Cloudflare Pages.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>File</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td>js/supabase-data.js</td><td>Core data layer — initialises TH namespace, fetches hadiths + categories from Supabase PostgREST via parallel pagination (bypasses 1,000-row limit)</td></tr>
+        <tr><td>js/app.js</td><td>Shared logic across all pages — theme toggle, localStorage bookmarks, share-as-image, Supabase Storage logo probing</td></tr>
+        <tr><td>js/index-wire.js</td><td>Homepage wiring — featured hadiths carousel, categories grid, topics row, <span class="code-inline">buildCategoryCards()</span> with glassmorphism HTML</td></tr>
+        <tr><td>js/categories-wire.js</td><td>Categories index page — fetches all books from Supabase, builds glassmorphism card HTML, count pills, Arabic title rendering</td></tr>
+        <tr><td>js/category-wire.js</td><td>Single category view — pagination, filtering, hadith list rendering, Arabic/English toggle</td></tr>
+        <tr><td>js/supabase-auth.js</td><td>Supabase Auth integration — sign in/out UI, user profile, session persistence</td></tr>
+        <tr><td>js/ai-search.js</td><td>AI search frontend UX — input, results rendering, loading states (backend AI integration pending)</td></tr>
+        <tr><td>js/bookmarks-wire.js</td><td>Bookmarks page — reads localStorage, renders saved hadiths, handles removal</td></tr>
+        <tr><td>js/nav-widgets.js</td><td>Live navbar widgets — Makkah time clock, weather, prayer times, dynamic updates</td></tr>
+        <tr><td>js/urdu-toggle.js</td><td>Urdu accordion — fetches <span class="code-inline">urdu</span> column from Supabase on demand, renders RTL text</td></tr>
+        <tr><td>js/theme-init.js</td><td>Injected early in &lt;head&gt; — reads localStorage theme and sets <span class="code-inline">data-theme</span> before paint to prevent flash of wrong theme</td></tr>
+        <tr><td>js/page-chrome.js</td><td>Shared header, footer, and navigation — injected on every page</td></tr>
+        <tr><td>js/sw-register.js</td><td>Registers service worker for offline support and stale-while-revalidate caching</td></tr>
+        <tr><td>js/analytics.js</td><td>Google Analytics 4 + Cloudflare Web Analytics integration</td></tr>
+        <tr><td>css/styles.min.css</td><td>Main stylesheet — self-hosted Inter + Noto Kufi Arabic fonts, CSS custom properties (--ink, --accent, --surface), responsive grid, glassmorphism card utilities</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════ API ROUTES ═══════════════════ -->
+<section class="section">
+  <h2>API routes — admin-app</h2>
+  <p style="margin-bottom:16px;">All routes use edge runtime. Admin routes require a valid HMAC-SHA256 session cookie.</p>
+
+  <div style="margin-bottom:10px;">
+    <p class="section-label">Public routes</p>
+    <div class="route-list">
+      <div class="route-row">
+        <span class="method post">POST</span>
+        <span class="route-path">/api/checkout</span>
+        <span class="route-desc">Create Stripe Checkout Session. Fetches prices server-side (never trusts client). Creates pending order row linked to Stripe session ID.</span>
+      </div>
+      <div class="route-row">
+        <span class="method post">POST</span>
+        <span class="route-path">/api/webhook</span>
+        <span class="route-desc">Stripe webhook receiver. Validates signature. Handles <span class="code-inline">checkout.session.completed</span> (mark order paid) and <span class="code-inline">checkout.session.expired</span>. Idempotent.</span>
+      </div>
+      <div class="route-row">
+        <span class="method get">GET</span>
+        <span class="route-path">/api/shop/products</span>
+        <span class="route-desc">List products with pagination. Supports filters: category, search (full-text), sort (popular/newest/price/rating). Returns count for pagination.</span>
+      </div>
+      <div class="route-row">
+        <span class="method get">GET</span>
+        <span class="route-path">/api/shop/products/[slug]</span>
+        <span class="route-desc">Single product detail with images array and current inventory level.</span>
+      </div>
+      <div class="route-row">
+        <span class="method get">GET</span>
+        <span class="route-path">/api/shop/categories</span>
+        <span class="route-desc">All active categories. Cached 5 minutes at CDN edge (s-maxage=300, stale-while-revalidate=3600).</span>
+      </div>
+      <div class="route-row">
+        <span class="method multi">GET·POST</span>
+        <span class="route-path">/api/shop/reviews</span>
+        <span class="route-desc">GET returns approved reviews for a product. POST submits a new review (pending admin approval).</span>
+      </div>
+      <div class="route-row">
+        <span class="method post">POST</span>
+        <span class="route-path">/api/shop/newsletter</span>
+        <span class="route-desc">Subscribe email to newsletter. Upserts row (safe to call multiple times for same email). Records interest tags and source.</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <p class="section-label">Admin routes (HMAC auth required)</p>
+    <div class="route-list">
+      <div class="route-row">
+        <span class="method multi">POST·DEL</span>
+        <span class="route-path">/api/admin/login</span>
+        <span class="route-desc">POST: verifies ADMIN_SECRET, sets httpOnly session cookie. DELETE: clears cookie (logout).</span>
+      </div>
+      <div class="route-row">
+        <span class="method multi">CRUD</span>
+        <span class="route-path">/api/admin/products</span>
+        <span class="route-desc">Full product management. GET lists all, POST creates, PUT updates (include id), DELETE removes. Also supports inventory adjustment via <span class="code-inline">initial_quantity</span> / <span class="code-inline">quantity_on_hand</span> fields.</span>
+      </div>
+      <div class="route-row">
+        <span class="method multi">CRUD</span>
+        <span class="route-path">/api/admin/categories</span>
+        <span class="route-desc">Category management. Auto-generates slug from title. Full CRUD with slug uniqueness enforcement.</span>
+      </div>
+      <div class="route-row">
+        <span class="method multi">GET·PUT</span>
+        <span class="route-path">/api/admin/orders</span>
+        <span class="route-desc">GET with status/date filters and pagination. PUT to transition order through status pipeline: pending → confirmed → processing → shipped → delivered.</span>
+      </div>
+      <div class="route-row">
+        <span class="method multi">GET·PUT·DEL</span>
+        <span class="route-path">/api/admin/reviews</span>
+        <span class="route-desc">Moderation queue. GET returns pending/approved reviews. PUT to approve. DELETE to remove.</span>
+      </div>
+      <div class="route-row">
+        <span class="method get">GET</span>
+        <span class="route-path">/api/admin/stats</span>
+        <span class="route-desc">Dashboard summary — total orders, revenue, product count, newsletter subscribers, low-stock alert count.</span>
+      </div>
+      <div class="route-row">
+        <span class="method get">GET</span>
+        <span class="route-path">/api/admin/analytics</span>
+        <span class="route-desc">Period revenue, order counts, daily breakdown for charting. Supports from/to date params and period-over-period comparison.</span>
+      </div>
+      <div class="route-row">
+        <span class="method multi">CRUD</span>
+        <span class="route-path">/api/admin/coupons</span>
+        <span class="route-desc">Discount code management. Supports percent and fixed-amount types, min order values, use limits, and expiry dates.</span>
+      </div>
+      <div class="route-row">
+        <span class="method get">GET</span>
+        <span class="route-path">/api/admin/customers</span>
+        <span class="route-desc">Customer list grouped by email. Search by name/email. Drill into a customer's full order history.</span>
+      </div>
+      <div class="route-row">
+        <span class="method multi">GET·PUT</span>
+        <span class="route-path">/api/admin/settings</span>
+        <span class="route-desc">Single-row shop configuration — name, tagline, currency, free shipping threshold, low-stock threshold, social links.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ AUTH DEEP DIVE ═══════════════════ -->
+<section class="section">
+  <h2>Authentication — how it works</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Admin session (HMAC-SHA256)</h3>
+      <p style="margin-bottom:12px;font-size:13px;">Stateless — no database session table, no Redis. The session token is deterministically derived from the ADMIN_SECRET at login time and stored in an httpOnly cookie.</p>
+      <pre class="code">// lib/admin-auth.ts
+deriveSessionToken(secret):
+  HMAC-SHA256(secret, "th-admin-session-v1")
+  → base64url string
+
+isAdminAuthenticated(request):
+  cookie = request.cookies.get('th_admin_session')
+  expected = deriveSessionToken(ADMIN_SECRET)
+  return timingSafeEqual(cookie, expected)
+  // constant-time → prevents timing attacks</pre>
+      <p style="margin-top:10px;font-size:12px;color:var(--text3);">Changing ADMIN_SECRET in Cloudflare Pages env vars instantly invalidates all existing sessions.</p>
+    </div>
+    <div class="card">
+      <h3>Supabase key split</h3>
+      <p style="margin-bottom:12px;font-size:13px;">Two Supabase keys are used, strictly separated by context.</p>
+      <div class="tbl-wrap" style="border-radius:var(--r8);">
+        <table>
+          <thead><tr><th>Key</th><th>Where used</th><th>Permissions</th></tr></thead>
+          <tbody>
+            <tr><td>anon</td><td>Frontend JS, public API routes</td><td>Respects RLS — read-only public data</td></tr>
+            <tr><td>service_role</td><td>Admin API routes only (server-side)</td><td>Bypasses RLS — full read/write access</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:10px;font-size:12px;color:var(--text3);">The service_role key is never exposed to the browser or committed to git. It only exists in Cloudflare Pages environment variables and local .env.local (gitignored).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ DATABASE ═══════════════════ -->
+<section class="section">
+  <h2>Database schema — Supabase PostgreSQL</h2>
+  <p style="margin-bottom:16px;">Hosted at <span class="code-inline">dwcsledifvnyrunxejzd.supabase.co</span>. All tables have RLS enabled. Triggers handle auto-timestamps, order number generation, and inventory reservation.</p>
+
+  <div class="db-grid">
+    <div class="db-card">
+      <div class="db-name">hadiths</div>
+      <div class="db-field"><span class="key">id</span> <span class="type">UUID PK</span></div>
+      <div class="db-field">arabic, english, urdu</div>
+      <div class="db-field">narrator, source, number</div>
+      <div class="db-field">in_book_ref, authenticity</div>
+      <div class="db-field">quick_read, subcategory</div>
+      <div class="db-field" style="margin-top:6px;color:var(--teal-text);font-size:10px;">7,277 rows · 6,967 Urdu pending</div>
+    </div>
+    <div class="db-card">
+      <div class="db-name">shop_products</div>
+      <div class="db-field"><span class="key">id</span> <span class="type">UUID PK</span></div>
+      <div class="db-field">slug <span class="type">UNIQUE</span>, title</div>
+      <div class="db-field">price, original_price</div>
+      <div class="db-field"><span class="fk">category_id</span> <span class="type">FK nullable</span></div>
+      <div class="db-field">badge, tags[], sku</div>
+      <div class="db-field">is_active, is_digital</div>
+      <div class="db-field">free_shipping, weight_grams</div>
+      <div class="db-field">meta_title, meta_description</div>
+    </div>
+    <div class="db-card">
+      <div class="db-name">shop_categories</div>
+      <div class="db-field"><span class="key">id</span> <span class="type">UUID PK</span></div>
+      <div class="db-field">slug <span class="type">UNIQUE</span>, title</div>
+      <div class="db-field">description, image_url</div>
+      <div class="db-field">sort_order, featured</div>
+      <div class="db-field">is_active</div>
+      <div class="db-field" style="margin-top:6px;color:var(--teal-text);font-size:10px;">8 seed categories</div>
+    </div>
+    <div class="db-card">
+      <div class="db-name">shop_orders</div>
+      <div class="db-field"><span class="key">id</span> <span class="type">UUID PK</span></div>
+      <div class="db-field">order_number <span class="type">TH-YYYY-####</span></div>
+      <div class="db-field">status, payment_status</div>
+      <div class="db-field">customer_email, name, phone</div>
+      <div class="db-field">shipping address fields</div>
+      <div class="db-field">subtotal, shipping_cost</div>
+      <div class="db-field">discount_amount, total</div>
+      <div class="db-field">payment_ref <span class="type">Stripe ID</span></div>
+      <div class="db-field">tracking_number, carrier</div>
+    </div>
+    <div class="db-card">
+      <div class="db-name">shop_inventory</div>
+      <div class="db-field"><span class="key">id</span> <span class="type">UUID PK</span></div>
+      <div class="db-field"><span class="fk">product_id</span> <span class="type">FK UNIQUE</span></div>
+      <div class="db-field">quantity_on_hand</div>
+      <div class="db-field">quantity_reserved</div>
+      <div class="db-field">low_stock_threshold</div>
+      <div class="db-field" style="margin-top:6px;color:var(--purple-text);font-size:10px;">Trigger: reserves on order insert</div>
+    </div>
+    <div class="db-card">
+      <div class="db-name">shop_inventory_log</div>
+      <div class="db-field"><span class="key">id</span> <span class="type">UUID PK</span></div>
+      <div class="db-field"><span class="fk">product_id</span> <span class="type">FK</span></div>
+      <div class="db-field">delta <span class="type">INT</span> (±)</div>
+      <div class="db-field">reason <span class="type">order|adj|return</span></div>
+      <div class="db-field">reference, created_at</div>
+      <div class="db-field" style="margin-top:6px;color:var(--amber-text);font-size:10px;">Full audit trail</div>
+    </div>
+    <div class="db-card">
+      <div class="db-name">shop_carts</div>
+      <div class="db-field"><span class="key">id</span> <span class="type">UUID PK</span></div>
+      <div class="db-field">session_id <span class="type">TEXT UNIQUE</span></div>
+      <div class="db-field"><span class="fk">user_id</span> <span class="type">nullable</span></div>
+      <div class="db-field">expires_at <span class="type">+30 days</span></div>
+    </div>
+    <div class="db-card">
+      <div class="db-name">shop_reviews</div>
+      <div class="db-field"><span class="key">id</span> <span class="type">UUID PK</span></div>
+      <div class="db-field"><span class="fk">product_id</span> <span class="type">FK</span></div>
+      <div class="db-field">author_name, author_email</div>
+      <div class="db-field">rating <span class="type">1–5</span></div>
+      <div class="db-field">title, body</div>
+      <div class="db-field">is_verified, is_approved</div>
+      <div class="db-field"><span class="fk">order_id</span> <span class="type">FK nullable</span></div>
+    </div>
+    <div class="db-card">
+      <div class="db-name">shop_discount_codes</div>
+      <div class="db-field"><span class="key">id</span> <span class="type">UUID PK</span></div>
+      <div class="db-field">code <span class="type">UNIQUE</span></div>
+      <div class="db-field">type <span class="type">percent|fixed</span></div>
+      <div class="db-field">value, min_order_value</div>
+      <div class="db-field">max_uses, uses_count</div>
+      <div class="db-field">expires_at, is_active</div>
+    </div>
+    <div class="db-card">
+      <div class="db-name">shop_newsletter_subscribers</div>
+      <div class="db-field"><span class="key">id</span> <span class="type">UUID PK</span></div>
+      <div class="db-field">email <span class="type">UNIQUE</span></div>
+      <div class="db-field">first_name, interests[]</div>
+      <div class="db-field">is_active, source</div>
+      <div class="db-field">unsubscribed_at</div>
+    </div>
+    <div class="db-card">
+      <div class="db-name">shop_settings</div>
+      <div class="db-field"><span class="key">id</span> <span class="type">INT = 1</span></div>
+      <div class="db-field">shop_name, shop_tagline</div>
+      <div class="db-field">currency, contact_email</div>
+      <div class="db-field">free_shipping_threshold</div>
+      <div class="db-field">default_low_stock_threshold</div>
+      <div class="db-field">social_facebook, _instagram</div>
+      <div class="db-field" style="margin-top:6px;color:var(--gray-text);font-size:10px;">Single row pattern (id always 1)</div>
+    </div>
+    <div class="db-card">
+      <div class="db-name">shop_product_images</div>
+      <div class="db-field"><span class="key">id</span> <span class="type">UUID PK</span></div>
+      <div class="db-field"><span class="fk">product_id</span> <span class="type">FK</span></div>
+      <div class="db-field">url, alt_text</div>
+      <div class="db-field">sort_order, is_primary</div>
+      <div class="db-field" style="margin-top:6px;color:var(--gray-text);font-size:10px;">One-to-many with products</div>
+    </div>
+  </div>
+
+  <div style="margin-top:14px;padding:14px 18px;background:var(--bg2);border-radius:var(--r12);border:0.5px solid var(--border);">
+    <p class="section-label" style="margin-bottom:8px;">Database triggers & functions</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="font-size:12px;color:var(--text2);"><strong style="color:var(--text);">update_updated_at()</strong> — Auto-updates <span class="code-inline">updated_at</span> on shop_products, shop_orders, shop_categories, shop_inventory, shop_carts</div>
+      <div style="font-size:12px;color:var(--text2);"><strong style="color:var(--text);">generate_order_number()</strong> — Auto-generates <span class="code-inline">TH-YYYY-####</span> sequential order numbers on insert</div>
+      <div style="font-size:12px;color:var(--text2);"><strong style="color:var(--text);">reserve_inventory()</strong> — Decrements quantity_on_hand and logs delta when shop_order_items row is inserted</div>
+      <div style="font-size:12px;color:var(--text2);"><strong style="color:var(--text);">RLS policies</strong> — Public read on active products/categories/images. Service role bypasses all policies for admin writes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ DEPENDENCIES ═══════════════════ -->
+<section class="section">
+  <h2>Key dependencies — admin-app</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Package</th><th>Version</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td>next</td><td>^15.1.0</td><td><strong>React framework</strong> — App Router, server components, edge runtime, API routes</td></tr>
+        <tr><td>react / react-dom</td><td>^19.0.0</td><td><strong>UI library</strong> — Latest stable with concurrent features</td></tr>
+        <tr><td>framer-motion</td><td>^11.2.0</td><td><strong>Animations</strong> — Product showcase, page transitions, micro-interactions</td></tr>
+        <tr><td>@supabase/supabase-js</td><td>^2.43.0</td><td><strong>Database client</strong> — Typed PostgreSQL queries, auth, realtime</td></tr>
+        <tr><td>stripe</td><td>^16.0.0</td><td><strong>Payments</strong> — Checkout sessions, webhook handling, refunds</td></tr>
+        <tr><td>@cloudflare/next-on-pages</td><td>^1.13.0</td><td><strong>CF Pages adapter</strong> — Transforms Next.js build for Cloudflare Workers runtime</td></tr>
+        <tr><td>@cloudflare/workers-types</td><td>^4.20240529.0</td><td><strong>TypeScript types</strong> — Type definitions for Cloudflare Workers APIs</td></tr>
+        <tr><td>tailwindcss</td><td>^3.4.0</td><td><strong>CSS framework</strong> — Utility classes for shop UI components</td></tr>
+        <tr><td>wrangler</td><td>^3.57.0</td><td><strong>CF CLI</strong> — Local development server for Cloudflare Pages</td></tr>
+        <tr><td>tailwind-scrollbar-hide</td><td>^1.1.7</td><td><strong>CSS utility</strong> — Cross-browser scrollbar hiding for horizontal carousels</td></tr>
+        <tr><td>typescript</td><td>^5</td><td><strong>Type safety</strong> — Strict typing across all lib/ files and API routes</td></tr>
+        <tr><td>autoprefixer / postcss</td><td>^10 / ^8</td><td><strong>CSS toolchain</strong> — Vendor prefixing and CSS transformation for Tailwind</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════ ENVIRONMENT VARIABLES ═══════════════════ -->
+<section class="section">
+  <h2>Environment variables</h2>
+  <p style="margin-bottom:14px;">All sensitive values live in Cloudflare Pages dashboard (production) and local <span class="code-inline">.env.local</span> (development). The .env.local file is gitignored — never committed.</p>
+  <div class="tbl-wrap">
+    <div class="env-list">
+      <div class="env-row"><span class="env-key">NEXT_PUBLIC_SUPABASE_URL</span><span class="env-note">Supabase project URL — exposed to browser (safe, project-scoped)</span></div>
+      <div class="env-row"><span class="env-key">NEXT_PUBLIC_SUPABASE_ANON_KEY</span><span class="env-note">Anon JWT — exposed to browser, enforces RLS (read-only public data)</span></div>
+      <div class="env-row"><span class="env-key">SUPABASE_SERVICE_ROLE_KEY</span><span class="env-note">Service role JWT — server-only, bypasses RLS, admin writes</span></div>
+      <div class="env-row"><span class="env-key">STRIPE_SECRET_KEY</span><span class="env-note">sk_live_… — server-only, creates sessions and processes payments</span></div>
+      <div class="env-row"><span class="env-key">STRIPE_WEBHOOK_SECRET</span><span class="env-note">whsec_… — validates Stripe webhook payload signatures</span></div>
+      <div class="env-row"><span class="env-key">NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</span><span class="env-note">pk_live_… — browser-safe, initialises Stripe.js on frontend</span></div>
+      <div class="env-row"><span class="env-key">ADMIN_SECRET</span><span class="env-note">32-char random — HMAC key for admin session token derivation</span></div>
+      <div class="env-row"><span class="env-key">NEXT_PUBLIC_SITE_URL</span><span class="env-note">https://timelesshadith.com — used in OG tags, canonicals, checkout success URL</span></div>
+      <div class="env-row"><span class="env-key">RESEND_API_KEY</span><span class="env-note">Resend transactional email — 100/day free tier, optional (fails gracefully)</span></div>
+      <div class="env-row"><span class="env-key">EMAIL_FROM</span><span class="env-note">shop@timelesshadith.com — sender address for order confirmation emails</span></div>
+      <div class="env-row"><span class="env-key">ADMIN_EMAIL</span><span class="env-note">ehsaasradio@gmail.com — receives new order notifications</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ DEPLOYMENT ═══════════════════ -->
+<section class="section">
+  <h2>Deployment pipeline</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Static site</h3>
+      <p style="margin-bottom:10px;font-size:13px;">No build step required. Cloudflare Pages serves HTML/CSS/JS files directly from the repository root.</p>
+      <pre class="code">git push origin main
+  ↓
+Cloudflare Pages detects push
+  ↓
+Serves static files from /
+  ↓
+Global CDN edge delivery
+  ↓
+timelesshadith.com (live)</pre>
+    </div>
+    <div class="card">
+      <h3>Next.js shop</h3>
+      <p style="margin-bottom:10px;font-size:13px;">Cloudflare Pages build command transforms the Next.js output for the Workers runtime.</p>
+      <pre class="code">git push origin main
+  ↓
+Build command runs:
+  next build &&
+  npx @cloudflare/next-on-pages
+  ↓
+Output: .vercel/output →
+  Cloudflare Workers format
+  ↓
+Edge runtime deployed globally</pre>
+    </div>
+  </div>
+
+  <div style="margin-top:12px;" class="card">
+    <h3 style="margin-bottom:10px;">Security headers — public/_headers</h3>
+    <pre class="code">/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable   # 1 year
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=31536000, immutable</pre>
+    <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+      <span class="pill pill-green">HSTS preload</span>
+      <span class="pill pill-green">X-Frame-Options</span>
+      <span class="pill pill-green">Immutable static assets</span>
+      <span class="pill pill-red">Missing CSP on shop</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ NOTABLE PATTERNS ═══════════════════ -->
+<section class="section">
+  <h2>Notable implementation patterns</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Pattern</th><th>Where</th><th>How it works</th></tr></thead>
+      <tbody>
+        <tr><td>Parallel pagination</td><td>supabase-data.js</td><td>Supabase PostgREST caps responses at 1,000 rows. JS fires multiple parallel requests with different offset ranges, then merges results to load all 7,277 hadiths.</td></tr>
+        <tr><td>Stateless admin auth</td><td>lib/admin-auth.ts</td><td>HMAC-SHA256 derives a deterministic token from ADMIN_SECRET. No session table needed. Rotating the secret immediately invalidates all sessions globally.</td></tr>
+        <tr><td>Server-side pricing</td><td>app/api/checkout</td><td>Checkout route ignores client-submitted prices entirely. It fetches prices from Supabase before creating the Stripe session — a customer cannot manipulate what they're charged.</td></tr>
+        <tr><td>Idempotent webhooks</td><td>app/api/webhook</td><td>Stripe may deliver the same webhook event multiple times. The handler checks if the order is already marked paid before writing, making it safe to replay.</td></tr>
+        <tr><td>Inventory triggers</td><td>Supabase SQL</td><td>A PostgreSQL trigger fires on every shop_order_items insert to atomically decrement quantity_on_hand and write an audit row to shop_inventory_log.</td></tr>
+        <tr><td>Sequential order numbers</td><td>Supabase SQL</td><td>A trigger generates TH-YYYY-#### formatted order numbers on insert, readable by staff and safe for customer communications.</td></tr>
+        <tr><td>Theme flash prevention</td><td>js/theme-init.js</td><td>A tiny script injected before any CSS in &lt;head&gt; reads localStorage and sets data-theme on &lt;html&gt; synchronously, preventing the white flash on page load for dark-mode users.</td></tr>
+        <tr><td>Logo probing</td><td>js/app.js</td><td>Checks Supabase Storage hourly for a custom logo asset. If found, swaps the default logo. Allows brand updates without a code deploy.</td></tr>
+        <tr><td>Edge runtime everywhere</td><td>All API routes</td><td>Every API route declares export const runtime = 'edge'. All logic uses Web Crypto, fetch(), and Headers — no Node.js APIs. Executes in under 10ms globally.</td></tr>
+        <tr><td>Single-row settings table</td><td>shop_settings</td><td>A single PostgreSQL row (id=1) stores all shop configuration. Simpler than a key-value table, fully typed, and queryable as a regular row.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════ THIRD-PARTY SERVICES ═══════════════════ -->
+<section class="section">
+  <h2>Third-party services</h2>
+  <div class="arch-grid">
+    <div class="arch-card coral arch-card-accent">
+      <div class="arch-name">Stripe</div>
+      <div class="arch-desc">Payment processing. Hosted checkout, webhook delivery, refunds, discount codes. API v16. Free for development, 2.9% + 30¢ per transaction in production.</div>
+      <div class="arch-tag"><span class="pill pill-coral">Payments</span><span class="pill pill-gray">Webhooks</span></div>
+    </div>
+    <div class="arch-card teal arch-card-accent">
+      <div class="arch-name">Supabase</div>
+      <div class="arch-desc">PostgreSQL database, Auth, Storage. Free tier: 500MB DB, 1GB storage, 50,000 MAU. Hosts both the 7,277 hadith corpus and the full e-commerce schema.</div>
+      <div class="arch-tag"><span class="pill pill-teal">PostgreSQL</span><span class="pill pill-green">Free tier</span></div>
+    </div>
+    <div class="arch-card blue arch-card-accent">
+      <div class="arch-name">Cloudflare Pages</div>
+      <div class="arch-desc">Global CDN hosting + edge function execution. Free tier includes unlimited requests, 500 builds/month, automatic HTTPS, and global edge network.</div>
+      <div class="arch-tag"><span class="pill pill-blue">Edge CDN</span><span class="pill pill-green">Free tier</span></div>
+    </div>
+    <div class="arch-card amber arch-card-accent">
+      <div class="arch-name">Resend</div>
+      <div class="arch-desc">Transactional email — order confirmations, shipping notifications. Free tier: 100 emails/day, 3,000/month. Integration is optional — API routes skip email gracefully if key is missing.</div>
+      <div class="arch-tag"><span class="pill pill-amber">Email</span><span class="pill pill-green">Free tier</span></div>
+    </div>
+    <div class="arch-card purple arch-card-accent">
+      <div class="arch-name">Google Analytics 4</div>
+      <div class="arch-desc">Page views, session data, hadith category engagement, conversion tracking. Loaded via analytics.js on the static site. Pairs with Cloudflare Web Analytics for privacy-preserving data.</div>
+      <div class="arch-tag"><span class="pill pill-purple">Analytics</span><span class="pill pill-gray">Free</span></div>
+    </div>
+    <div class="arch-card green arch-card-accent">
+      <div class="arch-name">fawazahmed0 Hadith API</div>
+      <div class="arch-desc">Open-source CDN-hosted hadith dataset used as the Urdu translation source. Matched 6,967 of 7,272 hadiths by book + in-book reference number. No API key required.</div>
+      <div class="arch-tag"><span class="pill pill-green">Open source</span><span class="pill pill-gray">Free</span></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>Timeless Hadith · Tech Stack & Architecture</span>
+  <span>Generated April 2026 · timelesshadith.com</span>
+</footer>
+
+</body>
+</html>

@@ -38,19 +38,19 @@ export async function POST(request: NextRequest) {
     // Validate required fields
     const { title, slug, price, sku, category_id } = body;
     if (!title?.trim()) return NextResponse.json({ error: 'title is required' }, { status: 400 });
-    if (!slug?.trim()) return NextResponse.json({ error: 'slug is required' }, { status: 400 });
     if (typeof price !== 'number' || price < 0) return NextResponse.json({ error: 'price must be a non-negative number' }, { status: 400 });
     if (!sku?.trim()) return NextResponse.json({ error: 'sku is required' }, { status: 400 });
-    if (!category_id) return NextResponse.json({ error: 'category_id is required' }, { status: 400 });
+    // category_id is optional — products can be uncategorized
+    const autoSlug = (slug || title).toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 
     const product = await adminUpsertProduct({
       title: title.trim(),
-      slug: slug.trim().toLowerCase().replace(/\s+/g, '-'),
+      slug: autoSlug,
       description: body.description ?? '',
       price,
       original_price: body.original_price ?? null,
       currency: body.currency ?? 'USD',
-      category_id,
+      category_id: category_id || null,
       badge: body.badge ?? null,
       tags: body.tags ?? [],
       sku: sku.trim().toUpperCase(),
