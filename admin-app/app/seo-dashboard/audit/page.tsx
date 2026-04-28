@@ -79,7 +79,7 @@ export default function AuditPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Audit failed');
-      const id = data.audit?.id ?? data.id;
+      const id = data.auditId ?? data.audit?.id ?? data.id;
       if (id) {
         router.push(`/seo-dashboard/audit/${id}`);
       } else {
