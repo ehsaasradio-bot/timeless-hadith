@@ -1,0 +1,11 @@
+page_title,url,anchor_text_suggestion,topic_relevance,page_type,priority
+Hadith Library — Search All Hadiths,/categories.html,explore our full hadith library,universal — link from any post,category,high
+Hadith on Patience (Category Filter),/category.html?cat=patience,browse hadiths on patience and sabr,patience posts,category,high
+Hadith on Gratitude (Category Filter),/category.html?cat=gratitude,hadiths on gratitude and shukr,sabr/shukr pairing,category,high
+Hadith on Trials and Tests (Category Filter),/category.html?cat=trials,hadiths on trials and hardship,patience context,category,high
+Hadith on Tawakkul (Category Filter),/category.html?cat=tawakkul,what the Prophet taught about tawakkul,patience/trust pairing,category,medium
+Hadith on Dua (Category Filter),/category.html?cat=dua,prophetic duas for difficult times,practical angle,category,medium
+Blog — Islamic Articles,/blog.html,read more Islamic articles on the blog,universal footer CTA,blog index,medium
+About Timeless Hadith,/about.html,learn about our approach to hadith verification,trust/E-E-A-T signal,about,low
+Bookmarks — Save Hadiths,/bookmarks.html,bookmark hadiths for daily reflection,UX conversion,feature,low
+Home — Timeless Hadith,/index.html,Timeless Hadith,breadcrumb/brand link only,home,low

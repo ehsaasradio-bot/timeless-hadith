@@ -1,0 +1,28 @@
+type,keyword,est_monthly_volume,difficulty,intent,notes
+primary,patience in Islam hadith,8100,medium,informational,Core target — high evergreen volume
+secondary,sabr in Islam,4400,medium,informational,Arabic term with strong search intent
+secondary,hadith about patience,3600,low-medium,informational,Direct hadith lookup intent
+secondary,Islamic patience quotes,2900,low,informational,Social sharing / inspiration angle
+secondary,what does Islam say about patience,2400,medium,informational,Question-format — PAA target
+secondary,sabr meaning in Islam,1900,low,informational,Definition intent — featured snippet opportunity
+secondary,hadiths on hardship,1200,low,informational,Related topic cluster
+secondary,patience during trials Islam,900,low,informational,Emotional/spiritual intent
+lsi,tawakkul,3200,n/a,informational,Related Islamic concept — trust in Allah
+lsi,shukr,2100,n/a,informational,Gratitude — pairs with patience
+lsi,prophetic guidance,1800,n/a,informational,Authority signal term
+lsi,Sahih Muslim,5400,n/a,navigational,Citation anchor term
+lsi,Sahih al-Bukhari,6200,n/a,navigational,Citation anchor term
+lsi,Islamic lifestyle,4100,n/a,informational,Site-wide topical term
+lsi,authentic hadith,3300,n/a,informational,E-E-A-T signal term
+lsi,Suhaib ibn Sinan,400,n/a,informational,Hadith narrator — semantic entity
+lsi,Abu Said al-Khudri,500,n/a,informational,Hadith narrator — semantic entity
+lsi,hardship and reward Islam,800,n/a,informational,Related concept
+lsi,Quran patience,2700,n/a,informational,Cross-content signal
+lsi,daily Islamic practice,1500,n/a,informational,Practical angle
+lsi,Muslim resilience,700,n/a,informational,Modern framing
+lsi,spiritual endurance Islam,600,n/a,informational,Modern framing
+paa,what does the Quran say about patience,2200,medium,informational,People Also Ask target
+paa,how to be patient according to Islam,1700,medium,informational,Practical intent — how-to
+paa,is patience a virtue in Islam,1100,low,informational,Definitional — snippet target
+paa,types of patience in Islam,900,low,informational,Listicle intent
+paa,dua for patience in Islam,3800,low,informational,High intent — link opportunity to hadith library
