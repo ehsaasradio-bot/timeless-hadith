@@ -318,4 +318,8 @@
         if(lb&&lb.leaderboard){var sess=JSON.parse(localStorage.getItem('th_supabase_session')||'{}');rComp(lb.leaderboard,lb.myUserId||(sess.user&&sess.user.id));}
       }catch(e){document.getElementById('skeletonLoader').style.display='none';document.getElementById('dashContent').style.display='';document.getElementById('greetingSubtext').textContent='Could not load your data. Please refresh.';}
     }
-    waitSess
+    waitSession(function(){load();});
+  })();
+  </script>
+</body>
+</html>
