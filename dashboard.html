@@ -243,7 +243,7 @@
     function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
     function fmt(n){return Number(n||0).toLocaleString();}
     function waitSession(cb,n){n=n||0;var t=tok();if(t)return cb(t);if(n>=20){document.getElementById('skeletonLoader').style.display='none';document.getElementById('authGate').style.display='';return;}setTimeout(function(){waitSession(cb,n+1);},300);}
-    document.getElementById('signInBtn').addEventListener('click',function(){if(window.TH_AUTH&&window.TH_AUTH.openModal)window.TH_AUTH.openModal();});
+    document.getElementById('signInBtn').addEventListener('click',function(){if(window.TH_SB_AUTH&&window.TH_SB_AUTH.signInWithGoogle)window.TH_SB_AUTH.signInWithGoogle();else window.location.href='/?signin=1';});
     function rStats(st,pr){
       var n=(pr&&pr.display_name)?pr.display_name.split(' ')[0]:'Reader';
       document.getElementById('greetingText').textContent='Assalamu Alaikum, '+n;
@@ -318,8 +318,4 @@
         if(lb&&lb.leaderboard){var sess=JSON.parse(localStorage.getItem('th_supabase_session')||'{}');rComp(lb.leaderboard,lb.myUserId||(sess.user&&sess.user.id));}
       }catch(e){document.getElementById('skeletonLoader').style.display='none';document.getElementById('dashContent').style.display='';document.getElementById('greetingSubtext').textContent='Could not load your data. Please refresh.';}
     }
-    waitSession(function(){load();});
-  })();
-  </script>
-</body>
-</html>
+    waitSess
