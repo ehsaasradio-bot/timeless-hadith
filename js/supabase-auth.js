@@ -126,11 +126,21 @@
     /* Redirect to Supabase Google OAuth */
     signInWithGoogle: function () {
       var redirect = window.location.origin + window.location.pathname;
-      window.location.href =
-        SB_URL + '/auth/v1/authorize' +
-        '?provider=google' +
-        '&flow_type=implicit' +
-        '&redirect_to=' + encodeURIComponent(redirect);
+      /* Generate PKCE verifier + challenge */
+      var verifier = Array.from(crypto.getRandomValues(new Uint8Array(32)))
+        .map(function(b){return ('0'+b.toString(16)).slice(-2);}).join('');
+      sessionStorage.setItem('pkce_verifier', verifier);
+      crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier))
+        .then(function(buf){
+          var challenge = btoa(String.fromCharCode.apply(null, new Uint8Array(buf)))
+            .replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+          window.location.href =
+            SB_URL + '/auth/v1/authorize' +
+            '?provider=google' +
+            '&code_challenge=' + challenge +
+            '&code_challenge_method=s256' +
+            '&redirect_to=' + encodeURIComponent(redirect);
+        });
     },
 
     /* Send magic link to email */
@@ -277,44 +287,20 @@
   ───────────────────────────────────────────────────────── */
 
   function _boot() {
-    /* 1. Check for OAuth callback in URL hash */
-    var hashSession = _parseHashCallback();
-    if (hashSession) {
-      _saveSession(hashSession);
-      /* Clean the URL (remove hash tokens) */
-      try {
-        history.replaceState(
-          null, '',
-          window.location.pathname + window.location.search
-        );
-      } catch (e) {}
-
-      _fetchUser(hashSession.access_token).then(function (sbUser) {
-        var thUser = _toTHUser(sbUser);
-        if (thUser) _applyUser(thUser);
-      });
-      return;
-    }
-
-    /* 2. Restore stored session */
-    var stored = _loadSession();
-    if (stored && stored.access_token) {
-      _fetchUser(stored.access_token).then(function (sbUser) {
-        var thUser = _toTHUser(sbUser);
-        if (thUser) _applyUser(thUser);
-      });
-    }
-  }
-
-  /* ─────────────────────────────────────────────────────────
-     Run
-  ───────────────────────────────────────────────────────── */
-
-  /* Patch the modal as soon as DOM is ready */
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
-      _patchLoginModal();
-      _boot();
-    });
-  } else {
-    _patchLoginM
+    /* 1. Check for PKCE code callback (?code=...) */
+    var urlParams = new URLSearchParams(window.location.search);
+    var code = urlParams.get('code');
+    var verifier = sessionStorage.getItem('pkce_verifier');
+    if (code && verifier) {
+      sessionStorage.removeItem('pkce_verifier');
+      fetch(SB_URL + '/auth/v1/token?grant_type=pkce', {
+        method: 'POST',
+        headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ auth_code: code, code_verifier: verifier })
+      }).then(function(r){ return r.json(); }).then(function(data){
+        if (data.access_token) {
+          var sess = {
+            access_token:  data.access_token,
+            refresh_token: data.refresh_token,
+            expires_at:    data.expires_at,
+            use
