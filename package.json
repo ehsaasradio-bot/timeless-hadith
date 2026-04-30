@@ -1,7 +1,7 @@
 {
   "name": "haith",
   "version": "1.0.0",
-  "description": "> Authentic, searchable hadiths from Prophet Muhammad ﷺ — beautifully organised, beautifully presented.",
+  "description": "Authentic, searchable hadiths from Prophet Muhammad — beautifully organised, beautifully presented.",
   "main": "sw.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,4 +19,5 @@
   "bugs": {
     "url": "https://github.com/ehsaasradio-bot/timeless-hadith/issues"
   },
-  "homepage"
+  "homepage": "https://github.com/ehsaasradio-bot/timeless-hadith#readme"
+}
