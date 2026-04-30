@@ -297,7 +297,7 @@
       var all=[{k:'first_step',n:'First Step',i:'book-open',r:1,t:'read'},{k:'ten_hadith',n:'10 Hadiths',i:'star',r:10,t:'read'},{k:'hundred_hadith',n:'100 Hadiths',i:'award',r:100,t:'read'},{k:'five_hundred_hadith',n:'500 Hadiths',i:'trophy',r:500,t:'read'},{k:'thousand_hadith',n:'1,000 Hadiths',i:'crown',r:1000,t:'read'},{k:'seven_day_streak',n:'7-Day Streak',i:'flame',r:7,t:'streak'},{k:'thirty_day_streak',n:'30-Day Streak',i:'sparkles',r:30,t:'streak'},{k:'ten_lessons',n:'10 Lessons',i:'medal',r:10,t:'lesson'}];
       var uk=(ach||[]).map(function(a){return a.badge_key||(a.achievements&&a.achievements.badge_key);});
       var tot=st.total_hadith_read||0,str=st.longest_streak||0;
-      document.getElementById('achievementGrid').innerHTML=all.map(function(b){var u=uk.indexOf(b.k)>-1||(b.t==='read'&&tot>=b.r)||(b.t==='streak'&&str>=b.r);return'<div class="glass-card ach-card'+(u?'',' ach-locked')+'"><div class="ach-icon">'+(ICONS[b.i]||'🎖️')+'</div><div class="ach-name">'+b.n+'</div><div class="ach-desc">'+(u?'Unlocked':'Locked')+'</div></div>';}).join('');
+      document.getElementById('achievementGrid').innerHTML=all.map(function(b){var u=uk.indexOf(b.k)>-1||(b.t==='read'&&tot>=b.r)||(b.t==='streak'&&str>=b.r);return'<div class="glass-card ach-card'+(u?'':' ach-locked')+'"><div class="ach-icon">'+(ICONS[b.i]||'🎖️')+'</div><div class="ach-name">'+b.n+'</div><div class="ach-desc">'+(u?'Unlocked':'Locked')+'</div></div>';}).join('');
     }
     function rComp(lb,uid){
       var el=document.getElementById('compPreview');
