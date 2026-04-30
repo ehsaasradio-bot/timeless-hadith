@@ -129,6 +129,7 @@
       window.location.href =
         SB_URL + '/auth/v1/authorize' +
         '?provider=google' +
+        '&flow_type=implicit' +
         '&redirect_to=' + encodeURIComponent(redirect);
     },
 
@@ -316,8 +317,4 @@
       _boot();
     });
   } else {
-    _patchLoginModal();
-    _boot();
-  }
-
-})();
+    _patchLoginM
