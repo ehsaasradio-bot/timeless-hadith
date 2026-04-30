@@ -588,12 +588,5 @@
     if (hadithId) {
       loadHadith(hadithId);
     } else {
-      // Default: load hadith #1
-      loadHadith(1);
-    }
-
-  })();
-  </script>
-
-</body>
-</html>
+      // Default: load first available hadith
+      fetch(SB_URL + '/rest/v1/hadiths?select=id&ord
