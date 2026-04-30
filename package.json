@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ehsaasradio-bot/timeless-hadith.git"
@@ -16,5 +19,4 @@
   "bugs": {
     "url": "https://github.com/ehsaasradio-bot/timeless-hadith/issues"
   },
-  "homepage": "https://github.com/ehsaasradio-bot/timeless-hadith#readme"
-}
+  "homepage"
