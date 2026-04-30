@@ -533,6 +533,12 @@
         <button class="admin-tab" data-tab="seo" onclick="switchTab('seo')">
           SEO Dashboard
         </button>
+        <button class="admin-tab" data-tab="hadiths" onclick="switchTab('hadiths')">
+          Hadiths
+        </button>
+        <button class="admin-tab" data-tab="blog" onclick="switchTab('blog')">
+          Blog Posts
+        </button>
       </div>
 
       <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1008,6 +1014,69 @@
         </div>
 
       </div>
+
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           TAB 6: HADITHS MANAGEMENT
+           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <div class="tab-panel" id="panel-hadiths">
+        <div class="admin-card">
+          <h2>Hadith Management</h2>
+          <p class="card-desc">Search, add, edit, or delete individual hadiths from the live Supabase database.</p>
+          <div class="hadith-search-row">
+            <input type="text" id="hadith-search-input" placeholder="Search by English text or narrator…" onkeydown="if(event.key==='Enter') hadithSearchNow()" />
+            <button class="btn-primary-sm" onclick="hadithSearchNow()">Search</button>
+            <button class="btn-primary-sm btn-green" onclick="openHadithNew()">+ New Hadith</button>
+          </div>
+          <div style="overflow-x:auto;margin-top:12px">
+            <table class="admin-data-table">
+              <thead><tr>
+                <th style="width:56px">ID</th>
+                <th>English Text</th>
+                <th style="width:140px">Narrator</th>
+                <th style="width:160px">Book</th>
+                <th style="width:130px">Actions</th>
+              </tr></thead>
+              <tbody id="hadith-rows">
+                <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pager-row">
+            <button class="pager-btn" id="hadith-prev" onclick="_hadithPage--;loadHadiths()" disabled>← Prev</button>
+            <span id="hadith-pager" style="font-size:13px;color:var(--muted)"></span>
+            <button class="pager-btn" id="hadith-next" onclick="_hadithPage++;loadHadiths()">Next →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           TAB 7: BLOG POSTS
+           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+      <div class="tab-panel" id="panel-blog">
+        <div class="admin-card">
+          <h2>Blog Posts</h2>
+          <p class="card-desc">Create, edit, schedule, and publish SEO blog posts. Run <code style="background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px;font-size:12px">sql/002_blog_posts.sql</code> in Supabase SQL Editor first to create the table.</p>
+          <div style="display:flex;gap:10px;margin-bottom:16px">
+            <button class="btn-primary-sm btn-green" onclick="openBlogNew()">+ New Post</button>
+            <button class="pager-btn" onclick="loadBlogPosts()">Refresh</button>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="admin-data-table">
+              <thead><tr>
+                <th>Title</th>
+                <th style="width:130px">Category</th>
+                <th style="width:90px">Status</th>
+                <th style="width:110px">Date</th>
+                <th style="width:170px">Actions</th>
+              </tr></thead>
+              <tbody id="blog-rows">
+                <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -1858,5 +1927,319 @@
       if (e.key === 'Enter') verifyMFAEnroll();
     });
   </script>
+
+  <!-- ━━ Phase D: Hadiths & Blog — Styles ━━ -->
+  <style>
+    .hadith-search-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .hadith-search-row input { flex:1; min-width:200px; padding:9px 14px; border:1px solid var(--border); border-radius:100px; background:var(--bg); color:var(--ink); font-family:var(--font); font-size:13px; outline:none; }
+    .hadith-search-row input:focus { border-color:var(--accent); }
+    .btn-primary-sm { padding:8px 16px; background:var(--accent); color:#fff; border:none; border-radius:100px; font-family:var(--font); font-size:13px; font-weight:600; cursor:pointer; }
+    .btn-primary-sm:hover { opacity:0.85; }
+    .btn-primary-sm.btn-green { background:#34a853; }
+    .admin-data-table { width:100%; border-collapse:collapse; font-size:13px; }
+    .admin-data-table th { text-align:left; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); border-bottom:1px solid var(--border); padding:8px 10px; }
+    .admin-data-table td { padding:10px; border-bottom:1px solid var(--border); vertical-align:top; }
+    .admin-data-table tr:last-child td { border-bottom:none; }
+    .admin-data-table tr:hover td { background:rgba(var(--accent-raw),0.04); }
+    .pager-row { display:flex; align-items:center; gap:12px; margin-top:14px; }
+    .pager-btn { padding:6px 14px; border:1px solid var(--border); background:var(--surface); color:var(--ink); border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; font-family:var(--font); }
+    .pager-btn:hover:not(:disabled) { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .pager-btn:disabled { opacity:0.4; cursor:not-allowed; }
+    .row-btn { padding:4px 11px; border:1px solid var(--border); background:var(--surface); color:var(--ink); border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; font-family:var(--font); }
+    .row-btn:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .row-btn.danger:hover { background:#e53e3e; border-color:#e53e3e; }
+    .row-btn.success:hover { background:#34a853; border-color:#34a853; }
+    /* Modal */
+    .d-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:9000; align-items:center; justify-content:center; padding:20px; }
+    .d-modal-overlay.open { display:flex; }
+    .d-modal { background:var(--surface); border-radius:var(--radius); padding:28px 28px 20px; width:100%; max-width:660px; max-height:92vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.25); }
+    .d-modal h2 { font-size:18px; font-weight:700; margin:0 0 20px; color:var(--ink); letter-spacing:-0.02em; }
+    .d-field { margin-bottom:14px; }
+    .d-field label { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:var(--muted); margin-bottom:5px; }
+    .d-field input, .d-field textarea, .d-field select { width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:10px; background:var(--bg); color:var(--ink); font-family:var(--font); font-size:13px; outline:none; box-sizing:border-box; }
+    .d-field input:focus, .d-field textarea:focus, .d-field select:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(var(--accent-raw),0.1); }
+    .d-field textarea { resize:vertical; }
+    .d-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .d-modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; padding-top:16px; border-top:1px solid var(--border); }
+    .d-btn-save { padding:9px 22px; background:var(--accent); color:#fff; border:none; border-radius:100px; font-family:var(--font); font-size:13px; font-weight:600; cursor:pointer; }
+    .d-btn-save:hover { opacity:0.85; }
+    .d-btn-cancel { padding:9px 22px; background:transparent; color:var(--muted); border:1px solid var(--border); border-radius:100px; font-family:var(--font); font-size:13px; font-weight:600; cursor:pointer; }
+    .d-btn-cancel:hover { background:var(--border); }
+  </style>
+
+  <!-- Hadith Edit/Add Modal -->
+  <div class="d-modal-overlay" id="hadith-modal">
+    <div class="d-modal">
+      <h2 id="he-id">Edit Hadith</h2>
+      <div class="d-field"><label>English Text *</label><textarea id="he-english" rows="4"></textarea></div>
+      <div class="d-field"><label>Arabic Text</label><textarea id="he-arabic" rows="3" style="direction:rtl;font-size:15px;line-height:1.8"></textarea></div>
+      <div class="d-field"><label>Urdu Text</label><textarea id="he-urdu" rows="3" style="direction:rtl"></textarea></div>
+      <div class="d-grid-2">
+        <div class="d-field"><label>Narrator</label><input type="text" id="he-narrator" /></div>
+        <div class="d-field"><label>Book / Source</label><input type="text" id="he-source" /></div>
+        <div class="d-field"><label>Hadith Number</label><input type="text" id="he-number" /></div>
+        <div class="d-field"><label>Chapter</label><input type="text" id="he-chapter" /></div>
+      </div>
+      <div class="d-modal-actions">
+        <button class="d-btn-cancel" onclick="closeHadithModal()">Cancel</button>
+        <button class="d-btn-save" onclick="saveHadith()">Save Hadith</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blog Post Modal -->
+  <div class="d-modal-overlay" id="blog-modal">
+    <div class="d-modal">
+      <h2 id="bp-modal-title">New Blog Post</h2>
+      <div class="d-field"><label>Title *</label><input type="text" id="bp-title" oninput="autoSlug()" placeholder="e.g. Patience in Islam — What the Prophet Said" /></div>
+      <div class="d-field"><label>Slug * (URL)</label><input type="text" id="bp-slug" placeholder="patience-in-islam-hadith" /></div>
+      <div class="d-grid-2">
+        <div class="d-field">
+          <label>Category</label>
+          <select id="bp-category">
+            <option value="faith">Faith and Belief</option>
+            <option value="prayer">Prayer and Worship</option>
+            <option value="character">Character and Manners</option>
+            <option value="patience">Patience and Gratitude</option>
+            <option value="family">Family and Relationships</option>
+            <option value="knowledge">Knowledge and Wisdom</option>
+            <option value="sunnah">Daily Life and Sunnah</option>
+            <option value="trials">Trials and Tests</option>
+            <option value="spirituality">Spirituality and the Heart</option>
+            <option value="justice">Social Justice and Compassion</option>
+          </select>
+        </div>
+        <div class="d-field">
+          <label>Status</label>
+          <select id="bp-status">
+            <option value="draft">Draft</option>
+            <option value="scheduled">Scheduled</option>
+            <option value="published">Published</option>
+          </select>
+        </div>
+      </div>
+      <div class="d-field"><label>Schedule Date &amp; Time</label><input type="datetime-local" id="bp-scheduled-at" /></div>
+      <div class="d-field"><label>Excerpt</label><textarea id="bp-excerpt" rows="2" placeholder="Short summary shown in post listings…"></textarea></div>
+      <div class="d-field"><label>Content (HTML)</label><textarea id="bp-content" rows="8" placeholder="Full blog post content…"></textarea></div>
+      <div class="d-field"><label>SEO Title</label><input type="text" id="bp-meta-title" placeholder="Leave blank to use post title" /></div>
+      <div class="d-field"><label>SEO Meta Description</label><input type="text" id="bp-meta-desc" placeholder="150–160 characters recommended" /></div>
+      <div class="d-modal-actions">
+        <button class="d-btn-cancel" onclick="closeBlogModal()">Cancel</button>
+        <button class="d-btn-save" onclick="saveBlogPost()">Save Post</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  /* ══════════════════════════════════════════════════════════
+     PHASE D — Hadiths Tab Logic
+  ══════════════════════════════════════════════════════════ */
+  var _hadithPage = 0, _hadithPageSize = 20, _hadithSearch = '', _hadithTotal = 0, _hadithEditId = null;
+
+  function initHadithsTab() {
+    if (document.getElementById('hadith-rows').dataset.loaded) return;
+    document.getElementById('hadith-rows').dataset.loaded = '1';
+    loadHadiths();
+  }
+
+  async function loadHadiths() {
+    var search = _hadithSearch.trim();
+    var offset = _hadithPage * _hadithPageSize;
+    var q = search ? '&or=(text_en.ilike.*' + encodeURIComponent(search) + '*,narrator.ilike.*' + encodeURIComponent(search) + '*)' : '';
+    var hdrs = { 'apikey': _adminToken, 'Authorization': 'Bearer ' + _adminToken };
+    try {
+      var countRes = await fetch(SB_URL + '/rest/v1/hadiths?select=id' + q, { headers: Object.assign({}, hdrs, { 'Prefer': 'count=exact' }) });
+      var cr = countRes.headers.get('Content-Range');
+      _hadithTotal = cr ? parseInt(cr.split('/')[1], 10) : 0;
+      var rows = await (await fetch(SB_URL + '/rest/v1/hadiths?select=id,text_en,narrator,book_name_en&order=id.asc&limit=' + _hadithPageSize + '&offset=' + offset + q, { headers: hdrs })).json();
+      var tbody = document.getElementById('hadith-rows');
+      if (!rows || !rows.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">No hadiths found.</td></tr>'; }
+      else {
+        tbody.innerHTML = rows.map(function(h) {
+          var eng = h.text_en ? h.text_en.substring(0,90) + (h.text_en.length > 90 ? '…' : '') : '—';
+          return '<tr><td style="color:var(--muted);font-size:12px">' + h.id + '</td>' +
+            '<td style="font-size:13px">' + _esc(eng) + '</td>' +
+            '<td style="font-size:12px;color:var(--muted)">' + _esc(h.narrator||'—') + '</td>' +
+            '<td style="font-size:12px;color:var(--muted)">' + _esc(h.book_name_en||'—') + '</td>' +
+            '<td style="white-space:nowrap"><button class="row-btn" onclick="openHadithEdit(' + h.id + ')">Edit</button> <button class="row-btn danger" onclick="deleteHadith(' + h.id + ')">Delete</button></td></tr>';
+        }).join('');
+      }
+      var from = offset + 1, to = Math.min(offset + _hadithPageSize, _hadithTotal);
+      document.getElementById('hadith-pager').textContent = _hadithTotal ? from + '–' + to + ' of ' + _hadithTotal : '0 results';
+      document.getElementById('hadith-prev').disabled = _hadithPage === 0;
+      document.getElementById('hadith-next').disabled = to >= _hadithTotal;
+    } catch(e) { showToast('Error', e.message, 'error'); }
+  }
+
+  function hadithSearchNow() { _hadithSearch = document.getElementById('hadith-search-input').value; _hadithPage = 0; loadHadiths(); }
+
+  async function openHadithEdit(id) {
+    _hadithEditId = id;
+    try {
+      var h = (await (await fetch(SB_URL + '/rest/v1/hadiths?id=eq.' + id + '&select=*', { headers: { 'apikey': _adminToken, 'Authorization': 'Bearer ' + _adminToken } })).json())[0];
+      document.getElementById('he-id').textContent = 'Editing Hadith #' + h.id;
+      document.getElementById('he-english').value  = h.text_en || '';
+      document.getElementById('he-arabic').value   = h.text_ar || '';
+      document.getElementById('he-urdu').value     = h.urdu    || '';
+      document.getElementById('he-narrator').value = h.narrator || '';
+      document.getElementById('he-source').value   = h.book_name_en || '';
+      document.getElementById('he-number').value   = h.hadith_number || '';
+      document.getElementById('he-chapter').value  = h.chapter_en || '';
+      document.getElementById('hadith-modal').classList.add('open');
+    } catch(e) { showToast('Error', e.message, 'error'); }
+  }
+
+  function openHadithNew() {
+    _hadithEditId = null;
+    document.getElementById('he-id').textContent = 'New Hadith';
+    ['he-english','he-arabic','he-urdu','he-narrator','he-source','he-number','he-chapter'].forEach(function(id){ document.getElementById(id).value = ''; });
+    document.getElementById('hadith-modal').classList.add('open');
+  }
+
+  function closeHadithModal() { document.getElementById('hadith-modal').classList.remove('open'); }
+
+  async function saveHadith() {
+    var body = { text_en: document.getElementById('he-english').value.trim(), text_ar: document.getElementById('he-arabic').value.trim(), urdu: document.getElementById('he-urdu').value.trim(), narrator: document.getElementById('he-narrator').value.trim(), book_name_en: document.getElementById('he-source').value.trim(), hadith_number: document.getElementById('he-number').value.trim(), chapter_en: document.getElementById('he-chapter').value.trim() };
+    if (!body.text_en) { showToast('Validation', 'English text is required.', 'error'); return; }
+    try {
+      var url = SB_URL + '/rest/v1/hadiths' + (_hadithEditId ? '?id=eq.' + _hadithEditId : '');
+      var res = await fetch(url, { method: _hadithEditId ? 'PATCH' : 'POST', headers: { 'apikey': _adminToken, 'Authorization': 'Bearer ' + _adminToken, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify(body) });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      closeHadithModal(); loadHadiths();
+      showToast(_hadithEditId ? 'Hadith Updated' : 'Hadith Added', '', 'success');
+    } catch(e) { showToast('Error', e.message, 'error'); }
+  }
+
+  async function deleteHadith(id) {
+    if (!confirm('Delete Hadith #' + id + '? This cannot be undone.')) return;
+    try {
+      var res = await fetch(SB_URL + '/rest/v1/hadiths?id=eq.' + id, { method: 'DELETE', headers: { 'apikey': _adminToken, 'Authorization': 'Bearer ' + _adminToken } });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      loadHadiths(); showToast('Deleted', 'Hadith #' + id + ' removed.', 'success');
+    } catch(e) { showToast('Error', e.message, 'error'); }
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     PHASE D — Blog Posts Tab Logic
+  ══════════════════════════════════════════════════════════ */
+  var _blogEditId = null;
+
+  function initBlogTab() {
+    if (document.getElementById('blog-rows').dataset.loaded) return;
+    document.getElementById('blog-rows').dataset.loaded = '1';
+    loadBlogPosts();
+  }
+
+  async function loadBlogPosts() {
+    try {
+      var rows = await (await fetch(SB_URL + '/rest/v1/blog_posts?select=id,title,category,status,scheduled_at,published_at,created_at&order=created_at.desc&limit=50', { headers: { 'apikey': _adminToken, 'Authorization': 'Bearer ' + _adminToken } })).json();
+      var tbody = document.getElementById('blog-rows');
+      if (!rows || !rows.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">No posts yet. Click &quot;+ New Post&quot; to start.</td></tr>'; return; }
+      tbody.innerHTML = rows.map(function(p) {
+        var sc = p.status==='published'?'#34a853':p.status==='scheduled'?'#f59e0b':'var(--muted)';
+        var dt = p.published_at ? new Date(p.published_at).toLocaleDateString() : p.scheduled_at ? 'Sched: '+new Date(p.scheduled_at).toLocaleDateString() : new Date(p.created_at).toLocaleDateString();
+        return '<tr><td style="font-size:13px;font-weight:500">' + _esc(p.title) + '</td><td style="font-size:12px;color:var(--muted)">' + _esc(p.category) + '</td>' +
+          '<td><span style="font-size:11px;font-weight:700;color:'+sc+';text-transform:uppercase">' + p.status + '</span></td>' +
+          '<td style="font-size:12px;color:var(--muted)">' + dt + '</td>' +
+          '<td style="white-space:nowrap"><button class="row-btn" onclick="openBlogEdit('+p.id+')">Edit</button> ' +
+          (p.status!=='published'?'<button class="row-btn success" onclick="publishBlogPost('+p.id+')">Publish</button> ':'') +
+          '<button class="row-btn danger" onclick="deleteBlogPost('+p.id+')">Delete</button></td></tr>';
+      }).join('');
+    } catch(e) { showToast('Error', e.message, 'error'); }
+  }
+
+  function openBlogNew() {
+    _blogEditId = null;
+    document.getElementById('bp-modal-title').textContent = 'New Blog Post';
+    ['bp-title','bp-slug','bp-excerpt','bp-content','bp-meta-title','bp-meta-desc'].forEach(function(id){ document.getElementById(id).value=''; });
+    document.getElementById('bp-category').value = 'faith';
+    document.getElementById('bp-status').value = 'draft';
+    document.getElementById('bp-scheduled-at').value = '';
+    document.getElementById('blog-modal').classList.add('open');
+  }
+
+  async function openBlogEdit(id) {
+    _blogEditId = id;
+    try {
+      var p = (await (await fetch(SB_URL + '/rest/v1/blog_posts?id=eq.' + id + '&select=*', { headers: { 'apikey': _adminToken, 'Authorization': 'Bearer ' + _adminToken } })).json())[0];
+      document.getElementById('bp-modal-title').textContent = 'Edit Post #' + p.id;
+      document.getElementById('bp-title').value      = p.title      || '';
+      document.getElementById('bp-slug').value       = p.slug       || '';
+      document.getElementById('bp-category').value   = p.category   || 'faith';
+      document.getElementById('bp-status').value     = p.status     || 'draft';
+      document.getElementById('bp-excerpt').value    = p.excerpt    || '';
+      document.getElementById('bp-content').value    = p.content    || '';
+      document.getElementById('bp-meta-title').value = p.meta_title || '';
+      document.getElementById('bp-meta-desc').value  = p.meta_desc  || '';
+      document.getElementById('bp-scheduled-at').value = p.scheduled_at ? p.scheduled_at.substring(0,16) : '';
+      document.getElementById('blog-modal').classList.add('open');
+    } catch(e) { showToast('Error', e.message, 'error'); }
+  }
+
+  function closeBlogModal() { document.getElementById('blog-modal').classList.remove('open'); }
+
+  function autoSlug() {
+    var t = document.getElementById('bp-title').value;
+    document.getElementById('bp-slug').value = t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+  }
+
+  async function saveBlogPost() {
+    var status = document.getElementById('bp-status').value;
+    var schedVal = document.getElementById('bp-scheduled-at').value;
+    var body = {
+      title:       document.getElementById('bp-title').value.trim(),
+      slug:        document.getElementById('bp-slug').value.trim(),
+      category:    document.getElementById('bp-category').value,
+      excerpt:     document.getElementById('bp-excerpt').value.trim(),
+      content:     document.getElementById('bp-content').value.trim(),
+      meta_title:  document.getElementById('bp-meta-title').value.trim(),
+      meta_desc:   document.getElementById('bp-meta-desc').value.trim(),
+      status:      status,
+      scheduled_at: (status==='scheduled' && schedVal) ? new Date(schedVal).toISOString() : null,
+      published_at: status==='published' ? new Date().toISOString() : null
+    };
+    if (!body.title) { showToast('Validation', 'Title is required.', 'error'); return; }
+    if (!body.slug)  { showToast('Validation', 'Slug is required.', 'error'); return; }
+    try {
+      var url = SB_URL + '/rest/v1/blog_posts' + (_blogEditId ? '?id=eq.' + _blogEditId : '');
+      var res = await fetch(url, { method: _blogEditId ? 'PATCH' : 'POST', headers: { 'apikey': _adminToken, 'Authorization': 'Bearer ' + _adminToken, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify(body) });
+      if (!res.ok) { var err = await res.text(); throw new Error(err); }
+      closeBlogModal(); loadBlogPosts();
+      showToast(_blogEditId ? 'Post Updated' : 'Post Created', body.title, 'success');
+    } catch(e) { showToast('Error', e.message, 'error'); }
+  }
+
+  async function publishBlogPost(id) {
+    if (!confirm('Publish this post now?')) return;
+    try {
+      var res = await fetch(SB_URL + '/rest/v1/blog_posts?id=eq.' + id, { method: 'PATCH', headers: { 'apikey': _adminToken, 'Authorization': 'Bearer ' + _adminToken, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify({ status: 'published', published_at: new Date().toISOString() }) });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      loadBlogPosts(); showToast('Published', 'Post is now live.', 'success');
+    } catch(e) { showToast('Error', e.message, 'error'); }
+  }
+
+  async function deleteBlogPost(id) {
+    if (!confirm('Delete this post? This cannot be undone.')) return;
+    try {
+      var res = await fetch(SB_URL + '/rest/v1/blog_posts?id=eq.' + id, { method: 'DELETE', headers: { 'apikey': _adminToken, 'Authorization': 'Bearer ' + _adminToken } });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      loadBlogPosts(); showToast('Deleted', 'Post removed.', 'success');
+    } catch(e) { showToast('Error', e.message, 'error'); }
+  }
+
+  /* Helper: HTML escape */
+  function _esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  /* Hook into tab switching to lazy-load data */
+  (function() {
+    var _orig = switchTab;
+    switchTab = function(tab) {
+      _orig(tab);
+      if (tab === 'hadiths' && typeof _adminToken !== 'undefined' && _adminToken) initHadithsTab();
+      if (tab === 'blog'    && typeof _adminToken !== 'undefined' && _adminToken) initBlogTab();
+    };
+  })();
+  </script>
+
 </body>
 </html>
