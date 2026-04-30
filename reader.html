@@ -589,4 +589,16 @@
       loadHadith(hadithId);
     } else {
       // Default: load first available hadith
-      fetch(SB_URL + '/rest/v1/hadiths?select=id&ord
+      fetch(SB_URL + '/rest/v1/hadiths?select=id&order=id.asc&limit=1', {
+        headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON }
+      }).then(function(r){ return r.json(); }).then(function(rows){
+        if (rows && rows.length) loadHadith(rows[0].id);
+        else showError('No hadiths found.');
+      }).catch(function(){ showError('Could not load Hadith. Please try again.'); });
+    }
+
+  })();
+  </script>
+
+</body>
+</html>
