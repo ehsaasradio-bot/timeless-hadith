@@ -466,35 +466,29 @@ nav.main-nav {
 }
 .nav-drawer .drawer-cta:hover { opacity: 0.82; }
 
-/* ── Theme Toggle ── */
+/* ── Theme Toggle — icon circle (no sliding knob) ── */
 .theme-toggle {
-  width: 44px; height: 26px;
-  background: var(--toggle-bg); border-radius: 100px;
-  border: none; cursor: pointer; position: relative;
-  flex-shrink: 0; transition: background 0.35s ease; outline: none;
+  width: 34px; height: 34px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 50%; cursor: pointer; position: relative;
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease; outline: none;
 }
-.theme-toggle:focus-visible { box-shadow: 0 0 0 2px var(--ink); }
+.theme-toggle:hover { background: var(--surface2); border-color: var(--muted); }
+.theme-toggle:focus-visible { box-shadow: 0 0 0 2px var(--accent); outline: none; }
+.theme-toggle::after { display: none; }             /* no sliding knob */
 .theme-toggle .icon-sun,
 .theme-toggle .icon-moon {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  width: 13px; height: 13px; transition: opacity 0.25s ease;
-  stroke: var(--toggle-icon); fill: none;
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 15px; height: 15px; transition: opacity 0.2s ease;
+  stroke: var(--ink); fill: none;
   stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
 }
-.theme-toggle .icon-sun  { left: 6px; }
-.theme-toggle .icon-moon { right: 5px; }
 [data-theme="light"] .theme-toggle .icon-moon { opacity: 0; }
 [data-theme="light"] .theme-toggle .icon-sun  { opacity: 1; }
 [data-theme="dark"]  .theme-toggle .icon-sun  { opacity: 0; }
 [data-theme="dark"]  .theme-toggle .icon-moon { opacity: 1; }
-.theme-toggle::after {
-  content: ""; position: absolute; top: 3px;
-  width: 20px; height: 20px; background: var(--toggle-knob);
-  border-radius: 50%;
-  transition: left 0.28s cubic-bezier(0.4,0,0.2,1), background 0.35s ease;
-}
-[data-theme="light"] .theme-toggle::after { left: 3px; }
-[data-theme="dark"]  .theme-toggle::after { left: 21px; }
 
 /* ── Footer ── */
 footer {
@@ -534,9 +528,11 @@ footer {
 @media (max-width: 1024px) {
   nav.main-nav { padding: 0 20px; gap: 8px; }
   .nav-links { display: none; }
-  .nav-right { gap: 6px; }
+  .nav-right { gap: 4px; }
   .nav-widgets { display: none; }       /* hide info pill on tablet/mobile */
   .nav-hamburger { display: flex; }
+  #btn-login { display: none; }         /* sign-in lives in drawer instead */
+  #btn-logout { display: none; }        /* logout lives in drawer instead */
 }
 /* Mobile-only extras */
 @media (max-width: 768px) {
@@ -848,5 +844,4 @@ div[dir="rtl"] {
 .nav-widget .prayer-time { color: var(--ink); font-weight: 600; white-space: nowrap; }
 .nav-sep {
   width:3px; height:3px; border-radius:50%;
-  background: var(--border); flex-shrink:0; display:inline-block;
-}
+  background: var(-
