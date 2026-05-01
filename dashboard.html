@@ -403,6 +403,7 @@
           <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285f4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34a853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2.04a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/><path fill="#fbbc05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z"/><path fill="#ea4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/></svg>
           Continue with Google — it's free
         </button>
+        <button onclick="loadDemo()" style="margin-top:10px;padding:13px 28px;border:2px solid #186450;border-radius:10px;background:transparent;color:#186450;font-size:15px;font-weight:600;cursor:pointer;width:100%;max-width:320px;" onmouseover="this.style.background='#f0faf6'" onmouseout="this.style.background='transparent'">&#10022; Preview Demo</button>
         <p class="dash-hero-note">No account needed to browse hadiths. Sign in to track your progress.</p>
       </div>
       <div class="dash-features">
@@ -937,8 +938,62 @@
     }
 
     waitSession(function () { load(); });
+
+    /* ── Demo mode ── */
+    var DEMO_DATA = {
+      stats: { total_hadith_read: 347, current_streak: 7, daily_goal: 20 },
+      weeklyActivity: [
+        { reading_date: '2026-04-25', hadith_read_count: 12 },
+        { reading_date: '2026-04-26', hadith_read_count: 18 },
+        { reading_date: '2026-04-27', hadith_read_count: 22 },
+        { reading_date: '2026-04-28', hadith_read_count: 8  },
+        { reading_date: '2026-04-29', hadith_read_count: 25 },
+        { reading_date: '2026-04-30', hadith_read_count: 19 },
+        { reading_date: '2026-05-01', hadith_read_count: 14 }
+      ],
+      collectionProgress: [
+        { collection_name: 'Sahih al-Bukhari',  chapter_name: 'Book of Revelation', read_count: 180 },
+        { collection_name: 'Sahih Muslim',       chapter_name: 'Introduction',        read_count: 95  },
+        { collection_name: 'Riyad as-Salihin',   chapter_name: 'Various Chapters',    read_count: 52  },
+        { collection_name: 'Sunan Abu Dawud',    chapter_name: 'Purification',        read_count: 20  }
+      ],
+      recent: [{
+        hadith_number: 1,
+        collection_name: 'Sahih al-Bukhari',
+        chapter_name: 'Book of Revelation',
+        arabic: '\u0625\u0646\u0651\u064e\u0645\u064e\u0627 \u0627\u0644\u0623\u0639\u0645\u064e\u0627\u0644\u064f \u0628\u0650\u0627\u0644\u0646\u0651\u064a\u0651\u064e\u0627\u062a'
+      }],
+      achievements: [
+        { badge_key: 'seven_day_streak' },
+        { badge_key: 'first_step' },
+        { badge_key: 'fifty_hadith' }
+      ]
+    };
+
+    function loadDemo() {
+      document.getElementById('authGate').style.display    = 'none';
+      document.getElementById('skeletonLoader').style.display = 'none';
+      document.getElementById('dashContent').style.display = '';
+      var banner = document.getElementById('demoBanner');
+      banner.style.display = 'flex';
+      document.body.style.paddingTop = '44px';
+      var d = DEMO_DATA, st = d.stats;
+      var todayRow = d.weeklyActivity[d.weeklyActivity.length - 1];
+      renderOverall(st, todayRow);
+      renderWeekly(d.weeklyActivity);
+      renderDonut(d.collectionProgress, st.total_hadith_read);
+      renderLine(d.weeklyActivity);
+      renderContinue(d.recent, st);
+      renderCollections(d.collectionProgress, st);
+      renderAchievements(d.achievements, st);
+    }
+
   })();
   </script>
 
+  <div id="demoBanner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#186450;color:#fff;text-align:center;padding:10px 20px;font-size:14px;font-weight:600;align-items:center;justify-content:center;gap:16px;">
+    <span>&#10022; Demo Mode &mdash; sample data only</span>
+    <button onclick="window.location.reload()" style="padding:5px 16px;border:1.5px solid rgba(255,255,255,.7);border-radius:6px;background:transparent;color:#fff;cursor:pointer;font-size:13px;font-weight:600;">Reset</button>
+  </div>
 </body>
 </html>
