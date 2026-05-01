@@ -476,7 +476,7 @@
 
       <div class="nav-auth" id="nav-auth-item">
         <button id="btn-login">Sign in</button>
-        <button id="btn-logout">Sign out</button>
+        <button id="btn-logout" onclick="localStorage.removeItem('th_supabase_session');localStorage.removeItem('th_auth_user');window.location.href='/index.html';">Sign out</button>
         <div id="nav-avatar-wrap" role="button" tabindex="0" aria-label="User account">
           <div class="nav-avatar">
             <img id="nav-avatar-img" src="" alt="" />
