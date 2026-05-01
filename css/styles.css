@@ -29,7 +29,6 @@
   unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
 }
 
-/*
 @font-face {
   font-family: 'Gulzar';
   src: url('/fonts/gulzar-arabic.woff2') format('woff2');
@@ -46,7 +45,6 @@
   font-display: swap;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-*/
 
 /* ── Accessibility ── */
 .skip-link {
@@ -803,45 +801,49 @@ div[dir="rtl"] {
   background: rgba(79, 114, 248, 0.13);
   border-color: rgba(79, 114, 248, 0.45);
 }
-[data-theme="dark"
+.urdu-trans-btn::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  margin-left: 2px;
+}
+.urdu-trans-btn.open::after {
+  transform: rotate(-135deg) translateY(-2px);
+}
 
-/* ── NAV WIDGETS: Makkah Time · Weather · Next Prayer ── */
-.nav-widgets {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 6px;
-  margin-right: 8px;
-  flex-shrink: 0;
-  min-width: max-content;
+/* Accordion body */
+.urdu-inline-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-top: 0;
+  transition: grid-template-rows 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+              opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+              margin-top 0.35s cubic-bezier(0.23, 1, 0.32, 1);
 }
-.nav-widget {
-  display: inline-flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 11px;
-  background: rgba(79,114,248,0.07);
-  border: 1px solid rgba(79,114,248,0.15);
-  border-radius: 100px;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--muted);
-  white-space: nowrap;
-  flex-shrink: 0;
-  cursor: default;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: background 0.2s, border-color 0.2s;
+.urdu-inline-body > .urdu-inline-inner {
+  overflow: hidden;
 }
-[data-theme="dark"] .nav-widget {
-  background: rgba(79,114,248,0.10);
-  border-color: rgba(100,140,255,0.20);
+.urdu-inline-body.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 14px;
 }
-.nav-widget svg { flex-shrink: 0; opacity: 0.65; }
-.nav-widget strong { color: var(--ink); font-weight: 600; white-space: nowrap; }
-.nav-widget .prayer-name { color: var(--accent); font-weight: 700; white-space: nowrap; }
-.nav-widget .prayer-time { color: var(--ink); font-weight: 600; white-space: nowrap; }
-.nav-sep {
-  width:3px; height:3px; border-radius:50%;
-  background: var(-
+.urdu-inline-inner {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 14px;
+  transform: translateY(-8px);
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+[data-theme="dark"] .urdu-inline-inner {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+.urdu-inline-body.open > .urdu-inline-inner {
+  transform: translateY(0);
+}
+.urdu-inline-
