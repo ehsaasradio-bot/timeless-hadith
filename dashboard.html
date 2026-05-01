@@ -9,128 +9,259 @@
   <link rel="stylesheet" href="css/styles.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js" defer></script>
   <script>(function(){try{var m='th_theme_default_v3';if(!localStorage.getItem(m)){localStorage.setItem(m,'1');}var s=localStorage.getItem('th_theme');document.documentElement.setAttribute('data-theme',s||'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
-  <style>
-    .dash-wrap{max-width:1140px;margin:88px auto 80px;padding:0 20px}
-    .glass-card{background:rgba(255,255,255,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.5);border-radius:20px;box-shadow:0 4px 32px rgba(0,0,0,.06)}
-    [data-theme=dark] .glass-card{background:rgba(20,25,50,.72);border-color:rgba(255,255,255,.08);box-shadow:0 4px 32px rgba(0,0,0,.3)}
-    .dash-greeting{margin-bottom:32px}
-    .dash-greeting h1{font-size:26px;font-weight:800;letter-spacing:-.04em;color:var(--ink)}
-    .dash-greeting p{font-size:14px;color:var(--muted);margin-top:4px}
-    .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-bottom:24px}
-    .stat-card{padding:20px 22px}
-    .stat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
-    .stat-value{font-size:36px;font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--ink)}
-    .stat-sub{font-size:12px;color:var(--muted);margin-top:5px}
-    .stat-accent{color:var(--accent)!important}.stat-amber{color:#f59e0b!important}.stat-gold{color:#eab308!important}.stat-purple{color:#8b5cf6!important}
-    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px}
-    @media(max-width:700px){.two-col{grid-template-columns:1fr}}
-    .sec-hdr{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:16px}
-    .sec-hdr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-    .sec-hdr-row a{font-size:13px;color:var(--accent);font-weight:600;text-decoration:none}
-    .ring-section{padding:28px;display:flex;align-items:center;gap:28px;flex-wrap:wrap}
-    .ring-wrap{position:relative;width:120px;height:120px;flex-shrink:0}
-    .ring-svg{transform:rotate(-90deg)}
-    .ring-track{fill:none;stroke:var(--border);stroke-width:10}
-    .ring-fill{fill:none;stroke:var(--accent);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .8s ease}
-    .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-    .ring-pct{font-size:22px;font-weight:800;color:var(--ink);line-height:1}
-    .ring-sub2{font-size:11px;color:var(--muted)}
-    .ring-info h3{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:6px}
-    .ring-info p{font-size:13px;color:var(--muted);line-height:1.5}
-    .chart-card{padding:26px;margin-bottom:24px}
-    .chart-canvas-wrap{position:relative;height:180px}
-    .coll-card,.recent-card{padding:24px}
-    .coll-item{margin-bottom:14px}.coll-item:last-child{margin-bottom:0}
-    .coll-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
-    .coll-name{color:var(--ink);font-weight:600}.coll-count{color:var(--muted)}
-    .coll-bar-track{height:7px;background:var(--border);border-radius:100px;overflow:hidden}
-    .coll-bar-fill{height:100%;background:var(--accent);border-radius:100px;transition:width .6s ease}
-    .recent-item{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--border)}
-    .recent-item:last-child{border-bottom:none;padding-bottom:0}
-    .recent-num{width:36px;height:36px;border-radius:10px;background:rgba(79,114,248,.1);color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-    .recent-text{flex:1;min-width:0}
-    .recent-book{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:3px}
-    .recent-hadith{font-size:13px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .recent-time{font-size:11px;color:var(--muted);white-space:nowrap}
-    .ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
-    .ach-card{padding:18px;text-align:center}
-    .ach-icon{font-size:28px;margin-bottom:8px}
-    .ach-name{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:3px}
-    .ach-desc{font-size:11px;color:var(--muted);line-height:1.3}
-    .ach-locked{opacity:.35}
-    .comp-preview-card{padding:24px}
-    .comp-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
-    .comp-row:last-child{border-bottom:none}
-    .comp-rank{width:28px;font-size:14px;font-weight:800;color:var(--muted);text-align:center;flex-shrink:0}
-    .comp-avatar{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
-    .comp-name{flex:1;font-size:14px;font-weight:600;color:var(--ink)}
-    .comp-pts{font-size:13px;font-weight:700;color:var(--accent)}
-    .comp-highlight{background:rgba(79,114,248,.06);border-radius:10px;margin:0 -8px;padding:10px 8px}
-    .milestone-card{padding:24px}
-    .milestone-row{display:flex;align-items:center;gap:14px;margin-bottom:14px}
-    .milestone-row:last-child{margin-bottom:0}
-    .milestone-icon{width:40px;height:40px;border-radius:12px;background:rgba(79,114,248,.1);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-    .milestone-info{flex:1}
-    .milestone-name{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px}
-    .milestone-bar-track{height:6px;background:var(--border);border-radius:100px;overflow:hidden}
-    .milestone-bar-fill{height:100%;background:var(--accent);border-radius:100px;transition:width .7s ease}
-    .milestone-pct{font-size:12px;color:var(--muted);margin-top:4px}
-    .goal-section{padding:22px 26px;margin-bottom:0}
-    .goal-section h2{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:14px}
-    .goal-label{font-size:13px;color:var(--muted);margin-bottom:6px}
-    .goal-bar-track{height:10px;background:var(--border);border-radius:100px;overflow:hidden;margin-bottom:14px}
-    .goal-bar-fill{height:100%;background:var(--accent);border-radius:100px;transition:width .6s ease}
-    .goal-input-row{display:flex;align-items:center;gap:8px}
-    .goal-input-row input{width:70px;padding:7px 10px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:13px;outline:none;text-align:center}
-    .goal-input-row input:focus{border-color:var(--accent)}
-    .btn-save{padding:7px 18px;background:var(--accent);color:#fff;border:none;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)}
-    .btn-save:hover{opacity:.85}
 
-    /* ── Dashboard Hero (unauthenticated landing) ── */
-    .dash-hero{text-align:center;padding:32px 20px 40px;max-width:680px;margin:0 auto}
-    .dash-hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;
+  <style>
+    /* ── Dashboard palette ── */
+    :root {
+      --dp-green:   #1a6b52;
+      --dp-mid:     #2d9970;
+      --dp-emerald: #10b981;
+      --dp-amber:   #f59e0b;
+      --dp-amber2:  #fbbf24;
+      --dp-purple:  #8b5cf6;
+      --dp-blue:    #3b82f6;
+    }
+
+    /* ── Layout ── */
+    .dp-wrap { max-width: 1180px; margin: 88px auto 80px; padding: 0 24px; }
+
+    /* ── Breadcrumb ── */
+    .dp-breadcrumb {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--muted); margin-bottom: 20px;
+    }
+    .dp-breadcrumb a { color: var(--muted); text-decoration: none; }
+    .dp-breadcrumb a:hover { color: var(--ink); }
+    .dp-breadcrumb svg { flex-shrink: 0; }
+    .dp-breadcrumb-sep { color: var(--muted); opacity: .5; }
+    .dp-breadcrumb-cur { color: var(--ink); font-weight: 600; }
+
+    /* ── Page header ── */
+    .dp-page-hdr {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 24px; gap: 16px;
+    }
+    .dp-page-hdr h1 { font-size: 28px; font-weight: 800; letter-spacing: -.04em; color: var(--ink); margin-bottom: 4px; }
+    .dp-page-hdr p  { font-size: 13px; color: var(--muted); }
+    .btn-export {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 18px; border: 1px solid var(--border); border-radius: 100px;
+      background: var(--surface); color: var(--ink); font-size: 13px; font-weight: 600;
+      font-family: var(--font); cursor: pointer; white-space: nowrap;
+      transition: background .15s, border-color .15s;
+    }
+    .btn-export:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Glass card base ── */
+    .dp-card {
+      background: linear-gradient(135deg, rgba(255,255,255,.9) 0%, rgba(255,255,255,.75) 100%);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid rgba(255,255,255,.75);
+      border-top-color: rgba(255,255,255,.95);
+      border-radius: 20px;
+      box-shadow: 0 2px 0 rgba(255,255,255,.9) inset, 0 6px 28px rgba(0,0,0,.07);
+    }
+    [data-theme=dark] .dp-card {
+      background: linear-gradient(135deg, rgba(28,36,66,.88) 0%, rgba(18,24,48,.80) 100%);
+      border-color: rgba(255,255,255,.10); border-top-color: rgba(255,255,255,.16);
+      box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 6px 32px rgba(0,0,0,.4);
+    }
+
+    /* ── Overall Progress Card ── */
+    .overall-card { padding: 32px 36px; margin-bottom: 20px; }
+    .overall-inner { display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: start; }
+    @media(max-width:700px){ .overall-inner { grid-template-columns: 1fr; gap: 24px; } }
+
+    /* Ring */
+    .dp-ring-wrap { position: relative; width: 136px; height: 136px; flex-shrink: 0; }
+    .dp-ring-svg { transform: rotate(-90deg); }
+    .dp-ring-track { fill: none; stroke: var(--border); stroke-width: 12; }
+    .dp-ring-fill  { fill: none; stroke: var(--dp-green); stroke-width: 12; stroke-linecap: round;
+                     transition: stroke-dashoffset .9s cubic-bezier(.4,0,.2,1); }
+    .dp-ring-center {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .dp-ring-pct  { font-size: 28px; font-weight: 800; color: var(--ink); line-height: 1; }
+    .dp-ring-lbl  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* Stats row */
+    .overall-right { display: flex; flex-direction: column; gap: 20px; }
+    .overall-title { font-size: 16px; font-weight: 700; color: var(--ink); }
+    .dp-stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    @media(max-width:900px){ .dp-stats-row { grid-template-columns: repeat(2,1fr); } }
+    @media(max-width:480px){ .dp-stats-row { grid-template-columns: 1fr 1fr; } }
+
+    .dp-stat { display: flex; flex-direction: column; gap: 4px; }
+    .dp-stat-val { font-size: 32px; font-weight: 800; letter-spacing: -.04em; line-height: 1; color: var(--ink); }
+    .dp-stat-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+    .dp-stat-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .dp-stat-icon { font-size: 16px; margin-bottom: 2px; }
+
+    /* Progress bar */
+    .dp-progress-row { display: flex; flex-direction: column; gap: 6px; }
+    .dp-progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+    .dp-prog-track { height: 8px; background: var(--border); border-radius: 100px; overflow: hidden; }
+    .dp-prog-fill  { height: 100%; background: linear-gradient(90deg, var(--dp-green), var(--dp-mid));
+                     border-radius: 100px; transition: width .8s cubic-bezier(.4,0,.2,1); }
+    .dp-view-goals { font-size: 13px; color: var(--dp-green); font-weight: 600; text-decoration: none; }
+    .dp-view-goals:hover { opacity: .75; }
+    .dp-prog-footer { display: flex; justify-content: space-between; align-items: center; }
+
+    /* ── Charts Row ── */
+    .dp-charts-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 20px; }
+    @media(max-width:860px){ .dp-charts-row { grid-template-columns: 1fr; } }
+    .dp-chart-card { padding: 24px; }
+    .dp-chart-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+    .dp-chart-title { font-size: 14px; font-weight: 700; color: var(--ink); }
+    .dp-chart-info  { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--border);
+                      display: flex; align-items: center; justify-content: center;
+                      font-size: 11px; color: var(--muted); cursor: default; }
+    .dp-canvas-wrap { position: relative; height: 160px; }
+    .dp-donut-wrap  { position: relative; height: 160px; display: flex; align-items: center; gap: 16px; }
+    .dp-donut-canvas { flex: 0 0 140px; height: 140px; }
+    .dp-donut-legend { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .dp-legend-item { display: flex; align-items: center; gap: 8px; }
+    .dp-legend-dot  { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .dp-legend-name { font-size: 11px; color: var(--ink); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dp-legend-pct  { font-size: 11px; color: var(--muted); font-weight: 600; }
+    .dp-time-big { font-size: 28px; font-weight: 800; color: var(--ink); letter-spacing: -.04em; margin-bottom: 4px; }
+    .dp-time-sub { font-size: 12px; color: var(--dp-emerald); font-weight: 600; }
+
+    /* ── Bottom section (main + sidebar) ── */
+    .dp-bottom { display: grid; grid-template-columns: 1fr 320px; gap: 20px; align-items: start; }
+    @media(max-width:900px){ .dp-bottom { grid-template-columns: 1fr; } }
+
+    /* Achievements */
+    .dp-ach-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .dp-ach-hdr-title { font-size: 16px; font-weight: 700; color: var(--ink); }
+    .dp-ach-hdr a { font-size: 13px; color: var(--dp-green); font-weight: 600; text-decoration: none; }
+    .dp-ach-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+    @media(max-width:700px){ .dp-ach-grid { grid-template-columns: repeat(2,1fr); } }
+    .dp-ach-card { padding: 20px 16px; text-align: center; }
+    .dp-ach-icon { font-size: 32px; margin-bottom: 10px; display: block; }
+    .dp-ach-name { font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    .dp-ach-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+    .dp-ach-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-top: 8px; padding: 3px 10px; border-radius: 100px;
+      font-size: 10px; font-weight: 700; background: rgba(26,107,82,.12); color: var(--dp-green);
+    }
+    .dp-ach-locked { opacity: .32; }
+
+    /* ── Sidebar ── */
+    .dp-sidebar { display: flex; flex-direction: column; gap: 16px; }
+
+    /* Continue Reading */
+    .dp-continue-card { padding: 22px; }
+    .dp-continue-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .dp-continue-title { font-size: 14px; font-weight: 700; color: var(--ink); }
+    .dp-continue-viewall { font-size: 12px; color: var(--dp-green); font-weight: 600; text-decoration: none; }
+    .dp-continue-book { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .dp-book-thumb {
+      width: 44px; height: 54px; border-radius: 8px; flex-shrink: 0;
+      background: linear-gradient(160deg, var(--dp-green), var(--dp-mid));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; box-shadow: 0 3px 10px rgba(26,107,82,.25);
+    }
+    .dp-book-info-name { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+    .dp-book-info-sub  { font-size: 11px; color: var(--muted); }
+    .dp-continue-hadith-num { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+    .dp-continue-arabic {
+      font-family: 'Amiri', serif; font-size: 15px; direction: rtl; text-align: right;
+      color: var(--ink); line-height: 1.8; margin-bottom: 12px;
+      padding: 10px 12px; background: rgba(26,107,82,.05); border-radius: 10px;
+      border-right: 3px solid var(--dp-green);
+    }
+    [data-theme=dark] .dp-continue-arabic { background: rgba(26,107,82,.10); }
+    .dp-continue-prog-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .dp-continue-prog-lbl { font-size: 11px; color: var(--muted); }
+    .dp-continue-prog-track { flex: 1; height: 5px; background: var(--border); border-radius: 100px; overflow: hidden; margin: 0 10px; }
+    .dp-continue-prog-fill  { height: 100%; background: var(--dp-green); border-radius: 100px; }
+    .btn-continue {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 11px; border-radius: 12px;
+      background: var(--dp-green); color: #fff; border: none;
+      font-size: 14px; font-weight: 700; font-family: var(--font);
+      cursor: pointer; text-decoration: none; transition: opacity .15s;
+    }
+    .btn-continue:hover { opacity: .88; }
+
+    /* Active Collections */
+    .dp-coll-card { padding: 22px; }
+    .dp-coll-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .dp-coll-title { font-size: 14px; font-weight: 700; color: var(--ink); }
+    .dp-coll-viewall { font-size: 12px; color: var(--dp-green); font-weight: 600; text-decoration: none; }
+    .dp-coll-item { display: flex; align-items: center; gap: 12px; padding: 10px 0;
+                    border-bottom: 1px solid var(--border); }
+    .dp-coll-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .dp-coll-thumb {
+      width: 40px; height: 48px; border-radius: 7px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 16px;
+    }
+    .dp-coll-thumb-green  { background: linear-gradient(160deg, var(--dp-green), var(--dp-mid)); }
+    .dp-coll-thumb-amber  { background: linear-gradient(160deg, #92400e, #f59e0b); }
+    .dp-coll-thumb-purple { background: linear-gradient(160deg, #4c1d95, #8b5cf6); }
+    .dp-coll-info { flex: 1; min-width: 0; }
+    .dp-coll-name { font-size: 12px; font-weight: 700; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dp-coll-sub  { font-size: 11px; color: var(--muted); margin-bottom: 5px; }
+    .dp-coll-bar-track { height: 5px; background: var(--border); border-radius: 100px; overflow: hidden; }
+    .dp-coll-bar-fill  { height: 100%; border-radius: 100px; }
+    .dp-coll-pct  { font-size: 11px; color: var(--muted); font-weight: 600; white-space: nowrap; }
+    .dp-coll-arrow { color: var(--muted); flex-shrink: 0; }
+
+    /* ── Auth gate (same as before) ── */
+    .dp-auth-wrap { text-align: center; }
+    .dash-hero { text-align:center; padding:32px 20px 40px; max-width:680px; margin:0 auto; }
+    .dash-hero-badge { display:inline-flex;align-items:center;gap:6px;padding:5px 14px;
       background:rgba(79,114,248,.1);color:var(--accent);border-radius:100px;
-      font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:22px}
-    .dash-hero h1{font-size:clamp(28px,5vw,48px);font-weight:800;letter-spacing:-.04em;
-      line-height:1.08;color:var(--ink);margin-bottom:16px}
-    .dash-hero h1 em{font-style:normal;color:var(--accent)}
-    .dash-hero p{font-size:clamp(15px,1.8vw,17px);color:var(--muted);line-height:1.65;
-      max-width:520px;margin:0 auto 28px}
-    .btn-google{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;
+      font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:22px; }
+    .dash-hero h1 { font-size:clamp(28px,5vw,48px);font-weight:800;letter-spacing:-.04em;
+      line-height:1.08;color:var(--ink);margin-bottom:16px; }
+    .dash-hero h1 em { font-style:normal;color:var(--accent); }
+    .dash-hero p { font-size:clamp(15px,1.8vw,17px);color:var(--muted);line-height:1.65;
+      max-width:520px;margin:0 auto 28px; }
+    .btn-google { display:inline-flex;align-items:center;gap:10px;padding:14px 28px;
       background:var(--accent);color:#fff;border:none;border-radius:100px;
       font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;
-      letter-spacing:-.1px;transition:opacity .2s ease,transform .2s ease;margin-bottom:14px}
-    .btn-google:hover{opacity:.88;transform:translateY(-1px)}
-    .btn-google svg{flex-shrink:0}
-    .dash-hero-note{font-size:12px;color:var(--muted);margin-bottom:0}
-    /* Feature grid */
-    .dash-features{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-      gap:14px;margin-top:40px}
-    .dash-feat{padding:24px 22px;text-align:left}
-    .dash-feat-icon{font-size:26px;margin-bottom:12px;display:block}
-    .dash-feat h3{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px}
-    .dash-feat p{font-size:13px;color:var(--muted);line-height:1.5;margin:0}
-    /* Social proof bar */
-    .dash-proof{display:flex;align-items:center;justify-content:center;gap:0;
+      letter-spacing:-.1px;transition:opacity .2s ease,transform .2s ease;margin-bottom:14px; }
+    .btn-google:hover { opacity:.88;transform:translateY(-1px); }
+    .dash-hero-note { font-size:12px;color:var(--muted); }
+    .dash-features { display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+      gap:14px;margin-top:40px; }
+    .dash-feat { padding:24px 22px;text-align:left;
+      background:linear-gradient(135deg,rgba(255,255,255,.9) 0%,rgba(255,255,255,.75) 100%);
+      backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+      border:1px solid rgba(255,255,255,.75);border-radius:20px;
+      box-shadow:0 6px 28px rgba(0,0,0,.07); }
+    [data-theme=dark] .dash-feat { background:rgba(28,36,66,.85);border-color:rgba(255,255,255,.10); }
+    .dash-feat-icon { font-size:26px;margin-bottom:12px;display:block; }
+    .dash-feat h3 { font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px; }
+    .dash-feat p  { font-size:13px;color:var(--muted);line-height:1.5;margin:0; }
+    .dash-proof { display:flex;align-items:center;justify-content:center;
       margin-top:36px;padding:20px 28px;border-radius:20px;
-      background:var(--surface);border:1px solid var(--border)}
-    .dash-proof-item{flex:1;text-align:center;padding:0 12px}
-    .dash-proof-num{display:block;font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.04em}
-    .dash-proof-label{font-size:12px;color:var(--muted);font-weight:500}
-    .dash-proof-sep{width:1px;height:36px;background:var(--border);flex-shrink:0}
-    @media(max-width:500px){.dash-features{grid-template-columns:1fr 1fr}.dash-proof{padding:16px 14px}}
+      background:var(--surface);border:1px solid var(--border); }
+    .dash-proof-item { flex:1;text-align:center;padding:0 12px; }
+    .dash-proof-num   { display:block;font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.04em; }
+    .dash-proof-label { font-size:12px;color:var(--muted);font-weight:500; }
+    .dash-proof-sep   { width:1px;height:36px;background:var(--border);flex-shrink:0; }
 
-    .auth-gate{text-align:center;padding:0}
-    .auth-gate h2{font-size:22px;font-weight:700;color:var(--ink);margin-bottom:10px}
-    .auth-gate p{color:var(--muted);font-size:14px;margin-bottom:24px}
-    .btn-signin{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:var(--accent);color:#fff;border-radius:100px;font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:var(--font)}
-    .btn-signin:hover{opacity:.85}
-    .skeleton{background:var(--border);border-radius:8px;animation:pulse 1.5s ease infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
-    @media(max-width:600px){.stats-grid{grid-template-columns:1fr 1fr}.dash-greeting h1{font-size:20px}}
+    /* ── Skeleton ── */
+    .dp-skeleton { background:var(--border);border-radius:12px;animation:dp-pulse 1.5s ease infinite; }
+    @keyframes dp-pulse { 0%,100%{opacity:1}50%{opacity:.4} }
+    .dp-skel-wrap { display:flex;flex-direction:column;gap:16px; }
+
+    /* ── Responsive ── */
+    @media(max-width:600px) {
+      .dp-wrap { padding: 0 16px; }
+      .dp-page-hdr h1 { font-size: 22px; }
+      .overall-card { padding: 22px 20px; }
+    }
   </style>
 </head>
 <body>
+
   <nav class="main-nav" aria-label="Main navigation">
     <a href="index.html" class="nav-logo" aria-label="Timeless Hadith — Home">
       <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp"/><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="28" width="90"/></picture>
@@ -144,7 +275,8 @@
     </ul>
     <div class="nav-right">
       <button id="themeToggle" class="nav-theme-btn" aria-label="Toggle theme">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
       </button>
       <div class="nav-auth" id="nav-auth-item">
         <button class="nav-signin-btn" id="nav-signin-btn" style="display:none">Sign in</button>
@@ -165,9 +297,10 @@
     <a href="competition.html">Milestones</a>
   </nav>
 
-  <main class="dash-wrap" id="dashMain">
-    <div class="auth-gate" id="authGate" style="display:none">
-      <!-- Hero -->
+  <div class="dp-wrap" id="dashMain">
+
+    <!-- ── Auth gate (unauthenticated) ── -->
+    <div id="authGate" class="dp-auth-wrap" style="display:none">
       <div class="dash-hero">
         <div class="dash-hero-badge">✨ Personal Dashboard</div>
         <h1>Your Hadith Reading<br><em>Journey Awaits</em></h1>
@@ -183,231 +316,523 @@
         </button>
         <p class="dash-hero-note">No account needed to browse hadiths. Sign in to track your progress.</p>
       </div>
-      <!-- Features -->
       <div class="dash-features">
-        <div class="glass-card dash-feat">
-          <span class="dash-feat-icon">🔥</span>
-          <h3>Daily Streaks</h3>
-          <p>Build a lasting reading habit with streak tracking. Never miss a day.</p>
-        </div>
-        <div class="glass-card dash-feat">
-          <span class="dash-feat-icon">📊</span>
-          <h3>Reading Stats</h3>
-          <p>Total hadiths read, weekly charts, collection progress and more.</p>
-        </div>
-        <div class="glass-card dash-feat">
-          <span class="dash-feat-icon">🏆</span>
-          <h3>Achievements</h3>
-          <p>Unlock badges and trophies as you reach milestones on your journey.</p>
-        </div>
-        <div class="glass-card dash-feat">
-          <span class="dash-feat-icon">🎯</span>
-          <h3>Daily Goals</h3>
-          <p>Set your own daily hadith target and watch your progress bar fill up.</p>
-        </div>
+        <div class="dash-feat"><span class="dash-feat-icon">🔥</span><h3>Daily Streaks</h3><p>Build a lasting reading habit with streak tracking. Never miss a day.</p></div>
+        <div class="dash-feat"><span class="dash-feat-icon">📊</span><h3>Reading Stats</h3><p>Total hadiths read, weekly charts, collection progress and more.</p></div>
+        <div class="dash-feat"><span class="dash-feat-icon">🏆</span><h3>Achievements</h3><p>Unlock badges and trophies as you reach milestones on your journey.</p></div>
+        <div class="dash-feat"><span class="dash-feat-icon">🎯</span><h3>Daily Goals</h3><p>Set your own daily hadith target and watch your progress bar fill up.</p></div>
       </div>
-      <!-- Social proof -->
       <div class="dash-proof">
-        <div class="dash-proof-item">
-          <span class="dash-proof-num">2,000+</span>
-          <span class="dash-proof-label">Hadiths in library</span>
-        </div>
+        <div class="dash-proof-item"><span class="dash-proof-num">7,277</span><span class="dash-proof-label">Hadiths in library</span></div>
         <div class="dash-proof-sep"></div>
-        <div class="dash-proof-item">
-          <span class="dash-proof-num">8</span>
-          <span class="dash-proof-label">Collections</span>
-        </div>
+        <div class="dash-proof-item"><span class="dash-proof-num">1</span><span class="dash-proof-label">Collection</span></div>
         <div class="dash-proof-sep"></div>
-        <div class="dash-proof-item">
-          <span class="dash-proof-num">Free</span>
-          <span class="dash-proof-label">Always &amp; forever</span>
-        </div>
+        <div class="dash-proof-item"><span class="dash-proof-num">Free</span><span class="dash-proof-label">Always &amp; forever</span></div>
       </div>
     </div>
-    <div id="skeletonLoader">
-      <div class="skeleton" style="height:26px;width:260px;margin-bottom:8px"></div>
-      <div class="skeleton" style="height:15px;width:180px;margin-bottom:28px"></div>
-      <div class="stats-grid">
-        <div class="glass-card stat-card skeleton" style="height:90px"></div>
-        <div class="glass-card stat-card skeleton" style="height:90px"></div>
-        <div class="glass-card stat-card skeleton" style="height:90px"></div>
-        <div class="glass-card stat-card skeleton" style="height:90px"></div>
-        <div class="glass-card stat-card skeleton" style="height:90px"></div>
+
+    <!-- ── Skeleton ── -->
+    <div id="skeletonLoader" class="dp-skel-wrap">
+      <div class="dp-skeleton" style="height:24px;width:220px;margin-bottom:4px"></div>
+      <div class="dp-skeleton" style="height:14px;width:160px;margin-bottom:20px"></div>
+      <div class="dp-skeleton" style="height:180px;border-radius:20px"></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+        <div class="dp-skeleton" style="height:220px;border-radius:20px"></div>
+        <div class="dp-skeleton" style="height:220px;border-radius:20px"></div>
+        <div class="dp-skeleton" style="height:220px;border-radius:20px"></div>
       </div>
     </div>
+
+    <!-- ── Dashboard content ── -->
     <div id="dashContent" style="display:none">
-      <div class="dash-greeting">
-        <h1 id="greetingText">Assalamu Alaikum</h1>
-        <p id="greetingSubtext">Here is your reading journey today.</p>
+
+      <!-- Breadcrumb -->
+      <nav class="dp-breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </a>
+        <span class="dp-breadcrumb-sep">›</span>
+        <span class="dp-breadcrumb-cur">Your Progress</span>
+      </nav>
+
+      <!-- Page header -->
+      <div class="dp-page-hdr">
+        <div>
+          <h1>Your Reading Progress</h1>
+          <p>Keep learning, keep growing. Every hadith brings you closer.</p>
+        </div>
+        <button class="btn-export" id="btnExport" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export Progress
+        </button>
       </div>
-      <div class="stats-grid">
-        <div class="glass-card stat-card"><div class="stat-label">Total Read</div><div class="stat-value stat-accent" id="statTotal">0</div><div class="stat-sub">Hadiths</div></div>
-        <div class="glass-card stat-card"><div class="stat-label">Current Streak</div><div class="stat-value stat-amber" id="statStreak">0</div><div class="stat-sub">days in a row</div></div>
-        <div class="glass-card stat-card"><div class="stat-label">Longest Streak</div><div class="stat-value" id="statLongest">0</div><div class="stat-sub">personal best</div></div>
-        <div class="glass-card stat-card"><div class="stat-label">Reward Points</div><div class="stat-value stat-purple" id="statPoints">0</div><div class="stat-sub">knowledge pts</div></div>
-        <div class="glass-card stat-card"><div class="stat-label">Virtual Coins</div><div class="stat-value stat-gold" id="statCoins">0</div><div class="stat-sub">coins earned</div></div>
-        <div class="glass-card stat-card"><div class="stat-label">Trophies</div><div class="stat-value" id="statTrophies">0</div><div class="stat-sub">achievements</div></div>
-        <div class="glass-card stat-card"><div class="stat-label">Level</div><div class="stat-value stat-accent" id="statLevel">1</div><div class="stat-sub">current level</div></div>
-      </div>
-      <div class="two-col" style="margin-top:24px">
-        <div class="glass-card ring-section">
-          <div class="ring-wrap">
-            <svg class="ring-svg" width="120" height="120" viewBox="0 0 120 120">
-              <circle class="ring-track" cx="60" cy="60" r="50"/>
-              <circle class="ring-fill" id="ringFill" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314"/>
-            </svg>
-            <div class="ring-center"><span class="ring-pct" id="ringPct">0%</span><span class="ring-sub2">monthly</span></div>
+
+      <!-- ── Overall Progress Card ── -->
+      <div class="dp-card overall-card">
+        <div class="overall-inner">
+          <!-- Ring -->
+          <div>
+            <div class="dp-ring-wrap">
+              <svg class="dp-ring-svg" width="136" height="136" viewBox="0 0 136 136">
+                <circle class="dp-ring-track" cx="68" cy="68" r="56"/>
+                <circle class="dp-ring-fill" id="dpRingFill" cx="68" cy="68" r="56" stroke-dasharray="352" stroke-dashoffset="352"/>
+              </svg>
+              <div class="dp-ring-center">
+                <span class="dp-ring-pct" id="dpRingPct">0%</span>
+                <span class="dp-ring-lbl">Complete</span>
+              </div>
+            </div>
           </div>
-          <div class="ring-info">
-            <h3>Monthly Progress</h3>
-            <p id="ringDesc">You are on your reading journey. Keep going!</p>
+          <!-- Right: title + stats + bar -->
+          <div class="overall-right">
+            <div class="overall-title">Overall Progress</div>
+            <div class="dp-stats-row">
+              <div class="dp-stat">
+                <span class="dp-stat-icon">📖</span>
+                <span class="dp-stat-val" id="dpStatTotal" style="color:var(--ink)">0</span>
+                <span class="dp-stat-label">Hadiths Read</span>
+                <span class="dp-stat-sub" id="dpStatTotalSub">of 7,277 total</span>
+              </div>
+              <div class="dp-stat">
+                <span class="dp-stat-icon">🔥</span>
+                <span class="dp-stat-val" id="dpStatStreak" style="color:var(--dp-amber)">0</span>
+                <span class="dp-stat-label">Day Streak</span>
+                <span class="dp-stat-sub" id="dpStatStreakSub">Keep it going!</span>
+              </div>
+              <div class="dp-stat">
+                <span class="dp-stat-icon">✅</span>
+                <span class="dp-stat-val" id="dpStatPoints" style="color:var(--dp-green)">0</span>
+                <span class="dp-stat-label">Knowledge Pts</span>
+                <span class="dp-stat-sub">Level <span id="dpLevel">1</span></span>
+              </div>
+              <div class="dp-stat">
+                <span class="dp-stat-icon">🎯</span>
+                <span class="dp-stat-val" id="dpStatGoal" style="color:var(--dp-blue)">0</span>
+                <span class="dp-stat-label">Today's Goal</span>
+                <span class="dp-stat-sub" id="dpGoalSub">/ <span id="dpGoalTarget">20</span> hadiths</span>
+              </div>
+            </div>
+            <div class="dp-progress-row">
+              <div class="dp-prog-track"><div class="dp-prog-fill" id="dpProgFill" style="width:0%"></div></div>
+              <div class="dp-prog-footer">
+                <span style="font-size:12px;color:var(--muted)" id="dpProgLabel">0 of 7,277 hadiths read</span>
+                <a href="competition.html" class="dp-view-goals">View Goals →</a>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="glass-card goal-section">
-          <h2>Today's Goal</h2>
-          <div class="goal-label" id="goalLabel">0 / 20 Hadiths today</div>
-          <div class="goal-bar-track"><div class="goal-bar-fill" id="goalBarFill" style="width:0%"></div></div>
-          <div class="goal-input-row">
-            <input type="number" id="goalInput" min="1" max="100" value="20"/>
-            <button class="btn-save" id="btnSaveGoal">Update Goal</button>
+      </div>
+
+      <!-- ── Charts Row ── -->
+      <div class="dp-charts-row">
+
+        <!-- 1. Weekly Reading Activity (bar) -->
+        <div class="dp-card dp-chart-card">
+          <div class="dp-chart-hdr">
+            <span class="dp-chart-title">Weekly Reading Activity</span>
+            <span class="dp-chart-info">ℹ</span>
+          </div>
+          <div class="dp-canvas-wrap"><canvas id="dpWeeklyChart"></canvas></div>
+        </div>
+
+        <!-- 2. Completion by Collection (donut) -->
+        <div class="dp-card dp-chart-card">
+          <div class="dp-chart-hdr">
+            <span class="dp-chart-title">Completion by Collection</span>
+            <span class="dp-chart-info">ℹ</span>
+          </div>
+          <div class="dp-donut-wrap">
+            <div class="dp-donut-canvas"><canvas id="dpDonutChart"></canvas></div>
+            <div class="dp-donut-legend" id="dpDonutLegend"></div>
           </div>
         </div>
-      </div>
-      <div class="glass-card chart-card">
-        <div class="sec-hdr">Weekly Reading Activity</div>
-        <div class="chart-canvas-wrap"><canvas id="weeklyChart"></canvas></div>
-      </div>
-      <div class="two-col">
-        <div class="glass-card coll-card">
-          <div class="sec-hdr">Collection Progress</div>
-          <div id="collectionList"><p style="color:var(--muted);font-size:13px">No collections read yet.</p></div>
-        </div>
-        <div class="glass-card recent-card">
-          <div class="sec-hdr-row">
-            <span class="sec-hdr" style="margin-bottom:0">Recently Read</span>
-            <a href="reader.html">Continue reading</a>
+
+        <!-- 3. Reading Activity Trend (line) -->
+        <div class="dp-card dp-chart-card">
+          <div class="dp-chart-hdr">
+            <span class="dp-chart-title">Reading Trend</span>
+            <span class="dp-chart-info">ℹ</span>
           </div>
-          <div id="recentList"><p style="color:var(--muted);font-size:13px">No reads recorded yet.</p></div>
+          <div class="dp-time-big" id="dpTrendTotal">0</div>
+          <div class="dp-time-sub" id="dpTrendSub">This week</div>
+          <div class="dp-canvas-wrap" style="height:100px;margin-top:8px"><canvas id="dpLineChart"></canvas></div>
         </div>
+
       </div>
-      <div class="glass-card milestone-card" style="margin-top:24px">
-        <div class="sec-hdr">Next Milestones</div>
-        <div id="milestoneList"></div>
-      </div>
-      <div style="margin-top:24px">
-        <div class="sec-hdr-row">
-          <span class="sec-hdr" style="margin-bottom:0">Achievements</span>
-          <a href="competition.html">View all</a>
+
+      <!-- ── Bottom: main + sidebar ── -->
+      <div class="dp-bottom">
+
+        <!-- Achievements (main) -->
+        <div>
+          <div class="dp-ach-hdr">
+            <span class="dp-ach-hdr-title">Achievements</span>
+            <a href="competition.html">View all</a>
+          </div>
+          <div class="dp-ach-grid" id="dpAchGrid">
+            <!-- populated by JS -->
+          </div>
         </div>
-        <div class="ach-grid" id="achievementGrid"></div>
-      </div>
-      <div class="glass-card comp-preview-card" style="margin-top:24px">
-        <div class="sec-hdr-row">
-          <span class="sec-hdr" style="margin-bottom:0">Knowledge Path — Top Readers</span>
-          <a href="competition.html">Full leaderboard</a>
-        </div>
-        <div id="compPreview"><p style="color:var(--muted);font-size:13px">Loading…</p></div>
-      </div>
-    </div>
-  </main>
+
+        <!-- Sidebar -->
+        <div class="dp-sidebar">
+
+          <!-- Continue Reading -->
+          <div class="dp-card dp-continue-card" id="dpContinueCard">
+            <div class="dp-continue-hdr">
+              <span class="dp-continue-title">Continue Reading</span>
+              <a href="reader.html" class="dp-continue-viewall">View all</a>
+            </div>
+            <div class="dp-continue-book">
+              <div class="dp-book-thumb">📚</div>
+              <div>
+                <div class="dp-book-info-name" id="dpContBookName">Sahih al-Bukhari</div>
+                <div class="dp-book-info-sub" id="dpContChapter">Book of Revelation</div>
+              </div>
+            </div>
+            <div class="dp-continue-hadith-num" id="dpContHadithNum">Hadith —</div>
+            <div class="dp-continue-arabic" id="dpContArabic" style="display:none"></div>
+            <div class="dp-continue-prog-row">
+              <span class="dp-continue-prog-lbl" id="dpContProgLbl">— of 7,277</span>
+              <div class="dp-continue-prog-track">
+                <div class="dp-continue-prog-fill" id="dpContProgFill" style="width:0%"></div>
+              </div>
+            </div>
+            <a id="dpContBtn" href="reader.html" class="btn-continue">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Continue
+            </a>
+          </div>
+
+          <!-- Active Collections -->
+          <div class="dp-card dp-coll-card">
+            <div class="dp-coll-hdr">
+              <span class="dp-coll-title">Active Collections</span>
+              <a href="categories.html" class="dp-coll-viewall">View all</a>
+            </div>
+            <div id="dpCollList">
+              <p style="font-size:13px;color:var(--muted)">Start reading to see your collections.</p>
+            </div>
+          </div>
+
+        </div><!-- /sidebar -->
+      </div><!-- /bottom -->
+
+    </div><!-- /dashContent -->
+  </div><!-- /dp-wrap -->
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <a href="index.html" class="footer-logo"><picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp"/><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="24" width="80"/></picture></a>
-      <ul class="footer-links"><li><a href="about.html">About</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul>
+      <a href="index.html" class="footer-logo">
+        <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp"/><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="24" width="80"/></picture>
+      </a>
+      <ul class="footer-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+      </ul>
     </div>
   </footer>
 
   <script src="js/nav-widgets.js" defer></script>
   <script src="js/supabase-auth.js" defer></script>
   <script src="js/progress-api.js" defer></script>
+
   <script>
-  (function(){
+  (function () {
     'use strict';
-    var ICONS={'book-open':'📖','star':'⭐','award':'🏅','trophy':'🏆','crown':'👑','flame':'🔥','sparkles':'✨','medal':'🎖️'};
-    var chart=null;
-    function tok(){try{var s=JSON.parse(localStorage.getItem('th_supabase_session')||'null');return s&&s.access_token?s.access_token:null;}catch(e){return null;}}
-    function rel(iso){var d=Math.floor((Date.now()-new Date(iso).getTime())/86400000);return d===0?'Today':d===1?'Yesterday':d+'d ago';}
-    function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-    function fmt(n){return Number(n||0).toLocaleString();}
-    function waitSession(cb,n){n=n||0;var t=tok();if(t)return cb(t);if(n===0){var hp=window.location.search+window.location.hash;var isOAuth=hp.indexOf('code=')>-1||hp.indexOf('access_token')>-1;if(!isOAuth){document.getElementById('skeletonLoader').style.display='none';document.getElementById('authGate').style.display='';return;}}if(n>=15){document.getElementById('skeletonLoader').style.display='none';document.getElementById('authGate').style.display='';return;}setTimeout(function(){waitSession(cb,n+1);},300);}
-    document.getElementById('signInBtn').addEventListener('click',function(){if(window.TH_SB_AUTH&&window.TH_SB_AUTH.signInWithGoogle)window.TH_SB_AUTH.signInWithGoogle();else window.location.href='/?signin=1';});
-    function rStats(st,pr){
-      var n=(pr&&pr.display_name)?pr.display_name.split(' ')[0]:'Reader';
-      document.getElementById('greetingText').textContent='Assalamu Alaikum, '+n;
-      document.getElementById('greetingSubtext').textContent=st.current_streak>0?'You are on a '+st.current_streak+'-day reading streak. Keep it going!':'Begin your reading journey today.';
-      document.getElementById('statTotal').textContent=fmt(st.total_hadith_read);
-      document.getElementById('statStreak').textContent=st.current_streak||0;
-      document.getElementById('statLongest').textContent=st.longest_streak||0;
-      document.getElementById('statPoints').textContent=fmt(st.total_points);
-      document.getElementById('statCoins').textContent=fmt(st.virtual_coins);
-      document.getElementById('statTrophies').textContent=st.trophies_count||0;
-      document.getElementById('statLevel').textContent=st.current_level||1;
+
+    var TOTAL_HADITHS = 7277;
+    var chartWeekly = null, chartDonut = null, chartLine = null;
+
+    /* ── Helpers ── */
+    function tok() {
+      try { var s = JSON.parse(localStorage.getItem('th_supabase_session') || 'null');
+            return s && s.access_token ? s.access_token : null; } catch (e) { return null; }
     }
-    function rRing(st){
-      var g=st.daily_goal||20,mg=g*30,t=st.total_hadith_read||0,p=Math.min(100,Math.round((t%mg)/mg*100));
-      document.getElementById('ringFill').style.strokeDashoffset=314-(314*p/100);
-      document.getElementById('ringPct').textContent=p+'%';
-      document.getElementById('ringDesc').textContent=t>0?'You have read '+fmt(t)+' Hadiths total. Amazing consistency!':'Start reading to track your monthly progress.';
+    function fmt(n) { return Number(n || 0).toLocaleString(); }
+    function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
+    function gc()    { return isDark() ? 'rgba(255,255,255,.07)' : 'rgba(0,0,0,.06)'; }
+    function tc()    { return isDark() ? '#8892a4' : '#9ca3af'; }
+
+    /* ── Auth gate ── */
+    function waitSession(cb, n) {
+      n = n || 0;
+      var t = tok();
+      if (t) return cb(t);
+      if (n === 0) {
+        var hp = window.location.search + window.location.hash;
+        var isOAuth = hp.indexOf('code=') > -1 || hp.indexOf('access_token') > -1;
+        if (!isOAuth) {
+          document.getElementById('skeletonLoader').style.display = 'none';
+          document.getElementById('authGate').style.display = '';
+          return;
+        }
+      }
+      if (n >= 15) {
+        document.getElementById('skeletonLoader').style.display = 'none';
+        document.getElementById('authGate').style.display = '';
+        return;
+      }
+      setTimeout(function () { waitSession(cb, n + 1); }, 300);
     }
-    function rGoal(st,today){
-      var g=st.daily_goal||20,td=today?today.hadith_read_count:0,p=Math.min(100,Math.round(td/g*100));
-      document.getElementById('goalInput').value=g;
-      document.getElementById('goalLabel').textContent=td+' / '+g+' Hadiths today';
-      document.getElementById('goalBarFill').style.width=p+'%';
+
+    document.getElementById('signInBtn').addEventListener('click', function () {
+      if (window.TH_SB_AUTH && window.TH_SB_AUTH.signInWithGoogle) window.TH_SB_AUTH.signInWithGoogle();
+      else window.location.href = '/?signin=1';
+    });
+
+    /* ── Render: Overall Progress Card ── */
+    function renderOverall(stats, todayRow) {
+      var total  = stats.total_hadith_read || 0;
+      var streak = stats.current_streak || 0;
+      var pts    = stats.total_points || 0;
+      var level  = stats.current_level || 1;
+      var goal   = stats.daily_goal || 20;
+      var today  = todayRow ? (todayRow.hadith_read_count || 0) : 0;
+      var pct    = Math.min(100, Math.round(total / TOTAL_HADITHS * 100));
+
+      /* Ring */
+      var circ = 2 * Math.PI * 56; /* r=56 → 351.86 */
+      document.getElementById('dpRingFill').style.strokeDasharray  = circ.toFixed(1);
+      document.getElementById('dpRingFill').style.strokeDashoffset = (circ - circ * pct / 100).toFixed(1);
+      document.getElementById('dpRingPct').textContent = pct + '%';
+
+      /* Stats */
+      document.getElementById('dpStatTotal').textContent  = fmt(total);
+      document.getElementById('dpStatTotalSub').textContent = 'of ' + fmt(TOTAL_HADITHS) + ' total';
+      document.getElementById('dpStatStreak').textContent = streak;
+      document.getElementById('dpStatStreakSub').textContent = streak > 0 ? 'Keep it going!' : 'Start today!';
+      document.getElementById('dpStatPoints').textContent  = fmt(pts);
+      document.getElementById('dpLevel').textContent       = level;
+      document.getElementById('dpStatGoal').textContent    = today;
+      document.getElementById('dpGoalTarget').textContent  = goal;
+
+      /* Progress bar */
+      document.getElementById('dpProgFill').style.width = pct + '%';
+      document.getElementById('dpProgLabel').textContent = fmt(total) + ' of ' + fmt(TOTAL_HADITHS) + ' hadiths read';
     }
-    function rChart(wa){
-      var days=[],counts=[];
-      for(var i=6;i>=0;i--){var d=new Date(Date.now()-i*86400000),ds=d.toISOString().substring(0,10),e=wa.find(function(w){return w.reading_date===ds;});days.push(i===0?'Today':d.toLocaleDateString('en',{weekday:'short'}));counts.push(e?e.hadith_read_count:0);}
-      var dark=document.documentElement.getAttribute('data-theme')==='dark',gc=dark?'rgba(255,255,255,.08)':'rgba(0,0,0,.06)',lc='#8892a4';
-      var ctx=document.getElementById('weeklyChart').getContext('2d');
-      if(chart)chart.destroy();
-      chart=new Chart(ctx,{type:'bar',data:{labels:days,datasets:[{data:counts,backgroundColor:'rgba(79,114,248,.7)',borderRadius:8,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.raw+' Hadiths';}}}},scales:{x:{grid:{color:gc},ticks:{color:lc,font:{size:12}}},y:{grid:{color:gc},ticks:{color:lc,font:{size:12},stepSize:1},beginAtZero:true}}}});
+
+    /* ── Render: Weekly Bar Chart ── */
+    function renderWeekly(weeklyActivity) {
+      var days = [], counts = [];
+      for (var i = 6; i >= 0; i--) {
+        var d  = new Date(Date.now() - i * 86400000);
+        var ds = d.toISOString().substring(0, 10);
+        var e  = (weeklyActivity || []).find(function (w) { return w.reading_date === ds; });
+        days.push(i === 0 ? 'Today' : d.toLocaleDateString('en', { weekday: 'short' }));
+        counts.push(e ? (e.hadith_read_count || 0) : 0);
+      }
+      var ctx = document.getElementById('dpWeeklyChart').getContext('2d');
+      if (chartWeekly) chartWeekly.destroy();
+      chartWeekly = new Chart(ctx, {
+        type: 'bar',
+        data: { labels: days, datasets: [{
+          data: counts,
+          backgroundColor: 'rgba(26,107,82,.75)',
+          borderRadius: 7, borderSkipped: false
+        }]},
+        options: { responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { callbacks: { label: function (c) { return c.raw + ' hadiths'; }}}},
+          scales: {
+            x: { grid: { color: gc() }, ticks: { color: tc(), font: { size: 11 }}},
+            y: { grid: { color: gc() }, ticks: { color: tc(), font: { size: 11 }, stepSize: 1 }, beginAtZero: true }
+          }}
+      });
     }
-    function rColl(cp){
-      var el=document.getElementById('collectionList');
-      if(!cp||!cp.length){el.innerHTML='<p style="color:var(--muted);font-size:13px">No collections read yet. <a href="reader.html" style="color:var(--accent)">Start reading</a></p>';return;}
-      var mx=Math.max.apply(null,cp.map(function(c){return c.read_count;}));
-      el.innerHTML=cp.slice(0,6).map(function(c){var p=Math.round(c.read_count/mx*100);return'<div class="coll-item"><div class="coll-row"><span class="coll-name">'+esc(c.collection_name||'Sahih al-Bukhari')+'</span><span class="coll-count">'+c.read_count+' read</span></div><div class="coll-bar-track"><div class="coll-bar-fill" style="width:'+p+'%"></div></div></div>';}).join('');
+
+    /* ── Render: Donut Chart (Collections) ── */
+    var DONUT_COLORS = ['#1a6b52','#2d9970','#f59e0b','#8b5cf6','#3b82f6','#10b981'];
+    function renderDonut(collectionProgress) {
+      var cp = (collectionProgress || []).slice(0, 5);
+      if (!cp.length) {
+        cp = [{ collection_name: 'Sahih al-Bukhari', read_count: 0 }];
+      }
+      var total = cp.reduce(function (s, c) { return s + (c.read_count || 0); }, 0) || 1;
+      var labels = cp.map(function (c) { return c.collection_name || 'Sahih al-Bukhari'; });
+      var data   = cp.map(function (c) { return c.read_count || 0; });
+      var pcts   = data.map(function (d) { return Math.round(d / total * 100); });
+
+      var ctx = document.getElementById('dpDonutChart').getContext('2d');
+      if (chartDonut) chartDonut.destroy();
+      chartDonut = new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels: labels, datasets: [{ data: data, backgroundColor: DONUT_COLORS, borderWidth: 0, hoverOffset: 4 }]},
+        options: { responsive: true, maintainAspectRatio: false, cutout: '68%',
+          plugins: { legend: { display: false }, tooltip: { callbacks: {
+            label: function (c) { return c.label + ': ' + c.raw + ' read'; }
+          }}}}
+      });
+
+      /* Legend */
+      document.getElementById('dpDonutLegend').innerHTML = labels.map(function (l, i) {
+        return '<div class="dp-legend-item">'
+          + '<div class="dp-legend-dot" style="background:' + DONUT_COLORS[i] + '"></div>'
+          + '<span class="dp-legend-name">' + esc(l) + '</span>'
+          + '<span class="dp-legend-pct">' + pcts[i] + '%</span>'
+          + '</div>';
+      }).join('');
     }
-    function rRecent(rc){
-      var el=document.getElementById('recentList');
-      if(!rc||!rc.length){el.innerHTML='<p style="color:var(--muted);font-size:13px">No reads recorded yet. <a href="reader.html" style="color:var(--accent)">Start reading</a></p>';return;}
-      el.innerHTML=rc.slice(0,6).map(function(r){return'<div class="recent-item"><div class="recent-num">#'+esc(r.hadith_number||r.hadith_id)+'</div><div class="recent-text"><div class="recent-book">'+esc(r.collection_name||r.book_name||'Sahih al-Bukhari')+'</div><div class="recent-hadith">'+esc(r.chapter_name||'Hadith #'+(r.hadith_number||r.hadith_id))+'</div></div><div class="recent-time">'+rel(r.read_at)+'</div></div>';}).join('');
+
+    /* ── Render: Line Chart (trend) ── */
+    function renderLine(weeklyActivity) {
+      var counts = [], weekTotal = 0;
+      for (var i = 6; i >= 0; i--) {
+        var d  = new Date(Date.now() - i * 86400000);
+        var ds = d.toISOString().substring(0, 10);
+        var e  = (weeklyActivity || []).find(function (w) { return w.reading_date === ds; });
+        var v  = e ? (e.hadith_read_count || 0) : 0;
+        counts.push(v); weekTotal += v;
+      }
+      document.getElementById('dpTrendTotal').textContent = weekTotal;
+      document.getElementById('dpTrendSub').textContent   = weekTotal > 0 ? 'hadiths this week' : 'Start reading today';
+
+      var ctx = document.getElementById('dpLineChart').getContext('2d');
+      if (chartLine) chartLine.destroy();
+      chartLine = new Chart(ctx, {
+        type: 'line',
+        data: { labels: ['','','','','','',''], datasets: [{
+          data: counts, borderColor: '#10b981', borderWidth: 2.5,
+          pointBackgroundColor: '#10b981', pointRadius: 4, pointHoverRadius: 6,
+          fill: true, backgroundColor: 'rgba(16,185,129,.10)', tension: 0.35
+        }]},
+        options: { responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { callbacks: {
+            label: function (c) { return c.raw + ' hadiths'; }
+          }}},
+          scales: {
+            x: { display: false },
+            y: { display: false, beginAtZero: true }
+          }}
+      });
     }
-    function rMilestones(st){
-      var ms=[{n:'10 Hadiths',i:'⭐',r:10,t:'read'},{n:'100 Hadiths',i:'🏅',r:100,t:'read'},{n:'500 Hadiths',i:'🏆',r:500,t:'read'},{n:'1,000 Hadiths',i:'👑',r:1000,t:'read'},{n:'7-Day Streak',i:'🔥',r:7,t:'streak'},{n:'30-Day Streak',i:'✨',r:30,t:'streak'}];
-      var tot=st.total_hadith_read||0,str=st.longest_streak||0,el=document.getElementById('milestoneList');
-      var html=ms.filter(function(m){return(m.t==='read'&&tot<m.r)||(m.t==='streak'&&str<m.r);}).slice(0,3).map(function(m){var cur=m.t==='read'?tot:str,p=Math.min(100,Math.round(cur/m.r*100));return'<div class="milestone-row"><div class="milestone-icon">'+m.i+'</div><div class="milestone-info"><div class="milestone-name">'+m.n+'</div><div class="milestone-bar-track"><div class="milestone-bar-fill" style="width:'+p+'%"></div></div><div class="milestone-pct">'+cur+' / '+m.r+' ('+p+'%)</div></div></div>';}).join('');
-      el.innerHTML=html||'<p style="color:var(--muted);font-size:13px">All milestones unlocked! Outstanding.</p>';
+
+    /* ── Render: Continue Reading ── */
+    function renderContinue(recent, stats) {
+      if (!recent || !recent.length) return;
+      var r = recent[0];
+      var num = r.hadith_number || r.hadith_id || 1;
+      document.getElementById('dpContBookName').textContent   = r.collection_name || r.book_name || 'Sahih al-Bukhari';
+      document.getElementById('dpContChapter').textContent    = r.chapter_name    || 'Book of Knowledge';
+      document.getElementById('dpContHadithNum').textContent  = 'Hadith ' + num;
+      var total = stats.total_hadith_read || 0;
+      var progPct = Math.min(100, Math.round(total / TOTAL_HADITHS * 100));
+      document.getElementById('dpContProgLbl').textContent    = fmt(total) + ' of ' + fmt(TOTAL_HADITHS);
+      document.getElementById('dpContProgFill').style.width   = progPct + '%';
+      document.getElementById('dpContBtn').href = 'reader.html?id=' + num;
     }
-    function rAch(ach,st){
-      var all=[{k:'first_step',n:'First Step',i:'book-open',r:1,t:'read'},{k:'ten_hadith',n:'10 Hadiths',i:'star',r:10,t:'read'},{k:'hundred_hadith',n:'100 Hadiths',i:'award',r:100,t:'read'},{k:'five_hundred_hadith',n:'500 Hadiths',i:'trophy',r:500,t:'read'},{k:'thousand_hadith',n:'1,000 Hadiths',i:'crown',r:1000,t:'read'},{k:'seven_day_streak',n:'7-Day Streak',i:'flame',r:7,t:'streak'},{k:'thirty_day_streak',n:'30-Day Streak',i:'sparkles',r:30,t:'streak'},{k:'ten_lessons',n:'10 Lessons',i:'medal',r:10,t:'lesson'}];
-      var uk=(ach||[]).map(function(a){return a.badge_key||(a.achievements&&a.achievements.badge_key);});
-      var tot=st.total_hadith_read||0,str=st.longest_streak||0;
-      document.getElementById('achievementGrid').innerHTML=all.map(function(b){var u=uk.indexOf(b.k)>-1||(b.t==='read'&&tot>=b.r)||(b.t==='streak'&&str>=b.r);return'<div class="glass-card ach-card'+(u?'':' ach-locked')+'"><div class="ach-icon">'+(ICONS[b.i]||'🎖️')+'</div><div class="ach-name">'+b.n+'</div><div class="ach-desc">'+(u?'Unlocked':'Locked')+'</div></div>';}).join('');
+
+    /* ── Render: Active Collections ── */
+    var THUMB_CLASSES = ['dp-coll-thumb-green','dp-coll-thumb-amber','dp-coll-thumb-purple'];
+    var THUMB_ICONS   = ['📗','📘','📙'];
+    function renderCollections(collectionProgress) {
+      var el = document.getElementById('dpCollList');
+      var cp = (collectionProgress || []).slice(0, 4);
+      if (!cp.length) return;
+      var barColors = ['#1a6b52','#f59e0b','#8b5cf6','#10b981'];
+      el.innerHTML = cp.map(function (c, i) {
+        var readCount = c.read_count || 0;
+        var pct = Math.min(100, Math.round(readCount / TOTAL_HADITHS * 100));
+        return '<div class="dp-coll-item">'
+          + '<div class="dp-book-thumb dp-coll-thumb ' + (THUMB_CLASSES[i % 3]) + '">' + THUMB_ICONS[i % 3] + '</div>'
+          + '<div class="dp-coll-info">'
+          +   '<div class="dp-coll-name">' + esc(c.collection_name || 'Sahih al-Bukhari') + '</div>'
+          +   '<div class="dp-coll-sub">' + readCount + ' hadiths read</div>'
+          +   '<div class="dp-coll-bar-track"><div class="dp-coll-bar-fill" style="width:' + pct + '%;background:' + barColors[i % 4] + '"></div></div>'
+          + '</div>'
+          + '<span class="dp-coll-pct">' + pct + '%</span>'
+          + '</div>';
+      }).join('');
     }
-    function rComp(lb,uid){
-      var el=document.getElementById('compPreview');
-      if(!lb||!lb.length){el.innerHTML='<p style="color:var(--muted);font-size:13px">No leaderboard data yet.</p>';return;}
-      el.innerHTML=lb.slice(0,5).map(function(r){var rc=r.rank===1?'':'top'+Math.min(r.rank,3),me=r.user_id===uid,init=(r.display_name||'R').charAt(0).toUpperCase();return'<div class="comp-row'+(me?' comp-highlight':'')+'"><div class="comp-rank '+rc+'">'+(r.rank===1?'🥇':r.rank===2?'🥈':r.rank===3?'🥉':r.rank)+'</div><div class="comp-avatar">'+esc(init)+'</div><div class="comp-name">'+esc(r.display_name||'Anonymous Reader')+(r.company_name?'<br><small style="color:var(--muted);font-weight:400">'+esc(r.company_name)+'</small>':'')+'</div><div class="comp-pts">'+fmt(r.total_points)+' pts'+(me?'<span style="font-size:11px;color:var(--muted);margin-left:4px"> You</span>':'')+'</div></div>';}).join('');
+
+    /* ── Render: Achievements ── */
+    var ACH_DEF = [
+      { k:'first_step',        n:'First Step',        i:'📖', r:1,    t:'read'   },
+      { k:'ten_hadith',        n:'10 Hadiths',        i:'⭐', r:10,   t:'read'   },
+      { k:'fifty_hadith',      n:'50 Hadiths',        i:'🏅', r:50,   t:'read'   },
+      { k:'hundred_hadith',    n:'100 Hadiths',       i:'🏆', r:100,  t:'read'   },
+      { k:'five_hundred',      n:'500 Hadiths',       i:'👑', r:500,  t:'read'   },
+      { k:'seven_day_streak',  n:'7-Day Streak',      i:'🔥', r:7,    t:'streak' },
+      { k:'thirty_day_streak', n:'30-Day Streak',     i:'✨', r:30,   t:'streak' },
+      { k:'thousand_hadith',   n:'1,000 Hadiths',     i:'🎖️', r:1000, t:'read'   },
+    ];
+    function renderAchievements(achievements, stats) {
+      var tot = stats.total_hadith_read || 0;
+      var str = stats.longest_streak   || 0;
+      var uk  = (achievements || []).map(function (a) { return a.badge_key || (a.achievements && a.achievements.badge_key); });
+      document.getElementById('dpAchGrid').innerHTML = ACH_DEF.map(function (b) {
+        var unlocked = uk.indexOf(b.k) > -1
+          || (b.t === 'read'   && tot >= b.r)
+          || (b.t === 'streak' && str >= b.r);
+        return '<div class="dp-card dp-ach-card' + (unlocked ? '' : ' dp-ach-locked') + '">'
+          + '<span class="dp-ach-icon">' + b.i + '</span>'
+          + '<div class="dp-ach-name">' + b.n + '</div>'
+          + '<div class="dp-ach-desc">' + (unlocked ? 'Unlocked' : 'Locked') + '</div>'
+          + (unlocked ? '<div class="dp-ach-badge">✓ Earned</div>' : '')
+          + '</div>';
+      }).join('');
     }
-    document.getElementById('btnSaveGoal').addEventListener('click',async function(){var t=tok(),v=parseInt(document.getElementById('goalInput').value,10);if(!v||v<1||v>100||!t)return;try{await fetch('/api/reading-goals',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+t},body:JSON.stringify({daily_target:v})});}catch(e){}});
-    async function load(){
-      try{
-        var[sd,ld]=await Promise.allSettled([window.ProgressAPI.getDashboardSummary(),window.ProgressAPI.getLeaderboard()]);
-        document.getElementById('skeletonLoader').style.display='none';
-        document.getElementById('dashContent').style.display='';
-        var data=sd.status==='fulfilled'?sd.value:null,lb=ld.status==='fulfilled'?ld.value:null;
-        if(!data){document.getElementById('greetingText').textContent='Welcome to your Dashboard';document.getElementById('greetingSubtext').textContent='Start reading to track your journey.';return;}
-        var st=data.stats||{},pr=data.profile||{};
-        var today=(data.weeklyActivity||[]).find(function(w){return w.reading_date===new Date().toISOString().substring(0,10);});
-        rStats(st,pr);rRing(st);rGoal(st,today);rChart(data.weeklyActivity||[]);rColl(data.collectionProgress||[]);rRecent(data.recent||[]);rMilestones(st);rAch(data.achievements||[],st);
-        if(lb&&lb.leaderboard){var sess=JSON.parse(localStorage.getItem('th_supabase_session')||'{}');rComp(lb.leaderboard,lb.myUserId||(sess.user&&sess.user.id));}
-      }catch(e){document.getElementById('skeletonLoader').style.display='none';document.getElementById('dashContent').style.display='';document.getElementById('greetingSubtext').textContent='Could not load your data. Please refresh.';}
+
+    /* ── Export ── */
+    document.getElementById('btnExport').addEventListener('click', function () {
+      try {
+        var sesh  = JSON.parse(localStorage.getItem('th_supabase_session') || '{}');
+        var user  = sesh.user || {};
+        var items = [
+          'Timeless Hadith — Progress Export',
+          'Date: ' + new Date().toLocaleDateString(),
+          'User: ' + (user.email || 'Unknown'),
+          '',
+          '=== Your Stats ===',
+        ];
+        var el = document.getElementById('dpStatTotal');
+        if (el) items.push('Total Hadiths Read: ' + el.textContent);
+        var blob = new Blob([items.join('\n')], { type: 'text/plain' });
+        var a    = document.createElement('a'); a.href = URL.createObjectURL(blob);
+        a.download = 'timeless-hadith-progress.txt'; a.click();
+      } catch (e) {}
+    });
+
+    /* ── Main load ── */
+    async function load() {
+      try {
+        var [sd, ld] = await Promise.allSettled([
+          window.ProgressAPI.getDashboardSummary(),
+          window.ProgressAPI.getLeaderboard()
+        ]);
+        document.getElementById('skeletonLoader').style.display = 'none';
+        document.getElementById('dashContent').style.display    = '';
+
+        var data = sd.status === 'fulfilled' ? sd.value : null;
+        if (!data) {
+          document.getElementById('dpRingPct').textContent = '—';
+          return;
+        }
+        var stats  = data.stats            || {};
+        var today  = (data.weeklyActivity  || []).find(function (w) {
+          return w.reading_date === new Date().toISOString().substring(0, 10);
+        });
+
+        renderOverall(stats, today);
+        renderWeekly(data.weeklyActivity   || []);
+        renderDonut(data.collectionProgress || []);
+        renderLine(data.weeklyActivity     || []);
+        renderContinue(data.recent         || [], stats);
+        renderCollections(data.collectionProgress || []);
+        renderAchievements(data.achievements || [], stats);
+
+      } catch (e) {
+        document.getElementById('skeletonLoader').style.display = 'none';
+        document.getElementById('dashContent').style.display    = '';
+        document.getElementById('dpRingPct').textContent = '—';
+      }
     }
-    waitSession(function(){load();});
+
+    waitSession(function () { load(); });
+
   })();
   </script>
+
 </body>
 </html>
