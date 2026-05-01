@@ -1,4 +1,0 @@
-* main
-  preview/landing-cleanup
-  remotes/origin/main
-  remotes/origin/preview/landing-cleanup
