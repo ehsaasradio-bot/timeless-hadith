@@ -174,7 +174,7 @@
       });
     },
 
-    /* Sign out: revoke Supabase session + clear TH_AUTH */
+    /* Sign out: revoke Supabase session + clear TH_AUTH + redirect */
     signOut: function () {
       var s = _loadSession();
       if (s && s.access_token) {
@@ -190,6 +190,8 @@
       if (typeof TH_AUTH !== 'undefined' && typeof TH_AUTH.logout === 'function') {
         TH_AUTH.logout();
       }
+      /* Redirect to home after clearing sessions */
+      window.location.href = '/index.html';
     },
 
     /* Get the stored session */
@@ -264,7 +266,7 @@
       }, 50);
     };
 
-    /* Patch logout to also revoke Supabase session */
+    /* Patch logout to also revoke Supabase session + redirect */
     var _origLogout = TH_AUTH.logout.bind(TH_AUTH);
     TH_AUTH.logout = function () {
       var s = _loadSession();
@@ -279,6 +281,7 @@
       }
       _clearSession();
       _origLogout();
+      window.location.href = '/index.html';
     };
   }
 

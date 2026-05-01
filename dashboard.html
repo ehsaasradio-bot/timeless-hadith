@@ -374,8 +374,9 @@
       </button>
       <div class="nav-auth" id="nav-auth-item">
         <button class="nav-signin-btn" id="nav-signin-btn" style="display:none">Sign in</button>
-        <div id="nav-avatar-wrap" role="button" tabindex="0" aria-label="User account" style="display:none">
-          <div class="nav-avatar"><img id="nav-avatar-img" src="" alt=""/><span id="nav-avatar-initial"></span></div>
+        <div id="nav-avatar-wrap" style="display:none;align-items:center;gap:10px;">
+          <div class="nav-avatar" style="cursor:default;"><img id="nav-avatar-img" src="" alt=""/><span id="nav-avatar-initial"></span></div>
+          <button id="btn-signout" onclick="if(window.TH_SB_AUTH)TH_SB_AUTH.signOut()" style="padding:6px 14px;border:1.5px solid rgba(0,0,0,.15);border-radius:8px;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink-secondary,#555);font-family:inherit;" onmouseover="this.style.borderColor='#186450';this.style.color='#186450';" onmouseout="this.style.borderColor='rgba(0,0,0,.15)';this.style.color='var(--ink-secondary,#555)';">Sign out</button>
         </div>
       </div>
     </div>
@@ -648,6 +649,23 @@
     function tok() {
       try { var s = JSON.parse(localStorage.getItem('th_supabase_session') || 'null');
             return s && s.access_token ? s.access_token : null; } catch (e) { return null; }
+    }
+    function updateDashNav() {
+      var s = JSON.parse(localStorage.getItem('th_supabase_session') || 'null');
+      var avatarWrap = document.getElementById('nav-avatar-wrap');
+      var signinBtn  = document.getElementById('nav-signin-btn');
+      if (s && s.user) {
+        var u = s.user; var meta = u.user_metadata || {};
+        var img = document.getElementById('nav-avatar-img');
+        var ini = document.getElementById('nav-avatar-initial');
+        if (img && meta.avatar_url) { img.src = meta.avatar_url; img.style.display = 'block'; if(ini) ini.style.display = 'none'; }
+        else if (ini) { ini.textContent = (meta.full_name || u.email || 'U').charAt(0).toUpperCase(); ini.style.display = 'flex'; if(img) img.style.display='none'; }
+        if (avatarWrap) avatarWrap.style.display = 'flex';
+        if (signinBtn)  signinBtn.style.display  = 'none';
+      } else {
+        if (avatarWrap) avatarWrap.style.display = 'none';
+        if (signinBtn)  signinBtn.style.display  = '';
+      }
     }
     function fmt(n) { return Number(n || 0).toLocaleString(); }
     function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -937,6 +955,7 @@
       }
     }
 
+    updateDashNav();
     waitSession(function () { load(); });
 
     /* ── Demo mode ── */
