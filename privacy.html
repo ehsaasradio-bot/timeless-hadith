@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Timeless Hadith</title>
+  <meta name="description" content="Read the Timeless Hadith privacy policy. We collect no personal data. Your hadith bookmarks are stored locally on your device." />
+  <link rel="canonical" href="https://timelesshadith.com/privacy.html" />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#060c1a" />
+  <meta name="color-scheme" content="dark light" />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://timelesshadith.com/privacy.html" />
+  <meta property="og:title"       content="Privacy Policy — Timeless Hadith" />
+  <meta property="og:description" content="Read the Timeless Hadith privacy policy. We collect no personal data. Your hadith bookmarks are stored locally on your device." />
+  <meta property="og:image"       content="https://timelesshadith.com/og-image.png" />
+  <meta property="og:site_name"    content="Timeless Hadith" />
+  <meta name="twitter:image"       content="https://timelesshadith.com/og-image.png" />
+  <meta name="twitter:site"        content="@TimelessHadith" />
+  <meta name="author"              content="Timeless Hadith" />
+  <meta name="twitter:card"        content="summary" />
+  <meta name="twitter:title"       content="Privacy Policy — Timeless Hadith" />
+  <meta name="twitter:description" content="We collect no personal data. Your bookmarks are stored locally on your device." />
+  <link rel="icon"             type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon"             type="image/png" sizes="16x16" href="favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180"              href="apple-touch-icon.png" />
+  <link rel="manifest"         href="manifest.json" />
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="css/styles.min.css" />
+  <!-- Fonts: self-hosted via @font-face in styles.css -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Privacy Policy",
+    "description": "Read the Timeless Hadith privacy policy. We collect no personal data. Your hadith bookmarks are stored locally on your device.",
+    "url": "https://timelesshadith.com/privacy.html",
+    "isPartOf": { "@type": "WebSite", "name": "Timeless Hadith", "url": "https://timelesshadith.com" }
+  }
+  </script>
+
+  <!-- Theme initialiser — must run before paint -->
+  <script>(function () {
+  try {
+    var MIGRATION_KEY = 'th_theme_default_v3';
+    var migrated = localStorage.getItem(MIGRATION_KEY);
+    if (!migrated) {
+      // One-time: clear any forced dark preference from the previous era.
+      try { localStorage.removeItem('th_theme'); } catch (_) {}
+      localStorage.setItem(MIGRATION_KEY, '1');
+    }
+    var saved = localStorage.getItem('th_theme');
+    document.documentElement.setAttribute('data-theme', saved || 'light');
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();</script>
+
+  <style>
+    /* ── Page layout ── */
+    .page-header {
+      padding: 100px 40px 48px;
+      max-width: 760px; margin: 0 auto;
+    }
+    .page-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.6px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 14px;
+    }
+    .page-eyebrow span {
+      display: inline-block; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--accent);
+    }
+    .page-header h1 {
+      font-size: clamp(26px, 3.5vw, 38px); font-weight: 700;
+      letter-spacing: -0.04em; color: var(--ink); margin-bottom: 10px;
+    }
+    .effective-date {
+      font-size: 13px; color: var(--muted); margin-bottom: 28px;
+    }
+    .pdpl-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 16px; background: rgba(0,113,227,0.07);
+      border: 1px solid rgba(0,113,227,0.18); border-radius: 100px;
+      font-size: 12px; font-weight: 500; color: var(--accent);
+      margin-bottom: 0;
+    }
+    [data-theme="dark"] .pdpl-badge {
+      background: rgba(41,151,255,0.1); border-color: rgba(41,151,255,0.25);
+    }
+    .pdpl-badge svg {
+      width: 14px; height: 14px; stroke: var(--accent); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    .page-wrap { max-width: 760px; margin: 0 auto; padding: 40px 40px 80px; }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--surface); border-radius: 20px;
+      padding: 20px 24px; margin-bottom: 48px;
+      border: 1px solid var(--border);
+      transition: background 0.35s ease, border-color 0.35s ease;
+    }
+    .toc-title {
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .toc ol { list-style: none; counter-reset: toc; display: flex; flex-direction: column; gap: 8px; }
+    .toc ol li { counter-increment: toc; display: flex; align-items: baseline; gap: 6px; }
+    .toc ol li::before { content: counter(toc) "."; color: var(--muted); font-size: 13px; min-width: 18px; }
+    .toc ol li a { font-size: 14px; color: var(--accent); text-decoration: none; letter-spacing: -0.1px; }
+    .toc ol li a:hover { text-decoration: underline; }
+
+    /* ── Typography ── */
+    section.policy-section { margin-bottom: 48px; }
+    h2 {
+      font-size: 20px; font-weight: 600; letter-spacing: -0.03em;
+      color: var(--ink); margin-bottom: 14px; padding-top: 8px;
+    }
+    h3 { font-size: 15px; font-weight: 600; color: var(--ink); margin: 20px 0 8px; }
+    p { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 14px; }
+    p a { color: var(--accent); text-decoration: none; }
+    p a:hover { text-decoration: underline; }
+    ul, ol { padding-left: 20px; margin-bottom: 14px; }
+    li { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 6px; }
+    code {
+      font-size: 13px; background: var(--surface2);
+      padding: 2px 6px; border-radius: 5px;
+      font-family: "SF Mono", "Menlo", "Monaco", monospace;
+      color: var(--ink); transition: background 0.35s ease;
+    }
+
+    /* ── Highlight box ── */
+    .highlight-box {
+      background: var(--surface); border-left: 3px solid var(--accent);
+      border-radius: 0 14px 14px 0; padding: 16px 20px; margin: 16px 0;
+      transition: background 0.35s ease;
+    }
+    .highlight-box p { margin-bottom: 0; }
+
+    /* ── Divider ── */
+    hr { border: none; height: 1px; background: var(--border); margin: 40px 0; transition: background 0.35s ease; }
+
+    /* ── Contact box ── */
+    .contact-box {
+      background: var(--surface); border-radius: 20px;
+      padding: 28px; border: 1px solid var(--border);
+      transition: background 0.35s ease, border-color 0.35s ease;
+    }
+    .contact-box h3 { margin-top: 0; font-size: 16px; margin-bottom: 12px; }
+    .contact-box p { margin-bottom: 8px; }
+
+    /* ── Responsive ── */
+    
+      .footer-copy  { text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 680px) {
+      nav.main-nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .page-header { padding: 80px 20px 36px; }
+      .page-wrap { padding: 32px 20px 60px; }
+      footer { padding: 32px 20px; }
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6JL045YKG3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6JL045YKG3');
+    window.gaEvent = function(e, p){ gtag('event', e, p || {}); };
+  </script>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- ══ NAV ══ -->
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Timeless Hadith — Home">
+      <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="48" width="160" fetchpriority="high" decoding="async" /></picture>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="categories.html" >Browse</a></li>
+      <li><a href="bookmarks.html" >Bookmarks<span class="bm-badge" id="nav-bm-badge" data-count="0" aria-label="bookmarks count"></span></a></li>
+      <li><a href="about.html" >About</a></li>
+      <li><a href="blog.html" >Blog</a></li>
+      <li><a href="prayer-times.html" >Prayer&nbsp;Times</a></li>
+      <li><a href="https://shop.timelesshadith.com" target="_blank" rel="noopener">Shop</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="nav-widgets" aria-label="Live updates">
+        <div class="nav-widget" id="widget-time" title="Current time in Makkah al-Mukarramah">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <strong id="makkah-time">--:--</strong>
+        </div>
+        <span class="nav-sep" aria-hidden="true"></span>
+        <div class="nav-widget" id="widget-weather" title="Local weather">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          <span id="weather-val">…</span>
+        </div>
+        <span class="nav-sep" aria-hidden="true"></span>
+        <div class="nav-widget" id="widget-prayer" title="Next prayer (your location)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span class="prayer-name" id="prayer-name">—</span>
+          <span class="prayer-time" id="prayer-time">—</span>
+        </div>
+      </div>
+
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+
+      <div class="nav-auth" id="nav-auth-item">
+        <button id="btn-login">Sign in</button>
+        <button id="btn-logout" onclick="localStorage.removeItem('th_supabase_session');localStorage.removeItem('th_auth_user');window.location.href='/index.html';">Sign out</button>
+        <div id="nav-avatar-wrap" role="button" tabindex="0" aria-label="User account">
+          <div class="nav-avatar">
+            <img id="nav-avatar-img" src="" alt="" />
+            <span id="nav-avatar-initial"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <nav class="nav-drawer" id="navDrawer" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="categories.html">Browse Categories</a>
+    <a href="blog.html">Blog</a>
+    <a href="prayer-times.html">Prayer Times</a>
+    <a href="https://shop.timelesshadith.com" target="_blank" rel="noopener">Shop</a>
+    <a href="bookmarks.html">My Bookmarks</a>
+    <a href="about.html">About</a>
+    <button class="theme-toggle" id="themeToggleDrawer" aria-label="Toggle dark mode" style="margin-top:8px;align-self:flex-start;">
+      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </nav>
+
+  <!-- ══ PAGE HEADER ══ -->
+  <header>
+    <div class="page-header">
+      <p class="page-eyebrow"><span></span>Legal</p>
+      <h1>Privacy Policy</h1>
+      <p class="effective-date">Effective date: 27 March 2026 &nbsp;·&nbsp; Last updated: 27 March 2026</p>
+      <div class="pdpl-badge">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Compliant with Saudi Arabia PDPL — Regulation No. M/19, 2021
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ CONTENT ══ -->
+  <main class="page-wrap" id="main-content">
+
+    <div class="toc">
+      <p class="toc-title">Table of Contents</p>
+      <ol>
+        <li><a href="#who-we-are">Who We Are</a></li>
+        <li><a href="#data-collected">Data We Collect</a></li>
+        <li><a href="#why-we-collect">Why We Collect It</a></li>
+        <li><a href="#legal-basis">Legal Basis (PDPL)</a></li>
+        <li><a href="#cookies">Cookies &amp; Local Storage</a></li>
+        <li><a href="#sharing">Data Sharing</a></li>
+        <li><a href="#retention">Data Retention</a></li>
+        <li><a href="#your-rights">Your Rights</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#minors">Minors</a></li>
+        <li><a href="#changes">Changes to This Policy</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ol>
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>Plain-language summary:</strong> Timeless Hadith is a static informational website. We do not collect, process, or store personal data on our servers. We do not set any cookies. The only data stored is your theme preference and bookmarks, saved locally on your own device via <code>localStorage</code>.</p>
+    </div>
+
+    <!-- 1 -->
+    <section class="policy-section" id="who-we-are">
+      <h2>1. Who We Are</h2>
+      <p>Timeless Hadith ("<strong>we</strong>", "<strong>us</strong>", or "<strong>our</strong>") operates the website at <a href="https://timelesshadith.com">timelesshadith.com</a>. We are committed to protecting your privacy in accordance with the Saudi Arabian <strong>Personal Data Protection Law (PDPL)</strong>, issued by Royal Decree No. M/19 dated 9/2/1443H (corresponding to 16 September 2021), and its implementing regulations.</p>
+      <p>This Privacy Policy explains what data, if any, is collected when you visit our site and how we handle it.</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="policy-section" id="data-collected">
+      <h2>2. Data We Collect</h2>
+      <h3>2.1 Data we do NOT collect</h3>
+      <p>Timeless Hadith does not have a backend, database, or user accounts. We do not collect:</p>
+      <ul>
+        <li>Your name, email address, or any personal identifiers</li>
+        <li>IP addresses (we do not run server-side analytics)</li>
+        <li>Device identifiers or fingerprints</li>
+        <li>Browsing history or behavioural profiles</li>
+        <li>Payment or financial information</li>
+      </ul>
+
+      <h3>2.2 Data stored on your device (localStorage)</h3>
+      <p>When you interact with our site, your browser may store the following values <strong>locally on your own device only</strong>:</p>
+      <ul>
+        <li><code>th_theme</code> — your chosen display mode (light or dark)</li>
+        <li><code>th_bookmarks</code> — hadith IDs you have bookmarked (if signed in)</li>
+      </ul>
+      <p>We do <strong>not</strong> set any HTTP cookies of any kind — no essential, preference, analytics, or tracking cookies.</p>
+      <p>These values never leave your device and are never transmitted to us or any third party.</p>
+
+      <h3>2.3 Hosting provider data</h3>
+      <p>Our hosting provider (Cloudflare Pages / GitHub Pages) may log standard server access logs including IP addresses and request paths. These logs are governed by the hosting provider's own privacy policy and are used solely for security and infrastructure purposes. We do not access or process individual user records from these logs.</p>
+    </section>
+
+    <!-- 3 -->
+    <section class="policy-section" id="why-we-collect">
+      <h2>3. Why We Collect It</h2>
+      <p>The local storage values described above are collected for the following purposes:</p>
+      <ul>
+        <li><strong>Theme preference</strong> — to restore your display preference on repeat visits, improving usability</li>
+        <li><strong>Bookmarks</strong> — to save hadiths you have marked for personal reference, stored entirely on your own device</li>
+      </ul>
+    </section>
+
+    <!-- 4 -->
+    <section class="policy-section" id="legal-basis">
+      <h2>4. Legal Basis Under PDPL</h2>
+      <p>Under the PDPL (Articles 5 and 6), personal data must not be processed without a valid legal basis. Because Timeless Hadith does not process personal data on any server, the PDPL's consent requirements for personal data processing do not apply to our core functionality.</p>
+      <p>For the limited use of <code>localStorage</code> on your device:</p>
+      <ul>
+        <li>Only strictly necessary preference data (theme and bookmarks) is stored, which qualifies as functional storage exempt from explicit consent requirements under most privacy frameworks</li>
+        <li>The site remains fully functional with default settings if your browser blocks <code>localStorage</code></li>
+        <li>You may remove stored data at any time by clearing your browser's local storage</li>
+      </ul>
+      <div class="highlight-box">
+        <p>Timeless Hadith complies with PDPL Article 4 (data minimisation), Article 5 (purpose limitation), and Article 11 (transparency) by collecting only what is strictly necessary, for clearly stated purposes, and disclosing this policy openly.</p>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="policy-section" id="cookies">
+      <h2>5. Cookies &amp; Local Storage</h2>
+      <p>We do <strong>not</strong> use tracking cookies, advertising cookies, or third-party cookies of any kind.</p>
+      <p>We use browser <code>localStorage</code> (not HTTP cookies) to store the preference values listed in Section 2.2. Unlike cookies, <code>localStorage</code> data is not transmitted with HTTP requests and cannot be accessed by any server or third party.</p>
+      <h3>How to clear your data</h3>
+      <p>You can delete all locally stored data at any time:</p>
+      <ul>
+        <li><strong>Chrome/Edge:</strong> DevTools → Application → Local Storage → timelesshadith.com → Delete all</li>
+        <li><strong>Firefox:</strong> DevTools → Storage → Local Storage → Right-click → Delete all</li>
+        <li><strong>Safari:</strong> Preferences → Privacy → Manage Website Data → timelesshadith.com → Remove</li>
+        <li><strong>All browsers:</strong> Clear browsing data (site data / cookies &amp; storage)</li>
+      </ul>
+    </section>
+
+    <!-- 6 -->
+    <section class="policy-section" id="sharing">
+      <h2>6. Data Sharing</h2>
+      <p>We do <strong>not</strong> sell, rent, trade, or share any personal data with third parties. Because we collect no personal data on our servers, there is nothing to share.</p>
+      <p>If you use the <strong>Share as Text</strong> feature, the hadith text is copied to your clipboard using your browser's native clipboard API. We do not send this text to any server. If you use the <strong>Share as Image</strong> feature, the image is generated locally in your browser using the Canvas API and downloaded directly to your device — no data is transmitted to us.</p>
+    </section>
+
+    <!-- 7 -->
+    <section class="policy-section" id="retention">
+      <h2>7. Data Retention</h2>
+      <p>Data stored in <code>localStorage</code> persists on your device until you clear it. We have no ability to delete it remotely, as it resides solely on your device.</p>
+      <p>No personal data is retained on our servers at any time.</p>
+    </section>
+
+    <!-- 8 -->
+    <section class="policy-section" id="your-rights">
+      <h2>8. Your Rights Under PDPL</h2>
+      <p>Under Saudi Arabia's Personal Data Protection Law, you have the following rights:</p>
+      <ul>
+        <li><strong>Right to be informed</strong> — this policy fulfils that right</li>
+        <li><strong>Right of access</strong> — you can view your stored data by opening your browser's DevTools → Local Storage</li>
+        <li><strong>Right to rectification</strong> — stored values are auto-generated preferences; you can reset them by clearing local storage</li>
+        <li><strong>Right to erasure</strong> — clear your browser's local storage at any time (see Section 5)</li>
+        <li><strong>Right to restrict processing</strong> — clear your browser's local storage at any time</li>
+        <li><strong>Right to data portability</strong> — not applicable (no personal data held by us)</li>
+        <li><strong>Right to object</strong> — contact us at the address below</li>
+      </ul>
+      <p>To exercise any of these rights, please contact us at <a href="mailto:privacy@timelesshadith.com">privacy@timelesshadith.com</a>. We will respond within 30 days.</p>
+    </section>
+
+    <!-- 9 -->
+    <section class="policy-section" id="security">
+      <h2>9. Security</h2>
+      <p>Although we collect minimal data, we take security seriously:</p>
+      <ul>
+        <li>All traffic is served over <strong>HTTPS</strong> (TLS 1.2+)</li>
+        <li>HTTP security headers are enforced: <code>X-Frame-Options: DENY</code>, <code>X-Content-Type-Options: nosniff</code>, <code>Strict-Transport-Security</code>, <code>Permissions-Policy</code></li>
+        <li>A <strong>Content Security Policy</strong> is applied to prevent cross-site scripting (XSS)</li>
+        <li>No third-party scripts or CDNs are loaded beyond Google Fonts for Arabic text rendering</li>
+      </ul>
+    </section>
+
+    <!-- 10 -->
+    <section class="policy-section" id="minors">
+      <h2>10. Minors</h2>
+      <p>Timeless Hadith is an educational and spiritual resource suitable for all ages. We do not knowingly collect data from children under the age of 13. Because we collect no personal data whatsoever, this site is safe for users of all ages.</p>
+    </section>
+
+    <!-- 11 -->
+    <section class="policy-section" id="changes">
+      <h2>11. Changes to This Policy</h2>
+      <p>We may update this policy from time to time. When we do, we will update the "Last updated" date at the top of this page. Continued use of the site after changes constitutes acceptance of the updated policy.</p>
+      <p>For material changes, we will display a notice on the site.</p>
+    </section>
+
+    <!-- 12 -->
+    <section class="policy-section" id="contact">
+      <h2>12. Contact Us</h2>
+      <div class="contact-box">
+        <h3>Privacy enquiries</h3>
+        <p>If you have any questions, concerns, or requests related to this Privacy Policy or your data rights under the PDPL, please contact us:</p>
+        <p><a href="mailto:privacy@timelesshadith.com">privacy@timelesshadith.com</a></p>
+        <p><a href="https://timelesshadith.com">timelesshadith.com</a></p>
+        <p style="margin-top:16px;font-size:13px;color:var(--muted);">You also have the right to lodge a complaint with the <strong style="color:var(--ink);">Saudi Data &amp; AI Authority (SDAIA)</strong>, the supervisory authority for PDPL enforcement in the Kingdom of Saudi Arabia.</p>
+      </div>
+    </section>
+
+    <hr />
+
+    <p style="font-size:13px;color:var(--muted);text-align:center;line-height:1.8;">
+      Last updated 27 March 2026<br />
+      <a href="terms.html" style="color:var(--accent);text-decoration:none;">Terms of Use</a>
+      &nbsp;·&nbsp;
+      <a href="index.html" style="color:var(--accent);text-decoration:none;">Homepage</a>
+    </p>
+
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">
+        <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="32" loading="lazy" decoding="async" /></picture>
+      </a>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html">Browse</a></li>
+        <li><a href="bookmarks.html">Bookmarks<span class="bm-badge" id="nav-bm-badge" data-count="0" aria-label="bookmarks count"></span></a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+      </ul>
+      <p class="footer-copy">&copy; 2026 Timeless Hadith</p>
+    </div>
+  </footer>
+
+  <!-- ══ SCRIPTS ══ -->
+  <script defer src="js/supabase-data.js?v=2"></script>
+  <script defer src="js/app.js"></script>
+  <script defer src="js/supabase-auth.js"></script>
+
+  <script defer src="js/page-chrome.js"></script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="js/sw-register.js"></script>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+    <script src="js/nav-widgets.js" defer></script>
+</body>
+</html>

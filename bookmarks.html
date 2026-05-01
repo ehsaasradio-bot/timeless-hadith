@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Saved Hadiths — Timeless Hadith</title>
+  <meta name="description" content="View your saved hadiths on Timeless Hadith. Access your personal collection of bookmarked prophetic guidance." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href="https://timelesshadith.com/bookmarks.html" />
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://timelesshadith.com/bookmarks.html" />
+  <meta property="og:title"       content="My Saved Hadiths — Timeless Hadith" />
+  <meta property="og:description" content="View your saved hadiths on Timeless Hadith. Access your personal collection of bookmarked prophetic guidance." />
+  <meta property="og:image"       content="https://timelesshadith.com/og-image.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="My Saved Hadiths — Timeless Hadith" />
+  <meta name="twitter:description" content="View your saved hadiths on Timeless Hadith. Access your personal collection of bookmarked prophetic guidance." />
+  <meta name="twitter:image"       content="https://timelesshadith.com/og-image.png" />
+  <link rel="icon"             type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon"             type="image/png" sizes="16x16" href="favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180"              href="apple-touch-icon.png" />
+  <link rel="manifest"         href="manifest.json" />
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="css/styles.min.css" />
+  <!-- Fonts: self-hosted via @font-face in styles.css -->
+
+  <script>(function () {
+  try {
+    var MIGRATION_KEY = 'th_theme_default_v3';
+    var migrated = localStorage.getItem(MIGRATION_KEY);
+    if (!migrated) {
+      // One-time: clear any forced dark preference from the previous era.
+      try { localStorage.removeItem('th_theme'); } catch (_) {}
+      localStorage.setItem(MIGRATION_KEY, '1');
+    }
+    var saved = localStorage.getItem('th_theme');
+    document.documentElement.setAttribute('data-theme', saved || 'light');
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();</script>
+
+  <style>
+    @media (max-width:768px) {
+      .hadith-grid { grid-template-columns:1fr;gap:16px; }
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6JL045YKG3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6JL045YKG3');
+    window.gaEvent = function(e, p){ gtag('event', e, p || {}); };
+  </script>
+</head>
+<body>
+
+  <!-- Skip Nav -->
+  <a class="skip-link" href="#content-area">Skip to content</a>
+
+  <!-- ══ NAV ══ -->
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Timeless Hadith — Home">
+      <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="48" width="160" fetchpriority="high" decoding="async" /></picture>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="categories.html" >Browse</a></li>
+      <li><a href="bookmarks.html" class="nav-active" aria-current="page">Bookmarks<span class="bm-badge" id="nav-bm-badge" data-count="0" aria-label="bookmarks count"></span></a></li>
+      <li><a href="about.html" >About</a></li>
+      <li><a href="blog.html" >Blog</a></li>
+      <li><a href="prayer-times.html" >Prayer&nbsp;Times</a></li>
+      <li><a href="https://shop.timelesshadith.com" target="_blank" rel="noopener">Shop</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="nav-widgets" aria-label="Live updates">
+        <div class="nav-widget" id="widget-time" title="Current time in Makkah al-Mukarramah">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <strong id="makkah-time">--:--</strong>
+        </div>
+        <span class="nav-sep" aria-hidden="true"></span>
+        <div class="nav-widget" id="widget-weather" title="Local weather">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          <span id="weather-val">…</span>
+        </div>
+        <span class="nav-sep" aria-hidden="true"></span>
+        <div class="nav-widget" id="widget-prayer" title="Next prayer (your location)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span class="prayer-name" id="prayer-name">—</span>
+          <span class="prayer-time" id="prayer-time">—</span>
+        </div>
+      </div>
+
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+
+      <div class="nav-auth" id="nav-auth-item">
+        <button id="btn-login">Sign in</button>
+        <button id="btn-logout" onclick="localStorage.removeItem('th_supabase_session');localStorage.removeItem('th_auth_user');window.location.href='/index.html';">Sign out</button>
+        <div id="nav-avatar-wrap" role="button" tabindex="0" aria-label="User account">
+          <div class="nav-avatar">
+            <img id="nav-avatar-img" src="" alt="" />
+            <span id="nav-avatar-initial"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <nav class="nav-drawer" id="navDrawer" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="categories.html">Browse Categories</a>
+    <a href="bookmarks.html" class="active" aria-current="page">My Bookmarks<span class="bm-badge" id="nav-bm-badge-mobile" data-count="0" aria-label="bookmarks count"></span></a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Blog</a>
+    <a href="prayer-times.html">Prayer Times</a>
+    <a href="https://shop.timelesshadith.com" target="_blank" rel="noopener">Shop</a>
+    <button class="theme-toggle" id="themeToggleDrawer" aria-label="Toggle theme" style="margin-top:8px;align-self:flex-start;">
+      <svg class="icon-sun"  viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </nav>
+
+  <!-- ══ PAGE HEADER ══ -->
+  <header>
+    <div class="page-header">
+      <p class="page-eyebrow"><span></span>My Collection</p>
+      <div class="page-header-row">
+        <div>
+          <h1>Saved Hadiths</h1>
+          <p class="page-sub" id="page-sub">Sign in to save hadiths</p>
+        </div>
+        <button class="btn-clear" id="btn-clear" >Clear all</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ CONTENT ══ -->
+  <main class="content" id="content-area" role="main" aria-label="Bookmarked hadiths">
+    <!-- JS populated -->
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">
+        <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="32" loading="lazy" decoding="async" /></picture>
+      </a>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html">Browse</a></li>
+        <li><a href="bookmarks.html">Bookmarks<span class="bm-badge" id="footer-bm-badge" data-count="0" aria-label="bookmarks count"></span></a></li>
+        <li><a href="about.html">About</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="prayer-times.html">Prayer Times</a></li>
+        <li><a href="https://shop.timelesshadith.com" target="_blank" rel="noopener">Shop</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+      </ul>
+      <p class="footer-copy">&copy; 2026 Timeless Hadith</p>
+    </div>
+  </footer>
+
+  <!-- ══ SCRIPTS ══ -->
+  <script defer src="js/supabase-data.js?v=2"></script>
+  <script defer src="js/app.js"></script>
+  <script defer src="js/supabase-auth.js"></script>
+
+  <script defer src="js/bookmarks-wire.js"></script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="js/sw-register.js"></script>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+
+
+
+<script defer src="js/urdu-toggle.js"></script>
+    <script src="js/nav-widgets.js" defer></script>
+</body>
+</html>
