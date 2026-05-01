@@ -768,4 +768,51 @@
     });
     document.getElementById('btnNoteSave').addEventListener('click', function () {
       var note = document.getElementById('noteText').value.trim();
-      if (!no
+      if (!note || !currentHadith) return;
+      var notes = JSON.parse(localStorage.getItem('th_notes') || '{}');
+      notes[String(currentHadith.hadith_number)] = note;
+      localStorage.setItem('th_notes', JSON.stringify(notes));
+      document.getElementById('noteModal').classList.remove('open');
+      document.getElementById('noteText').value = '';
+      var toast = document.getElementById('pointsToast');
+      toast.textContent = 'Reflection saved ✓';
+      toast.classList.add('show');
+      setTimeout(function () { toast.classList.remove('show'); }, 2400);
+    });
+
+    // ── Share ──
+    document.getElementById('btnShare').addEventListener('click', function () {
+      if (!currentHadith) return;
+      var text = '“' + (currentHadith.text_en || '').substring(0, 200) + '…”\n\n— ' +
+        (currentHadith.book_name_en || 'Sahih al-Bukhari') + ' | timelesshadith.com';
+      if (navigator.share) {
+        navigator.share({ title: 'Hadith — Timeless Hadith', text: text, url: location.href });
+      } else {
+        navigator.clipboard.writeText(text).then(function () {
+          var toast = document.getElementById('pointsToast');
+          toast.textContent = 'Copied to clipboard ✓';
+          toast.classList.add('show');
+          setTimeout(function () { toast.classList.remove('show'); }, 2000);
+        });
+      }
+    });
+
+    // ── Sign-in banner ──
+    document.getElementById('signInBannerBtn').addEventListener('click', function () {
+      if (window.TH_SB_AUTH && window.TH_SB_AUTH.signInWithGoogle) {
+        window.TH_SB_AUTH.signInWithGoogle();
+      }
+    });
+
+    // ── Init ──
+    if (hadithId) {
+      loadHadith(hadithId);
+    } else {
+      loadHadith(1);
+    }
+
+  })();
+  </script>
+
+</body>
+</html>
