@@ -756,7 +756,8 @@ div[dir="rtl"] {
   font-variant-ligatures: common-ligatures contextual;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  line-height: 2.0;
+  line-height: 2.2;
+  color: #1ea64a !important;
   letter-spacing: 0;
 }
 
