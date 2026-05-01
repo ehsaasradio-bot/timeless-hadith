@@ -1,5 +1,5 @@
 /* ── Google Fonts — Cairo + Gulzar ── */
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Gulzar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Gulzar&family=Noto+Kufi+Arabic:wght@100;200;300&display=swap');
 
 /* ── Self-hosted Fonts (Legacy — disabled in favor of Cairo) ── */
 /*
@@ -864,11 +864,11 @@ div[dir="rtl"] {
 }
 .urdu-inline-text,
 .urdu-inline-empty {
-  font-family: 'Gulzar', serif;
+  font-family: 'Noto Kufi Arabic', sans-serif;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 2.2;
-  color: #1f1d3d;
+  color: rgb(89, 133, 225);
   direction: rtl;
   text-align: right;
   margin: 0;
