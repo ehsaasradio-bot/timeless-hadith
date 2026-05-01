@@ -885,3 +885,124 @@ div[dir="rtl"] {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE SYSTEM — 5 breakpoints
+   375 mobile · 600 small-phone · 744 tablet · 1128 laptop · 1280 desktop · 1440 wide
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Wide (> 1440px): cap content width ── */
+@media (min-width: 1440px) {
+  .cards-section,
+  .hadith-list,
+  .featured-section,
+  .page-wrap,
+  .hadith-index-block {
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  /* Editorial / blog content narrower cap */
+  .blog-content,
+  .about-content,
+  .page-prose {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ── Desktop (1128–1440px): full nav, 6-col category grid ── */
+@media (min-width: 1128px) {
+  .cards-track {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 18px;
+  }
+  nav.main-nav {
+    padding: 0 40px;
+  }
+  .nav-links { display: flex; }
+  .nav-hamburger { display: none; }
+  .nav-widgets { display: flex; }
+  #btn-login { display: inline-flex; }
+  #btn-logout { display: inline-flex; }
+  .search-wrap { max-width: 680px; margin: 0 auto; }
+}
+
+/* ── Laptop (744–1128px): 2-up hadith cards, 3-col category ── */
+@media (min-width: 744px) and (max-width: 1127px) {
+  .cards-track {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .search-wrap { max-width: 520px; margin: 0 auto; }
+  nav.main-nav { padding: 0 24px; }
+}
+
+/* ── Tablet (744px): hamburger threshold ── */
+@media (max-width: 743px) {
+  /* Nav — hamburger only */
+  nav.main-nav { padding: 0 16px; gap: 8px; }
+  .nav-links { display: none; }
+  .nav-right { gap: 4px; }
+  .nav-widgets { display: none; }
+  .nav-hamburger { display: flex; }
+  #btn-login { display: none; }
+  #btn-logout { display: none; }
+
+  /* Search collapses to full-width pill */
+  .search-wrap { max-width: 100%; padding: 0 16px; }
+  .search-bar {
+    border-radius: 100px;
+    padding: 0 16px;
+  }
+  .search-btn-label { display: none; }
+
+  /* Cards — 2-up on small tablet / large phone */
+  .cards-track {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  /* Hadith list — single column */
+  .hadith-list { padding: 0 12px; }
+
+  /* Page sections breathe less on mobile */
+  .cards-section { padding: 24px 16px 48px; }
+  .featured-section { margin: 32px 16px; }
+}
+
+/* ── Small phone (< 600px): 1-up cards ── */
+@media (max-width: 599px) {
+  .cards-track {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .cat-card { border-radius: 16px !important; }
+  .search-bar { font-size: 15px; }
+
+  /* Pagination dots smaller */
+  .pagination-dots { gap: 6px; }
+
+  /* Sticky bottom bar for key CTA on mobile */
+  .mobile-sticky-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    z-index: 900;
+    gap: 10px;
+  }
+}
+
+/* ── Mobile (< 375px): micro adjustments ── */
+@media (max-width: 374px) {
+  nav.main-nav { padding: 0 12px; }
+  .cards-section { padding: 16px 10px 40px; }
+  .search-wrap { padding: 0 10px; }
+  .hadith-list { padding: 0 8px; }
+}
