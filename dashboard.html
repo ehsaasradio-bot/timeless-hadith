@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard — Timeless Hadith</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="stylesheet" href="css/styles.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js" defer></script>
+  <script>(function(){try{var m='th_theme_default_v3';if(!localStorage.getItem(m)){localStorage.setItem(m,'1');}var s=localStorage.getItem('th_theme');document.documentElement.setAttribute('data-theme',s||'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <style>
+    .dash-wrap{max-width:1140px;margin:88px auto 80px;padding:0 20px}
+    .glass-card{background:rgba(255,255,255,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.5);border-radius:20px;box-shadow:0 4px 32px rgba(0,0,0,.06)}
+    [data-theme=dark] .glass-card{background:rgba(20,25,50,.72);border-color:rgba(255,255,255,.08);box-shadow:0 4px 32px rgba(0,0,0,.3)}
+    .dash-greeting{margin-bottom:32px}
+    .dash-greeting h1{font-size:26px;font-weight:800;letter-spacing:-.04em;color:var(--ink)}
+    .dash-greeting p{font-size:14px;color:var(--muted);margin-top:4px}
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-bottom:24px}
+    .stat-card{padding:20px 22px}
+    .stat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+    .stat-value{font-size:36px;font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--ink)}
+    .stat-sub{font-size:12px;color:var(--muted);margin-top:5px}
+    .stat-accent{color:var(--accent)!important}.stat-amber{color:#f59e0b!important}.stat-gold{color:#eab308!important}.stat-purple{color:#8b5cf6!important}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px}
+    @media(max-width:700px){.two-col{grid-template-columns:1fr}}
+    .sec-hdr{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:16px}
+    .sec-hdr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .sec-hdr-row a{font-size:13px;color:var(--accent);font-weight:600;text-decoration:none}
+    .ring-section{padding:28px;display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+    .ring-wrap{position:relative;width:120px;height:120px;flex-shrink:0}
+    .ring-svg{transform:rotate(-90deg)}
+    .ring-track{fill:none;stroke:var(--border);stroke-width:10}
+    .ring-fill{fill:none;stroke:var(--accent);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .8s ease}
+    .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .ring-pct{font-size:22px;font-weight:800;color:var(--ink);line-height:1}
+    .ring-sub2{font-size:11px;color:var(--muted)}
+    .ring-info h3{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:6px}
+    .ring-info p{font-size:13px;color:var(--muted);line-height:1.5}
+    .chart-card{padding:26px;margin-bottom:24px}
+    .chart-canvas-wrap{position:relative;height:180px}
+    .coll-card,.recent-card{padding:24px}
+    .coll-item{margin-bottom:14px}.coll-item:last-child{margin-bottom:0}
+    .coll-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+    .coll-name{color:var(--ink);font-weight:600}.coll-count{color:var(--muted)}
+    .coll-bar-track{height:7px;background:var(--border);border-radius:100px;overflow:hidden}
+    .coll-bar-fill{height:100%;background:var(--accent);border-radius:100px;transition:width .6s ease}
+    .recent-item{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--border)}
+    .recent-item:last-child{border-bottom:none;padding-bottom:0}
+    .recent-num{width:36px;height:36px;border-radius:10px;background:rgba(79,114,248,.1);color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .recent-text{flex:1;min-width:0}
+    .recent-book{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:3px}
+    .recent-hadith{font-size:13px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .recent-time{font-size:11px;color:var(--muted);white-space:nowrap}
+    .ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+    .ach-card{padding:18px;text-align:center}
+    .ach-icon{font-size:28px;margin-bottom:8px}
+    .ach-name{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:3px}
+    .ach-desc{font-size:11px;color:var(--muted);line-height:1.3}
+    .ach-locked{opacity:.35}
+    .comp-preview-card{padding:24px}
+    .comp-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+    .comp-row:last-child{border-bottom:none}
+    .comp-rank{width:28px;font-size:14px;font-weight:800;color:var(--muted);text-align:center;flex-shrink:0}
+    .comp-avatar{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+    .comp-name{flex:1;font-size:14px;font-weight:600;color:var(--ink)}
+    .comp-pts{font-size:13px;font-weight:700;color:var(--accent)}
+    .comp-highlight{background:rgba(79,114,248,.06);border-radius:10px;margin:0 -8px;padding:10px 8px}
+    .milestone-card{padding:24px}
+    .milestone-row{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+    .milestone-row:last-child{margin-bottom:0}
+    .milestone-icon{width:40px;height:40px;border-radius:12px;background:rgba(79,114,248,.1);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .milestone-info{flex:1}
+    .milestone-name{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px}
+    .milestone-bar-track{height:6px;background:var(--border);border-radius:100px;overflow:hidden}
+    .milestone-bar-fill{height:100%;background:var(--accent);border-radius:100px;transition:width .7s ease}
+    .milestone-pct{font-size:12px;color:var(--muted);margin-top:4px}
+    .goal-section{padding:22px 26px;margin-bottom:0}
+    .goal-section h2{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:14px}
+    .goal-label{font-size:13px;color:var(--muted);margin-bottom:6px}
+    .goal-bar-track{height:10px;background:var(--border);border-radius:100px;overflow:hidden;margin-bottom:14px}
+    .goal-bar-fill{height:100%;background:var(--accent);border-radius:100px;transition:width .6s ease}
+    .goal-input-row{display:flex;align-items:center;gap:8px}
+    .goal-input-row input{width:70px;padding:7px 10px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:13px;outline:none;text-align:center}
+    .goal-input-row input:focus{border-color:var(--accent)}
+    .btn-save{padding:7px 18px;background:var(--accent);color:#fff;border:none;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)}
+    .btn-save:hover{opacity:.85}
+
+    /* ── Dashboard Hero (unauthenticated landing) ── */
+    .dash-hero{text-align:center;padding:32px 20px 40px;max-width:680px;margin:0 auto}
+    .dash-hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;
+      background:rgba(79,114,248,.1);color:var(--accent);border-radius:100px;
+      font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:22px}
+    .dash-hero h1{font-size:clamp(28px,5vw,48px);font-weight:800;letter-spacing:-.04em;
+      line-height:1.08;color:var(--ink);margin-bottom:16px}
+    .dash-hero h1 em{font-style:normal;color:var(--accent)}
+    .dash-hero p{font-size:clamp(15px,1.8vw,17px);color:var(--muted);line-height:1.65;
+      max-width:520px;margin:0 auto 28px}
+    .btn-google{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;
+      background:var(--accent);color:#fff;border:none;border-radius:100px;
+      font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;
+      letter-spacing:-.1px;transition:opacity .2s ease,transform .2s ease;margin-bottom:14px}
+    .btn-google:hover{opacity:.88;transform:translateY(-1px)}
+    .btn-google svg{flex-shrink:0}
+    .dash-hero-note{font-size:12px;color:var(--muted);margin-bottom:0}
+    /* Feature grid */
+    .dash-features{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+      gap:14px;margin-top:40px}
+    .dash-feat{padding:24px 22px;text-align:left}
+    .dash-feat-icon{font-size:26px;margin-bottom:12px;display:block}
+    .dash-feat h3{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px}
+    .dash-feat p{font-size:13px;color:var(--muted);line-height:1.5;margin:0}
+    /* Social proof bar */
+    .dash-proof{display:flex;align-items:center;justify-content:center;gap:0;
+      margin-top:36px;padding:20px 28px;border-radius:20px;
+      background:var(--surface);border:1px solid var(--border)}
+    .dash-proof-item{flex:1;text-align:center;padding:0 12px}
+    .dash-proof-num{display:block;font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.04em}
+    .dash-proof-label{font-size:12px;color:var(--muted);font-weight:500}
+    .dash-proof-sep{width:1px;height:36px;background:var(--border);flex-shrink:0}
+    @media(max-width:500px){.dash-features{grid-template-columns:1fr 1fr}.dash-proof{padding:16px 14px}}
+
+    .auth-gate{text-align:center;padding:0}
+    .auth-gate h2{font-size:22px;font-weight:700;color:var(--ink);margin-bottom:10px}
+    .auth-gate p{color:var(--muted);font-size:14px;margin-bottom:24px}
+    .btn-signin{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:var(--accent);color:#fff;border-radius:100px;font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:var(--font)}
+    .btn-signin:hover{opacity:.85}
+    .skeleton{background:var(--border);border-radius:8px;animation:pulse 1.5s ease infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+    @media(max-width:600px){.stats-grid{grid-template-columns:1fr 1fr}.dash-greeting h1{font-size:20px}}
+  </style>
+</head>
+<body>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Timeless Hadith — Home">
+      <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp"/><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="28" width="90"/></picture>
+    </a>
+    <ul class="nav-links">
+      <li><a href="categories.html">Browse</a></li>
+      <li><a href="reader.html">Reader</a></li>
+      <li><a href="dashboard.html" class="nav-active" aria-current="page">Dashboard</a></li>
+      <li><a href="competition.html">Milestones</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-right">
+      <button id="themeToggle" class="nav-theme-btn" aria-label="Toggle theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <div class="nav-auth" id="nav-auth-item">
+        <button class="nav-signin-btn" id="nav-signin-btn" style="display:none">Sign in</button>
+        <div id="nav-avatar-wrap" role="button" tabindex="0" aria-label="User account" style="display:none">
+          <div class="nav-avatar"><img id="nav-avatar-img" src="" alt=""/><span id="nav-avatar-initial"></span></div>
+        </div>
+      </div>
+    </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <nav class="nav-drawer" id="navDrawer" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="categories.html">Browse</a>
+    <a href="reader.html">Reader</a>
+    <a href="dashboard.html" class="active">Dashboard</a>
+    <a href="competition.html">Milestones</a>
+  </nav>
+
+  <main class="dash-wrap" id="dashMain">
+    <div class="auth-gate" id="authGate" style="display:none">
+      <!-- Hero -->
+      <div class="dash-hero">
+        <div class="dash-hero-badge">✨ Personal Dashboard</div>
+        <h1>Your Hadith Reading<br><em>Journey Awaits</em></h1>
+        <p>Track every hadith you read, build daily streaks, earn achievements and grow your knowledge — all in one beautiful dashboard.</p>
+        <button class="btn-google" id="signInBtn" type="button">
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+            <path fill="#4285f4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/>
+            <path fill="#34a853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2.04a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/>
+            <path fill="#fbbc05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z"/>
+            <path fill="#ea4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/>
+          </svg>
+          Continue with Google — it's free
+        </button>
+        <p class="dash-hero-note">No account needed to browse hadiths. Sign in to track your progress.</p>
+      </div>
+      <!-- Features -->
+      <div class="dash-features">
+        <div class="glass-card dash-feat">
+          <span class="dash-feat-icon">🔥</span>
+          <h3>Daily Streaks</h3>
+          <p>Build a lasting reading habit with streak tracking. Never miss a day.</p>
+        </div>
+        <div class="glass-card dash-feat">
+          <span class="dash-feat-icon">📊</span>
+          <h3>Reading Stats</h3>
+          <p>Total hadiths read, weekly charts, collection progress and more.</p>
+        </div>
+        <div class="glass-card dash-feat">
+          <span class="dash-feat-icon">🏆</span>
+          <h3>Achievements</h3>
+          <p>Unlock badges and trophies as you reach milestones on your journey.</p>
+        </div>
+        <div class="glass-card dash-feat">
+          <span class="dash-feat-icon">🎯</span>
+          <h3>Daily Goals</h3>
+          <p>Set your own daily hadith target and watch your progress bar fill up.</p>
+        </div>
+      </div>
+      <!-- Social proof -->
+      <div class="dash-proof">
+        <div class="dash-proof-item">
+          <span class="dash-proof-num">2,000+</span>
+          <span class="dash-proof-label">Hadiths in library</span>
+        </div>
+        <div class="dash-proof-sep"></div>
+        <div class="dash-proof-item">
+          <span class="dash-proof-num">8</span>
+          <span class="dash-proof-label">Collections</span>
+        </div>
+        <div class="dash-proof-sep"></div>
+        <div class="dash-proof-item">
+          <span class="dash-proof-num">Free</span>
+          <span class="dash-proof-label">Always &amp; forever</span>
+        </div>
+      </div>
+    </div>
+    <div id="skeletonLoader">
+      <div class="skeleton" style="height:26px;width:260px;margin-bottom:8px"></div>
+      <div class="skeleton" style="height:15px;width:180px;margin-bottom:28px"></div>
+      <div class="stats-grid">
+        <div class="glass-card stat-card skeleton" style="height:90px"></div>
+        <div class="glass-card stat-card skeleton" style="height:90px"></div>
+        <div class="glass-card stat-card skeleton" style="height:90px"></div>
+        <div class="glass-card stat-card skeleton" style="height:90px"></div>
+        <div class="glass-card stat-card skeleton" style="height:90px"></div>
+      </div>
+    </div>
+    <div id="dashContent" style="display:none">
+      <div class="dash-greeting">
+        <h1 id="greetingText">Assalamu Alaikum</h1>
+        <p id="greetingSubtext">Here is your reading journey today.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="glass-card stat-card"><div class="stat-label">Total Read</div><div class="stat-value stat-accent" id="statTotal">0</div><div class="stat-sub">Hadiths</div></div>
+        <div class="glass-card stat-card"><div class="stat-label">Current Streak</div><div class="stat-value stat-amber" id="statStreak">0</div><div class="stat-sub">days in a row</div></div>
+        <div class="glass-card stat-card"><div class="stat-label">Longest Streak</div><div class="stat-value" id="statLongest">0</div><div class="stat-sub">personal best</div></div>
+        <div class="glass-card stat-card"><div class="stat-label">Reward Points</div><div class="stat-value stat-purple" id="statPoints">0</div><div class="stat-sub">knowledge pts</div></div>
+        <div class="glass-card stat-card"><div class="stat-label">Virtual Coins</div><div class="stat-value stat-gold" id="statCoins">0</div><div class="stat-sub">coins earned</div></div>
+        <div class="glass-card stat-card"><div class="stat-label">Trophies</div><div class="stat-value" id="statTrophies">0</div><div class="stat-sub">achievements</div></div>
+        <div class="glass-card stat-card"><div class="stat-label">Level</div><div class="stat-value stat-accent" id="statLevel">1</div><div class="stat-sub">current level</div></div>
+      </div>
+      <div class="two-col" style="margin-top:24px">
+        <div class="glass-card ring-section">
+          <div class="ring-wrap">
+            <svg class="ring-svg" width="120" height="120" viewBox="0 0 120 120">
+              <circle class="ring-track" cx="60" cy="60" r="50"/>
+              <circle class="ring-fill" id="ringFill" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314"/>
+            </svg>
+            <div class="ring-center"><span class="ring-pct" id="ringPct">0%</span><span class="ring-sub2">monthly</span></div>
+          </div>
+          <div class="ring-info">
+            <h3>Monthly Progress</h3>
+            <p id="ringDesc">You are on your reading journey. Keep going!</p>
+          </div>
+        </div>
+        <div class="glass-card goal-section">
+          <h2>Today's Goal</h2>
+          <div class="goal-label" id="goalLabel">0 / 20 Hadiths today</div>
+          <div class="goal-bar-track"><div class="goal-bar-fill" id="goalBarFill" style="width:0%"></div></div>
+          <div class="goal-input-row">
+            <input type="number" id="goalInput" min="1" max="100" value="20"/>
+            <button class="btn-save" id="btnSaveGoal">Update Goal</button>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card chart-card">
+        <div class="sec-hdr">Weekly Reading Activity</div>
+        <div class="chart-canvas-wrap"><canvas id="weeklyChart"></canvas></div>
+      </div>
+      <div class="two-col">
+        <div class="glass-card coll-card">
+          <div class="sec-hdr">Collection Progress</div>
+          <div id="collectionList"><p style="color:var(--muted);font-size:13px">No collections read yet.</p></div>
+        </div>
+        <div class="glass-card recent-card">
+          <div class="sec-hdr-row">
+            <span class="sec-hdr" style="margin-bottom:0">Recently Read</span>
+            <a href="reader.html">Continue reading</a>
+          </div>
+          <div id="recentList"><p style="color:var(--muted);font-size:13px">No reads recorded yet.</p></div>
+        </div>
+      </div>
+      <div class="glass-card milestone-card" style="margin-top:24px">
+        <div class="sec-hdr">Next Milestones</div>
+        <div id="milestoneList"></div>
+      </div>
+      <div style="margin-top:24px">
+        <div class="sec-hdr-row">
+          <span class="sec-hdr" style="margin-bottom:0">Achievements</span>
+          <a href="competition.html">View all</a>
+        </div>
+        <div class="ach-grid" id="achievementGrid"></div>
+      </div>
+      <div class="glass-card comp-preview-card" style="margin-top:24px">
+        <div class="sec-hdr-row">
+          <span class="sec-hdr" style="margin-bottom:0">Knowledge Path — Top Readers</span>
+          <a href="competition.html">Full leaderboard</a>
+        </div>
+        <div id="compPreview"><p style="color:var(--muted);font-size:13px">Loading…</p></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo"><picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp"/><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="24" width="80"/></picture></a>
+      <ul class="footer-links"><li><a href="about.html">About</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul>
+    </div>
+  </footer>
+
+  <script src="js/nav-widgets.js" defer></script>
+  <script src="js/supabase-auth.js" defer></script>
+  <script src="js/progress-api.js" defer></script>
+  <script>
+  (function(){
+    'use strict';
+    var ICONS={'book-open':'📖','star':'⭐','award':'🏅','trophy':'🏆','crown':'👑','flame':'🔥','sparkles':'✨','medal':'🎖️'};
+    var chart=null;
+    function tok(){try{var s=JSON.parse(localStorage.getItem('th_supabase_session')||'null');return s&&s.access_token?s.access_token:null;}catch(e){return null;}}
+    function rel(iso){var d=Math.floor((Date.now()-new Date(iso).getTime())/86400000);return d===0?'Today':d===1?'Yesterday':d+'d ago';}
+    function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    function fmt(n){return Number(n||0).toLocaleString();}
+    function waitSession(cb,n){n=n||0;var t=tok();if(t)return cb(t);if(n===0){var hp=window.location.search+window.location.hash;var isOAuth=hp.indexOf('code=')>-1||hp.indexOf('access_token')>-1;if(!isOAuth){document.getElementById('skeletonLoader').style.display='none';document.getElementById('authGate').style.display='';return;}}if(n>=15){document.getElementById('skeletonLoader').style.display='none';document.getElementById('authGate').style.display='';return;}setTimeout(function(){waitSession(cb,n+1);},300);}
+    document.getElementById('signInBtn').addEventListener('click',function(){if(window.TH_SB_AUTH&&window.TH_SB_AUTH.signInWithGoogle)window.TH_SB_AUTH.signInWithGoogle();else window.location.href='/?signin=1';});
+    function rStats(st,pr){
+      var n=(pr&&pr.display_name)?pr.display_name.split(' ')[0]:'Reader';
+      document.getElementById('greetingText').textContent='Assalamu Alaikum, '+n;
+      document.getElementById('greetingSubtext').textContent=st.current_streak>0?'You are on a '+st.current_streak+'-day reading streak. Keep it going!':'Begin your reading journey today.';
+      document.getElementById('statTotal').textContent=fmt(st.total_hadith_read);
+      document.getElementById('statStreak').textContent=st.current_streak||0;
+      document.getElementById('statLongest').textContent=st.longest_streak||0;
+      document.getElementById('statPoints').textContent=fmt(st.total_points);
+      document.getElementById('statCoins').textContent=fmt(st.virtual_coins);
+      document.getElementById('statTrophies').textContent=st.trophies_count||0;
+      document.getElementById('statLevel').textContent=st.current_level||1;
+    }
+    function rRing(st){
+      var g=st.daily_goal||20,mg=g*30,t=st.total_hadith_read||0,p=Math.min(100,Math.round((t%mg)/mg*100));
+      document.getElementById('ringFill').style.strokeDashoffset=314-(314*p/100);
+      document.getElementById('ringPct').textContent=p+'%';
+      document.getElementById('ringDesc').textContent=t>0?'You have read '+fmt(t)+' Hadiths total. Amazing consistency!':'Start reading to track your monthly progress.';
+    }
+    function rGoal(st,today){
+      var g=st.daily_goal||20,td=today?today.hadith_read_count:0,p=Math.min(100,Math.round(td/g*100));
+      document.getElementById('goalInput').value=g;
+      document.getElementById('goalLabel').textContent=td+' / '+g+' Hadiths today';
+      document.getElementById('goalBarFill').style.width=p+'%';
+    }
+    function rChart(wa){
+      var days=[],counts=[];
+      for(var i=6;i>=0;i--){var d=new Date(Date.now()-i*86400000),ds=d.toISOString().substring(0,10),e=wa.find(function(w){return w.reading_date===ds;});days.push(i===0?'Today':d.toLocaleDateString('en',{weekday:'short'}));counts.push(e?e.hadith_read_count:0);}
+      var dark=document.documentElement.getAttribute('data-theme')==='dark',gc=dark?'rgba(255,255,255,.08)':'rgba(0,0,0,.06)',lc='#8892a4';
+      var ctx=document.getElementById('weeklyChart').getContext('2d');
+      if(chart)chart.destroy();
+      chart=new Chart(ctx,{type:'bar',data:{labels:days,datasets:[{data:counts,backgroundColor:'rgba(79,114,248,.7)',borderRadius:8,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.raw+' Hadiths';}}}},scales:{x:{grid:{color:gc},ticks:{color:lc,font:{size:12}}},y:{grid:{color:gc},ticks:{color:lc,font:{size:12},stepSize:1},beginAtZero:true}}}});
+    }
+    function rColl(cp){
+      var el=document.getElementById('collectionList');
+      if(!cp||!cp.length){el.innerHTML='<p style="color:var(--muted);font-size:13px">No collections read yet. <a href="reader.html" style="color:var(--accent)">Start reading</a></p>';return;}
+      var mx=Math.max.apply(null,cp.map(function(c){return c.read_count;}));
+      el.innerHTML=cp.slice(0,6).map(function(c){var p=Math.round(c.read_count/mx*100);return'<div class="coll-item"><div class="coll-row"><span class="coll-name">'+esc(c.collection_name||'Sahih al-Bukhari')+'</span><span class="coll-count">'+c.read_count+' read</span></div><div class="coll-bar-track"><div class="coll-bar-fill" style="width:'+p+'%"></div></div></div>';}).join('');
+    }
+    function rRecent(rc){
+      var el=document.getElementById('recentList');
+      if(!rc||!rc.length){el.innerHTML='<p style="color:var(--muted);font-size:13px">No reads recorded yet. <a href="reader.html" style="color:var(--accent)">Start reading</a></p>';return;}
+      el.innerHTML=rc.slice(0,6).map(function(r){return'<div class="recent-item"><div class="recent-num">#'+esc(r.hadith_number||r.hadith_id)+'</div><div class="recent-text"><div class="recent-book">'+esc(r.collection_name||r.book_name||'Sahih al-Bukhari')+'</div><div class="recent-hadith">'+esc(r.chapter_name||'Hadith #'+(r.hadith_number||r.hadith_id))+'</div></div><div class="recent-time">'+rel(r.read_at)+'</div></div>';}).join('');
+    }
+    function rMilestones(st){
+      var ms=[{n:'10 Hadiths',i:'⭐',r:10,t:'read'},{n:'100 Hadiths',i:'🏅',r:100,t:'read'},{n:'500 Hadiths',i:'🏆',r:500,t:'read'},{n:'1,000 Hadiths',i:'👑',r:1000,t:'read'},{n:'7-Day Streak',i:'🔥',r:7,t:'streak'},{n:'30-Day Streak',i:'✨',r:30,t:'streak'}];
+      var tot=st.total_hadith_read||0,str=st.longest_streak||0,el=document.getElementById('milestoneList');
+      var html=ms.filter(function(m){return(m.t==='read'&&tot<m.r)||(m.t==='streak'&&str<m.r);}).slice(0,3).map(function(m){var cur=m.t==='read'?tot:str,p=Math.min(100,Math.round(cur/m.r*100));return'<div class="milestone-row"><div class="milestone-icon">'+m.i+'</div><div class="milestone-info"><div class="milestone-name">'+m.n+'</div><div class="milestone-bar-track"><div class="milestone-bar-fill" style="width:'+p+'%"></div></div><div class="milestone-pct">'+cur+' / '+m.r+' ('+p+'%)</div></div></div>';}).join('');
+      el.innerHTML=html||'<p style="color:var(--muted);font-size:13px">All milestones unlocked! Outstanding.</p>';
+    }
+    function rAch(ach,st){
+      var all=[{k:'first_step',n:'First Step',i:'book-open',r:1,t:'read'},{k:'ten_hadith',n:'10 Hadiths',i:'star',r:10,t:'read'},{k:'hundred_hadith',n:'100 Hadiths',i:'award',r:100,t:'read'},{k:'five_hundred_hadith',n:'500 Hadiths',i:'trophy',r:500,t:'read'},{k:'thousand_hadith',n:'1,000 Hadiths',i:'crown',r:1000,t:'read'},{k:'seven_day_streak',n:'7-Day Streak',i:'flame',r:7,t:'streak'},{k:'thirty_day_streak',n:'30-Day Streak',i:'sparkles',r:30,t:'streak'},{k:'ten_lessons',n:'10 Lessons',i:'medal',r:10,t:'lesson'}];
+      var uk=(ach||[]).map(function(a){return a.badge_key||(a.achievements&&a.achievements.badge_key);});
+      var tot=st.total_hadith_read||0,str=st.longest_streak||0;
+      document.getElementById('achievementGrid').innerHTML=all.map(function(b){var u=uk.indexOf(b.k)>-1||(b.t==='read'&&tot>=b.r)||(b.t==='streak'&&str>=b.r);return'<div class="glass-card ach-card'+(u?'':' ach-locked')+'"><div class="ach-icon">'+(ICONS[b.i]||'🎖️')+'</div><div class="ach-name">'+b.n+'</div><div class="ach-desc">'+(u?'Unlocked':'Locked')+'</div></div>';}).join('');
+    }
+    function rComp(lb,uid){
+      var el=document.getElementById('compPreview');
+      if(!lb||!lb.length){el.innerHTML='<p style="color:var(--muted);font-size:13px">No leaderboard data yet.</p>';return;}
+      el.innerHTML=lb.slice(0,5).map(function(r){var rc=r.rank===1?'':'top'+Math.min(r.rank,3),me=r.user_id===uid,init=(r.display_name||'R').charAt(0).toUpperCase();return'<div class="comp-row'+(me?' comp-highlight':'')+'"><div class="comp-rank '+rc+'">'+(r.rank===1?'🥇':r.rank===2?'🥈':r.rank===3?'🥉':r.rank)+'</div><div class="comp-avatar">'+esc(init)+'</div><div class="comp-name">'+esc(r.display_name||'Anonymous Reader')+(r.company_name?'<br><small style="color:var(--muted);font-weight:400">'+esc(r.company_name)+'</small>':'')+'</div><div class="comp-pts">'+fmt(r.total_points)+' pts'+(me?'<span style="font-size:11px;color:var(--muted);margin-left:4px"> You</span>':'')+'</div></div>';}).join('');
+    }
+    document.getElementById('btnSaveGoal').addEventListener('click',async function(){var t=tok(),v=parseInt(document.getElementById('goalInput').value,10);if(!v||v<1||v>100||!t)return;try{await fetch('/api/reading-goals',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+t},body:JSON.stringify({daily_target:v})});}catch(e){}});
+    async function load(){
+      try{
+        var[sd,ld]=await Promise.allSettled([window.ProgressAPI.getDashboardSummary(),window.ProgressAPI.getLeaderboard()]);
+        document.getElementById('skeletonLoader').style.display='none';
+        document.getElementById('dashContent').style.display='';
+        var data=sd.status==='fulfilled'?sd.value:null,lb=ld.status==='fulfilled'?ld.value:null;
+        if(!data){document.getElementById('greetingText').textContent='Welcome to your Dashboard';document.getElementById('greetingSubtext').textContent='Start reading to track your journey.';return;}
+        var st=data.stats||{},pr=data.profile||{};
+        var today=(data.weeklyActivity||[]).find(function(w){return w.reading_date===new Date().toISOString().substring(0,10);});
+        rStats(st,pr);rRing(st);rGoal(st,today);rChart(data.weeklyActivity||[]);rColl(data.collectionProgress||[]);rRecent(data.recent||[]);rMilestones(st);rAch(data.achievements||[],st);
+        if(lb&&lb.leaderboard){var sess=JSON.parse(localStorage.getItem('th_supabase_session')||'{}');rComp(lb.leaderboard,lb.myUserId||(sess.user&&sess.user.id));}
+      }catch(e){document.getElementById('skeletonLoader').style.display='none';document.getElementById('dashContent').style.display='';document.getElementById('greetingSubtext').textContent='Could not load your data. Please refresh.';}
+    }
+    waitSession(function(){load();});
+  })();
+  </script>
+</body>
+</html>
