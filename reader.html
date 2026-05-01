@@ -492,7 +492,7 @@
       if (!currentHadith) return;
       if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
         e.preventDefault();
-        var numId = parseInt(currentHadith.id, 10);
+        var numId = parseInt(currentHadith.hadith_number, 10);
         jumpTo(e.key === 'ArrowRight' ? numId + 1 : Math.max(1, numId - 1));
       }
     });
@@ -550,7 +550,7 @@
         h.text_en ? '“' + h.text_en + '”' : 'Translation not available.';
 
       // Urdu
-      var urduText = h.text_ur || '';
+      var urduText = h.urdu || '';
       document.getElementById('hadithUrduText').textContent = urduText;
       applyUrduToggle();
 
@@ -574,11 +574,11 @@
         (h.book_name_en || 'Hadith') + (h.hadith_number ? ' #' + h.hadith_number : '');
 
       // Jump input pre-fill
-      document.getElementById('jumpInput').value = h.id;
+      document.getElementById('jumpInput').value = h.hadith_number;
 
       // Bookmark state
       var bks = getBookmarks();
-      isBookmarked = bks.some(function (b) { return b.id === String(h.id); });
+      isBookmarked = bks.some(function (b) { return b.id === String(h.hadith_number); });
       updateBookmarkBtn();
 
       // Mark read button
@@ -600,8 +600,8 @@
       document.getElementById('hadithCard').style.display = 'none';
       document.getElementById('errorState').style.display = 'none';
       try {
-        var url = SB_URL + '/rest/v1/hadiths?id=eq.' + encodeURIComponent(id) +
-          '&select=id,hadith_number,in_book_ref,text_en,text_ar,text_ur,narrator,book_name_en,chapter_en&limit=1';
+        var url = SB_URL + '/rest/v1/hadiths?hadith_number=eq.' + encodeURIComponent(id) +
+          '&select=id,hadith_number,in_book_ref,text_en,text_ar,urdu,narrator,book_name_en,chapter_en&limit=1';
         var res  = await fetch(url, { headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON } });
         var rows = await res.json();
         if (!rows || !rows.length) return showError('Hadith #' + id + ' not found.');
@@ -613,10 +613,10 @@
 
     // ── Prev / Next ──
     document.getElementById('btnPrev').addEventListener('click', function () {
-      if (currentHadith) jumpTo(Math.max(1, parseInt(currentHadith.id, 10) - 1));
+      if (currentHadith) jumpTo(Math.max(1, parseInt(currentHadith.hadith_number, 10) - 1));
     });
     document.getElementById('btnNext').addEventListener('click', function () {
-      if (currentHadith) jumpTo(parseInt(currentHadith.id, 10) + 1);
+      if (currentHadith) jumpTo(parseInt(currentHadith.hadith_number, 10) + 1);
     });
 
     // ── Mark as Read ──
@@ -633,7 +633,7 @@
       btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin .7s linear infinite"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.09-4.43"/></svg> Saving…';
       try {
         var result = await window.ProgressAPI.markHadithAsRead({
-          hadithId:       String(currentHadith.id),
+          hadithId:       String(currentHadith.hadith_number),
           collectionName: 'Sahih al-Bukhari',
           bookName:       currentHadith.book_name_en || '',
           chapterName:    currentHadith.chapter_en   || '',
@@ -669,7 +669,7 @@
     }
     document.getElementById('btnBookmark').addEventListener('click', function () {
       if (!currentHadith) return;
-      var bks = getBookmarks(), id = String(currentHadith.id);
+      var bks = getBookmarks(), id = String(currentHadith.hadith_number);
       if (isBookmarked) {
         bks = bks.filter(function (b) { return b.id !== id; });
         isBookmarked = false;
@@ -702,7 +702,7 @@
       var note = document.getElementById('noteText').value.trim();
       if (!note || !currentHadith) return;
       var notes = JSON.parse(localStorage.getItem('th_notes') || '{}');
-      notes[String(currentHadith.id)] = note;
+      notes[String(currentHadith.hadith_number)] = note;
       localStorage.setItem('th_notes', JSON.stringify(notes));
       document.getElementById('noteModal').classList.remove('open');
       document.getElementById('noteText').value = '';
@@ -740,16 +740,11 @@
     if (hadithId) {
       loadHadith(hadithId);
     } else {
-      fetch(SB_URL + '/rest/v1/hadiths?select=id&order=id.asc&limit=1', {
-        headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON }
-      }).then(function(r){ return r.json(); }).then(function(rows){
-        if (rows && rows.length) loadHadith(rows[0].id);
-        else showError('No hadiths found.');
-      }).catch(function(){ showError('Could not load. Please try again.'); });
+      loadHadith(1);
     }
 
   })();
   </script>
 
 </body>
-</html>
+</html>                                                                                                                                                                                                                                                                                          
