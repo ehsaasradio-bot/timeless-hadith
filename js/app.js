@@ -1064,3 +1064,5 @@ const TH_INTERACTIONS = (() => {
 
 // Google GIS global callback
 window.handleGoogleCredential = TH_AUTH.handleGoogleCredential.bind(TH_AUTH);
+// Expose TH_AUTH globally so supabase-auth.js can patch logout()
+window.TH_AUTH = TH_AUTH;
