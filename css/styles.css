@@ -844,4 +844,44 @@ div[dir="rtl"] {
   border-top-color: rgba(255, 255, 255, 0.1);
 }
 .urdu-inline-body.open > .urdu-inline-inner {
-  transform: transla
+  transform: translateY(0);
+}
+.urdu-inline-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-family: "Cairo", sans-serif;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+}
+.urdu-inline-body.open .urdu-inline-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+.urdu-inline-text,
+.urdu-inline-empty {
+  font-family: 'Gulzar', serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 2.2;
+  color: var(--ink);
+  direction: rtl;
+  text-align: right;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.35s ease 0.15s, transform 0.35s ease 0.15s;
+}
+.urdu-inline-empty {
+  color: var(--muted);
+  font-size: 18px;
+}
+.urdu-inline-body.open .urdu-inline-text,
+.urdu-inline-body.open .urdu-inline-empty {
+  opacity: 1;
+  transform: translateY(0);
+}
