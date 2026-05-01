@@ -865,10 +865,10 @@ div[dir="rtl"] {
 .urdu-inline-text,
 .urdu-inline-empty {
   font-family: 'Gulzar', serif;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 2.2;
-  color: var(--ink);
+  color: #3D4F9F;
   direction: rtl;
   text-align: right;
   margin: 0;
