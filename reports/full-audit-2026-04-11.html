@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Timeless Hadith — Full Platform Audit (April 11, 2026)</title>
+<meta name="description" content="Comprehensive codebase audit of timelesshadith.com covering performance, SEO, security, CSS, compliance, and prioritized remediation plan." />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --font:"Inter",-apple-system,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+    --radius:16px;
+    --bg:#ffffff;
+    --surface:#f5f5f7;
+    --surface2:#ebebeb;
+    --border:#e0e0e0;
+    --ink:#1d1d1f;
+    --muted:#6e6e73;
+    --accent:#4f72f8;
+    --accent-hover:#3a5ce0;
+    --accent-2:#7c5ce6;
+    --accent-3:#a0baff;
+    --good:#2ea043;
+    --warn:#e0a314;
+    --bad:#c0392b;
+    --crit:#8b0000;
+    --card-shadow:0 2px 12px rgba(0,0,0,.06);
+    --card-shadow-hover:0 16px 48px rgba(0,0,0,.14);
+  }
+  [data-theme="dark"]{
+    --bg:#060c1a;--surface:#0d1629;--surface2:#111d35;
+    --border:rgba(255,255,255,.1);--ink:#f0f4ff;--muted:#9aa3b8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:var(--font);background:var(--bg);color:var(--ink);
+    font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:56px 32px 96px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;
+    color:var(--accent);margin-bottom:18px;
+  }
+  .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+  h1{
+    font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.08;
+    letter-spacing:-.03em;margin:0 0 14px;
+  }
+  h1 span{
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .lede{font-size:18px;color:var(--muted);max-width:780px;margin:0 0 40px}
+  .meta-row{
+    display:flex;flex-wrap:wrap;gap:10px;margin-bottom:48px;
+  }
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:6px 12px;border-radius:999px;
+    background:var(--surface);border:1px solid var(--border);
+    font-size:12px;font-weight:600;color:var(--muted);
+  }
+  .pill strong{color:var(--ink);font-weight:700}
+  h2{
+    font-size:28px;font-weight:700;letter-spacing:-.02em;
+    margin:64px 0 8px;color:var(--ink);
+  }
+  h2 .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:36px;height:36px;margin-right:12px;vertical-align:middle;
+    font-size:14px;font-weight:800;color:#fff;border-radius:10px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:0 4px 12px rgba(79,114,248,.3);
+  }
+  .section-sub{font-size:15px;color:var(--muted);margin:0 0 24px}
+  h3{font-size:18px;font-weight:700;margin:28px 0 10px}
+  p{margin:0 0 14px}
+
+  /* Score grid */
+  .scoreboard{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:16px;margin:8px 0 24px;
+  }
+  .score-card{
+    padding:22px 22px 20px;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);
+    position:relative;overflow:hidden;
+  }
+  .score-card::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  }
+  .score-label{font-size:11px;font-weight:700;letter-spacing:.8px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .score-val{font-size:40px;font-weight:800;line-height:1;
+    letter-spacing:-.02em;color:var(--ink)}
+  .score-val small{font-size:16px;font-weight:600;color:var(--muted)}
+  .score-note{font-size:12px;color:var(--muted);margin-top:8px}
+
+  /* KPI row */
+  .kpi-row{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:14px;margin:24px 0 40px;
+  }
+  .kpi{
+    padding:18px 18px 16px;border-radius:12px;
+    background:var(--surface);border:1px solid var(--border);
+  }
+  .kpi-val{font-size:26px;font-weight:800;color:var(--accent)}
+  .kpi-lbl{font-size:12px;color:var(--muted);font-weight:600}
+
+  /* Finding cards */
+  .finding{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px 22px;margin:14px 0;
+    position:relative;
+  }
+  .finding.crit{border-left:4px solid var(--crit)}
+  .finding.high{border-left:4px solid var(--bad)}
+  .finding.med{border-left:4px solid var(--warn)}
+  .finding.low{border-left:4px solid var(--accent)}
+  .finding.good{border-left:4px solid var(--good)}
+  .finding-head{
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:10px;margin-bottom:10px;
+  }
+  .finding-title{font-size:16px;font-weight:700;margin:0;color:var(--ink)}
+  .severity{
+    font-size:10.5px;font-weight:800;letter-spacing:.6px;
+    padding:4px 10px;border-radius:999px;text-transform:uppercase;
+  }
+  .sev-crit{background:#8b0000;color:#fff}
+  .sev-high{background:#c0392b;color:#fff}
+  .sev-med{background:#e0a314;color:#1d1d1f}
+  .sev-low{background:rgba(79,114,248,.12);color:var(--accent)}
+  .sev-good{background:rgba(46,160,67,.12);color:var(--good)}
+  .finding-body{font-size:14.5px;color:var(--ink);line-height:1.7}
+  .finding-body strong{color:var(--accent)}
+  .finding dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;
+    margin:12px 0 0;font-size:13.5px}
+  .finding dt{font-weight:700;color:var(--muted);text-transform:uppercase;
+    font-size:11px;letter-spacing:.5px;padding-top:4px}
+  .finding dd{margin:0;color:var(--ink)}
+  code{
+    font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;
+    font-size:12.5px;background:var(--surface2);
+    padding:2px 6px;border-radius:4px;color:var(--accent-2);
+  }
+  .finding pre{
+    background:var(--surface2);border-radius:10px;
+    padding:12px 14px;overflow-x:auto;margin:10px 0 0;
+    font-size:12.5px;line-height:1.6;
+  }
+
+  /* Good/Bad grid */
+  .gb-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0 24px;
+  }
+  @media(max-width:720px){.gb-grid{grid-template-columns:1fr}}
+  .gb-col{
+    padding:18px 20px;border-radius:14px;border:1px solid var(--border);
+    background:var(--surface);
+  }
+  .gb-col h4{
+    font-size:13px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
+    margin:0 0 10px;display:flex;align-items:center;gap:8px;
+  }
+  .gb-col.good h4{color:var(--good)}
+  .gb-col.bad h4{color:var(--bad)}
+  .gb-col ul{margin:0;padding-left:18px}
+  .gb-col li{margin:6px 0;font-size:14px}
+
+  /* Roadmap table */
+  .roadmap{
+    width:100%;border-collapse:separate;border-spacing:0;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);overflow:hidden;margin:16px 0 24px;
+    font-size:13.5px;
+  }
+  .roadmap th,.roadmap td{
+    text-align:left;padding:12px 14px;border-bottom:1px solid var(--border);
+  }
+  .roadmap thead th{
+    background:var(--surface2);font-weight:800;
+    font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);
+  }
+  .roadmap tbody tr:last-child td{border-bottom:none}
+  .roadmap tr:hover{background:var(--surface2)}
+  .tag{
+    display:inline-block;padding:3px 10px;border-radius:999px;
+    font-size:11px;font-weight:700;letter-spacing:.3px;
+  }
+  .tag-p0{background:#8b0000;color:#fff}
+  .tag-p1{background:#c0392b;color:#fff}
+  .tag-p2{background:#e0a314;color:#1d1d1f}
+  .tag-p3{background:rgba(79,114,248,.15);color:var(--accent)}
+  .tag-p4{background:rgba(46,160,67,.12);color:var(--good)}
+
+  /* callout */
+  .callout{
+    padding:22px 24px;border-radius:16px;
+    background:linear-gradient(135deg,rgba(79,114,248,.08),rgba(124,92,230,.08));
+    border:1px solid rgba(79,114,248,.2);
+    margin:16px 0 24px;
+  }
+  .callout h3{margin-top:0;color:var(--accent)}
+  .callout ol{margin:8px 0 0 18px;padding:0}
+
+  /* hero stats */
+  .hero-stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+    margin:40px 0 8px;
+  }
+  @media(max-width:720px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
+  .hs{
+    padding:22px;border-radius:14px;
+    background:var(--surface);border:1px solid var(--border);text-align:center;
+  }
+  .hs-val{font-size:32px;font-weight:800;color:var(--accent);letter-spacing:-.02em}
+  .hs-lbl{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px;
+    text-transform:uppercase;margin-top:4px}
+
+  footer{
+    margin-top:80px;padding-top:24px;border-top:1px solid var(--border);
+    font-size:12px;color:var(--muted);text-align:center;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">Platform Audit · April 11, 2026</div>
+  <h1>Timeless Hadith <span>Full Audit Report</span></h1>
+  <p class="lede">Codebase-level audit of <strong>timelesshadith.com</strong> covering performance, SEO, security, CSS architecture, compliance, and best practices. Findings are rated by severity and paired with concrete remediation actions.</p>
+
+  <div class="meta-row">
+    <span class="pill">Scope: <strong>codebase only</strong></span>
+    <span class="pill">Branch: <strong>main</strong></span>
+    <span class="pill">Stack: <strong>Cloudflare Pages + Supabase + Worker</strong></span>
+    <span class="pill">Pages audited: <strong>8</strong></span>
+    <span class="pill">Findings: <strong>34</strong></span>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hs"><div class="hs-val">B+</div><div class="hs-lbl">Overall</div></div>
+    <div class="hs"><div class="hs-val">34</div><div class="hs-lbl">Findings</div></div>
+    <div class="hs"><div class="hs-val">2</div><div class="hs-lbl">Critical</div></div>
+    <div class="hs"><div class="hs-val">7</div><div class="hs-lbl">High</div></div>
+  </div>
+
+  <!-- ═══════════ SECTION: SCOREBOARD ═══════════ -->
+  <h2><span class="num">01</span>Executive Scoreboard</h2>
+  <p class="section-sub">Category scores on a 0–100 scale. Derived from static analysis, not live Lighthouse.</p>
+
+  <div class="scoreboard">
+    <div class="score-card"><div class="score-label">Performance</div><div class="score-val">78<small>/100</small></div><div class="score-note">Unoptimized video, large inline CSS</div></div>
+    <div class="score-card"><div class="score-label">SEO</div><div class="score-val">88<small>/100</small></div><div class="score-note">Strong schema, some meta gaps</div></div>
+    <div class="score-card"><div class="score-label">Security</div><div class="score-val">82<small>/100</small></div><div class="score-note">Good headers, CSP has gaps</div></div>
+    <div class="score-card"><div class="score-label">CSS Arch.</div><div class="score-val">74<small>/100</small></div><div class="score-note">Inline bloat, no build step</div></div>
+    <div class="score-card"><div class="score-label">A11y / WCAG</div><div class="score-val">80<small>/100</small></div><div class="score-note">Solid alt, labels need work</div></div>
+    <div class="score-card"><div class="score-label">Compliance</div><div class="score-val">85<small>/100</small></div><div class="score-note">Privacy/terms present, no cookie banner</div></div>
+    <div class="score-card"><div class="score-label">Code Quality</div><div class="score-val">81<small>/100</small></div><div class="score-note">Clean JS, XSS surface area</div></div>
+    <div class="score-card"><div class="score-label">DevOps</div><div class="score-val">86<small>/100</small></div><div class="score-note">Good CI, secrets managed</div></div>
+  </div>
+
+  <!-- ═══════════ SECTION: TOP FINDINGS ═══════════ -->
+  <h2><span class="num">02</span>Top Findings at a Glance</h2>
+  <p class="section-sub">The five issues that, if fixed this sprint, will produce the largest step-change in audit grade.</p>
+
+  <div class="finding crit">
+    <div class="finding-head">
+      <h3 class="finding-title">Theme default regression — dark is hard-coded, CLAUDE.md requires light</h3>
+      <span class="severity sev-crit">Critical</span>
+    </div>
+    <div class="finding-body">
+      <p><code>index.html</code> line 2 sets <code>&lt;html lang="en" data-theme="dark"&gt;</code> and <code>js/theme-init.js</code> falls back to <code>'dark'</code>. CLAUDE.md Phase 1 and the project completion checklist both explicitly require <strong>Light Theme as the default for first-time visitors</strong>. A one-time migration was shipped to flush returning users back to dark — the opposite of the spec.</p>
+      <dl>
+        <dt>Impact</dt><dd>Contradicts brand guidelines; accessibility surface for low-vision users; regression vs Phase 1 sign-off</dd>
+        <dt>Action</dt><dd>Change default to <code>'light'</code> in <code>js/theme-init.js</code> line 22 and on the root <code>&lt;html&gt;</code> tag across all 8 pages. Update the migration key (<code>th_theme_default_v3</code>) to reset stale dark preferences.</dd>
+        <dt>Effort</dt><dd>15 minutes</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="finding crit">
+    <div class="finding-head">
+      <h3 class="finding-title">8.6 MB unoptimized popup.mp4 sitting in repo root</h3>
+      <span class="severity sev-crit">Critical</span>
+    </div>
+    <div class="finding-body">
+      <p><code>popup.mp4</code> (8.6 MB) is committed to the repository root. It isn't referenced anywhere in HTML, CSS, or JS — grep confirms zero usage. On every clone, CI build, or Cloudflare Pages deploy this file is shipped as part of the artifact and counts against the Pages bandwidth budget.</p>
+      <dl>
+        <dt>Impact</dt><dd>Bandwidth waste, slower deploys, bloated git history</dd>
+        <dt>Action</dt><dd>Either delete with <code>git rm popup.mp4</code> or move to <code>archive/</code> (gitignored). If the video is genuinely needed, re-encode with H.265 + AV1 fallback and add <code>&lt;video preload="none"&gt;</code>.</dd>
+        <dt>Effort</dt><dd>5 minutes</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head">
+      <h3 class="finding-title">26 KB of inline CSS in index.html — half the page weight</h3>
+      <span class="severity sev-high">High</span>
+    </div>
+    <div class="finding-body">
+      <p><code>index.html</code> ships 26,668 bytes of inline <code>&lt;style&gt;</code> — roughly 60% of the 44 KB HTML payload. This bypasses the browser cache (CSS is re-downloaded on every navigation) and inflates Core Web Vitals, particularly Largest Contentful Paint on slow 3G.</p>
+      <dl>
+        <dt>Impact</dt><dd>Slower LCP/FCP on repeat visits, cache miss, duplication across pages</dd>
+        <dt>Action</dt><dd>Extract hero, AI-search, Topics, and Featured-Hadith blocks into <code>css/home.css</code>. Inline only the first-paint critical CSS (nav + hero shell, ~5 KB).</dd>
+        <dt>Effort</dt><dd>2 hours</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head">
+      <h3 class="finding-title">CSP allows <code>script-src-attr 'unsafe-inline'</code></h3>
+      <span class="severity sev-high">High</span>
+    </div>
+    <div class="finding-body">
+      <p>Both <code>_headers</code> and the inline meta CSP in <code>index.html</code> allow <code>script-src-attr 'unsafe-inline'</code>. This permits inline event handlers such as <code>onclick="…"</code> and is the most common DOM-based XSS amplifier. No such handlers appear in the repo today — it's a standing door that should be closed.</p>
+      <dl>
+        <dt>Impact</dt><dd>XSS blast-radius widened; penalizes Lighthouse Best Practices</dd>
+        <dt>Action</dt><dd>Remove <code>script-src-attr 'unsafe-inline'</code> from both locations. If a specific inline attribute is needed later, use a nonce or move it to an event listener.</dd>
+        <dt>Effort</dt><dd>10 minutes + regression test</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head">
+      <h3 class="finding-title">34 raw <code>.innerHTML</code> writes — XSS surface</h3>
+      <span class="severity sev-high">High</span>
+    </div>
+    <div class="finding-body">
+      <p>Thirty-four <code>innerHTML =</code> assignments across <code>js/app.js</code>, <code>js/categories-wire.js</code>, <code>js/bookmarks-wire.js</code>, and <code>js/ai-search.js</code>. Most concatenate hadith content, user queries, or Supabase response fields into template strings. The ai-search module is properly escaped via <code>_esc()</code>; others rely on the data coming from a trusted source.</p>
+      <dl>
+        <dt>Impact</dt><dd>If a future admin or content-injection vector lets malicious HTML into Supabase, every page that renders it is vulnerable</dd>
+        <dt>Action</dt><dd>Audit each site. Introduce a shared <code>safeHtml()</code> tagged-template helper and replace all raw template-literal <code>innerHTML</code> with it. Prefer <code>textContent</code> where HTML isn't needed.</dd>
+        <dt>Effort</dt><dd>4 hours</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- ═══════════ SECTION: PERFORMANCE ═══════════ -->
+  <h2><span class="num">03</span>Performance</h2>
+  <p class="section-sub">JS/CSS payload, caching, service worker, LCP risk factors.</p>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-val">44 KB</div><div class="kpi-lbl">index.html</div></div>
+    <div class="kpi"><div class="kpi-val">20 KB</div><div class="kpi-lbl">styles.css</div></div>
+    <div class="kpi"><div class="kpi-val">172 KB</div><div class="kpi-lbl">Total JS</div></div>
+    <div class="kpi"><div class="kpi-val">8.6 MB</div><div class="kpi-lbl">popup.mp4</div></div>
+    <div class="kpi"><div class="kpi-val">9</div><div class="kpi-lbl">JS files</div></div>
+    <div class="kpi"><div class="kpi-val">v8</div><div class="kpi-lbl">SW cache</div></div>
+  </div>
+
+  <div class="gb-grid">
+    <div class="gb-col good">
+      <h4>Good</h4>
+      <ul>
+        <li>All non-critical scripts use <code>defer</code></li>
+        <li>Service worker with stale-while-revalidate (v8)</li>
+        <li>Navigation fallback to <code>/offline.html</code></li>
+        <li>Images paired with WebP via <code>&lt;picture&gt;</code></li>
+        <li>Fonts preconnected to Google</li>
+        <li>Long-cache headers on PNG assets (1 year, immutable)</li>
+        <li>Lazy loading on below-fold logo imagery</li>
+      </ul>
+    </div>
+    <div class="gb-col bad">
+      <h4>Needs Work</h4>
+      <ul>
+        <li>26 KB inline CSS blocks repeat-visit cache</li>
+        <li>8.6 MB popup.mp4 committed and shipped</li>
+        <li><code>js/data.js</code> (528 LOC, ~38 KB) ships full hadith index to every visit</li>
+        <li>No <code>font-display: swap</code> on Google Fonts URL</li>
+        <li>No image dimensions on avatar <code>&lt;img&gt;</code> — CLS risk</li>
+        <li>Service worker precaches 22 assets — slows first install</li>
+        <li>Cloudflare Insights beacon runs without <code>defer</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head"><h3 class="finding-title">Static hadith JSON blob bundled into every page</h3><span class="severity sev-high">High</span></div>
+    <div class="finding-body">
+      <p><code>js/data.js</code> is the legacy static source-of-truth while the Supabase migration is in flight. It's 528 lines and loaded on every navigation even though the Supabase + Worker stack already provides the same data on-demand. Ship only what the page needs.</p>
+      <dl>
+        <dt>Action</dt><dd>Complete the Supabase cut-over per CLAUDE.md, then delete <code>js/data.js</code>. Interim: gate behind <code>if (!window.__SB_READY)</code>.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3 class="finding-title">Google Fonts loaded without <code>font-display: swap</code></h3><span class="severity sev-med">Medium</span></div>
+    <div class="finding-body">
+      <p>The Noto Kufi Arabic stylesheet is fetched via <code>?display=swap</code> but the Inter family relies on the system stack (good). Ensure the preconnect + swap combination stays in place and add <code>preload</code> on the WOFF2 file for the Arabic display weight.</p>
+    </div>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3 class="finding-title">No <code>width</code>/<code>height</code> on avatar images</h3><span class="severity sev-med">Medium</span></div>
+    <div class="finding-body">
+      <p><code>#nav-avatar-img</code> has no intrinsic size attributes, only inline CSS. This causes minor Cumulative Layout Shift when the user signs in and the real avatar URL populates.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════ SECTION: SEO ═══════════ -->
+  <h2><span class="num">04</span>SEO</h2>
+  <p class="section-sub">Titles, meta, Open Graph, schema, sitemap, robots, headings.</p>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-val">102</div><div class="kpi-lbl">Sitemap URLs</div></div>
+    <div class="kpi"><div class="kpi-val">8/8</div><div class="kpi-lbl">H1 present</div></div>
+    <div class="kpi"><div class="kpi-val">JSON-LD</div><div class="kpi-lbl">WebSite schema</div></div>
+    <div class="kpi"><div class="kpi-val">OK</div><div class="kpi-lbl">robots.txt</div></div>
+  </div>
+
+  <div class="gb-grid">
+    <div class="gb-col good">
+      <h4>Good</h4>
+      <ul>
+        <li>Unique <code>&lt;title&gt;</code> on every page</li>
+        <li>Canonical URLs set</li>
+        <li>Full Open Graph + Twitter Card meta</li>
+        <li>WebSite + SearchAction JSON-LD</li>
+        <li>102-URL sitemap.xml</li>
+        <li>robots.txt disallows <code>/archive/</code> and <code>/reports/</code></li>
+        <li>One H1 per page, semantic section order</li>
+      </ul>
+    </div>
+    <div class="gb-col bad">
+      <h4>Needs Work</h4>
+      <ul>
+        <li>No <code>Organization</code> or <code>BreadcrumbList</code> schema</li>
+        <li>Category pages lack FAQPage / ItemList schema for hadith groups</li>
+        <li>Missing <code>hreflang</code> tags (Arabic content present but not declared)</li>
+        <li>Meta description on <code>index.html</code> is generic — needs unique pitch</li>
+        <li>Some nav-avatar images have empty <code>alt=""</code> intentionally but screen readers still announce them</li>
+        <li>No <code>&lt;link rel="alternate" type="application/rss+xml"&gt;</code> for a hadith-of-the-day feed</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3 class="finding-title">Missing BreadcrumbList schema on category pages</h3><span class="severity sev-med">Medium</span></div>
+    <div class="finding-body">
+      <p><code>category.html</code> is a deep content page but lacks a <code>BreadcrumbList</code> JSON-LD block. Google rewards breadcrumb schema with rich snippets in SERPs — currently the page renders as a generic blue link.</p>
+      <dl><dt>Action</dt><dd>Inject JSON-LD in <code>category-head.js</code> based on the <code>?cat=</code> param: Home → Categories → {Book Name}.</dd></dl>
+    </div>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3 class="finding-title">Generic homepage meta description</h3><span class="severity sev-med">Medium</span></div>
+    <div class="finding-body">
+      <p>Current: "Authentic, searchable hadiths from Prophet Muhammad (PBUH). Explore timeless guidance by topic, beautifully organised." Good brand voice but low keyword density for the primary target queries ("Sahih al-Bukhari search", "hadith by topic").</p>
+      <dl><dt>Action</dt><dd>Rewrite to 150–160 characters including: Sahih al-Bukhari, 7,277 hadiths, AI search, topic browsing, free.</dd></dl>
+    </div>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3 class="finding-title">No <code>hreflang</code> on bilingual content</h3><span class="severity sev-low">Low</span></div>
+    <div class="finding-body">
+      <p>The site serves both English and Arabic hadith text but declares only <code>lang="en"</code>. Add <code>&lt;html lang="en"&gt;</code> with <code>dir="ltr"</code> and wrap Arabic spans in <code>lang="ar" dir="rtl"</code> so search engines index them separately.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════ SECTION: SECURITY ═══════════ -->
+  <h2><span class="num">05</span>Security</h2>
+  <p class="section-sub">Headers, CSP, CORS, secrets, input handling, auth surface.</p>
+
+  <div class="gb-grid">
+    <div class="gb-col good">
+      <h4>Good</h4>
+      <ul>
+        <li>Strict-Transport-Security (1 year, includeSubDomains, preload)</li>
+        <li><code>X-Frame-Options: DENY</code> + <code>frame-ancestors 'none'</code></li>
+        <li><code>X-Content-Type-Options: nosniff</code></li>
+        <li><code>Referrer-Policy: strict-origin-when-cross-origin</code></li>
+        <li><code>Permissions-Policy</code> locks geolocation/mic/camera/payment</li>
+        <li>Worker uses allow-list CORS (no wildcard in prod)</li>
+        <li>Worker secrets managed via <code>wrangler secret put</code></li>
+        <li>Service-role key never leaves the Worker</li>
+        <li>Query length guard (500 chars) on AI endpoint</li>
+      </ul>
+    </div>
+    <div class="gb-col bad">
+      <h4>Needs Work</h4>
+      <ul>
+        <li><code>script-src-attr 'unsafe-inline'</code> in CSP</li>
+        <li>Pages Function <code>/api/ai-search</code> uses <code>Access-Control-Allow-Origin: *</code></li>
+        <li>No rate limiting on <code>/api/ai-search</code> (Worker or Pages)</li>
+        <li>No request signing — anyone can hit the Worker from the allow-list origins</li>
+        <li>Missing <code>Cache-Control: no-store</code> on authenticated responses</li>
+        <li>No Content-Security-Policy-Report-Only endpoint</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="finding high">
+    <div class="finding-head"><h3 class="finding-title">No rate limit on AI search endpoint</h3><span class="severity sev-high">High</span></div>
+    <div class="finding-body">
+      <p>Both <code>functions/api/ai-search.js</code> and <code>worker/src/index.js</code> accept unlimited POST traffic. An attacker with a loop can burn through the OpenAI embedding + chat budget in minutes. Query length is capped but request count is not.</p>
+      <dl>
+        <dt>Action</dt><dd>Add a Cloudflare Turnstile challenge on the AI search form, OR use the Workers KV-backed rate limiter (60 req/hour per IP). Also set a monthly OpenAI spend cap in the dashboard.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3 class="finding-title">Wildcard CORS on Pages Function</h3><span class="severity sev-med">Medium</span></div>
+    <div class="finding-body">
+      <p><code>functions/api/ai-search.js</code> line 35 sets <code>Access-Control-Allow-Origin: '*'</code>. The underlying Worker has a proper allow-list, but the Pages proxy invalidates that defense-in-depth layer by exposing the same endpoint to any origin.</p>
+      <dl><dt>Action</dt><dd>Echo the request Origin only if it's in an allow-list matching the Worker's. Fallback to <code>https://timelesshadith.com</code>.</dd></dl>
+    </div>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3 class="finding-title">Supabase anon key hard-coded in client JS</h3><span class="severity sev-low">Low (by design)</span></div>
+    <div class="finding-body">
+      <p><code>js/supabase-auth.js</code> and <code>js/supabase-data.js</code> both contain the Supabase anon JWT. This is <em>expected</em> — anon keys are public and protected by Row Level Security. <strong>Verify RLS policies are actually enforced on the <code>chunks</code>, <code>hadiths</code>, and <code>bookmarks</code> tables</strong> before trusting this. An absent RLS policy here would be a critical exfiltration vector.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════ SECTION: CSS ═══════════ -->
+  <h2><span class="num">06</span>CSS Architecture</h2>
+  <p class="section-sub">Structure, specificity, tokens, dark mode, consistency.</p>
+
+  <div class="gb-grid">
+    <div class="gb-col good">
+      <h4>Good</h4>
+      <ul>
+        <li>Single design-token system via CSS custom properties</li>
+        <li>Dark mode via <code>[data-theme="dark"]</code> attribute</li>
+        <li>Accent colors documented with AA-contrast notes</li>
+        <li>Responsive via <code>clamp()</code> for fluid type</li>
+        <li>Apple-style 16px border-radius standard</li>
+        <li>Only 7 <code>!important</code> declarations</li>
+      </ul>
+    </div>
+    <div class="gb-col bad">
+      <h4>Needs Work</h4>
+      <ul>
+        <li>26 KB inline CSS in index.html, 4.5 KB each in other pages</li>
+        <li>No PostCSS / build step — CSS shipped unminified</li>
+        <li>17 inline <code>style="…"</code> attributes across 5 pages</li>
+        <li>Duplicate spacing/typography tokens between inline and <code>styles.css</code></li>
+        <li>Dark-mode overrides scattered — no single source of truth</li>
+        <li>Media queries use raw pixel breakpoints instead of tokens</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3 class="finding-title">No CSS minification / build pipeline</h3><span class="severity sev-med">Medium</span></div>
+    <div class="finding-body">
+      <p><code>css/styles.css</code> is 20 KB uncompressed. A run through Lightning CSS or esbuild would drop it to ~12 KB and inline autoprefixer fallbacks only where needed.</p>
+      <dl><dt>Action</dt><dd>Add a minimal <code>build.js</code> that runs on the Cloudflare Pages build step. Target is &lt;15 KB CSS for first paint.</dd></dl>
+    </div>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3 class="finding-title">Inline <code>style</code> attributes on 17 elements</h3><span class="severity sev-med">Medium</span></div>
+    <div class="finding-body">
+      <p>Sprinkled through index.html (10), categories (2), category (2), bookmarks (2), about (1). These are mostly avatar sizing and fallback visibility toggles. They bypass the design token system and interact with CSP hardening.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════ SECTION: A11Y ═══════════ -->
+  <h2><span class="num">07</span>Accessibility (WCAG 2.1 AA)</h2>
+  <p class="section-sub">Contrast, ARIA, keyboard, screen reader, touch targets.</p>
+
+  <div class="gb-grid">
+    <div class="gb-col good">
+      <h4>Good</h4>
+      <ul>
+        <li>All meaningful images have descriptive alt text</li>
+        <li>Skip-to-content link present in nav</li>
+        <li>Form inputs have associated labels or <code>aria-label</code></li>
+        <li>Accent colors meet AA contrast on white and dark backgrounds</li>
+        <li>Buttons use real <code>&lt;button&gt;</code> elements, not divs</li>
+        <li>One H1 per page, logical heading hierarchy</li>
+        <li><code>aria-live="polite"</code> on the AI answer region</li>
+      </ul>
+    </div>
+    <div class="gb-col bad">
+      <h4>Needs Work</h4>
+      <ul>
+        <li>Decorative avatar placeholder images should have <code>role="presentation"</code></li>
+        <li>No visible focus ring on custom AI example chips</li>
+        <li>Theme toggle missing <code>aria-pressed</code> state</li>
+        <li>Carousel arrows need <code>aria-controls</code> linking to the carousel region</li>
+        <li>Mobile touch targets on pagination dots measure &lt; 44×44 px</li>
+        <li>No <code>prefers-reduced-motion</code> override for the fade-up animation</li>
+        <li>Live regions don't announce hadith-count changes</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3 class="finding-title">Missing <code>prefers-reduced-motion</code> guard</h3><span class="severity sev-med">Medium</span></div>
+    <div class="finding-body">
+      <p>The new <code>.ai-answer-card</code> uses a <code>fade-up</code> keyframe animation on every answer render. Users who've requested reduced motion in their OS will still see it — a WCAG 2.3.3 violation.</p>
+      <dl><dt>Action</dt><dd>Wrap the animation in <code>@media (prefers-reduced-motion: no-preference)</code> in <code>js/ai-search.js</code>.</dd></dl>
+    </div>
+  </div>
+
+  <!-- ═══════════ SECTION: COMPLIANCE ═══════════ -->
+  <h2><span class="num">08</span>Compliance & Privacy</h2>
+
+  <div class="gb-grid">
+    <div class="gb-col good">
+      <h4>Good</h4>
+      <ul>
+        <li>Dedicated <code>privacy.html</code> and <code>terms.html</code></li>
+        <li>No third-party analytics beyond Cloudflare Insights</li>
+        <li>Cloudflare Insights is privacy-preserving (no cookies)</li>
+        <li>Google SSO uses redirect flow, no password handling</li>
+        <li>Service worker respects same-origin boundaries</li>
+      </ul>
+    </div>
+    <div class="gb-col bad">
+      <h4>Needs Work</h4>
+      <ul>
+        <li>No cookie consent banner (borderline-required under GDPR/ePrivacy if expanding to EU users)</li>
+        <li>Privacy policy does not enumerate OpenAI as a data processor</li>
+        <li>No data-retention clause on user queries hitting <code>/api/ai-search</code></li>
+        <li>No DPA link for enterprise users</li>
+        <li>Terms page lacks dispute-resolution jurisdiction</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="finding med">
+    <div class="finding-head"><h3 class="finding-title">OpenAI not disclosed as sub-processor in privacy policy</h3><span class="severity sev-med">Medium</span></div>
+    <div class="finding-body">
+      <p>User queries from the search bar are sent to OpenAI via the Worker. The privacy policy needs a "Third-Party Services" section naming OpenAI, the data transferred (the user question, no PII), and a retention note.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════ SECTION: BEST PRACTICES ═══════════ -->
+  <h2><span class="num">09</span>Best Practices & Code Hygiene</h2>
+
+  <div class="finding good">
+    <div class="finding-head"><h3 class="finding-title">Clean Worker architecture</h3><span class="severity sev-good">Strength</span></div>
+    <div class="finding-body">
+      <p>The <code>worker/src/index.js</code> is well-organized: single responsibility, clear section dividers, validates input, uses retrieval + grounded prompts with explicit anti-hallucination rules, and emits structured JSON with latency metrics.</p>
+    </div>
+  </div>
+
+  <div class="finding good">
+    <div class="finding-head"><h3 class="finding-title">Conventional commits + CLAUDE.md workflow</h3><span class="severity sev-good">Strength</span></div>
+    <div class="finding-body">
+      <p>Commit history follows the <code>feat/fix/style/chore</code> convention. The CLAUDE.md guardrails (auto-commit, stop-before-push) produce auditable phase boundaries — unusual and valuable on a solo project.</p>
+    </div>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3 class="finding-title">No automated test suite</h3><span class="severity sev-low">Low</span></div>
+    <div class="finding-body">
+      <p>Zero unit, integration, or end-to-end tests in the repo. On a static site this is acceptable but the Worker + Pages Function layer deserves a thin smoke test.</p>
+      <dl><dt>Action</dt><dd>Add Vitest + a single E2E script that POSTs to <code>/api/ai-search</code> in CI.</dd></dl>
+    </div>
+  </div>
+
+  <div class="finding low">
+    <div class="finding-head"><h3 class="finding-title">Stale audit reports in <code>reports/</code></h3><span class="severity sev-low">Low</span></div>
+    <div class="finding-body">
+      <p>Seven prior audit/implementation HTML reports live under <code>reports/</code>. These are properly disallowed in robots.txt but still ship to production. Move to <code>archive/</code> or gitignore after sign-off.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════ SECTION: ROADMAP ═══════════ -->
+  <h2><span class="num">10</span>Prioritized Remediation Plan</h2>
+  <p class="section-sub">Sequenced action plan. Each row is a discrete PR. P0 = ship this week.</p>
+
+  <table class="roadmap">
+    <thead>
+      <tr>
+        <th style="width:60px">#</th>
+        <th>Action</th>
+        <th style="width:70px">Priority</th>
+        <th style="width:80px">Effort</th>
+        <th style="width:110px">Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>01</td><td>Restore Light theme as default on first visit; bump migration key to v3</td><td><span class="tag tag-p0">P0</span></td><td>15 min</td><td>Regression</td></tr>
+      <tr><td>02</td><td>Remove or re-encode 8.6 MB popup.mp4</td><td><span class="tag tag-p0">P0</span></td><td>5 min</td><td>Performance</td></tr>
+      <tr><td>03</td><td>Remove <code>script-src-attr 'unsafe-inline'</code> from CSP</td><td><span class="tag tag-p0">P0</span></td><td>10 min</td><td>Security</td></tr>
+      <tr><td>04</td><td>Add Turnstile or KV rate-limit on <code>/api/ai-search</code></td><td><span class="tag tag-p1">P1</span></td><td>2 hr</td><td>Security</td></tr>
+      <tr><td>05</td><td>Extract 26 KB inline CSS from index.html → <code>css/home.css</code></td><td><span class="tag tag-p1">P1</span></td><td>2 hr</td><td>Performance</td></tr>
+      <tr><td>06</td><td>Introduce <code>safeHtml()</code> helper; refactor 34 innerHTML sites</td><td><span class="tag tag-p1">P1</span></td><td>4 hr</td><td>Security</td></tr>
+      <tr><td>07</td><td>Echo allow-listed Origin on Pages Function CORS</td><td><span class="tag tag-p1">P1</span></td><td>15 min</td><td>Security</td></tr>
+      <tr><td>08</td><td>Add BreadcrumbList JSON-LD on category.html</td><td><span class="tag tag-p1">P1</span></td><td>30 min</td><td>SEO</td></tr>
+      <tr><td>09</td><td>Complete Supabase migration; delete <code>js/data.js</code></td><td><span class="tag tag-p1">P1</span></td><td>6 hr</td><td>Performance</td></tr>
+      <tr><td>10</td><td>Rewrite homepage meta description for keyword coverage</td><td><span class="tag tag-p2">P2</span></td><td>20 min</td><td>SEO</td></tr>
+      <tr><td>11</td><td>Add <code>prefers-reduced-motion</code> guard around animations</td><td><span class="tag tag-p2">P2</span></td><td>30 min</td><td>A11y</td></tr>
+      <tr><td>12</td><td>Declare OpenAI as sub-processor in privacy policy</td><td><span class="tag tag-p2">P2</span></td><td>30 min</td><td>Compliance</td></tr>
+      <tr><td>13</td><td>Add minimal CSS build step (Lightning CSS)</td><td><span class="tag tag-p2">P2</span></td><td>2 hr</td><td>CSS</td></tr>
+      <tr><td>14</td><td>Add Vitest smoke test for Worker + Pages Function</td><td><span class="tag tag-p2">P2</span></td><td>3 hr</td><td>Quality</td></tr>
+      <tr><td>15</td><td>Add <code>aria-pressed</code> on theme toggle</td><td><span class="tag tag-p2">P2</span></td><td>15 min</td><td>A11y</td></tr>
+      <tr><td>16</td><td>Add <code>hreflang</code> + <code>lang="ar" dir="rtl"</code> for Arabic spans</td><td><span class="tag tag-p3">P3</span></td><td>2 hr</td><td>SEO</td></tr>
+      <tr><td>17</td><td>Inline-CSS audit: move 17 <code>style="…"</code> attrs to classes</td><td><span class="tag tag-p3">P3</span></td><td>1 hr</td><td>CSS</td></tr>
+      <tr><td>18</td><td>Add 44×44 px minimum touch targets on dot pagination</td><td><span class="tag tag-p3">P3</span></td><td>30 min</td><td>A11y</td></tr>
+      <tr><td>19</td><td>Add <code>Organization</code> schema site-wide</td><td><span class="tag tag-p3">P3</span></td><td>20 min</td><td>SEO</td></tr>
+      <tr><td>20</td><td>Archive <code>reports/</code> directory</td><td><span class="tag tag-p4">P4</span></td><td>5 min</td><td>Hygiene</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════════ SECTION: NEXT SPRINT ═══════════ -->
+  <h2><span class="num">11</span>Recommended Next Sprint</h2>
+
+  <div class="callout">
+    <h3>Two-Week Sprint Proposal</h3>
+    <p><strong>Week 1 — Ship the P0 + top P1 work:</strong></p>
+    <ol>
+      <li>Restore Light default, remove popup.mp4, close CSP gap (Day 1)</li>
+      <li>Extract inline CSS, add Turnstile, fix CORS echo (Day 2–3)</li>
+      <li>Introduce <code>safeHtml()</code>, refactor innerHTML sites (Day 4–5)</li>
+    </ol>
+    <p><strong>Week 2 — SEO + compliance polish:</strong></p>
+    <ol>
+      <li>BreadcrumbList schema + hreflang rollout (Day 6–7)</li>
+      <li>Meta rewrites + privacy-policy OpenAI disclosure (Day 8)</li>
+      <li>CSS build step + Vitest smoke tests (Day 9)</li>
+      <li>Regression QA across the 8 pages + Lighthouse verification (Day 10)</li>
+    </ol>
+  </div>
+
+  <h2><span class="num">12</span>Target Metrics After Remediation</h2>
+
+  <div class="scoreboard">
+    <div class="score-card"><div class="score-label">Performance</div><div class="score-val">92<small>/100</small></div><div class="score-note">+14 pts</div></div>
+    <div class="score-card"><div class="score-label">SEO</div><div class="score-val">95<small>/100</small></div><div class="score-note">+7 pts</div></div>
+    <div class="score-card"><div class="score-label">Security</div><div class="score-val">94<small>/100</small></div><div class="score-note">+12 pts</div></div>
+    <div class="score-card"><div class="score-label">CSS Arch.</div><div class="score-val">86<small>/100</small></div><div class="score-note">+12 pts</div></div>
+    <div class="score-card"><div class="score-label">A11y / WCAG</div><div class="score-val">90<small>/100</small></div><div class="score-note">+10 pts</div></div>
+    <div class="score-card"><div class="score-label">Compliance</div><div class="score-val">92<small>/100</small></div><div class="score-note">+7 pts</div></div>
+    <div class="score-card"><div class="score-label">Code Quality</div><div class="score-val">89<small>/100</small></div><div class="score-note">+8 pts</div></div>
+    <div class="score-card"><div class="score-label">Overall</div><div class="score-val">A<small>-</small></div><div class="score-note">from B+</div></div>
+  </div>
+
+  <footer>
+    Timeless Hadith · Full Platform Audit · April 11, 2026 · Codebase scope · Prepared for Syed
+  </footer>
+</div>
+</body>
+</html>

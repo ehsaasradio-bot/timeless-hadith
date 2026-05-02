@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img"
+     aria-labelledby="og-t og-d">
+  <title id="og-t">Timeless Hadith Coin Shop</title>
+  <desc id="og-d">Premium rare coins and bullion — silver, gold, copper, bronze.</desc>
+  <defs>
+    <linearGradient id="ogbg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#0F1B35"/>
+      <stop offset="60%"  stop-color="#1042B3"/>
+      <stop offset="100%" stop-color="#3471FF"/>
+    </linearGradient>
+    <radialGradient id="oggold" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#FFE9A8" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#C9A84C" stop-opacity="0.85"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#ogbg)"/>
+  <g fill="none" stroke="#FFFFFF" stroke-opacity="0.10">
+    <circle cx="950" cy="315" r="280"/>
+    <circle cx="950" cy="315" r="220"/>
+    <circle cx="950" cy="315" r="160"/>
+  </g>
+  <g>
+    <circle cx="950" cy="315" r="140" fill="url(#oggold)"/>
+    <circle cx="950" cy="315" r="140" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-opacity="0.6"/>
+    <circle cx="950" cy="315" r="120" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0.35"/>
+    <text x="950" y="325" font-family="Inter, system-ui, sans-serif" text-anchor="middle"
+          font-size="32" font-weight="800" fill="#3D2D04" letter-spacing="0.04em">TH</text>
+  </g>
+  <g font-family="Inter, system-ui, sans-serif" fill="#FFFFFF">
+    <text x="80" y="260" font-size="22" font-weight="600" letter-spacing="0.18em" opacity="0.7">
+      TIMELESS HADITH
+    </text>
+    <text x="80" y="340" font-size="64" font-weight="800" letter-spacing="-0.02em">
+      Premium Rare Coins
+    </text>
+    <text x="80" y="412" font-size="64" font-weight="800" letter-spacing="-0.02em">
+      &amp; Bullion.
+    </text>
+    <text x="80" y="476" font-size="22" font-weight="500" opacity="0.85">
+      Authenticated · Certified · Shipped Worldwide
+    </text>
+  </g>
+  <g font-family="Inter, system-ui, sans-serif" fill="#FFFFFF" opacity="0.55">
+    <text x="80" y="570" font-size="14" letter-spacing="0.12em">timelesshadith.com / shop</text>
+  </g>
+</svg>

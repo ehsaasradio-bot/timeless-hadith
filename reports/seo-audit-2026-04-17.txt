@@ -1,0 +1,704 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║         TIMELESS HADITH — SEO AUDIT REPORT                                    ║
+║         Generated: 2026-04-17                                                 ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. DETAILED PAGE-BY-PAGE SEO ANALYSIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ 1. index.html (HOMEPAGE)                                                      │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Title Tag:
+  "Timeless Hadith — Prophetic Guidance for Every Heart"
+  Status: ✓ Present, compelling, 55 chars (optimal 50-60)
+
+Meta Description:
+  "Authentic, searchable hadiths from Prophet Muhammad (PBUH). Explore timeless
+   guidance by topic, beautifully organised."
+  Status: ✓ Present, 139 chars (optimal 150-160)
+
+Canonical:
+  "https://timelesshadith.com/"
+  Status: ✓ Present and correct
+
+Open Graph Tags:
+  og:title: "Timeless Hadith — Prophetic Guidance for Every Heart" ✓
+  og:description: "Authentic, searchable hadiths..." ✓
+  og:image: "https://timelesshadith.com/og-image.png" ✓
+  og:url: "https://timelesshadith.com/" ✓
+  og:site_name: "Timeless Hadith" ✓
+  og:locale: "en_US" ✓
+
+Twitter Card Tags:
+  twitter:card: "summary_large_image" ✓
+  twitter:title: "Timeless Hadith — Prophetic Guidance for Every Heart" ✓
+  twitter:description: "Authentic, searchable hadiths..." ✓
+  twitter:image: "https://timelesshadith.com/og-image.png" ✓
+
+Robots Meta Tag:
+  "index, follow" ✓
+
+H1 Tag:
+  "Guidance from the Prophet ﷺ"
+  Status: ✓ Present and appropriate
+
+Heading Structure:
+  H2: 3 | H3: 1 | H4: 0 | H5: 0 | H6: 0
+  Status: ⚠ Moderate structure, could use more H3s for hierarchy
+
+JSON-LD Schema:
+  Status: ✓ Present
+  Types: WebSite (SearchAction), Organization, FAQPage
+  Assessment: Comprehensive and well-implemented
+
+Body Content Length:
+  151 words
+  Status: ⚠ THIN CONTENT — Below 300-word threshold. Homepage may not rank well
+           for broader terms. Consider expanding with more value proposition text.
+
+Key Findings:
+  ✓ Excellent metadata across all OG and Twitter tags
+  ✓ Proper canonical and robots directives
+  ✓ Good schema markup for FAQ and organization
+  ⚠ Homepage body text is thin (151 words) — major ranking risk
+  ⚠ Limited heading hierarchy
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ 2. about.html (ABOUT US)                                                      │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Title Tag:
+  "About Us — Timeless Hadith | Authentic Islamic Guidance"
+  Status: ✓ Present, 54 chars (optimal range)
+
+Meta Description:
+  "Learn about Timeless Hadith — our mission to make authentic prophetic
+   guidance accessible to every Muslim. Explore verified hadiths..."
+  Status: ✓ Present, 158 chars (good)
+
+Canonical:
+  "https://timelesshadith.com/about.html" ✓
+
+Open Graph Tags:
+  og:title: "About Us — Timeless Hadith | Authentic Islamic Guidance" ✓
+  og:description: Present ✓
+  og:image: "https://timelesshadith.com/og-image.png" ✓
+  og:url: "https://timelesshadith.com/about.html" ✓
+
+Twitter Card Tags:
+  twitter:card: Missing ⚠
+  twitter:title: Missing ⚠
+  twitter:description: Missing ⚠
+  twitter:image: Missing ⚠
+
+Robots Meta Tag:
+  "index, follow" ✓
+
+H1 Tag:
+  "Authentic Prophetic Guidance, Accessible to Every Heart" ✓
+
+Heading Structure:
+  H2: 7 | H3: 7 | H4: 0 | H5: 0 | H6: 0
+  Status: ✓ Good hierarchy
+
+JSON-LD Schema:
+  Status: ✓ Present
+
+Body Content Length:
+  528 words ✓ Good content depth
+
+Key Findings:
+  ✓ Solid metadata and comprehensive content
+  ✓ Good heading hierarchy (H2/H3)
+  ✓ Strong word count (528 words)
+  ⚠ Missing all Twitter Card tags — reduces social sharing potential
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ 3. blog.html (BLOG)                                                           │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Title Tag:
+  "Islamic Blog — Timeless Hadith" ✓
+
+Meta Description:
+  "Explore the Timeless Hadith blog — articles on Islamic lifestyle, Quran &
+   Tafsir, Seerah, Fiqh, and spirituality..." ✓
+
+Canonical:
+  MISSING ⚠⚠ CRITICAL — Blog page lacks canonical URL
+
+Open Graph Tags:
+  og:title: "Blog — Timeless Hadith" ✓
+  og:description: Present ✓
+  og:image: MISSING ⚠
+  og:url: "https://timelesshadith.com/blog.html" ✓
+
+Twitter Card Tags:
+  twitter:card: "summary_large_image" ✓
+  Other Twitter fields: Missing ⚠
+
+Robots Meta Tag:
+  MISSING ⚠ No robots directive specified
+
+H1 Tag:
+  "Insights for the" (incomplete/truncated?) ⚠
+
+Heading Structure:
+  H2: 0 | H3: 0 | H4: 0 | H5: 0 | H6: 0
+  Status: ⚠ No heading hierarchy present — poor structure
+
+JSON-LD Schema:
+  MISSING ⚠
+
+Body Content Length:
+  675 words ✓ Good depth
+
+Key Findings:
+  ✓ Good word count and description
+  ⚠ MISSING canonical tag — duplicate content risk
+  ⚠ MISSING og:image — poor social preview
+  ⚠ MISSING robots directive — unclear crawl intent
+  ⚠ H1 appears incomplete/truncated
+  ⚠ No heading hierarchy at all
+  ⚠ Missing JSON-LD schema
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ 4. bookmarks.html (SAVED HADITHS)                                             │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Title Tag:
+  "My Saved Hadiths — Timeless Hadith" ✓
+
+Meta Description:
+  "View your saved hadiths on Timeless Hadith. Access your personal collection
+   of bookmarked prophetic guidance." ✓
+
+Canonical:
+  "https://timelesshadith.com/bookmarks.html" ✓
+
+Open Graph Tags:
+  og:title: "My Saved Hadiths — Timeless Hadith" ✓
+  og:description: Present ✓
+  og:image: "https://timelesshadith.com/og-image.png" ✓
+  og:url: "https://timelesshadith.com/bookmarks.html" ✓
+
+Twitter Card Tags:
+  twitter:card: "summary_large_image" ✓
+  twitter:title: "My Saved Hadiths — Timeless Hadith" ✓
+  twitter:description: Present ✓
+  twitter:image: "https://timelesshadith.com/og-image.png" ✓
+
+Robots Meta Tag:
+  "noindex, nofollow" ✓ (Correct — private user page)
+
+H1 Tag:
+  "Saved Hadiths" ✓
+
+Heading Structure:
+  H2: 0 | H3: 0 | H4: 0 | H5: 0 | H6: 0
+  (Expected — simple user page)
+
+JSON-LD Schema:
+  MISSING (acceptable for private user content)
+
+Body Content Length:
+  44 words ⚠ Very thin (expected for user page with no content)
+
+Key Findings:
+  ✓ Excellent metadata for a user/private page
+  ✓ Correctly blocked from indexing (noindex, nofollow)
+  ✓ All OG and Twitter tags present
+  ✓ Proper canonical
+  ✓ Appropriate for private content
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ 5. categories.html (BROWSE TOPICS)                                            │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Title Tag:
+  "Browse Hadith Topics — Timeless Hadith" ✓
+
+Meta Description:
+  "Browse all hadith topics and categories. Explore authentic sayings of Prophet
+   Muhammad (PBUH) organized by theme..." ✓
+
+Canonical:
+  "https://timelesshadith.com/categories.html" ✓
+
+Open Graph Tags:
+  og:title: "Browse Hadith Topics — Timeless Hadith" ✓
+  og:description: Present ✓
+  og:image: "https://timelesshadith.com/og-image.png" ✓
+  og:url: "https://timelesshadith.com/categories.html" ✓
+
+Twitter Card Tags:
+  All MISSING ⚠
+
+Robots Meta Tag:
+  "index, follow" ✓
+
+H1 Tag:
+  "Authentic Hadith Collection" ✓
+
+Heading Structure:
+  H2: 0 | H3: 0 | H4: 0 | H5: 0 | H6: 0
+  Status: ⚠ No subheadings present
+
+JSON-LD Schema:
+  Status: ✓ Present
+
+Body Content Length:
+  62 words ⚠ VERY THIN — below 300-word threshold
+
+Key Findings:
+  ✓ Good title, description, canonical, OG tags
+  ✓ Proper indexing directives
+  ✓ Schema present
+  ⚠ MISSING Twitter Card tags
+  ⚠ VERY thin content (62 words) — page may struggle for rankings
+  ⚠ No heading hierarchy
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ 6. category.html (CATEGORY DETAIL PAGE)                                       │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Title Tag:
+  "Hadith by Topic — Timeless Hadith" ✓
+
+Meta Description:
+  "Explore authentic hadiths organized by Islamic topic. Verified sayings of the
+   Prophet Muhammad (PBUH)..." ✓
+
+Canonical:
+  "https://timelesshadith.com/category.html" ⚠ Generic canonical — may be
+  problematic for parameterized pages (cat=??)
+
+Open Graph Tags:
+  og:title: "Hadith by Topic — Timeless Hadith" ✓
+  og:description: Present ✓
+  og:image: "https://timelesshadith.com/og-image.png" ✓
+  og:url: "https://timelesshadith.com/category.html" ⚠ Not parameter-aware
+
+Twitter Card Tags:
+  All MISSING ⚠
+
+Robots Meta Tag:
+  MISSING ⚠ No robots directive — unclear crawl intent
+
+H1 Tag:
+  "Loading…" ⚠ Placeholder text — filled dynamically via JavaScript
+
+Heading Structure:
+  H2: 0 | H3: 0 | H4: 0 | H5: 0 | H6: 0
+  (Likely filled via JS)
+
+JSON-LD Schema:
+  Status: ✓ Present
+
+Body Content Length:
+  51 words ⚠ VERY THIN
+
+Key Findings:
+  ✓ Base metadata present
+  ✓ Schema markup included
+  ⚠ CRITICAL: H1 and heading structure are JavaScript-rendered placeholders
+  ⚠ CRITICAL: Canonical URL doesn't account for query parameters (cat=?)
+  ⚠ MISSING robots directive
+  ⚠ Missing Twitter Card tags
+  ⚠ Very thin pre-render content (51 words)
+  ⚠ Likely SEO risk if JS rendering is not fully crawlable by Google
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ 7. prayer-times.html (PRAYER TIMES & ZAKAT)                                   │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Title Tag:
+  "Prayer Times & Zakat Calculator — Timeless Hadith" ✓
+
+Meta Description:
+  MISSING ⚠⚠ CRITICAL for utility feature page
+
+Canonical:
+  MISSING ⚠
+
+Open Graph Tags:
+  og:title: "Prayer Times & Zakat Calculator — Timeless Hadith" ✓
+  og:description: "Live prayer times using the Umm al-Qura method..." ✓
+  og:image: MISSING ⚠
+  og:url: "https://timelesshadith.com/prayer-times.html" ✓
+
+Twitter Card Tags:
+  twitter:card: "summary_large_image" ✓
+  Other fields: MISSING ⚠
+
+Robots Meta Tag:
+  MISSING ⚠
+
+H1 Tag:
+  "Stay on time." ⚠ Vague/generic
+
+Heading Structure:
+  H2: 0 | H3: 0 | H4: 0 | H5: 0 | H6: 0
+
+JSON-LD Schema:
+  MISSING ⚠
+
+Body Content Length:
+  1368 words ✓ Excellent depth
+
+Key Findings:
+  ✓ Good word count and title
+  ✓ Some OG metadata present
+  ⚠ MISSING meta description — major ranking impact
+  ⚠ MISSING canonical URL
+  ⚠ MISSING og:image
+  ⚠ MISSING robots directive
+  ⚠ MISSING JSON-LD schema
+  ⚠ H1 is too generic ("Stay on time")
+  ⚠ No heading hierarchy
+  NOTE: This page has rich utility but poor SEO optimization
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ 8. privacy.html (PRIVACY POLICY)                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Title Tag:
+  "Privacy Policy — Timeless Hadith" ✓
+
+Meta Description:
+  "Read the Timeless Hadith privacy policy. We collect no personal data. Your
+   hadith bookmarks are stored locally on your device." ✓
+
+Canonical:
+  "https://timelesshadith.com/privacy.html" ✓
+
+Open Graph Tags:
+  og:title: "Privacy Policy — Timeless Hadith" ✓
+  og:description: Present ✓
+  og:image: "https://timelesshadith.com/og-image.png" ✓
+  og:url: "https://timelesshadith.com/privacy.html" ✓
+
+Twitter Card Tags:
+  All MISSING ⚠
+
+Robots Meta Tag:
+  "noindex, follow" ✓ (Correct — legal page, no need to rank)
+
+H1 Tag:
+  "Privacy Policy" ✓
+
+Heading Structure:
+  H2: 12 | H3: 5 | H4: 0 | H5: 0 | H6: 0
+  Status: ✓ Excellent structure for legal document
+
+JSON-LD Schema:
+  Status: ✓ Present
+
+Body Content Length:
+  1193 words ✓ Comprehensive
+
+Key Findings:
+  ✓ Excellent structure and content depth
+  ✓ Properly blocked from ranking (noindex, follow allows internal linking)
+  ✓ All critical OG tags present
+  ✓ Good heading hierarchy
+  ⚠ Missing Twitter Card tags (low priority for legal page)
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ 9. terms.html (TERMS OF USE)                                                  │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Title Tag:
+  "Terms of Use — Timeless Hadith" ✓
+
+Meta Description:
+  "Terms of use for Timeless Hadith. Hadith texts are part of the public
+   Islamic tradition. Site design is MIT licensed." ✓
+
+Canonical:
+  "https://timelesshadith.com/terms.html" ✓
+
+Open Graph Tags:
+  og:title: "Terms of Use — Timeless Hadith" ✓
+  og:description: Present ✓
+  og:image: "https://timelesshadith.com/og-image.png" ✓
+  og:url: "https://timelesshadith.com/terms.html" ✓
+
+Twitter Card Tags:
+  All MISSING ⚠
+
+Robots Meta Tag:
+  "noindex, follow" ✓
+
+H1 Tag:
+  "Terms of Use" ✓
+
+Heading Structure:
+  H2: 12 | H3: 4 | H4: 0 | H5: 0 | H6: 0
+  Status: ✓ Excellent structure
+
+JSON-LD Schema:
+  Status: ✓ Present
+
+Body Content Length:
+  906 words ✓ Comprehensive
+
+Key Findings:
+  ✓ Excellent content and structure
+  ✓ Properly blocked from ranking
+  ✓ All OG metadata present
+  ⚠ Missing Twitter Card tags (low priority)
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ 10. admin.html (ADMIN PANEL)                                                  │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Title Tag:
+  "Admin — Timeless Hadith" ⚠ Very generic
+
+Meta Description:
+  MISSING ⚠
+
+Canonical:
+  MISSING ⚠
+
+Open Graph Tags:
+  All MISSING ⚠ (acceptable for non-public page)
+
+Twitter Card Tags:
+  All MISSING ⚠
+
+Robots Meta Tag:
+  "noindex, nofollow" ✓ (Correct — not public)
+
+H1 Tag:
+  "Admin Access" ✓
+
+Heading Structure:
+  H2: 11 | H3: 6 | H4: 3 (acceptable for admin area)
+
+JSON-LD Schema:
+  MISSING (acceptable for admin area)
+
+Body Content Length:
+  3604 words ✓ (admin documentation)
+
+Key Findings:
+  ✓ Correctly blocked from indexing
+  ✓ Comprehensive heading hierarchy
+  ⚠ Missing metadata (acceptable for non-public page)
+  ⚠ Admin title is generic
+  NOTE: This is fine — admin pages don't need SEO optimization
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ 11. 404.html (PAGE NOT FOUND)                                                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Title Tag:
+  "Page Not Found — Timeless Hadith" ✓
+
+Meta Description:
+  "The page you're looking for has drifted away. Search authentic hadiths, browse
+   trending topics, or return to the Timeless Hadith homepage." ✓
+
+Canonical:
+  "https://timelesshadith.com/" ✓ (Routes to homepage)
+
+Open Graph Tags:
+  og:title: "Page Not Found — Timeless Hadith" ✓
+  og:description: Present ✓
+  og:image: "https://timelesshadith.com/og-image.png" ✓
+  og:url: "https://timelesshadith.com/404.html" ✓
+
+Twitter Card Tags:
+  twitter:card: "summary_large_image" ✓
+  twitter:title: Present ✓
+  twitter:description: Present ✓
+  twitter:image: Present ✓
+
+Robots Meta Tag:
+  "noindex, follow" ✓
+
+H1 Tag:
+  "This page has" (incomplete?) ⚠
+
+Heading Structure:
+  H2: 1 | H3: 6
+
+JSON-LD Schema:
+  Status: ✓ Present
+
+Body Content Length:
+  643 words ✓ Good for error page
+
+Key Findings:
+  ✓ Well-handled error page
+  ✓ All metadata present
+  ✓ Helpful content for lost users
+  ✓ Properly blocked from indexing
+  ⚠ H1 appears incomplete
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. GLOBAL SEO ASSETS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+robots.txt:
+  Status: ✓ EXISTS
+  Contents:
+    - User-agent: * (all bots)
+    - Allow: / (all content indexable)
+    - Disallow: /404.html, /offline.html, /archive/, /reports/
+    - Sitemap: https://timelesshadith.com/sitemap.xml
+  Assessment: ✓ Well-configured, appropriate exclusions
+
+sitemap.xml:
+  Status: ✓ EXISTS
+  Contents:
+    - Core pages (index, categories, about, privacy, terms)
+    - 300+ category parameter URLs (category.html?cat=book-X)
+  Assessment: ✓ Comprehensive, includes parametric URLs for all books
+  Last Modified: 2026-04-12
+  Coverage: All major pages + category variations
+
+Broken Internal Links:
+  Status: ✓ NO BROKEN LINKS DETECTED
+  Assessment: All relative .html links point to valid pages
+
+Duplicate Title Tags:
+  Status: ✓ NO DUPLICATES FOUND
+  Assessment: Each page has a unique title
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. SUMMARY: CRITICAL ISSUES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CRITICAL (Fix Immediately):
+  1. blog.html
+     - MISSING canonical tag → Duplicate content risk
+     - MISSING og:image → Poor social preview
+     - MISSING robots directive → Unclear crawl intent
+     - H1 incomplete ("Insights for the")
+     - No heading hierarchy (H2-H6)
+
+  2. prayer-times.html
+     - MISSING meta description → Major ranking impact for utility page
+     - MISSING canonical tag → Duplicate content risk
+     - MISSING og:image → Poor social preview
+     - MISSING robots directive → Unclear crawl intent
+     - MISSING JSON-LD schema
+     - H1 is too generic ("Stay on time")
+
+  3. category.html (Parameterized pages)
+     - MISSING robots directive
+     - Canonical doesn't account for query parameters (cat=??) → May cause SEO issues
+     - H1 is "Loading…" (JavaScript placeholder) → Not crawlable by all engines
+     - No heading hierarchy
+     - Very thin pre-render content (51 words)
+
+HIGH (Should Fix):
+  4. index.html (Homepage)
+     - THIN CONTENT (153 words) → Poor ranking potential for broad terms
+     - Limited heading hierarchy
+     - Should expand with value proposition, key features, etc.
+
+  5. categories.html
+     - THIN CONTENT (62 words) → Unacceptable for main navigation page
+     - Missing Twitter Card tags
+     - No heading hierarchy
+     - Should expand with category descriptions
+
+  6. admin.html
+     - MISSING meta description
+     - MISSING canonical
+     - Very generic title
+     - (Note: Low priority since it's noindex'd)
+
+MEDIUM (Improves Social Sharing):
+  7. about.html
+     - MISSING Twitter Card tags (5 tags)
+
+  8. categories.html
+     - MISSING Twitter Card tags
+
+  9. category.html
+     - MISSING Twitter Card tags
+
+  10. terms.html
+      - MISSING Twitter Card tags (low priority for legal page)
+
+  11. privacy.html
+      - MISSING Twitter Card tags (low priority for legal page)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. RECOMMENDATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Priority 1 — CRITICAL (Rank Impact):
+  - Add missing canonical tags to: blog.html, prayer-times.html
+  - Add missing meta descriptions to: prayer-times.html, admin.html
+  - Add missing robots directives to: blog.html, category.html, prayer-times.html
+  - Fix parameterized canonical on category.html (handle query strings properly)
+  - Expand thin content on homepage (index.html) from 151 → 400+ words
+  - Expand thin content on categories.html from 62 → 300+ words
+  - Fix incomplete H1 tags (blog.html "Insights for the", 404.html "This page has")
+  - Add heading hierarchy to blog.html and category.html (add H2/H3)
+  - Make category.html H1 dynamic/server-rendered (not "Loading…")
+  - Improve H1 on prayer-times.html from generic "Stay on time" → descriptive
+  - Add JSON-LD schema to: blog.html, prayer-times.html
+  - Add og:image to: blog.html, prayer-times.html, category.html
+
+Priority 2 — HIGH (Conversion & Social):
+  - Add Twitter Card tags to: about.html, categories.html, category.html,
+    terms.html, privacy.html
+  - Verify/regenerate og-image.png asset (referenced on all pages)
+
+Priority 3 — MEDIUM (Polish):
+  - Improve admin.html title (change from "Admin — Timeless Hadith" → something
+    more descriptive)
+  - Add alt text to images across all pages (not detected in this audit)
+  - Consider Schema markup on blog.html for individual articles (BlogPosting type)
+  - Consider local business schema if applicable
+
+Priority 4 — ONGOING:
+  - Monitor Core Web Vitals (LCP, FID, CLS)
+  - Ensure prayer-times.html loads and renders quickly (data-heavy page)
+  - Test Google Bot crawlability of JavaScript-rendered content (category.html)
+  - Monitor rankings for "prayer times", "zakat calculator" (high-intent terms)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. POSITIVE FINDINGS (Strengths)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✓ Excellent robots.txt — clear, strategic exclusions
+  ✓ Comprehensive sitemap.xml — includes all pages + 300+ category variations
+  ✓ Strong schema markup on most pages (WebSite, Organization, FAQPage, etc.)
+  ✓ No broken internal links detected
+  ✓ No duplicate title tags
+  ✓ Proper canonical URLs on most pages
+  ✓ Privacy & Terms pages properly blocked from ranking (noindex)
+  ✓ Good OG metadata coverage on main pages (index, about, bookmarks, 404)
+  ✓ Appropriate noindex directives on user-specific pages (bookmarks)
+  ✓ Strong content depth on blog (675 words), prayer-times (1368 words)
+  ✓ Proper heading hierarchy on legal pages (privacy, terms)
+  ✓ Good brand consistency in titles and descriptions
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AUDIT COMPLETE — 2026-04-17
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -1,5 +1,5 @@
-/* ── Google Fonts — Cairo ── */
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+/* ── Google Fonts — Cairo + Gulzar ── */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Elms+Sans:wght@300&family=Gulzar&family=Noto+Kufi+Arabic:wght@100;200;300&display=swap');
 
 /* ── Self-hosted Fonts (Legacy — disabled in favor of Cairo) ── */
 /*
@@ -29,7 +29,6 @@
   unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
 }
 
-/*
 @font-face {
   font-family: 'Gulzar';
   src: url('/fonts/gulzar-arabic.woff2') format('woff2');
@@ -46,7 +45,6 @@
   font-display: swap;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-*/
 
 /* ── Accessibility ── */
 .skip-link {
@@ -758,7 +756,8 @@ div[dir="rtl"] {
   font-variant-ligatures: common-ligatures contextual;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  line-height: 2.0;
+  line-height: 2.2;
+  color: #1ea64a !important;
   letter-spacing: 0;
 }
 
@@ -771,6 +770,18 @@ div[dir="rtl"] {
 }
 
 /* ═══════════════════════════�
+
+/* ══════════════════════════════════════════════════════════════
+   English hadith card text — Elms Sans light
+   ══════════════════════════════════════════════════════════════ */
+.english-text,
+.quick-read-text {
+  font-family: 'Elms Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--ink);
+}
 
 /* ══════════════════════════════════════════════════════════════
    Urdu Translation — Inline Accordion
@@ -803,45 +814,208 @@ div[dir="rtl"] {
   background: rgba(79, 114, 248, 0.13);
   border-color: rgba(79, 114, 248, 0.45);
 }
-[data-theme="dark"
+.urdu-trans-btn::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  margin-left: 2px;
+}
+.urdu-trans-btn.open::after {
+  transform: rotate(-135deg) translateY(-2px);
+}
 
-/* ── NAV WIDGETS: Makkah Time · Weather · Next Prayer ── */
-.nav-widgets {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 6px;
-  margin-right: 8px;
-  flex-shrink: 0;
-  min-width: max-content;
+/* Accordion body */
+.urdu-inline-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-top: 0;
+  transition: grid-template-rows 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+              opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+              margin-top 0.35s cubic-bezier(0.23, 1, 0.32, 1);
 }
-.nav-widget {
-  display: inline-flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 11px;
-  background: rgba(79,114,248,0.07);
-  border: 1px solid rgba(79,114,248,0.15);
-  border-radius: 100px;
-  font-size: 11px;
-  font-weight: 500;
+.urdu-inline-body > .urdu-inline-inner {
+  overflow: hidden;
+}
+.urdu-inline-body.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 14px;
+}
+.urdu-inline-inner {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 14px;
+  transform: translateY(-8px);
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+[data-theme="dark"] .urdu-inline-inner {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+.urdu-inline-body.open > .urdu-inline-inner {
+  transform: translateY(0);
+}
+.urdu-inline-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-family: "Cairo", sans-serif;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+}
+.urdu-inline-body.open .urdu-inline-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+.urdu-inline-text,
+.urdu-inline-empty {
+  font-family: 'Noto Kufi Arabic', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 2.2;
+  color: rgb(89, 133, 225);
+  direction: rtl;
+  text-align: right;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.35s ease 0.15s, transform 0.35s ease 0.15s;
+}
+.urdu-inline-empty {
   color: var(--muted);
-  white-space: nowrap;
-  flex-shrink: 0;
-  cursor: default;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: background 0.2s, border-color 0.2s;
+  font-size: 18px;
 }
-[data-theme="dark"] .nav-widget {
-  background: rgba(79,114,248,0.10);
-  border-color: rgba(100,140,255,0.20);
+.urdu-inline-body.open .urdu-inline-text,
+.urdu-inline-body.open .urdu-inline-empty {
+  opacity: 1;
+  transform: translateY(0);
 }
-.nav-widget svg { flex-shrink: 0; opacity: 0.65; }
-.nav-widget strong { color: var(--ink); font-weight: 600; white-space: nowrap; }
-.nav-widget .prayer-name { color: var(--accent); font-weight: 700; white-space: nowrap; }
-.nav-widget .prayer-time { color: var(--ink); font-weight: 600; white-space: nowrap; }
-.nav-sep {
-  width:3px; height:3px; border-radius:50%;
-  background: var(-
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE SYSTEM — 5 breakpoints
+   375 mobile · 600 small-phone · 744 tablet · 1128 laptop · 1280 desktop · 1440 wide
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Wide (> 1440px): cap content width ── */
+@media (min-width: 1440px) {
+  .cards-section,
+  .hadith-list,
+  .featured-section,
+  .page-wrap,
+  .hadith-index-block {
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  /* Editorial / blog content narrower cap */
+  .blog-content,
+  .about-content,
+  .page-prose {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ── Desktop (1128–1440px): full nav, 6-col category grid ── */
+@media (min-width: 1128px) {
+  .cards-track {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 18px;
+  }
+  nav.main-nav {
+    padding: 0 40px;
+  }
+  .nav-links { display: flex; }
+  .nav-hamburger { display: none; }
+  .nav-widgets { display: flex; }
+  #btn-login { display: inline-flex; }
+  #btn-logout { display: inline-flex; }
+  .search-wrap { max-width: 680px; margin: 0 auto; }
+}
+
+/* ── Laptop (744–1128px): 2-up hadith cards, 3-col category ── */
+@media (min-width: 744px) and (max-width: 1127px) {
+  .cards-track {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .search-wrap { max-width: 520px; margin: 0 auto; }
+  nav.main-nav { padding: 0 24px; }
+}
+
+/* ── Tablet (744px): hamburger threshold ── */
+@media (max-width: 743px) {
+  /* Nav — hamburger only */
+  nav.main-nav { padding: 0 16px; gap: 8px; }
+  .nav-links { display: none; }
+  .nav-right { gap: 4px; }
+  .nav-widgets { display: none; }
+  .nav-hamburger { display: flex; }
+  #btn-login { display: none; }
+  #btn-logout { display: none; }
+
+  /* Search collapses to full-width pill */
+  .search-wrap { max-width: 100%; padding: 0 16px; }
+  .search-bar {
+    border-radius: 100px;
+    padding: 0 16px;
+  }
+  .search-btn-label { display: none; }
+
+  /* Cards — 2-up on small tablet / large phone */
+  .cards-track {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  /* Hadith list — single column */
+  .hadith-list { padding: 0 12px; }
+
+  /* Page sections breathe less on mobile */
+  .cards-section { padding: 24px 16px 48px; }
+  .featured-section { margin: 32px 16px; }
+}
+
+/* ── Small phone (< 600px): 1-up cards ── */
+@media (max-width: 599px) {
+  .cards-track {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .cat-card { border-radius: 16px !important; }
+  .search-bar { font-size: 15px; }
+
+  /* Pagination dots smaller */
+  .pagination-dots { gap: 6px; }
+
+  /* Sticky bottom bar for key CTA on mobile */
+  .mobile-sticky-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    z-index: 900;
+    gap: 10px;
+  }
+}
+
+/* ── Mobile (< 375px): micro adjustments ── */
+@media (max-width: 374px) {
+  nav.main-nav { padding: 0 12px; }
+  .cards-section { padding: 16px 10px 40px; }
+  .search-wrap { padding: 0 10px; }
+  .hadith-list { padding: 0 8px; }
+}

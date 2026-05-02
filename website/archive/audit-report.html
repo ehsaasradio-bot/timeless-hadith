@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeless Hadith — Full Site Audit Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f7; color: #1d1d1f; line-height: 1.6; }
+
+  /* Header */
+  .report-header { background: #1d1d1f; color: #fff; padding: 56px 40px 48px; }
+  .report-header .label { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: #86868b; text-transform: uppercase; margin-bottom: 12px; }
+  .report-header h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .report-header .meta { font-size: 14px; color: #86868b; }
+  .report-header .meta span { margin-right: 24px; }
+
+  /* Summary bar */
+  .summary-bar { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 24px 40px; display: flex; gap: 32px; flex-wrap: wrap; }
+  .summary-stat { text-align: center; }
+  .summary-stat .num { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; }
+  .summary-stat .lbl { font-size: 12px; color: #86868b; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+  .num.critical { color: #ff3b30; }
+  .num.high { color: #ff9500; }
+  .num.medium { color: #ffcc00; }
+  .num.low { color: #34c759; }
+  .num.pass { color: #30d158; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 40px 80px; }
+
+  /* Section */
+  .section { margin-bottom: 48px; }
+  .section-title { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #e5e5e5; display: flex; align-items: center; gap: 10px; }
+  .section-title .icon { font-size: 20px; }
+
+  /* Issue cards */
+  .issue-card { background: #fff; border-radius: 16px; padding: 24px 28px; margin-bottom: 16px; border-left: 5px solid #e5e5e5; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .issue-card.critical { border-left-color: #ff3b30; }
+  .issue-card.high     { border-left-color: #ff9500; }
+  .issue-card.medium   { border-left-color: #ffcc00; }
+  .issue-card.low      { border-left-color: #34c759; }
+  .issue-card.pass     { border-left-color: #30d158; background: #f0fdf4; }
+
+  .issue-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
+  .issue-title { font-size: 16px; font-weight: 600; }
+  .badge { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+  .badge.critical { background: #fff0f0; color: #ff3b30; }
+  .badge.high     { background: #fff8f0; color: #d4690a; }
+  .badge.medium   { background: #fffbee; color: #a07800; }
+  .badge.low      { background: #f0fff4; color: #1a7a35; }
+  .badge.pass     { background: #f0fff4; color: #1a7a35; }
+
+  .issue-page { font-size: 12px; color: #86868b; font-weight: 500; margin-bottom: 8px; }
+  .issue-desc { font-size: 14px; color: #3a3a3c; margin-bottom: 12px; }
+
+  .code-block { background: #1d1d1f; color: #e5e5e5; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; border-radius: 10px; padding: 14px 18px; overflow-x: auto; margin: 10px 0; line-height: 1.7; }
+  .code-block .bad  { color: #ff6b6b; }
+  .code-block .good { color: #69db7c; }
+  .code-block .comment { color: #868e96; }
+
+  .fix-label { font-size: 12px; font-weight: 700; color: #0071e3; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; margin-top: 14px; }
+  .fix-desc { font-size: 13px; color: #3a3a3c; background: #f0f7ff; border-radius: 8px; padding: 10px 14px; }
+
+  /* Page status grid */
+  .page-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 4px; }
+  .page-card { background: #fff; border-radius: 12px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,.07); }
+  .page-card .page-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .page-card .page-url  { font-size: 11px; color: #86868b; margin-bottom: 10px; font-family: monospace; }
+  .page-card .status-row { display: flex; align-items: center; gap: 6px; font-size: 12px; margin-top: 4px; }
+  .dot-ok  { width: 8px; height: 8px; border-radius: 50%; background: #30d158; flex-shrink: 0; }
+  .dot-err { width: 8px; height: 8px; border-radius: 50%; background: #ff3b30; flex-shrink: 0; }
+  .dot-warn{ width: 8px; height: 8px; border-radius: 50%; background: #ff9500; flex-shrink: 0; }
+
+  /* Priority table */
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  thead tr { background: #1d1d1f; color: #fff; }
+  thead th { padding: 14px 18px; text-align: left; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+  tbody tr { border-bottom: 1px solid #f2f2f7; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody td { padding: 14px 18px; font-size: 13px; vertical-align: top; }
+  tbody tr:hover { background: #f9f9fb; }
+  .td-sev { font-weight: 700; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .td-sev.critical { color: #ff3b30; }
+  .td-sev.high     { color: #d4690a; }
+  .td-sev.medium   { color: #a07800; }
+  .td-sev.low      { color: #1a7a35; }
+
+  /* Footer */
+  .report-footer { text-align: center; padding: 40px; color: #86868b; font-size: 13px; border-top: 1px solid #e5e5e5; }
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─────────────────────────────────────────────────── -->
+<div class="report-header">
+  <div class="label">Website Audit</div>
+  <h1>Timeless Hadith — Full Site Audit</h1>
+  <div class="meta">
+    <span>🌐 timeless-hadith.pages.dev</span>
+    <span>📅 April 3, 2026</span>
+    <span>🔍 11 issues found across 7 pages</span>
+  </div>
+</div>
+
+<!-- ─── SUMMARY BAR ────────────────────────────────────────────── -->
+<div class="summary-bar">
+  <div class="summary-stat"><div class="num critical">2</div><div class="lbl">Critical</div></div>
+  <div class="summary-stat"><div class="num high">3</div><div class="lbl">High</div></div>
+  <div class="summary-stat"><div class="num medium" style="color:#a07800">3</div><div class="lbl">Medium</div></div>
+  <div class="summary-stat"><div class="num low">3</div><div class="lbl">Low</div></div>
+  <div class="summary-stat" style="margin-left:auto"><div class="num pass">6</div><div class="lbl">Passing</div></div>
+</div>
+
+<div class="container">
+
+  <!-- ─── PAGE STATUS ───────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📄</span> Page Status Overview</div>
+    <div class="page-grid">
+
+      <div class="page-card">
+        <div class="page-name">Homepage</div>
+        <div class="page-url">/</div>
+        <div class="status-row"><span class="dot-ok"></span> Loads correctly</div>
+        <div class="status-row"><span class="dot-ok"></span> Featured Hadiths working</div>
+        <div class="status-row"><span class="dot-ok"></span> Category carousel working</div>
+        <div class="status-row"><span class="dot-ok"></span> No console errors</div>
+        <div class="status-row"><span class="dot-warn"></span> "Most Viewed" pills broken</div>
+        <div class="status-row"><span class="dot-warn"></span> "Daily Hadith" = anchor only</div>
+      </div>
+
+      <div class="page-card">
+        <div class="page-name">Browse / Categories</div>
+        <div class="page-url">/categories</div>
+        <div class="status-row"><span class="dot-err"></span> SyntaxError at line 858</div>
+        <div class="status-row"><span class="dot-err"></span> Category cards blank</div>
+        <div class="status-row"><span class="dot-err"></span> Search broken</div>
+        <div class="status-row"><span class="dot-ok"></span> Page loads (UI shell)</div>
+      </div>
+
+      <div class="page-card">
+        <div class="page-name">Category Detail</div>
+        <div class="page-url">/category?cat=book-N</div>
+        <div class="status-row"><span class="dot-ok"></span> Loads hadiths correctly</div>
+        <div class="status-row"><span class="dot-ok"></span> Narrator chips work</div>
+        <div class="status-row"><span class="dot-ok"></span> Search within topic works</div>
+        <div class="status-row"><span class="dot-err"></span> Pagination dots broken</div>
+      </div>
+
+      <div class="page-card">
+        <div class="page-name">Bookmarks</div>
+        <div class="page-url">/bookmarks</div>
+        <div class="status-row"><span class="dot-ok"></span> Loads correctly</div>
+        <div class="status-row"><span class="dot-ok"></span> Sign-in prompt shown</div>
+        <div class="status-row"><span class="dot-ok"></span> No console errors</div>
+      </div>
+
+      <div class="page-card">
+        <div class="page-name">About</div>
+        <div class="page-url">/about</div>
+        <div class="status-row"><span class="dot-ok"></span> Loads correctly</div>
+        <div class="status-row"><span class="dot-ok"></span> No console errors</div>
+        <div class="status-row"><span class="dot-ok"></span> Content complete</div>
+      </div>
+
+      <div class="page-card">
+        <div class="page-name">Privacy / Terms</div>
+        <div class="page-url">/privacy &nbsp; /terms</div>
+        <div class="status-row"><span class="dot-ok"></span> Both load correctly</div>
+        <div class="status-row"><span class="dot-ok"></span> No console errors</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── CRITICAL ISSUES ───────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🔴</span> Critical Issues</div>
+
+    <!-- Issue C1 -->
+    <div class="issue-card critical">
+      <div class="issue-top">
+        <div class="issue-title">C1 — categories.html: SyntaxError crashes entire Browse page</div>
+        <span class="badge critical">Critical</span>
+      </div>
+      <div class="issue-page">📄 /categories — Line 857–860</div>
+      <div class="issue-desc">
+        The <code>applySearch()</code> function body is truncated — it begins mid-expression with a filter callback fragment but is missing the wrapping <code>filteredCats = allCats.filter(function(cat){</code> line. The browser throws <strong>SyntaxError: Unexpected token ')'</strong> at line 858, which crashes the entire inline script. As a result: no category cards are rendered, and the search input does nothing.
+      </div>
+      <div class="code-block">
+<span class="bad">// BROKEN — function body starts mid-expression</span>
+function applySearch(q) {
+  <span class="bad">    (PILLS[cat.slug]||[]).join(' ').toLowerCase().indexOf(q) !== -1</span>
+  <span class="bad">  );</span>
+  <span class="bad">});</span>
+}
+      </div>
+      <div class="fix-label">✅ Fix</div>
+      <div class="fix-desc">Restore the missing top of the function body — the <code>filteredCats = allCats.filter(function(cat){ return ... })</code> wrapper and the category title/pill search conditions.</div>
+    </div>
+
+    <!-- Issue C2 -->
+    <div class="issue-card critical">
+      <div class="issue-top">
+        <div class="issue-title">C2 — categories.html: TH.categories is an Object, not an Array</div>
+        <span class="badge critical">Critical</span>
+      </div>
+      <div class="issue-page">📄 /categories — Line 886–887</div>
+      <div class="issue-desc">
+        <code>TH.categories</code> returns a plain object keyed by index (<code>{"0":{...}, "1":{...}}</code>). The categories page assigns it to <code>allCats</code> and immediately calls <code>allCats.slice()</code>, which is <strong>undefined on plain objects</strong>. This would silently fail or throw a TypeError when trying to render or filter categories.
+      </div>
+      <div class="code-block">
+<span class="bad">allCats = TH.categories;          // Object, not Array</span>
+<span class="bad">filteredCats = allCats.slice();    // TypeError: allCats.slice is not a function</span>
+
+<span class="good">// Fix: convert object values to array first</span>
+<span class="good">allCats = Object.values(TH.categories);</span>
+<span class="good">filteredCats = allCats.slice();</span>
+      </div>
+      <div class="fix-label">✅ Fix</div>
+      <div class="fix-desc">Replace <code>allCats = TH.categories</code> with <code>allCats = Object.values(TH.categories)</code> on line 886.</div>
+    </div>
+
+  </div>
+
+  <!-- ─── HIGH ISSUES ───────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🟠</span> High Issues</div>
+
+    <!-- Issue H1 -->
+    <div class="issue-card high">
+      <div class="issue-top">
+        <div class="issue-title">H1 — category.html: ReferenceError "dot is not defined" — pagination broken</div>
+        <span class="badge high">High</span>
+      </div>
+      <div class="issue-page">📄 /category?cat=* — Line 808</div>
+      <div class="issue-desc">
+        Inside the <code>updatePagination()</code> function, an IIFE wraps pagination dot creation. The variable <code>dot</code> is used but was never declared with <code>var dot = document.createElement('button')</code> inside the IIFE. The browser throws <strong>ReferenceError: dot is not defined</strong>. Pagination dots do not render — users cannot jump between pages of hadiths.
+      </div>
+      <div class="code-block">
+<span class="bad">// BROKEN — 'dot' is never declared inside the IIFE</span>
+(function(idx) {
+  <span class="bad">dot.className = 'p-dot' + (idx === currentPage ? ' active' : '');</span>
+  ...
+})(i);
+
+<span class="good">// Fix — declare 'dot' at the top of the IIFE</span>
+(function(idx) {
+  <span class="good">var dot = document.createElement('button');</span>
+  dot.className = 'p-dot' + (idx === currentPage ? ' active' : '');
+  ...
+})(i);
+      </div>
+      <div class="fix-label">✅ Fix</div>
+      <div class="fix-desc">Add <code>var dot = document.createElement('button');</code> as the first line inside the IIFE in <code>updatePagination()</code> in <code>category.html</code> around line 808.</div>
+    </div>
+
+    <!-- Issue H2 -->
+    <div class="issue-card high">
+      <div class="issue-top">
+        <div class="issue-title">H2 — "Most Viewed" pills use non-existent topic slugs</div>
+        <span class="badge high">High</span>
+      </div>
+      <div class="issue-page">📄 / (Homepage) — Most Viewed pill bar</div>
+      <div class="issue-desc">
+        The "Most Viewed" horizontal pill bar on the homepage links to slugs like <code>faith-belief</code>, <code>character-conduct</code>, <code>prayer-worship</code>, etc. However, all Supabase data is keyed by <strong>book number slugs</strong> (<code>book-1</code> through <code>book-97</code>). Clicking any Most Viewed pill opens a Category page that shows "Category not found" and 0 hadiths.
+      </div>
+      <div class="code-block">
+<span class="bad">category.html?cat=faith-belief       → "Category not found"</span>
+<span class="bad">category.html?cat=character-conduct  → "Category not found"</span>
+<span class="good">category.html?cat=book-2             → ✅ "Belief — 51 hadiths"</span>
+      </div>
+      <div class="fix-label">✅ Fix</div>
+      <div class="fix-desc">Update the "Most Viewed" pills in <code>index.html</code> to use the correct book slugs (e.g., <code>book-2</code> for Belief, <code>book-3</code> for Knowledge) — or map the display labels to real slugs dynamically from <code>TH.categories</code>.</div>
+    </div>
+
+    <!-- Issue H3 -->
+    <div class="issue-card high">
+      <div class="issue-top">
+        <div class="issue-title">H3 — All favicon and OG image files are missing (404)</div>
+        <span class="badge high">High</span>
+      </div>
+      <div class="issue-page">📄 All pages — &lt;head&gt; assets</div>
+      <div class="issue-desc">
+        None of the referenced image assets exist in the repository. Every page references these files and all return 404. The browser tab shows no icon, PWA installation fails, and social sharing shows no preview image.
+      </div>
+      <div class="code-block">
+<span class="bad">favicon-32.png        → 404 Not Found</span>
+<span class="bad">favicon-16.png        → 404 Not Found</span>
+<span class="bad">apple-touch-icon.png  → 404 Not Found</span>
+<span class="bad">icon-192.png          → 404 Not Found</span>
+<span class="bad">icon-512.png          → 404 Not Found</span>
+<span class="bad">og-image.png          → 404 Not Found (also wrong domain: timelesshadith.com)</span>
+      </div>
+      <div class="fix-label">✅ Fix</div>
+      <div class="fix-desc">Create and commit these image files to the repository root. A simple 32×32 favicon can be generated from text/emoji. The og-image should be 1200×630px. Also update the og:image URL from <code>timelesshadith.com/og-image.png</code> to a relative path.</div>
+    </div>
+
+  </div>
+
+  <!-- ─── MEDIUM ISSUES ─────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🟡</span> Medium Issues</div>
+
+    <!-- Issue M1 -->
+    <div class="issue-card medium">
+      <div class="issue-top">
+        <div class="issue-title">M1 — Canonical tag and og:url hardcoded to wrong domain</div>
+        <span class="badge medium">Medium</span>
+      </div>
+      <div class="issue-page">📄 All pages — &lt;head&gt; meta tags</div>
+      <div class="issue-desc">
+        Every page has its <code>&lt;link rel="canonical"&gt;</code> and <code>og:url</code> hardcoded to <code>https://timelesshadith.com/</code> (the root homepage URL). This means Google sees every single page as a duplicate of the homepage. Category pages, about, privacy, and terms all point to the same canonical, which will cause serious SEO de-indexing issues.
+      </div>
+      <div class="code-block">
+<span class="bad">&lt;link rel="canonical" href="https://timelesshadith.com/" /&gt;  ← same on ALL pages</span>
+<span class="bad">&lt;meta property="og:url" content="https://timelesshadith.com/" /&gt;</span>
+
+<span class="good">&lt;!-- Fix: use page-specific canonical --&gt;</span>
+<span class="good">&lt;link rel="canonical" href="https://timelesshadith.com/categories" /&gt;</span>
+      </div>
+      <div class="fix-label">✅ Fix</div>
+      <div class="fix-desc">Each page needs its own unique canonical URL. Update all HTML files to set the correct page-specific canonical and og:url. The category detail page already has a JS-based dynamic canonical — apply the same pattern to all pages.</div>
+    </div>
+
+    <!-- Issue M2 -->
+    <div class="issue-card medium">
+      <div class="issue-top">
+        <div class="issue-title">M2 — Sitemap uses .html extensions; Cloudflare strips them</div>
+        <span class="badge medium">Medium</span>
+      </div>
+      <div class="issue-page">📄 sitemap.xml</div>
+      <div class="issue-desc">
+        The sitemap lists URLs as <code>/categories.html</code>, <code>/about.html</code>, etc. However, Cloudflare Pages automatically removes the <code>.html</code> extension — the real accessible URLs are <code>/categories</code>, <code>/about</code>, <code>/privacy</code>, etc. Search engines indexing the sitemap will encounter redirects or mismatches.
+      </div>
+      <div class="code-block">
+<span class="bad">&lt;loc&gt;https://timelesshadith.com/categories.html&lt;/loc&gt;  ← redirects</span>
+<span class="good">&lt;loc&gt;https://timelesshadith.com/categories&lt;/loc&gt;       ← correct</span>
+      </div>
+      <div class="fix-label">✅ Fix</div>
+      <div class="fix-desc">Remove all <code>.html</code> extensions from <code>sitemap.xml</code> URLs. Also ensure the sitemap domain matches the live domain consistently.</div>
+    </div>
+
+    <!-- Issue M3 -->
+    <div class="issue-card medium">
+      <div class="issue-top">
+        <div class="issue-title">M3 — "Daily Hadith" CTA links to anchor, not a daily hadith feature</div>
+        <span class="badge medium">Medium</span>
+      </div>
+      <div class="issue-page">📄 / (Homepage) — Hero section</div>
+      <div class="issue-desc">
+        The hero button labelled <strong>"Daily Hadith"</strong> links to <code>/#featured</code>, which simply scrolls down to the Featured Hadiths carousel. It does not show a date-specific hadith or any dedicated "hadith of the day" experience. The label creates a false expectation for users who click it expecting a daily content feature.
+      </div>
+      <div class="fix-label">✅ Fix (2 options)</div>
+      <div class="fix-desc">Option A: Rename the button to "Featured Hadiths" to accurately describe what it does. Option B: Build a true daily hadith feature that selects a hadith by day-of-year and links to a dedicated <code>/daily</code> page.</div>
+    </div>
+
+  </div>
+
+  <!-- ─── LOW ISSUES ────────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🟢</span> Low / Cosmetic Issues</div>
+
+    <div class="issue-card low">
+      <div class="issue-top">
+        <div class="issue-title">L1 — Nav logo link has no accessible text or alt attribute</div>
+        <span class="badge low">Low</span>
+      </div>
+      <div class="issue-page">📄 All pages — Navigation</div>
+      <div class="issue-desc">The logo anchor in the nav bar has empty text content. Screen readers will announce it as an unlabelled link. Add <code>aria-label="Timeless Hadith — Home"</code> to the logo anchor.</div>
+    </div>
+
+    <div class="issue-card low">
+      <div class="issue-top">
+        <div class="issue-title">L2 — robots.txt lists non-existent pages</div>
+        <span class="badge low">Low</span>
+      </div>
+      <div class="issue-page">📄 robots.txt</div>
+      <div class="issue-desc">The robots.txt Disallow list references <code>/audit-confluence-report.html</code>, <code>/firebase-integration-guide.html</code>, <code>/mac-lineup.html</code>, and <code>/apple-sa-landing.html</code> — none of which exist in the repository. These are harmless but add noise and may confuse crawlers about the site's actual structure.</div>
+    </div>
+
+    <div class="issue-card low">
+      <div class="issue-top">
+        <div class="issue-title">L3 — Cookie consent banner overlaps content on load</div>
+        <span class="badge low">Low</span>
+      </div>
+      <div class="issue-page">📄 All pages — Bottom-right corner</div>
+      <div class="issue-desc">A cookie consent banner appears on every page load and overlaps the bottom-right content area. While functional, it should be positioned to not obscure page content, and should remember dismissal state across pages so it does not re-appear after being dismissed.</div>
+    </div>
+
+  </div>
+
+  <!-- ─── WHAT'S WORKING ────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title"><span class="icon">✅</span> What's Working Well</div>
+
+    <div class="issue-card pass">
+      <div class="issue-top"><div class="issue-title">Homepage — Featured Hadiths carousel</div><span class="badge pass">Pass</span></div>
+      <div class="issue-desc">Arabic and English hadith text renders correctly. Navigation arrows and dot indicators work. Share as Text / Share as Image buttons are present.</div>
+    </div>
+
+    <div class="issue-card pass">
+      <div class="issue-top"><div class="issue-title">Homepage — Explore by Topic carousel (97 books)</div><span class="badge pass">Pass</span></div>
+      <div class="issue-desc">All 97 Bukhari book categories load dynamically from Supabase using parallel paged fetches. Cards show correct title and hadith count. Previous/Next navigation works.</div>
+    </div>
+
+    <div class="issue-card pass">
+      <div class="issue-top"><div class="issue-title">Category Detail page loads hadiths correctly</div><span class="badge pass">Pass</span></div>
+      <div class="issue-desc">e.g. <code>/category?cat=book-2</code> shows "Belief — 51 hadiths" with full Arabic + English text, narrator chip filters, authenticity filters, and within-topic search all functional.</div>
+    </div>
+
+    <div class="issue-card pass">
+      <div class="issue-top"><div class="issue-title">Dark mode toggle works correctly</div><span class="badge pass">Pass</span></div>
+      <div class="issue-desc">Theme switches between light and dark on click. State persists via localStorage. FOUC prevented with early &lt;head&gt; inline theme script.</div>
+    </div>
+
+    <div class="issue-card pass">
+      <div class="issue-top"><div class="issue-title">Navigation and footer links are all functional</div><span class="badge pass">Pass</span></div>
+      <div class="issue-desc">Browse, Bookmarks, About, Privacy Policy, and Terms of Use links all resolve correctly. No broken <code>#</code> placeholder links in nav or footer.</div>
+    </div>
+
+    <div class="issue-card pass">
+      <div class="issue-top"><div class="issue-title">About, Privacy, Terms, Bookmarks pages are clean</div><span class="badge pass">Pass</span></div>
+      <div class="issue-desc">All four pages load without errors. Bookmarks correctly shows a sign-in prompt when unauthenticated. About page has complete mission/vision/values content.</div>
+    </div>
+
+  </div>
+
+  <!-- ─── PRIORITY TABLE ────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span> Fix Priority Summary</div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Issue</th>
+          <th>Page</th>
+          <th>Severity</th>
+          <th>Effort</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Fix truncated <code>applySearch()</code> in categories.html</td>
+          <td>/categories</td>
+          <td class="td-sev critical">Critical</td>
+          <td>30 min</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Fix <code>Object.values(TH.categories)</code> in categories.html</td>
+          <td>/categories</td>
+          <td class="td-sev critical">Critical</td>
+          <td>5 min</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Add <code>var dot = document.createElement('button')</code> in IIFE</td>
+          <td>/category</td>
+          <td class="td-sev high">High</td>
+          <td>5 min</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Map "Most Viewed" pills to real book slugs</td>
+          <td>/</td>
+          <td class="td-sev high">High</td>
+          <td>20 min</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Create &amp; commit favicon + og-image assets</td>
+          <td>All</td>
+          <td class="td-sev high">High</td>
+          <td>1 hour</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Fix page-specific canonical &amp; og:url tags</td>
+          <td>All</td>
+          <td class="td-sev medium">Medium</td>
+          <td>1 hour</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Remove .html extensions from sitemap.xml</td>
+          <td>sitemap.xml</td>
+          <td class="td-sev medium">Medium</td>
+          <td>10 min</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>Rename or implement "Daily Hadith" CTA</td>
+          <td>/</td>
+          <td class="td-sev medium">Medium</td>
+          <td>15 min</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>Add <code>aria-label</code> to nav logo anchor</td>
+          <td>All</td>
+          <td class="td-sev low">Low</td>
+          <td>5 min</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Clean up stale Disallow entries in robots.txt</td>
+          <td>robots.txt</td>
+          <td class="td-sev low">Low</td>
+          <td>5 min</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>Fix cookie banner overlap / persistence</td>
+          <td>All</td>
+          <td class="td-sev low">Low</td>
+          <td>30 min</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="report-footer">
+  Timeless Hadith — Site Audit · April 3, 2026 · timeless-hadith.pages.dev
+</div>
+
+</body>
+</html>

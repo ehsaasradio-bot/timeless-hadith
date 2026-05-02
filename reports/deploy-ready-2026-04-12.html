@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Deploy-Ready Report — Timeless Hadith — 2026-04-12</title>
+<style>
+  :root {
+    --bg: #f7f7f5;
+    --surface: #ffffff;
+    --ink: #0a0a0a;
+    --muted: #6b6b6b;
+    --accent: #4f72f8;
+    --accent-soft: #eef1ff;
+    --green: #16a34a;
+    --green-soft: #dcfce7;
+    --amber: #d97706;
+    --amber-soft: #fef3c7;
+    --red: #dc2626;
+    --red-soft: #fee2e2;
+    --border: #e4e4e0;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0f172a 100%);
+    color: #fff;
+    padding: 64px 32px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(79,114,248,0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 30%, rgba(99,102,241,0.18) 0%, transparent 55%);
+  }
+  .hero-inner { position: relative; max-width: 760px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px; padding: 6px 16px;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.8px; text-transform: uppercase;
+    color: rgba(255,255,255,0.85); margin-bottom: 24px;
+  }
+  .hero-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; }
+  .hero h1 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 14px; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,0.72); max-width: 560px; margin: 0 auto 32px; }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;
+  }
+  .h-stat { text-align: center; }
+  .h-stat-num { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; color: #fff; }
+  .h-stat-label { font-size: 12px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+  /* ── Layout ── */
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Section ── */
+  .section { padding: 56px 0 0; }
+  .section-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .section h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 24px; }
+
+  /* ── Commit timeline ── */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .t-item {
+    display: grid; grid-template-columns: 28px 1fr;
+    gap: 0 16px; position: relative; padding-bottom: 24px;
+  }
+  .t-item:last-child { padding-bottom: 0; }
+  .t-dot-col { display: flex; flex-direction: column; align-items: center; }
+  .t-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); display: flex;
+    align-items: center; justify-content: center;
+    flex-shrink: 0; z-index: 1;
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  .t-dot svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .t-line { flex: 1; width: 2px; background: var(--border); margin-top: 4px; }
+  .t-item:last-child .t-line { display: none; }
+  .t-body { padding-top: 4px; }
+  .t-hash { font-family: "SF Mono", "Fira Code", monospace; font-size: 11px; color: var(--accent); margin-bottom: 3px; }
+  .t-msg { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .t-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* ── Files table ── */
+  .file-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .file-table th { text-align: left; padding: 10px 14px; background: var(--surface); border-bottom: 2px solid var(--border); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }
+  .file-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .file-table tr:last-child td { border-bottom: none; }
+  .file-table tr:hover td { background: var(--bg); }
+  .badge {
+    display: inline-block; padding: 2px 9px; border-radius: 100px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+  }
+  .badge-green { background: var(--green-soft); color: var(--green); }
+  .badge-amber { background: var(--amber-soft); color: var(--amber); }
+  .badge-blue  { background: var(--accent-soft); color: var(--accent); }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px;
+  }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+
+  /* ── Feature list ── */
+  .feat-list { display: flex; flex-direction: column; gap: 12px; }
+  .feat-item { display: flex; align-items: flex-start; gap: 12px; }
+  .feat-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--accent-soft); display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .feat-icon svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .feat-icon.green { background: var(--green-soft); }
+  .feat-icon.green svg { stroke: var(--green); }
+  .feat-text strong { font-size: 14px; font-weight: 600; display: block; margin-bottom: 2px; }
+  .feat-text span { font-size: 13px; color: var(--muted); }
+
+  /* ── Checklist ── */
+  .checklist { display: flex; flex-direction: column; gap: 8px; }
+  .check-item { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+  .check-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .check-done svg { stroke: var(--green); }
+  .check-warn svg { stroke: var(--amber); }
+
+  /* ── Push CTA ── */
+  .push-cta {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+    border-radius: 20px; padding: 48px 36px; text-align: center;
+    color: #fff; margin: 56px 0 0;
+    position: relative; overflow: hidden;
+  }
+  .push-cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(79,114,248,0.3) 0%, transparent 65%);
+  }
+  .push-cta-inner { position: relative; }
+  .push-cta h2 { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 12px; }
+  .push-cta p { font-size: 16px; color: rgba(255,255,255,0.7); max-width: 520px; margin: 0 auto 32px; }
+  .push-cta-cmd {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px; padding: 14px 28px;
+    font-family: "SF Mono", "Fira Code", monospace;
+    font-size: 15px; color: #a5f3fc;
+    letter-spacing: 0.5px;
+  }
+  .push-note { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 20px; }
+
+  /* ── Road ahead ── */
+  .road-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 20px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .road-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent-soft); color: var(--accent);
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .road-content strong { font-size: 14px; font-weight: 600; display: block; margin-bottom: 3px; }
+  .road-content span { font-size: 13px; color: var(--muted); }
+  .road-grid { display: flex; flex-direction: column; gap: 12px; }
+
+  /* ── Divider ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 56px 0 0; }
+
+  /* ── Footer ── */
+  .footer { padding: 32px 0 48px; text-align: center; color: var(--muted); font-size: 13px; }
+
+  @media (max-width: 640px) {
+    .hero-stats { gap: 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Deploy-Ready — All Systems Go
+    </div>
+    <h1>Timeless Hadith<br>Sprint Complete</h1>
+    <p>All local changes implemented, validated, and committed. 11 commits ahead of origin/main. Awaiting your push approval.</p>
+    <div class="hero-stats">
+      <div class="h-stat">
+        <div class="h-stat-num">11</div>
+        <div class="h-stat-label">Commits Ready</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-num">24+</div>
+        <div class="h-stat-label">Files Changed</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-num">7</div>
+        <div class="h-stat-label">Major Features</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-num">0</div>
+        <div class="h-stat-label">Regressions</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ══ COMMIT TIMELINE ══ -->
+  <div class="section">
+    <div class="section-title">Git History</div>
+    <h2>11 Commits — Chronological Order</h2>
+    <div class="timeline">
+
+      <div class="t-item">
+        <div class="t-dot-col">
+          <div class="t-dot">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-hash">feat(seo) · 56a5efa · latest</div>
+          <div class="t-msg">Add JSON-LD schemas, optimise font loading, and update sitemap</div>
+          <div class="t-desc">WebSite + Organization + FAQPage schemas on index; CollectionPage + BreadcrumbList on categories; AboutPage + Organization on about; Arabic font non-render-blocking across all pages; dns-prefetch for Supabase + Worker; sitemap lastmod updated to 2026-04-12; sprint status report added.</div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot-col">
+          <div class="t-dot">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-hash">docs(reports) · 71bb95c</div>
+          <div class="t-msg">Add full site audit report (HTML + PPTX) and featured preview</div>
+          <div class="t-desc">39-slide PowerPoint audit deck and rich HTML sprint status report covering all completed phases, file inventory, and road-ahead items.</div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot-col">
+          <div class="t-dot">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-hash">refactor(ui) · 8db2c71</div>
+          <div class="t-msg">Remove inline onclick handlers, fix alt text, wire events via addEventListener</div>
+          <div class="t-desc">Security + CSP hardening: all inline onclick= removed from 6 pages; avatar img alt text made descriptive; all event listeners properly wired via JS.</div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot-col">
+          <div class="t-dot">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-hash">fix(security) · 438c46e</div>
+          <div class="t-msg">Replace CORS wildcard, remove CSP script-src-attr gap, add rate limiting</div>
+          <div class="t-desc">ai-search.js: CORS now uses explicit allow-list (timelesshadith.com, pages.dev). In-memory rate limiter: 10 req/60 s per IP. CSP: script-src-attr unsafe-inline removed from _headers.</div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot-col">
+          <div class="t-dot">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-hash">feat(featured-hadiths) · 3d21b3b</div>
+          <div class="t-msg">Replace carousel with two-card glassmorphism layout</div>
+          <div class="t-desc">New featured grid: "Hadith of the Day" (date-deterministic daily rotation) + "Most Read" (highest reads, animated balloon counter). Full glassmorphism CSS with shimmer, glow orbs, gradient. Mobile: stacked. Desktop: side-by-side.</div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot-col">
+          <div class="t-dot">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-hash">feat(theme) · 269b0c4</div>
+          <div class="t-msg">Set light as default theme, bump migration key to v3</div>
+          <div class="t-desc">theme-init.js: default changed from 'dark' to 'light'; migration key bumped to th_theme_default_v3 so returning users get reset to light. All HTML pages changed from data-theme="dark" to data-theme="light".</div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot-col">
+          <div class="t-dot">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-hash">feat(ai-search) · 4e64bd4</div>
+          <div class="t-msg">Upgrade backend to vector search via Worker proxy</div>
+          <div class="t-desc">Hybrid RAG pipeline: pgvector semantic search + full-text fallback. Cloudflare Worker proxies OpenAI embeddings + gpt-4o-mini completion. Responses are grounded only in database content.</div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot-col">
+          <div class="t-dot">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-hash">feat(worker) · 7905062</div>
+          <div class="t-msg">Add Cloudflare Worker for grounded hadith chat API</div>
+          <div class="t-desc">New worker/ directory: wrangler.toml, src/index.js. RAG endpoint deployed to timeless-hadith-worker.ehsaasradio.workers.dev. Requires separate wrangler deploy (not Cloudflare Pages).</div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot-col">
+          <div class="t-dot">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-hash">feat(scripts) · 562bbf8</div>
+          <div class="t-msg">Add idempotent ingestion from existing hadiths table</div>
+          <div class="t-desc">Migration script to copy hadiths → hadith_vectors with embeddings. Idempotent — safe to re-run. Processes in batches of 100.</div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot-col">
+          <div class="t-dot">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-hash">feat(db) · 0171adf</div>
+          <div class="t-msg">Add pgvector schema for grounded hadith AI search</div>
+          <div class="t-desc">New Supabase table: hadith_vectors (id, hadith_id, content, embedding vector(1536)). RLS enabled. match_hadith_vectors() PostgreSQL function for cosine similarity search.</div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot-col">
+          <div class="t-dot">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-hash">chore(gitignore) · 55373c6</div>
+          <div class="t-msg">Exclude Wrangler cache and Worker test scratch</div>
+          <div class="t-desc">.gitignore updated: .wrangler/, worker/src/scratch.js, worker/.dev.vars excluded.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ══ WHAT WAS DONE ══ -->
+  <div class="section">
+    <div class="section-title">Changes Implemented</div>
+    <h2>Full Implementation Summary</h2>
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="feat-list">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--accent);margin-bottom:14px;">Theme &amp; UI</div>
+          <div class="feat-item">
+            <div class="feat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>Light theme as default</strong><span>Migration key v3 — all returning visitors reset; no flash of wrong theme</span></div>
+          </div>
+          <div class="feat-item">
+            <div class="feat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>Two-card glassmorphism featured section</strong><span>Hadith of the Day (date-deterministic) + Most Read (animated reads counter)</span></div>
+          </div>
+          <div class="feat-item">
+            <div class="feat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>Inline onclick handlers removed</strong><span>All 6 HTML pages — events wired via addEventListener in app.js</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="feat-list">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--accent);margin-bottom:14px;">Security</div>
+          <div class="feat-item">
+            <div class="feat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>CORS allow-list</strong><span>Explicit origins — timelesshadith.com, www, pages.dev. No wildcard.</span></div>
+          </div>
+          <div class="feat-item">
+            <div class="feat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>Rate limiting on AI endpoint</strong><span>10 requests per 60 seconds per IP — in-memory Map</span></div>
+          </div>
+          <div class="feat-item">
+            <div class="feat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>CSP tightened</strong><span>script-src-attr unsafe-inline removed from _headers</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="feat-list">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--accent);margin-bottom:14px;">SEO &amp; Performance</div>
+          <div class="feat-item">
+            <div class="feat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>JSON-LD structured data</strong><span>WebSite + Organization + FAQPage (index); CollectionPage + Breadcrumb (categories); AboutPage + Organization (about)</span></div>
+          </div>
+          <div class="feat-item">
+            <div class="feat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>Non-render-blocking fonts</strong><span>Arabic font via print-trick on all pages; Inter preloaded on homepage</span></div>
+          </div>
+          <div class="feat-item">
+            <div class="feat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>Resource hints</strong><span>dns-prefetch for Supabase + Worker; fetchpriority=high on logo images; sitemap lastmod updated</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="feat-list">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--accent);margin-bottom:14px;">AI Search</div>
+          <div class="feat-item">
+            <div class="feat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>Cloudflare Worker RAG API</strong><span>text-embedding-3-small + gpt-4o-mini, grounded in Supabase pgvector</span></div>
+          </div>
+          <div class="feat-item">
+            <div class="feat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>pgvector schema + match function</strong><span>hadith_vectors table, cosine similarity search, RLS enabled</span></div>
+          </div>
+          <div class="feat-item">
+            <div class="feat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="feat-text"><strong>Ingestion script</strong><span>Idempotent batch migration from hadiths → hadith_vectors</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ══ FILES CHANGED ══ -->
+  <div class="section">
+    <div class="section-title">File Inventory</div>
+    <h2>Key Files Modified or Created</h2>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <table class="file-table">
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>Type</th>
+            <th>Change</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>index.html</code></td><td><span class="badge badge-blue">Modified</span></td><td>Light default theme, glassmorphism cards, JSON-LD array, font preload, dns-prefetch, CSP meta</td></tr>
+          <tr><td><code>js/theme-init.js</code></td><td><span class="badge badge-blue">Modified</span></td><td>Default changed to 'light', migration key bumped to v3</td></tr>
+          <tr><td><code>js/index-wire.js</code></td><td><span class="badge badge-blue">Modified</span></td><td>Full rewrite of featured section — date-deterministic daily card + reads-sorted popular card with animated counter</td></tr>
+          <tr><td><code>js/app.js</code></td><td><span class="badge badge-blue">Modified</span></td><td>addEventListener wiring for all button events; descriptive avatar alt text</td></tr>
+          <tr><td><code>functions/api/ai-search.js</code></td><td><span class="badge badge-blue">Modified</span></td><td>CORS allow-list, in-memory rate limiter (10 req/60 s/IP)</td></tr>
+          <tr><td><code>_headers</code></td><td><span class="badge badge-blue">Modified</span></td><td>Removed script-src-attr unsafe-inline; Worker URL added to connect-src</td></tr>
+          <tr><td><code>categories.html</code></td><td><span class="badge badge-blue">Modified</span></td><td>CollectionPage + BreadcrumbList JSON-LD; font + dns-prefetch optimisations</td></tr>
+          <tr><td><code>about.html</code></td><td><span class="badge badge-blue">Modified</span></td><td>AboutPage + Organization JSON-LD; SEO meta; font optimisations</td></tr>
+          <tr><td><code>bookmarks.html</code></td><td><span class="badge badge-blue">Modified</span></td><td>Full OG + Twitter Card meta; font + logo optimisations</td></tr>
+          <tr><td><code>category.html</code></td><td><span class="badge badge-blue">Modified</span></td><td>Arabic font non-render-blocking; dns-prefetch hints</td></tr>
+          <tr><td><code>sitemap.xml</code></td><td><span class="badge badge-blue">Modified</span></td><td>All lastmod dates updated to 2026-04-12 (135 URLs)</td></tr>
+          <tr><td><code>worker/src/index.js</code></td><td><span class="badge badge-green">Created</span></td><td>Cloudflare Worker — RAG endpoint (embeddings + gpt-4o-mini + pgvector)</td></tr>
+          <tr><td><code>worker/wrangler.toml</code></td><td><span class="badge badge-green">Created</span></td><td>Worker config — routes, compatibility date, environment bindings</td></tr>
+          <tr><td><code>reports/sprint-status-2026-04-12.html</code></td><td><span class="badge badge-green">Created</span></td><td>Themed HTML sprint status report</td></tr>
+          <tr><td><code>reports/deploy-ready-2026-04-12.html</code></td><td><span class="badge badge-green">Created</span></td><td>This report</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ══ PRE-PUSH CHECKLIST ══ -->
+  <div class="section">
+    <div class="section-title">Pre-Push Validation</div>
+    <h2>Final Checklist</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="checklist">
+          <div class="check-item check-done"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Light theme default on first load</div>
+          <div class="check-item check-done"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Theme toggle persists across refresh</div>
+          <div class="check-item check-done"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Hadith of the Day + Most Read cards live</div>
+          <div class="check-item check-done"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Glassmorphism + animated balloon counter</div>
+          <div class="check-item check-done"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> CORS allow-list (no wildcard)</div>
+          <div class="check-item check-done"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> AI rate limiting (10 req/60 s/IP)</div>
+          <div class="check-item check-done"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> JSON-LD on index, categories, about</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="checklist">
+          <div class="check-item check-done"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Arabic font non-render-blocking (all pages)</div>
+          <div class="check-item check-done"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> dns-prefetch for Supabase + Worker</div>
+          <div class="check-item check-done"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Sitemap lastmod → 2026-04-12</div>
+          <div class="check-item check-done"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> No secrets or credentials committed</div>
+          <div class="check-item check-done"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> No inline onclick handlers remaining</div>
+          <div class="check-item check-done"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Cloudflare Pages auto-deploys on push</div>
+          <div class="check-item check-warn"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Worker needs separate wrangler deploy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ══ ROAD AHEAD ══ -->
+  <div class="section">
+    <div class="section-title">What Comes Next</div>
+    <h2>Road Ahead — Next Sprint Priorities</h2>
+    <div class="road-grid">
+      <div class="road-card">
+        <div class="road-num">1</div>
+        <div class="road-content">
+          <strong>Connect Supabase live data to the frontend</strong>
+          <span>Replace js/data.js static hadith array with real-time Supabase REST API queries — unlocking all 7,277 hadiths for users.</span>
+        </div>
+      </div>
+      <div class="road-card">
+        <div class="road-num">2</div>
+        <div class="road-content">
+          <strong>Migrate Firebase Auth → Supabase Auth</strong>
+          <span>Remove js/firebase-auth.js entirely. Wire Supabase signInWithOAuth (Google), signOut, and session management. Simplifies the auth stack and removes the Firebase dependency.</span>
+        </div>
+      </div>
+      <div class="road-card">
+        <div class="road-num">3</div>
+        <div class="road-content">
+          <strong>Redeploy Cloudflare Worker</strong>
+          <span>Run <code>cd worker &amp;&amp; npx wrangler deploy</code> separately — the Worker is not part of Cloudflare Pages auto-deploy. Must be done manually after push.</span>
+        </div>
+      </div>
+      <div class="road-card">
+        <div class="road-num">4</div>
+        <div class="road-content">
+          <strong>KV-backed rate limiting for the Worker</strong>
+          <span>Replace the in-memory Map (resets on cold start) with Cloudflare KV for persistent, cross-instance rate limiting. Add KV namespace binding in wrangler.toml.</span>
+        </div>
+      </div>
+      <div class="road-card">
+        <div class="road-num">5</div>
+        <div class="road-content">
+          <strong>Admin panel — protected backend interface</strong>
+          <span>Password-protected admin UI for creating/editing blog posts, scheduling publications, managing categories, uploading data files (PDF/CSV/TXT), and viewing analytics.</span>
+        </div>
+      </div>
+      <div class="road-card">
+        <div class="road-num">6</div>
+        <div class="road-content">
+          <strong>Social media automation decision</strong>
+          <span>Choose: Buffer ($6/mo — simplest) or Make.com ($9/mo — most flexible) for auto-posting to Facebook, Twitter/X, Instagram, YouTube, and LinkedIn on publish.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PUSH CTA ══ -->
+  <div class="push-cta">
+    <div class="push-cta-inner">
+      <h2>Ready to Deploy</h2>
+      <p>11 commits are staged locally. Cloudflare Pages will auto-deploy the moment this reaches origin/main. Your call, Syed.</p>
+      <div class="push-cta-cmd">git push origin main</div>
+      <p class="push-note">Worker deployment is separate — run wrangler deploy from the worker/ directory after the Pages push.</p>
+    </div>
+  </div>
+
+  <hr class="divider" />
+  <div class="footer">
+    Generated 2026-04-12 &nbsp;·&nbsp; Timeless Hadith Platform &nbsp;·&nbsp; timelesshadith.com
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timeless Hadith — P3 Fixes Report (2026-04-11)</title>
+  <style>
+    :root {
+      --bg: #fafafa;
+      --ink: #0a0a0a;
+      --ink-2: #555;
+      --ink-3: #888;
+      --line: #e5e5e5;
+      --card: #fff;
+      --accent: #0071e3;
+      --good: #007a3d;
+      --warn: #a86500;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      padding: 48px 24px;
+    }
+    main { max-width: 860px; margin: 0 auto; }
+    header { border-bottom: 1px solid var(--line); padding-bottom: 20px; margin-bottom: 28px; }
+    h1 { font-size: 24px; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.01em; }
+    .subtitle { color: var(--ink-2); font-size: 14px; margin: 0; }
+    h2 { font-size: 16px; font-weight: 600; margin: 32px 0 12px; letter-spacing: -0.005em; }
+    h3 { font-size: 14px; font-weight: 600; margin: 20px 0 6px; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.04em; }
+    p { margin: 0 0 10px; color: var(--ink-2); }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; margin-bottom: 16px; }
+    .pill {
+      display: inline-block; padding: 3px 10px; border-radius: 999px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.02em;
+    }
+    .pill-done { background: #e8f5ee; color: var(--good); }
+    .pill-note { background: #fff5e5; color: var(--warn); }
+    ul { margin: 8px 0 4px; padding-left: 20px; }
+    li { margin-bottom: 4px; color: var(--ink-2); }
+    code {
+      font: 12.5px/1.5 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      background: #f1f1f1; padding: 1.5px 6px; border-radius: 5px;
+      color: var(--ink);
+    }
+    .commit {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 10px 0; border-bottom: 1px solid var(--line);
+    }
+    .commit:last-child { border-bottom: none; }
+    .commit .hash {
+      font: 12px ui-monospace, Menlo, monospace;
+      color: var(--ink-3); min-width: 64px;
+    }
+    .commit .msg { flex: 1; color: var(--ink); }
+    footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 12.5px; }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>P3 Fixes — Timeless Hadith Audit</h1>
+    <p class="subtitle">Medium-priority improvements completed locally. 2026-04-11.</p>
+  </header>
+
+  <div class="card">
+    <span class="pill pill-done">All P3 code fixes done</span>
+    <p style="margin-top:12px">Three logical commits on <code>main</code>, ahead of remote. Not pushed yet.</p>
+  </div>
+
+  <h2>What shipped</h2>
+
+  <div class="card">
+    <h3>Accessibility</h3>
+    <ul>
+      <li>Skip-to-content links present on all main pages (bookmarks updated to match the rest).</li>
+      <li>Footer logo on all 7 pages now uses <code>loading="lazy"</code> + <code>decoding="async"</code>.</li>
+    </ul>
+
+    <h3>Performance &amp; code hygiene</h3>
+    <ul>
+      <li>~1,500 lines of inline JavaScript extracted from HTML into 8 external modules under <code>js/</code>, enabling long-term caching and parallel download.</li>
+      <li>Shared helpers introduced: <code>theme-init.js</code>, <code>sw-register.js</code>, <code>page-chrome.js</code> (eliminates copy-paste of theme toggle, hamburger, and cookie banner across about/privacy/terms).</li>
+      <li>Fixed pre-existing syntax bugs (stray characters) in the inline cookie-banner code on about.html, privacy.html, and terms.html during extraction.</li>
+    </ul>
+
+    <h3>Security — Content Security Policy</h3>
+    <ul>
+      <li><code>'unsafe-inline'</code> removed from <code>script-src</code> in both the Cloudflare edge <code>_headers</code> file and the <code>&lt;meta&gt;</code> on index.html.</li>
+      <li>Added <code>base-uri 'self'</code>, <code>form-action 'self'</code>, and <code>frame-ancestors 'none'</code> as defense-in-depth hardening.</li>
+      <li><code>script-src-attr 'unsafe-inline'</code> retained so existing onclick attributes inside innerHTML-generated hadith card templates keep working. A full move to <code>addEventListener</code> is a larger follow-up.</li>
+    </ul>
+  </div>
+
+  <h2>Commits created</h2>
+  <div class="card">
+    <div class="commit">
+      <span class="hash">a8a8f71</span>
+      <span class="msg">refactor(scripts): add external JS modules for all inline wiring (P3 from audit)</span>
+    </div>
+    <div class="commit">
+      <span class="hash">99153e8</span>
+      <span class="msg">refactor(html): swap inline scripts for external refs across all pages (P3 from audit)</span>
+    </div>
+    <div class="commit">
+      <span class="hash">f6b315b</span>
+      <span class="msg">feat(csp): drop 'unsafe-inline' from script-src, add hardening directives (P3 from audit)</span>
+    </div>
+  </div>
+
+  <h2>Files changed</h2>
+  <div class="card">
+    <h3>New</h3>
+    <ul>
+      <li><code>js/theme-init.js</code>, <code>js/sw-register.js</code>, <code>js/page-chrome.js</code></li>
+      <li><code>js/category-head.js</code>, <code>js/index-wire.js</code>, <code>js/categories-wire.js</code></li>
+      <li><code>js/category-wire.js</code>, <code>js/bookmarks-wire.js</code></li>
+    </ul>
+    <h3>Modified</h3>
+    <ul>
+      <li><code>index.html</code>, <code>about.html</code>, <code>categories.html</code>, <code>category.html</code>, <code>bookmarks.html</code>, <code>privacy.html</code>, <code>terms.html</code></li>
+      <li><code>_headers</code> (CSP)</li>
+    </ul>
+  </div>
+
+  <h2>Verification</h2>
+  <div class="card">
+    <ul>
+      <li>All 8 extracted JS files parse cleanly under <code>node --check</code> equivalent (<code>new Function(src)</code>).</li>
+      <li>No inline <code>&lt;script&gt;</code> blocks remain on any public page (only JSON-LD schema data and external <code>src</code> references).</li>
+      <li>Commits are clean conventional-style, one logical concern per commit.</li>
+    </ul>
+  </div>
+
+  <h2>Not in this pass</h2>
+  <div class="card">
+    <p><span class="pill pill-note">Runtime verification needed</span></p>
+    <ul>
+      <li>Real-browser smoke test of each page after <code>unsafe-inline</code> removal (open DevTools console, confirm no CSP violations).</li>
+      <li>Lighthouse / axe re-run to quantify the a11y + perf delta.</li>
+      <li>Full refactor of <code>onclick="…"</code> attributes in card templates to <code>addEventListener</code> (would let us drop <code>script-src-attr 'unsafe-inline'</code> too).</li>
+    </ul>
+  </div>
+
+  <footer>
+    Ready for push approval. Branch <code>main</code> is 3 commits ahead of origin.
+  </footer>
+</main>
+</body>
+</html>

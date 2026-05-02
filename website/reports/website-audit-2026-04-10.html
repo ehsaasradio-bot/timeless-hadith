@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Timeless Hadith — Website Audit Report (April 10, 2026)</title>
+<style>
+  :root {
+    --bg:#f7f7f5; --surface:#ffffff; --surface2:#f1f1ef; --border:#e4e4e0;
+    --ink:#0a0a0a; --muted:#666; --accent:#4f72f8; --accent2:#7c5ce6;
+    --ok:#1f9d55; --warn:#c47a00; --crit:#c0392b; --info:#1976d2;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.6; padding:40px 20px;
+  }
+  .wrap { max-width:960px; margin:0 auto; }
+  header.hero {
+    background:linear-gradient(135deg,#4f72f8 0%,#7c5ce6 100%);
+    color:#fff; padding:48px 40px; border-radius:20px; margin-bottom:32px;
+    box-shadow:0 10px 40px rgba(79,114,248,0.18);
+  }
+  header.hero .eyebrow {
+    text-transform:uppercase; font-size:12px; letter-spacing:1.5px;
+    font-weight:600; opacity:0.85; margin-bottom:12px;
+  }
+  header.hero h1 { margin:0 0 8px; font-size:36px; letter-spacing:-0.02em; font-weight:700; }
+  header.hero p { margin:0; opacity:0.92; font-size:16px; }
+  h2 {
+    font-size:22px; margin:44px 0 16px; letter-spacing:-0.01em;
+    border-bottom:2px solid var(--border); padding-bottom:8px;
+  }
+  h3 { font-size:16px; margin:24px 0 10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; }
+  p { margin:10px 0; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin:20px 0 28px; }
+  .card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:14px; padding:18px; text-align:center;
+  }
+  .card .score { font-size:34px; font-weight:700; letter-spacing:-0.02em; }
+  .card .label { font-size:12px; text-transform:uppercase; letter-spacing:0.8px; color:var(--muted); margin-top:4px; }
+  .card.good .score { color:var(--ok); }
+  .card.warn .score { color:var(--warn); }
+  .card.crit .score { color:var(--crit); }
+  table {
+    width:100%; border-collapse:collapse; background:var(--surface);
+    border:1px solid var(--border); border-radius:12px; overflow:hidden;
+    margin:14px 0; font-size:14px;
+  }
+  th, td { padding:12px 14px; text-align:left; border-bottom:1px solid var(--border); vertical-align:top; }
+  th { background:var(--surface2); font-size:12px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); }
+  tr:last-child td { border-bottom:none; }
+  .badge {
+    display:inline-block; padding:3px 10px; border-radius:100px;
+    font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.4px;
+  }
+  .b-done { background:#e6f7ee; color:var(--ok); }
+  .b-todo { background:#fff4e0; color:var(--warn); }
+  .b-crit { background:#fdecea; color:var(--crit); }
+  .b-info { background:#e7f1fb; color:var(--info); }
+  .b-p1 { background:#c0392b; color:#fff; }
+  .b-p2 { background:#e67e22; color:#fff; }
+  .b-p3 { background:#3498db; color:#fff; }
+  .b-p4 { background:#95a5a6; color:#fff; }
+  ul { padding-left:22px; }
+  ul li { margin:6px 0; }
+  code {
+    background:var(--surface2); padding:1px 6px; border-radius:4px;
+    font-family:"SF Mono",Consolas,monospace; font-size:12px;
+  }
+  .summary-box {
+    background:var(--surface); border-left:4px solid var(--accent);
+    padding:16px 20px; border-radius:8px; margin:16px 0;
+  }
+  .summary-box.crit { border-left-color:var(--crit); }
+  .summary-box.warn { border-left-color:var(--warn); }
+  footer { margin-top:48px; padding-top:20px; border-top:1px solid var(--border); color:var(--muted); font-size:13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Website Audit · April 10, 2026</div>
+  <h1>Timeless Hadith — Full Site Audit</h1>
+  <p>SEO · Performance · Security · Accessibility · PWA · Code Quality</p>
+</header>
+
+<section>
+  <h2>At-a-glance scorecard</h2>
+  <div class="cards">
+    <div class="card good"><div class="score">A</div><div class="label">SEO</div></div>
+    <div class="card good"><div class="score">A-</div><div class="label">Security</div></div>
+    <div class="card warn"><div class="score">B</div><div class="label">Performance</div></div>
+    <div class="card warn"><div class="score">B</div><div class="label">Accessibility</div></div>
+    <div class="card warn"><div class="score">C+</div><div class="label">PWA</div></div>
+    <div class="card warn"><div class="score">B-</div><div class="label">Code Quality</div></div>
+  </div>
+
+  <div class="summary-box">
+    <strong>Overall verdict:</strong> The site is production-ready and launch-safe. SEO and security are strong. The main opportunities are removing dead Firebase code, adding a service worker for PWA install, and trimming unused audit/preview HTML files from the public root before the next deploy.
+  </div>
+</section>
+
+<section>
+  <h2>1. SEO</h2>
+  <table>
+    <thead><tr><th>Check</th><th>Status</th><th>Priority</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Unique &lt;title&gt; per page</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>Homepage, about, categories, category, bookmarks, privacy, terms all have distinct, keyword-aware titles.</td></tr>
+      <tr><td>Meta description</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>Present on all primary pages.</td></tr>
+      <tr><td>Canonical URLs</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td><code>&lt;link rel="canonical"&gt;</code> present on homepage.</td></tr>
+      <tr><td>Open Graph + Twitter Card</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>OG image set to <code>og-image.png</code> (1200x630, branded).</td></tr>
+      <tr><td>JSON-LD structured data</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>WebSite schema with SearchAction on index; present on 6 HTML files total.</td></tr>
+      <tr><td>Sitemap.xml</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>16 KB sitemap includes core and category pages.</td></tr>
+      <tr><td>robots.txt</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>Correctly disallows admin, cms, firebase-guide, and landing clones.</td></tr>
+      <tr><td>Semantic landmarks (header/main/nav/footer)</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>4 landmarks detected in index.html.</td></tr>
+      <tr><td>H1 uniqueness per page</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>Single H1 per page with sensible H2/H3 structure.</td></tr>
+      <tr><td>Image alt text on primary images</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p3">Medium</span></td><td>Logo, hero, and category images have alt attributes. Decorative favicon above title correctly uses <code>alt=""</code>.</td></tr>
+      <tr><td>Remove preview/audit HTMLs from public root</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p2">High</span></td><td>9 legacy files (<code>audit-report.html</code>, <code>audit-report-v2.html</code>, <code>audit-report-v3.html</code>, <code>audit-seo-report-v4.html</code>, <code>audit-confluence-report.html</code>, <code>apple-sa-landing.html</code>, <code>mac-lineup.html</code>, <code>firebase-integration-guide.html</code>, <code>admin-backup.html</code>) are disallowed in robots.txt but still indexable if linked. Move to <code>/reports/</code> or delete before next deploy.</td></tr>
+      <tr><td>Internal linking between categories ↔ hadiths</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p3">Medium</span></td><td>Frontend still pulls from static <code>js/data.js</code>. Once Supabase ingestion lands, generate per-hadith permalinks and internal link blocks for SEO depth.</td></tr>
+      <tr><td>hreflang for Arabic / English</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p3">Medium</span></td><td>Site serves bilingual content but lacks <code>hreflang</code> hints. Add when language-split pages exist.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>2. Performance</h2>
+  <table>
+    <thead><tr><th>Check</th><th>Status</th><th>Priority</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>HTML size (index.html)</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>69 KB. Within acceptable range for a single-page hero + category listing.</td></tr>
+      <tr><td>CSS size (styles.css)</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>13.6 KB uncompressed — excellent.</td></tr>
+      <tr><td>JS total (app + data + auth + ai-search)</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p2">High</span></td><td>~125 KB across 6 JS files. <code>firebase-auth.js</code> (24 KB) is dead code — Supabase Auth has replaced it. Delete to save ~20% of JS payload.</td></tr>
+      <tr><td>Image optimization</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>Brand PNGs are right-sized (logo 78 KB, og-image 62 KB, favicons &lt;14 KB). Consider WebP for further gains.</td></tr>
+      <tr><td>Font loading strategy</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>Preconnect to fonts.googleapis.com + fonts.gstatic.com. Noto Naskh Arabic uses <code>display=swap</code>.</td></tr>
+      <tr><td>Script defer/async</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p2">High</span></td><td>Local scripts at lines 995–998 (supabase-data, app, supabase-auth, ai-search) load without <code>defer</code>. Add <code>defer</code> to unblock initial paint. Cloudflare beacon already deferred.</td></tr>
+      <tr><td>Lazy loading images</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p3">Medium</span></td><td>Only 1 <code>loading="lazy"</code> found in index.html. Category and featured-hadith images below the fold should use <code>loading="lazy"</code> and <code>decoding="async"</code>.</td></tr>
+      <tr><td>Asset caching</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td><code>_headers</code> sets <code>max-age=31536000, immutable</code> for PNGs.</td></tr>
+      <tr><td>Core Web Vitals</td><td><span class="badge b-info">Verify</span></td><td><span class="badge b-p3">Medium</span></td><td>Run Lighthouse + PageSpeed Insights after the Cloudflare Pages deploy of <code>e417e78</code> to confirm LCP &lt; 2.5s.</td></tr>
+      <tr><td>Service Worker / offline cache</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p2">High</span></td><td>No <code>sw.js</code> present. Add a simple stale-while-revalidate SW for HTML + CSS + fonts to improve repeat-visit performance and enable offline fallback.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>3. Security</h2>
+  <table>
+    <thead><tr><th>Check</th><th>Status</th><th>Priority</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>HTTPS enforced (HSTS)</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td><code>Strict-Transport-Security: max-age=31536000; includeSubDomains; preload</code></td></tr>
+      <tr><td>Content-Security-Policy</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>CSP defined in both <code>_headers</code> and <code>&lt;meta&gt;</code>. Restricts to self, fonts, Supabase, Cloudflare beacon, Google accounts.</td></tr>
+      <tr><td>X-Frame-Options / Clickjacking</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td><code>DENY</code></td></tr>
+      <tr><td>X-Content-Type-Options</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td><code>nosniff</code></td></tr>
+      <tr><td>Referrer-Policy</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td><code>strict-origin-when-cross-origin</code></td></tr>
+      <tr><td>Permissions-Policy</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>Disables geolocation, mic, camera, payment.</td></tr>
+      <tr><td>Secrets / private keys in repo</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>No service-role keys, OpenAI keys, or <code>.env</code> files found. Only public Supabase anon keys in <code>js/supabase-*.js</code> (expected &amp; safe).</td></tr>
+      <tr><td>CSP <code>'unsafe-inline'</code> on scripts</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p3">Medium</span></td><td>Still allows inline scripts. Medium-term: move inline theme bootstrap + wiring into nonce-based or hashed inline directives.</td></tr>
+      <tr><td>Supabase Row-Level Security</td><td><span class="badge b-info">Verify</span></td><td><span class="badge b-p2">High</span></td><td>Confirm RLS is enabled on <code>hadiths</code>, <code>users</code>, and <code>bookmarks</code> tables. Anon key must only allow SELECT on public content.</td></tr>
+      <tr><td>Admin route exposure</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p2">High</span></td><td><code>admin-backup.html</code> and <code>cms.html</code> ship to production root. Even with robots disallow, they're reachable by direct URL. Either delete, rename with hash suffix, or gate behind a Cloudflare Access policy.</td></tr>
+      <tr><td>Dependency audit</td><td><span class="badge b-info">Verify</span></td><td><span class="badge b-p3">Medium</span></td><td>No <code>package.json</code> in web root — zero npm dependencies shipped. Only runtime dep is the Supabase CDN script.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>4. Accessibility (WCAG 2.1 AA)</h2>
+  <table>
+    <thead><tr><th>Check</th><th>Status</th><th>Priority</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Lang attribute on &lt;html&gt;</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td><code>lang="en"</code> on index.html.</td></tr>
+      <tr><td>Skip-to-content link</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p3">Medium</span></td><td>Not present. Add a visually-hidden <code>&lt;a href="#main"&gt;Skip to content&lt;/a&gt;</code> as the first focusable element.</td></tr>
+      <tr><td>Keyboard focus styles</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>6 occurrences of <code>:focus</code> / <code>focus-visible</code> across index.html + styles.css.</td></tr>
+      <tr><td>ARIA labels on icon buttons</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>26 aria-* attributes in index.html. AI search send button, theme toggle, and nav all labelled.</td></tr>
+      <tr><td>prefers-reduced-motion respect</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>Hero mark float/glow animation is wrapped in <code>@media (prefers-reduced-motion: reduce)</code>.</td></tr>
+      <tr><td>Color contrast (light theme)</td><td><span class="badge b-info">Verify</span></td><td><span class="badge b-p3">Medium</span></td><td>Run axe DevTools on the deployed site to confirm the indigo-on-off-white accent hits 4.5:1 on body copy and 3:1 on large text.</td></tr>
+      <tr><td>Form labels</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>AI search input has <code>aria-label</code>. Login form uses <code>&lt;label&gt;</code> elements.</td></tr>
+      <tr><td>Heading hierarchy</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>Single H1, logical H2 descent. No skipped levels detected.</td></tr>
+      <tr><td>Live regions</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>AI search toast uses <code>role="status" aria-live="polite"</code>.</td></tr>
+      <tr><td>Bookmarks page alt text</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p3">Medium</span></td><td>bookmarks.html has 0 alt attributes detected — verify there are no images or add alt where needed.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>5. PWA &amp; Mobile</h2>
+  <table>
+    <thead><tr><th>Check</th><th>Status</th><th>Priority</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>manifest.json</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>Present with icons 192/512, theme color, start_url.</td></tr>
+      <tr><td>Apple touch icon</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>180x180 linked in head.</td></tr>
+      <tr><td>Theme-color meta (light + dark)</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>Distinct light/dark theme-color via media queries.</td></tr>
+      <tr><td>Service worker</td><td><span class="badge b-crit">Missing</span></td><td><span class="badge b-p2">High</span></td><td>No <code>sw.js</code> — site does not qualify as installable PWA. Add a minimal SW registering from index.html.</td></tr>
+      <tr><td>Offline fallback page</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p3">Medium</span></td><td>Create <code>offline.html</code> showing brand + "You're offline — cached hadiths still work" message.</td></tr>
+      <tr><td>Mobile viewport</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td><code>width=device-width, initial-scale=1.0</code>.</td></tr>
+      <tr><td>Responsive hero / cards</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>Hero uses <code>clamp()</code> for fluid typography. AI search card shrinks correctly under 480px.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>6. Code Quality &amp; Content</h2>
+  <table>
+    <thead><tr><th>Check</th><th>Status</th><th>Priority</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Dead code: firebase-auth.js</td><td><span class="badge b-crit">Remove</span></td><td><span class="badge b-p1">Critical</span></td><td>Project decided on Supabase Auth (CLAUDE.md). <code>js/firebase-auth.js</code> (24 KB) is still in the bundle and imported nowhere on live pages. Delete before next deploy.</td></tr>
+      <tr><td>Dead code: old audit HTMLs</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p2">High</span></td><td>9 audit / preview / landing clones sit in repo root. Move to <code>/reports/</code> or <code>/archive/</code>.</td></tr>
+      <tr><td>Static data vs Supabase</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p2">High</span></td><td>Frontend still reads from <code>js/data.js</code> (32 KB hard-coded hadiths). Next sprint should swap to live Supabase REST reads of the 7,277-hadith corpus.</td></tr>
+      <tr><td>Emoji / italic removal (Phase 3 rule)</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>Repo is emoji-free in shipping HTML/CSS. Hero accent uses color change, not italics.</td></tr>
+      <tr><td>Git hygiene</td><td><span class="badge b-done">Done</span></td><td><span class="badge b-p4">Low</span></td><td>Clean working tree. Recent commits follow conventional format.</td></tr>
+      <tr><td>Duplicate Hadith.png / Quran.png</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p3">Medium</span></td><td>Unreferenced 40 KB + 48 KB PNGs at repo root. Either integrate or delete.</td></tr>
+      <tr><td>Firebase-Auth-Implementation-Guide.docx/pdf</td><td><span class="badge b-todo">Action</span></td><td><span class="badge b-p3">Medium</span></td><td>39 KB + unused docs shipped to production root. Move to <code>/docs/</code> folder (not deployed).</td></tr>
+      <tr><td>Content validation (anti-AI-slop)</td><td><span class="badge b-info">Verify</span></td><td><span class="badge b-p2">High</span></td><td>All hadith references in <code>data.js</code> must be cross-checked against sunnah.com before public blog launch.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Prioritized action list</h2>
+
+  <h3>Critical (do before next deploy)</h3>
+  <ul>
+    <li><span class="badge b-p1">P1</span> Delete <code>js/firebase-auth.js</code> (24 KB dead code, superseded by Supabase Auth).</li>
+  </ul>
+
+  <h3>High priority (this sprint)</h3>
+  <ul>
+    <li><span class="badge b-p2">P2</span> Add <code>defer</code> to all 4 local &lt;script&gt; tags in index.html (lines 995–998).</li>
+    <li><span class="badge b-p2">P2</span> Create <code>sw.js</code> stale-while-revalidate service worker + register in index.html.</li>
+    <li><span class="badge b-p2">P2</span> Move <code>admin-backup.html</code>, <code>cms.html</code>, and 7 legacy audit HTMLs out of the public root.</li>
+    <li><span class="badge b-p2">P2</span> Verify Supabase Row-Level Security on hadiths / bookmarks / users tables.</li>
+    <li><span class="badge b-p2">P2</span> Migrate frontend reads from <code>js/data.js</code> to live Supabase REST (7,277 hadiths).</li>
+    <li><span class="badge b-p2">P2</span> Validate hadith references against sunnah.com before the blog goes public.</li>
+  </ul>
+
+  <h3>Medium priority (next sprint)</h3>
+  <ul>
+    <li><span class="badge b-p3">P3</span> Add <code>loading="lazy"</code> and <code>decoding="async"</code> to below-the-fold images.</li>
+    <li><span class="badge b-p3">P3</span> Add skip-to-content link at the top of every page.</li>
+    <li><span class="badge b-p3">P3</span> Create <code>offline.html</code> fallback page.</li>
+    <li><span class="badge b-p3">P3</span> Delete unused <code>Hadith.png</code>, <code>Quran.png</code>, and Firebase guide docs from root.</li>
+    <li><span class="badge b-p3">P3</span> Run axe DevTools contrast audit on the deployed light theme.</li>
+    <li><span class="badge b-p3">P3</span> Run Lighthouse + PageSpeed on the <code>e417e78</code> deploy and record CWV baseline.</li>
+    <li><span class="badge b-p3">P3</span> Add hreflang hints once bilingual URL structure is finalised.</li>
+    <li><span class="badge b-p3">P3</span> Replace CSP <code>'unsafe-inline'</code> with nonce/hash approach.</li>
+  </ul>
+
+  <h3>Low priority (backlog)</h3>
+  <ul>
+    <li><span class="badge b-p4">P4</span> Generate WebP variants of brand PNGs for an extra ~30% image payload cut.</li>
+    <li><span class="badge b-p4">P4</span> Add per-hadith permalinks with internal link blocks for SEO depth.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>What's already working well</h2>
+  <div class="summary-box">
+    <ul style="margin:0;">
+      <li>Strong security baseline: HSTS, CSP, X-Frame-Options, Permissions-Policy — all configured in <code>_headers</code>.</li>
+      <li>SEO fundamentals nailed: titles, meta, OG, Twitter Card, canonical, JSON-LD, sitemap, robots.</li>
+      <li>Clean Inter-font + indigo/purple brand system with a light-default theme, prefers-reduced-motion, and animated favicon above title.</li>
+      <li>AI search card is themed, accessible (aria-label, live toast), responsive, and production-safe.</li>
+      <li>New brand assets (logo, 5 favicon sizes, og-image) are trimmed, transparent, correctly sized.</li>
+      <li>Emoji-free and italic-free per the Phase 3 house rule.</li>
+      <li>Zero npm supply chain — single Supabase CDN script is the only external JS dependency.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Context</h2>
+  <p><strong>Current HEAD:</strong> <code>e417e78 feat(hero): add AI search card and animated hero mark</code></p>
+  <p><strong>Branch:</strong> <code>main</code> (ahead of <code>origin/main</code> — push pending user approval)</p>
+  <p><strong>Cloudflare Pages:</strong> auto-deploys on push to main at <code>https://timeless-hadith.pages.dev</code> and <code>https://timelesshadith.com</code>.</p>
+  <p><strong>Audit methodology:</strong> static analysis of repo files (HTML, CSS, JS, config, headers, manifest, sitemap) without live browser testing. Items marked <span class="badge b-info">Verify</span> require a post-deploy Lighthouse / axe / Supabase dashboard check.</p>
+</section>
+
+<footer>
+  Generated April 10, 2026 · Timeless Hadith website audit · Syed / ehsaasradio-bot
+</footer>
+
+</div>
+</body>
+</html>

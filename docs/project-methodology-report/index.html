@@ -1,0 +1,1245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Timeless Hadith — Project Methodology Whitepaper</title>
+<meta name="description" content="A complete Apple-style methodology whitepaper documenting how the Timeless Hadith platform was built, every mistake we made, and how to rebuild it from zero." />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<main>
+
+<!-- ============================================================ -->
+<!--  A. COVER PAGE                                                -->
+<!-- ============================================================ -->
+<section class="cover" id="cover">
+  <div class="cover__brand">
+    <div class="logo-mark">TH</div>
+    <span>Timeless Hadith</span>
+    <span class="muted">·</span>
+    <span class="muted">Project Methodology Whitepaper</span>
+  </div>
+
+  <span class="eyebrow">Internal · Engineering Whitepaper · v1.0</span>
+  <h1>How We Built the Timeless Hadith Platform.</h1>
+  <p class="tagline">A complete, honest, child-readable rebuild guide — every layer, every lesson, every line of code that mattered.</p>
+
+  <span class="status-pill">Live · Stable · Production</span>
+
+  <dl class="cover__meta">
+    <div><dt>Project</dt><dd>Timeless Hadith / Kadis</dd></div>
+    <div><dt>Live URL</dt><dd>timelesshadith.com</dd></div>
+    <div><dt>Status</dt><dd>Completed &amp; Running</dd></div>
+    <div><dt>Stack</dt><dd>Static HTML · Next.js 15 · Supabase · Cloudflare</dd></div>
+    <div><dt>Prepared</dt><dd>April 2026</dd></div>
+    <div><dt>Audience</dt><dd>Engineering · Future Maintainer · 12-year-old learner</dd></div>
+  </dl>
+</section>
+
+<!-- ============================================================ -->
+<!--  TABLE OF CONTENTS                                            -->
+<!-- ============================================================ -->
+<section id="toc" class="section-break">
+  <div class="section-num">Contents</div>
+  <h2>What's inside.</h2>
+  <p class="lead">Sixteen chapters, one cover, one rebuild guide. Read top to bottom or jump straight to the part you need.</p>
+  <div class="toc">
+    <div class="toc__grid">
+      <a href="#exec"><span class="num">B</span> Executive Summary</a>
+      <a href="#arch"><span class="num">C</span> Project Architecture</a>
+      <a href="#method"><span class="num">D</span> Implementation Methodology</a>
+      <a href="#mistakes"><span class="num">E</span> Mistakes &amp; Fixes</a>
+      <a href="#security"><span class="num">F</span> Security Review</a>
+      <a href="#seo"><span class="num">G</span> SEO Review</a>
+      <a href="#perf"><span class="num">H</span> Performance Review</a>
+      <a href="#uiux"><span class="num">I</span> UI / UX Review</a>
+      <a href="#db"><span class="num">J</span> Database &amp; Data Flow</a>
+      <a href="#deploy"><span class="num">K</span> Deployment Methodology</a>
+      <a href="#checklists"><span class="num">L</span> Final Checklists</a>
+      <a href="#learn"><span class="num">M</span> Learning Guide for Kids</a>
+      <a href="#future"><span class="num">N</span> Future Improvements</a>
+      <a href="#appendix"><span class="num">O</span> Appendix &amp; Glossary</a>
+      <a href="#rebuild"><span class="num">P</span> Rebuild with Claude Co-worker</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!--  B. EXECUTIVE SUMMARY                                         -->
+<!-- ============================================================ -->
+<section id="exec" class="section-break">
+  <div class="section-num">B · Executive Summary</div>
+  <h2>What we built, and why it matters.</h2>
+  <p class="lead">Timeless Hadith is a fast, beautiful, ad-free reference platform for authentic hadiths of Prophet Muhammad <span style="font-weight:600">&#xFDFA;</span>. It is built to be searchable in plain English, mobile-first, and trustworthy by design.</p>
+
+  <div class="grid grid--3 mt-l">
+    <div class="kpi"><div class="num">7,277</div><div class="label">Hadiths in DB</div></div>
+    <div class="kpi"><div class="num">23</div><div class="label">Public + Admin pages</div></div>
+    <div class="kpi"><div class="num">102</div><div class="label">Sitemap URLs</div></div>
+    <div class="kpi"><div class="num">3</div><div class="label">Deployment targets</div></div>
+  </div>
+
+  <div class="grid grid--2 mt-l">
+    <div class="card">
+      <h3 class="mt-0">What it is</h3>
+      <p>A static-first Islamic reference website (<code>timelesshadith.com</code>) backed by Supabase, with a Next.js admin panel and a Cloudflare Worker that powers AI-grounded search over the hadith corpus.</p>
+    </div>
+    <div class="card">
+      <h3 class="mt-0">Why we built it</h3>
+      <p>Most Islamic content on the web is slow, ad-heavy, or hard to verify. We wanted something Apple-clean, instant, and honest — so a parent can hand it to a child without worry.</p>
+    </div>
+    <div class="card">
+      <h3 class="mt-0">The problem it solves</h3>
+      <p>Find the right hadith, in the right language, with proper attribution, in under two seconds. Bookmark it. Share it as an image. Read it offline. No clutter.</p>
+    </div>
+    <div class="card">
+      <h3 class="mt-0">Where it stands today</h3>
+      <p>Live and stable on Cloudflare Pages. PWA-installable. Admin CMS built. Stripe-backed shop scaffolded but indexing-blocked. Firebase Auth being phased out for Supabase Auth.</p>
+    </div>
+  </div>
+
+  <div class="callout callout--success mt-l">
+    <div class="callout__icon">&#x2713;</div>
+    <div>
+      <strong>Status snapshot.</strong> The website is live and serving real users. The 10-phase enhancement sprint (theme system, branding, bookmark badge, featured-hadith carousel, category icons, About page, SEO pass, QA polish, final report) is fully completed as of 2026-03-29.
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!--  C. PROJECT ARCHITECTURE                                      -->
+<!-- ============================================================ -->
+<section id="arch" class="section-break">
+  <div class="section-num">C · Project Architecture</div>
+  <h2>Three deployment targets, one product.</h2>
+  <p class="lead">The system is intentionally split into a fast static site, a typed admin app, and a small AI worker — each deployed independently, each with a clear job.</p>
+
+  <h3>Stack at a glance</h3>
+  <div class="chips">
+    <span class="chip chip--blue">HTML / CSS / Vanilla JS</span>
+    <span class="chip chip--blue">Next.js 15 (App Router)</span>
+    <span class="chip chip--blue">React 19</span>
+    <span class="chip chip--blue">TypeScript 5</span>
+    <span class="chip chip--blue">Tailwind CSS 3.4</span>
+    <span class="chip chip--purple">Supabase (Postgres + Auth + Storage)</span>
+    <span class="chip chip--orange">Cloudflare Pages</span>
+    <span class="chip chip--orange">Cloudflare Workers</span>
+    <span class="chip chip--green">OpenAI (GPT-4o-mini + embeddings)</span>
+    <span class="chip chip--green">Stripe (shop)</span>
+    <span class="chip">Service Worker / PWA</span>
+    <span class="chip">GitHub Actions (CI only)</span>
+  </div>
+
+  <h3>System diagram</h3>
+  <div class="arch">
+    <div class="arch__row">
+      <div class="arch__node arch__node--user">
+        <span class="icon">&#x1F464;</span>
+        <span class="name">Visitor</span>
+        <span class="meta">Phone / Tablet / Desktop</span>
+      </div>
+    </div>
+    <div class="arch__arrow">&darr; &darr; &darr;</div>
+    <div class="arch__row">
+      <div class="arch__node arch__node--cdn">
+        <span class="icon">&#x2601;</span>
+        <span class="name">Cloudflare Pages</span>
+        <span class="meta">Edge cache · HTTPS · WAF</span>
+      </div>
+      <div class="arch__node arch__node--cdn">
+        <span class="icon">&#x2699;</span>
+        <span class="name">Pages Functions</span>
+        <span class="meta">/api/ai-search proxy</span>
+      </div>
+      <div class="arch__node arch__node--ai">
+        <span class="icon">&#x26A1;</span>
+        <span class="name">CF Worker</span>
+        <span class="meta">RAG search engine</span>
+      </div>
+    </div>
+    <div class="arch__arrow">&darr; &darr; &darr;</div>
+    <div class="arch__row">
+      <div class="arch__node arch__node--app">
+        <span class="icon">&#x1F4D6;</span>
+        <span class="name">Static Site</span>
+        <span class="meta">index · about · categories · etc.</span>
+      </div>
+      <div class="arch__node arch__node--app">
+        <span class="icon">&#x1F510;</span>
+        <span class="name">Admin App</span>
+        <span class="meta">Next.js 15 · /shop/admin</span>
+      </div>
+      <div class="arch__node arch__node--ai">
+        <span class="icon">&#x1F916;</span>
+        <span class="name">OpenAI</span>
+        <span class="meta">embeddings + chat</span>
+      </div>
+    </div>
+    <div class="arch__arrow">&darr; &darr; &darr;</div>
+    <div class="arch__row">
+      <div class="arch__node arch__node--db">
+        <span class="icon">&#x1F5C4;</span>
+        <span class="name">Supabase Postgres</span>
+        <span class="meta">documents · document_chunks · shop_*</span>
+      </div>
+      <div class="arch__node arch__node--db">
+        <span class="icon">&#x1F511;</span>
+        <span class="name">Supabase Auth</span>
+        <span class="meta">OAuth · session</span>
+      </div>
+      <div class="arch__node arch__node--db">
+        <span class="icon">&#x1F4E6;</span>
+        <span class="name">Supabase Storage</span>
+        <span class="meta">custom logo · assets</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>What lives where</h3>
+  <div class="grid grid--2">
+    <div class="card">
+      <h4 class="mt-0">Frontend (root of repo)</h4>
+      <p>Pure HTML pages: <code>index.html</code>, <code>about.html</code>, <code>blog.html</code>, <code>categories.html</code>, <code>category.html</code>, <code>prayer-times.html</code>, <code>privacy.html</code>, <code>terms.html</code>, <code>bookmarks.html</code>, <code>404.html</code>, <code>offline.html</code>, plus the admin login page <code>admin.html</code>.</p>
+      <p>Logic in <code>js/</code>: <code>theme-init.js</code>, <code>app.js</code>, <code>supabase-auth.js</code>, <code>supabase-data.js</code>, <code>data.js</code> (static fallback), <code>bookmarks-wire.js</code>, <code>ai-search.js</code>, <code>urdu-toggle.js</code>, <code>page-chrome.js</code>, plus per-page wires.</p>
+      <p>Single stylesheet: <code>css/styles.css</code> (theme tokens, fonts, components).</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Admin app (<code>admin-app/</code>)</h4>
+      <p>Next.js 15 + React 19 with the App Router. Edge runtime everywhere except SEO endpoints (Node.js).</p>
+      <p><strong>Pages:</strong> shop storefront, product detail, cart, checkout, success/cancel, admin dashboard, products, categories, orders, customers, reviews, coupons, settings, analytics, plus a separate SEO dashboard.</p>
+      <p><strong>API:</strong> 23 routes covering shop reads, admin writes (HMAC-protected), Stripe checkout + webhook, and SEO audit/AI/content.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Worker (<code>worker/</code>)</h4>
+      <p>A small Cloudflare Worker at <code>timeless-hadith-worker.ehsaasradio.workers.dev</code> that takes a question, embeds it with OpenAI, runs vector search via Supabase's <code>match_chunks()</code> RPC, and returns a grounded answer with citations.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Edge function (<code>functions/api/</code>)</h4>
+      <p><code>ai-search.js</code> — a thin proxy from the static site to the Worker. Translates the browser's <code>{query}</code> into the Worker's <code>{question}</code>, applies CORS allow-listing, and rate-limits 10 req/60s per IP.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!--  D. IMPLEMENTATION METHODOLOGY                                -->
+<!-- ============================================================ -->
+<section id="method" class="section-break">
+  <div class="section-num">D · Implementation Methodology</div>
+  <h2>Twelve steps from empty folder to live site.</h2>
+  <p class="lead">Each step explains what we did, why it was needed, and a one-line version simple enough for a 12-year-old.</p>
+
+  <div class="timeline">
+
+    <div class="timeline__item">
+      <div class="timeline__date">Step 1 · Planning</div>
+      <div class="timeline__title">Decide what the site is — and what it isn't.</div>
+      <div class="timeline__body">
+        <p><strong>What we did:</strong> Wrote down the audience (Muslims looking up authentic hadith), the core promise (fast, clean, trustworthy), and the constraints (free hosting, no ads). We picked the domain <code>timelesshadith.com</code> and chose Apple-style minimalism as the design direction.</p>
+        <p><strong>Why:</strong> A clear vision keeps every later decision honest. If a feature doesn't serve the promise, it gets cut.</p>
+        <p><strong>Kid version:</strong> Before drawing the house, we drew the floor plan.</p>
+      </div>
+    </div>
+
+    <div class="timeline__item">
+      <div class="timeline__date">Step 2 · Project Setup</div>
+      <div class="timeline__title">Make a Git repo and a working folder.</div>
+      <div class="timeline__body">
+        <p><strong>What we did:</strong> Created the GitHub repo <code>github.com/ehsaasradio-bot/timeless-hadith</code>, added a basic <code>README.md</code>, <code>LICENSE</code>, and <code>.gitignore</code> that excludes <code>.env</code>, <code>node_modules</code>, <code>.next/</code>, <code>.wrangler/</code>, and large archives.</p>
+        <p><strong>Files changed:</strong> <code>.gitignore</code>, <code>README.md</code>, <code>LICENSE</code>, <code>package.json</code>.</p>
+        <p><strong>Kid version:</strong> Got an empty notebook with our name on it.</p>
+      </div>
+    </div>
+
+    <div class="timeline__item">
+      <div class="timeline__date">Step 3 · Frontend Creation</div>
+      <div class="timeline__title">Build the static site by hand, page by page.</div>
+      <div class="timeline__body">
+        <p><strong>What we did:</strong> Wrote each public page as a real <code>.html</code> file. Built one shared stylesheet (<code>css/styles.css</code>) using CSS custom properties for the theme tokens (<code>--bg</code>, <code>--ink</code>, <code>--accent</code>). Self-hosted the fonts (Inter, Noto Kufi Arabic, Gulzar) under <code>fonts/</code> with <code>font-display:swap</code>. Added a service worker (<code>sw.js</code>) and <code>manifest.json</code> to make the site a PWA.</p>
+        <p><strong>Why:</strong> Static HTML on Cloudflare's edge is essentially free and ridiculously fast. No build step means no build errors.</p>
+        <p><strong>Kid version:</strong> Built each room of the house from real bricks instead of pretending with magic.</p>
+      </div>
+    </div>
+
+    <div class="timeline__item">
+      <div class="timeline__date">Step 4 · Backend Integration</div>
+      <div class="timeline__title">Plug Supabase into the front-end for live data.</div>
+      <div class="timeline__body">
+        <p><strong>What we did:</strong> Added <code>js/supabase-data.js</code> that initialises the Supabase JS client with the public <em>anon</em> key (read-only by design) and exposes a tiny <code>TH</code> API: <code>TH.categories</code>, <code>TH.getCat()</code>, <code>TH.getHadiths()</code>, <code>TH.findHadith()</code>. Kept <code>js/data.js</code> as a static fallback so the site still works if Supabase is unavailable.</p>
+        <p><strong>Why:</strong> The browser can talk to Supabase directly using the anon key — Postgres' Row-Level Security (RLS) decides what's actually visible. No custom API needed for reads.</p>
+        <p><strong>Kid version:</strong> Connected the website to a giant filing cabinet of hadiths in the cloud.</p>
+      </div>
+    </div>
+
+    <div class="timeline__item">
+      <div class="timeline__date">Step 5 · Database Schema</div>
+      <div class="timeline__title">Design tables for content, shop, and SEO.</div>
+      <div class="timeline__body">
+        <p><strong>What we did:</strong> Wrote three migration files in <code>sql/</code>:</p>
+        <ol>
+          <li><code>001_schema.sql</code> — <code>documents</code> + <code>document_chunks</code> with <code>vector(1536)</code> embeddings and an HNSW index for semantic search; the <code>match_chunks()</code> RPC for cosine-similarity queries.</li>
+          <li><code>001_shop_schema.sql</code> — <code>shop_products</code>, <code>shop_categories</code>, <code>shop_orders</code>, <code>shop_reviews</code>, <code>shop_inventory</code>, plus a GIN full-text index on <code>title || description</code>.</li>
+          <li><code>003_seo_schema.sql</code> — <code>seo_audits</code>, <code>seo_audit_issues</code>, <code>seo_pages</code>, <code>seo_recommendations</code>.</li>
+        </ol>
+        <p>All migrations are <code>CREATE ... IF NOT EXISTS</code> so they're safe to re-run.</p>
+        <p><strong>Kid version:</strong> Built shelves before putting books on them — and labelled every shelf.</p>
+      </div>
+    </div>
+
+    <div class="timeline__item">
+      <div class="timeline__date">Step 6 · CMS / Admin Work</div>
+      <div class="timeline__title">A typed Next.js admin behind a password.</div>
+      <div class="timeline__body">
+        <p><strong>What we did:</strong> Spun up <code>admin-app/</code> as a separate Next.js 15 project. Built a stateless HMAC-SHA256 session: the browser POSTs the password to <code>/api/admin/login</code>, the server derives a token from <code>HMAC(ADMIN_SECRET, "th-admin-session-v1")</code> and sets it as an <code>httpOnly</code>, <code>secure</code>, <code>sameSite=strict</code> cookie with an 8-hour expiry. Every admin route calls a <code>requireAdmin(request)</code> helper that verifies the cookie with a constant-time comparison.</p>
+        <p><strong>Why:</strong> No external auth dependency. Works on Cloudflare's edge runtime. Easy to reason about.</p>
+        <p><strong>Kid version:</strong> Built a back-office with a key only mum and dad have.</p>
+      </div>
+    </div>
+
+    <div class="timeline__item">
+      <div class="timeline__date">Step 7 · SEO Setup</div>
+      <div class="timeline__title">Title, description, OG, schema, sitemap, robots.</div>
+      <div class="timeline__body">
+        <p><strong>What we did:</strong> Wrote unique <code>&lt;title&gt;</code> and <code>&lt;meta name="description"&gt;</code> for every page. Added <code>&lt;link rel="canonical"&gt;</code>, Open Graph and Twitter card tags. Embedded JSON-LD blocks (<code>WebSite</code>, <code>Organization</code>, <code>FAQPage</code>) in <code>index.html</code>. Wrote <code>robots.txt</code> and a 102-URL <code>sitemap.xml</code>.</p>
+        <p><strong>Kid version:</strong> Put a clear label on every page so Google can read it without squinting.</p>
+      </div>
+    </div>
+
+    <div class="timeline__item">
+      <div class="timeline__date">Step 8 · Security Hardening</div>
+      <div class="timeline__title">Headers, RLS, env hygiene, admin gates.</div>
+      <div class="timeline__body">
+        <p><strong>What we did:</strong> Wrote a <code>_headers</code> file with <code>X-Frame-Options: DENY</code>, <code>X-Content-Type-Options: nosniff</code>, <code>Referrer-Policy: strict-origin-when-cross-origin</code>, <code>Strict-Transport-Security</code> (with preload), and a Content Security Policy that explicitly allow-lists Supabase, the Worker, Aladhan, Open-Meteo, Google Fonts and Cloudflare Insights. Marked <code>admin.html</code> as <code>noindex, no-store</code>. Moved every secret to Cloudflare's encrypted env vars.</p>
+        <p><strong>Kid version:</strong> Added locks, alarms, and a "no kids in the kitchen" sign.</p>
+      </div>
+    </div>
+
+    <div class="timeline__item">
+      <div class="timeline__date">Step 9 · Performance Optimisation</div>
+      <div class="timeline__title">Cache, compress, defer, precache.</div>
+      <div class="timeline__body">
+        <p><strong>What we did:</strong> Set <code>Cache-Control: max-age=31536000, immutable</code> for fonts and images, 24h for versioned JS/CSS, 1h for HTML. Generated <code>.webp</code> siblings for every slide JPEG. Registered a service worker (<code>sw.js</code>) that pre-caches the app shell and uses stale-while-revalidate for runtime requests, while bypassing Supabase API calls.</p>
+        <p><strong>Kid version:</strong> Kept the most-used toys at the front of the cupboard so we never have to dig.</p>
+      </div>
+    </div>
+
+    <div class="timeline__item">
+      <div class="timeline__date">Step 10 · Deployment</div>
+      <div class="timeline__title">Connect GitHub to Cloudflare Pages — done forever.</div>
+      <div class="timeline__body">
+        <p><strong>What we did:</strong> Created a Cloudflare Pages project pointed at the GitHub repo. Set the build command to nothing (it's a static site) and the output directory to the repo root (via <code>wrangler.toml</code> with <code>pages_build_output_dir = "."</code>). Created a second Pages project for <code>admin-app/</code> with build command <code>npx @cloudflare/next-on-pages</code>. Deployed the Worker separately with <code>wrangler deploy</code>.</p>
+        <p><strong>Kid version:</strong> Once we hooked it up, every time we save the homework, the teacher sees the new version automatically.</p>
+      </div>
+    </div>
+
+    <div class="timeline__item">
+      <div class="timeline__date">Step 11 · Testing</div>
+      <div class="timeline__title">Real devices, real browsers, real audits.</div>
+      <div class="timeline__body">
+        <p><strong>What we did:</strong> Manual QA across iPhone, Android, iPad, desktop Safari, Chrome and Firefox. Ran Lighthouse on every key page. Wrote an SEO audit engine (<code>admin/seo-audit-engine.js</code>) that crawls the live site and stores findings in <code>seo_audits</code>. Verified the offline page works after the SW caches.</p>
+        <p><strong>Kid version:</strong> Tried opening every door of the house, on rainy days and sunny days.</p>
+      </div>
+    </div>
+
+    <div class="timeline__item">
+      <div class="timeline__date">Step 12 · Final Go-Live Checklist</div>
+      <div class="timeline__title">DNS, HTTPS, redirects, monitoring.</div>
+      <div class="timeline__body">
+        <p><strong>What we did:</strong> Pointed <code>timelesshadith.com</code> DNS at Cloudflare, enabled "Always Use HTTPS", added a 301 from <code>www.</code> to apex. Confirmed the site loads in &lt; 2s on a 3G profile. Snapshotted a backup bundle (<code>BACKUP-2026-04-12_0948.bundle</code>) before going live.</p>
+        <p><strong>Kid version:</strong> Final walk-through with mum before opening the door to visitors.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!--  E. MISTAKES & FIXES                                          -->
+<!-- ============================================================ -->
+<section id="mistakes" class="section-break">
+  <div class="section-num">E · Mistakes &amp; Fixes</div>
+  <h2>Every wrong turn we took, and what we learned.</h2>
+  <p class="lead">Mined from <code>git log</code>, the <code>reports/</code> folder, and developer notes. Honest, with severity tags.</p>
+
+  <h3>Severity distribution</h3>
+  <div class="chart">
+    <div class="chart__title">Issue criticality across 32 documented issues</div>
+    <div class="bar-row"><div class="label">Critical</div><div class="track"><div class="fill" style="width:12.5%; background:linear-gradient(90deg,#ff3b30,#a8201a)"></div></div><div class="value">4</div></div>
+    <div class="bar-row"><div class="label">High</div><div class="track"><div class="fill" style="width:34.4%; background:linear-gradient(90deg,#ff9500,#a4501a)"></div></div><div class="value">11</div></div>
+    <div class="bar-row"><div class="label">Medium</div><div class="track"><div class="fill" style="width:40.6%; background:linear-gradient(90deg,#e0c020,#7a5d00)"></div></div><div class="value">13</div></div>
+    <div class="bar-row"><div class="label">Low</div><div class="track"><div class="fill" style="width:12.5%; background:linear-gradient(90deg,#34c759,#1c8a3a)"></div></div><div class="value">4</div></div>
+  </div>
+
+  <h3>The full ledger</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Mistake</th><th>Root cause</th><th>Area</th><th>Severity</th><th>Fix &amp; lesson</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Cloudflare Pages couldn't find shop output</td><td>No root <code>wrangler.toml</code></td><td>cloudflare</td><td><span class="badge badge--critical">Critical</span></td><td>Added root <code>wrangler.toml</code> with <code>pages_build_output_dir</code>. <em>Lesson:</em> every deployable directory needs its own wrangler config.</td></tr>
+        <tr><td>2</td><td>Shop indexable while still under construction</td><td>Missing <code>noindex</code> meta on shop pages</td><td>seo / security</td><td><span class="badge badge--critical">Critical</span></td><td>Added <code>&lt;meta name="robots" content="noindex,nofollow"&gt;</code> + <code>X-Robots-Tag</code> on the shop layout. <em>Lesson:</em> default new sections to noindex.</td></tr>
+        <tr><td>3</td><td>Service-role JWT committed in <code>scripts/.env</code></td><td>Treated <code>scripts/</code> as untracked</td><td>security</td><td><span class="badge badge--critical">Critical</span></td><td>Rotated keys, scrubbed history, added explicit ignore rule. <em>Lesson:</em> never put a service-role key on disk; use Cloudflare/Supabase secret store.</td></tr>
+        <tr><td>4</td><td>No CSP on shop subproject</td><td>next-on-pages doesn't read <code>headers()</code> from <code>next.config</code></td><td>security</td><td><span class="badge badge--critical">Critical</span></td><td>Moved headers to <code>admin-app/public/_headers</code>. <em>Lesson:</em> verify static-output headers actually ship.</td></tr>
+        <tr><td>5</td><td>Edge runtime missing on shop layout</td><td>Default Node runtime broke Cloudflare routing</td><td>cloudflare</td><td><span class="badge badge--high">High</span></td><td>Added <code>export const runtime = 'edge'</code> on <code>layout.tsx</code> and <code>page.tsx</code>. <em>Lesson:</em> next-on-pages requires explicit edge.</td></tr>
+        <tr><td>6</td><td>Build-time Supabase env errors</td><td>Client created at module scope, ran at build with no env</td><td>build</td><td><span class="badge badge--high">High</span></td><td>Made client lazy: instantiate inside the function body that reads <code>process.env.*</code>. <em>Lesson:</em> never instantiate stateful clients at module top.</td></tr>
+        <tr><td>7</td><td><code>layout.tsx</code> truncated on disk twice</td><td>Editor / heredoc cut file mid-content</td><td>build</td><td><span class="badge badge--high">High</span></td><td>Rewrote via clean heredoc in two recovery commits. <em>Lesson:</em> diff before commit; never trust a partial file.</td></tr>
+        <tr><td>8</td><td>Stuck on Next.js &lt; 15</td><td>next-on-pages required 15+</td><td>build</td><td><span class="badge badge--high">High</span></td><td>Bumped to 15.1, fixed the type breakages it caused. <em>Lesson:</em> follow your adapter's version matrix.</td></tr>
+        <tr><td>9</td><td><code>JSX.Element</code> rejected by React 19</td><td>Global JSX namespace removed</td><td>shop</td><td><span class="badge badge--medium">Medium</span></td><td>Switched to <code>React.ReactElement</code>. <em>Lesson:</em> read the framework changelog before bumping major.</td></tr>
+        <tr><td>10</td><td>Duplicate <code>alternates</code> key in <code>Metadata</code></td><td>Spread + manual key collision</td><td>seo</td><td><span class="badge badge--low">Low</span></td><td>Merged into one <code>alternates</code> object. <em>Lesson:</em> don't spread when you also write the same key.</td></tr>
+        <tr><td>11</td><td>Canonical placement invalid</td><td>Next 15 wants <code>canonical</code> under <code>alternates</code></td><td>seo</td><td><span class="badge badge--medium">Medium</span></td><td>Moved it. <em>Lesson:</em> let TypeScript drive the schema, not memory.</td></tr>
+        <tr><td>12</td><td>Dynamic route params types broke</td><td>Next 15 made params async (<code>Promise&lt;...&gt;</code>)</td><td>shop</td><td><span class="badge badge--medium">Medium</span></td><td>Awaited <code>params</code>. <em>Lesson:</em> framework majors change API shapes.</td></tr>
+        <tr><td>13</td><td>/login &amp; /signup rendered unstyled</td><td><code>landing.css</code> imported only by <code>page.tsx</code></td><td>frontend</td><td><span class="badge badge--high">High</span></td><td>Moved global styles into <code>app/globals.css</code> imported in the root layout. <em>Lesson:</em> in App Router, page-level CSS doesn't leak.</td></tr>
+        <tr><td>14</td><td>Glassmorphism cards invisible on Categories</td><td>Transparent bg + no gradient backdrop</td><td>frontend</td><td><span class="badge badge--medium">Medium</span></td><td>Added a soft gradient on the page wrapper. <em>Lesson:</em> visual previews need the real background.</td></tr>
+        <tr><td>15</td><td>Most-Viewed pills broken; trending 404 cards</td><td>Hardcoded slugs out of sync with DB</td><td>frontend</td><td><span class="badge badge--medium">Medium</span></td><td>Moved trending list to a server query. <em>Lesson:</em> stop hardcoding what the DB already knows.</td></tr>
+        <tr><td>16</td><td>Theme/footer/canonical regressions after audit</td><td>Stale references re-introduced</td><td>frontend</td><td><span class="badge badge--medium">Medium</span></td><td>One audit-fix commit cleaning the lot. <em>Lesson:</em> run an audit before merging.</td></tr>
+        <tr><td>17</td><td><code>@import</code> placed after a comment in CSS</td><td>CSS spec forbids it; browsers silently dropped fonts</td><td>frontend</td><td><span class="badge badge--low">Low</span></td><td>Moved <code>@import</code> to top of file. <em>Lesson:</em> CSS is sneaky; check DevTools for silent failures.</td></tr>
+        <tr><td>18</td><td>Stale JS served after deploys</td><td>No version querystring; SW intercepted Google Fonts</td><td>cache</td><td><span class="badge badge--high">High</span></td><td>Added <code>?v=YYYYMMDD</code> on script tags; bypassed third-party hosts in SW. <em>Lesson:</em> cache-busting is mandatory.</td></tr>
+        <tr><td>19</td><td>Logo cached cross-browser</td><td>No invalidation strategy</td><td>cache</td><td><span class="badge badge--medium">Medium</span></td><td>Added Supabase Storage probe + <code>?v=</code>. <em>Lesson:</em> brand assets need explicit invalidation paths.</td></tr>
+        <tr><td>20</td><td>CMS auth used <code>btoa()</code></td><td>Reversible base64 in place of hashing</td><td>security</td><td><span class="badge badge--high">High</span></td><td>Replaced with HMAC-SHA256 signed sessions. <em>Lesson:</em> base64 is not encryption.</td></tr>
+        <tr><td>21</td><td>CORS wildcard + <code>script-src-attr</code> gap + no rate limit</td><td>Permissive defaults</td><td>security</td><td><span class="badge badge--high">High</span></td><td>Tightened CORS to allow-list, added rate limit (10/60s) on <code>/api/ai-search</code>. <em>Lesson:</em> a public endpoint without rate limit is a billing footgun.</td></tr>
+        <tr><td>22</td><td>Admin paths exposed in <code>robots.txt</code></td><td>Listed admin URLs leaking attack surface</td><td>security</td><td><span class="badge badge--medium">Medium</span></td><td>Removed admin entries; gated with <code>noindex</code> meta + headers instead. <em>Lesson:</em> robots.txt is a public file.</td></tr>
+        <tr><td>23</td><td>CSP blocked Google Fonts &amp; inline onclicks</td><td>Strict CSP without <code>connect-src</code> / <code>font-src</code> entries</td><td>security</td><td><span class="badge badge--medium">Medium</span></td><td>Allow-listed each origin explicitly; refactored inline handlers. <em>Lesson:</em> CSP is a contract — write it deliberately.</td></tr>
+        <tr><td>24</td><td>Product insert failed when category was empty</td><td>DB had <code>NOT NULL</code> on <code>category_id</code></td><td>supabase</td><td><span class="badge badge--medium">Medium</span></td><td>Migration <code>003_nullable_category.sql</code>. <em>Lesson:</em> match DB constraints to UI affordances.</td></tr>
+        <tr><td>25</td><td>Custom slugs (<code>tawheed</code>) didn't load hadiths</td><td>Slug-to-book-number resolver missing</td><td>supabase</td><td><span class="badge badge--medium">Medium</span></td><td>Added a category metadata table with <code>slug</code> ↔ <code>book_number</code>. <em>Lesson:</em> nice URLs cost a join.</td></tr>
+        <tr><td>26</td><td>Sitemap used numeric IDs</td><td>SEO copy-paste from old sitemap</td><td>seo</td><td><span class="badge badge--medium">Medium</span></td><td>Regenerated with semantic slugs. <em>Lesson:</em> URLs are forever — pick them with intent.</td></tr>
+        <tr><td>27</td><td>Multiple full-tree reverts</td><td>Experiments shipped without isolation</td><td>git</td><td><span class="badge badge--high">High</span></td><td>Started using feature branches. <em>Lesson:</em> never spike on <code>main</code>.</td></tr>
+        <tr><td>28</td><td>Merge conflict markers committed</td><td>Resolved conflicts incompletely</td><td>git</td><td><span class="badge badge--high">High</span></td><td>Hard re-merge; lost <code>supabase-data.js</code> at one point. <em>Lesson:</em> grep for <code>&lt;&lt;&lt;</code> before commit.</td></tr>
+        <tr><td>29</td><td>Auto-backup commits cluttering history</td><td>Scheduled task pushing to <code>main</code></td><td>git</td><td><span class="badge badge--low">Low</span></td><td>Squash-merge on release; backup branch separate. <em>Lesson:</em> CI shouldn't commit to <code>main</code>.</td></tr>
+        <tr><td>30</td><td>Repo above Pages 25 MB asset limit</td><td>Large backup files committed</td><td>git</td><td><span class="badge badge--medium">Medium</span></td><td>Moved <code>*.bundle</code>, <code>*.zip</code>, <code>*.pptx</code> to ignored backup folder. <em>Lesson:</em> binaries don't belong in git.</td></tr>
+        <tr><td>31</td><td>IIFE in <code>index.html</code> not closed</td><td>Manual inline-script edit dropped <code>})()</code></td><td>frontend</td><td><span class="badge badge--high">High</span></td><td>Added a tiny smoke test that opens the homepage in headless Chromium. <em>Lesson:</em> a syntax error breaks the whole page.</td></tr>
+        <tr><td>32</td><td>Featured hadiths blank + categories stuck loading</td><td>Combined Supabase wiring + truncated script</td><td>frontend</td><td><span class="badge badge--high">High</span></td><td>Restored from backup bundle; rewrote wires. <em>Lesson:</em> two changes at once = double the blast radius.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout--child">
+    <div class="callout__icon">i</div>
+    <div><strong>Lesson summary for a 12-year-old:</strong> almost every bug came from one of three things — putting a secret in the wrong place, changing two things at once, or trusting that something was saved when it wasn't. Slow down, check, then ship.</div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!--  F. SECURITY REVIEW                                           -->
+<!-- ============================================================ -->
+<section id="security" class="section-break">
+  <div class="section-num">F · Security Review</div>
+  <h2>Where we're locked down — and what still needs love.</h2>
+
+  <div class="grid grid--2">
+    <div class="card">
+      <h4 class="mt-0">Authentication</h4>
+      <p>Public site is read-only via Supabase anon key. Admin app uses HMAC-SHA256 stateless sessions stored in <code>httpOnly</code> + <code>secure</code> + <code>sameSite=strict</code> cookies with 8-hour expiry. <span class="badge badge--low">Low</span></p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Supabase RLS</h4>
+      <p>RLS is <em>enabled</em> on <code>documents</code> and <code>document_chunks</code>, but no public read policies have been added yet — reads currently flow through the static <code>js/data.js</code> fallback while the migration finishes. <span class="badge badge--medium">Medium</span></p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">API key handling</h4>
+      <p>Anon key is correctly used in the browser. Service-role key lives only in Cloudflare's encrypted env. One past leak in <code>scripts/.env</code> required key rotation. <span class="badge badge--high">High</span> until rotation is verified.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Cloudflare protections</h4>
+      <p>HTTPS-only, HSTS preload, WAF defaults, edge caching. <code>_headers</code> sets <code>X-Frame-Options: DENY</code>, <code>X-Content-Type-Options: nosniff</code>, <code>Referrer-Policy: strict-origin-when-cross-origin</code>. <span class="badge badge--low">Low</span></p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Input validation</h4>
+      <p>Admin API routes do basic <code>String()</code> coercion and trim; no schema validation library yet. <span class="badge badge--medium">Medium</span></p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Admin protection</h4>
+      <p><code>admin.html</code> is <code>noindex, no-store</code>. <code>/shop/admin</code> tests auth on mount and shows a login gate. Every API route calls <code>requireAdmin()</code>. <span class="badge badge--low">Low</span></p>
+    </div>
+  </div>
+
+  <h3>OWASP-style checklist</h3>
+  <div class="grid grid--2">
+    <div>
+      <ul class="checklist">
+        <li>Secrets excluded from git (<code>.env*</code> in <code>.gitignore</code>)</li>
+        <li class="partial">Service-role key never in client bundles <em>(rotation required)</em></li>
+        <li>HTTPS enforced (HSTS preload)</li>
+        <li>Clickjacking protection (<code>X-Frame-Options: DENY</code>)</li>
+        <li>MIME sniffing disabled</li>
+        <li>Strict referrer policy</li>
+        <li>Stripe webhook signature verified</li>
+        <li>Constant-time admin token comparison</li>
+      </ul>
+    </div>
+    <div>
+      <ul class="checklist">
+        <li class="partial">Content-Security-Policy <em>(allows <code>'unsafe-inline'</code> scripts — narrow further)</em></li>
+        <li class="partial">RLS policies on <code>documents</code> / <code>document_chunks</code> <em>(enable + write)</em></li>
+        <li class="todo">Schema validation (Zod) on admin POST routes</li>
+        <li class="todo">Per-route rate-limiting on admin API</li>
+        <li class="todo">Supabase audit-log monitoring</li>
+        <li class="todo">Pre-commit secret-scan hook (<code>git-secrets</code>)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Top remaining risks</h3>
+  <ol>
+    <li><strong>Service-role key rotation</strong> after the past <code>scripts/.env</code> incident.</li>
+    <li><strong>RLS policies missing</strong> on the hadith corpus; finalise the migration off <code>js/data.js</code>.</li>
+    <li><strong>Admin secret strength</strong> — replace any short admin password with 32+ random bytes (<code>openssl rand -base64 32</code>).</li>
+    <li><strong>CSP <code>unsafe-inline</code></strong> — move toward nonce-based CSP.</li>
+    <li><strong>Input validation</strong> — add Zod schemas to admin API routes.</li>
+  </ol>
+</section>
+
+<!-- ============================================================ -->
+<!--  G. SEO REVIEW                                                -->
+<!-- ============================================================ -->
+<section id="seo" class="section-break">
+  <div class="section-num">G · SEO Review</div>
+  <h2>The crawler's view of Timeless Hadith.</h2>
+
+  <h3>Coverage matrix</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Page</th><th>Title</th><th>Description</th><th>Canonical</th><th>OG</th><th>Twitter</th><th>JSON-LD</th><th>Robots</th></tr></thead>
+      <tbody>
+        <tr><td>index.html</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>index, follow</td></tr>
+        <tr><td>about.html</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&minus;</td><td>&#x2713;</td><td>index, follow</td></tr>
+        <tr><td>blog.html</td><td>&#x2713;</td><td>&minus;</td><td>&minus;</td><td>&minus;</td><td>&minus;</td><td>&minus;</td><td>default</td></tr>
+        <tr><td>categories.html</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&minus;</td><td>&#x2713;</td><td>index, follow</td></tr>
+        <tr><td>category.html</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;<sup>*</sup></td><td>&#x2713;</td><td>&minus;</td><td>&#x2713;</td><td>missing</td></tr>
+        <tr><td>prayer-times.html</td><td>&#x2713;</td><td>&minus;</td><td>&minus;</td><td>&minus;</td><td>&minus;</td><td>&minus;</td><td>missing</td></tr>
+        <tr><td>privacy.html</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&minus;</td><td>&#x2713;</td><td>noindex, follow</td></tr>
+        <tr><td>terms.html</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&minus;</td><td>&#x2713;</td><td>noindex, follow</td></tr>
+        <tr><td>bookmarks.html</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&minus;</td><td>noindex, nofollow</td></tr>
+        <tr><td>404.html</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>&#x2713;</td><td>noindex, follow</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted"><sup>*</sup>category.html canonical is generated dynamically from the slug.</p>
+
+  <h3>Score card</h3>
+  <div class="grid grid--3">
+    <div class="kpi"><div class="num">73%</div><div class="label">Overall SEO readiness</div></div>
+    <div class="kpi"><div class="num">102</div><div class="label">Indexed URLs in sitemap</div></div>
+    <div class="kpi"><div class="num">10/10</div><div class="label">Pages with &lt;title&gt;</div></div>
+  </div>
+
+  <h3>What's done well</h3>
+  <ul>
+    <li>Clean <code>robots.txt</code> with explicit Allow / Disallow and a single <code>Sitemap:</code> line.</li>
+    <li>102-URL <code>sitemap.xml</code> covering all 97 hadith books plus the five core pages, with sensible <code>priority</code> and <code>changefreq</code>.</li>
+    <li>JSON-LD on the homepage (<code>WebSite</code>, <code>Organization</code>, <code>FAQPage</code>) — eligible for rich results.</li>
+    <li>Personal-data pages (<code>bookmarks</code>) and legal pages correctly <code>noindex</code>'d.</li>
+    <li>Canonical and OG tags on the high-traffic pages.</li>
+  </ul>
+
+  <h3>Gaps to close</h3>
+  <ol>
+    <li><strong>blog.html &amp; prayer-times.html</strong> — add description, canonical, OG, Twitter, JSON-LD, robots.</li>
+    <li><strong>category.html</strong> — add explicit <code>&lt;meta name="robots" content="index, follow"&gt;</code>.</li>
+    <li><strong>Twitter cards</strong> — standardise <code>summary_large_image</code> across all indexable pages.</li>
+    <li><strong>Image alt text</strong> — formalise an audit pass.</li>
+    <li><strong>Hreflang</strong> — add when Urdu translations go live.</li>
+  </ol>
+</section>
+
+<!-- ============================================================ -->
+<!--  H. PERFORMANCE REVIEW                                        -->
+<!-- ============================================================ -->
+<section id="perf" class="section-break">
+  <div class="section-num">H · Performance Review</div>
+  <h2>The site is fast. Here's why.</h2>
+
+  <div class="grid grid--3">
+    <div class="card">
+      <h4 class="mt-0">Render-blocking</h4>
+      <p>One stylesheet, one early theme-init script (intentional, prevents flash). All other scripts <code>defer</code>'d. Inline critical hero CSS for the homepage.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Fonts</h4>
+      <p>Self-hosted woff2 with <code>font-display: swap</code>. Inter, Noto Kufi Arabic, Gulzar. Pre-cached in the service worker. Zero external font calls.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Images</h4>
+      <p>Slides shipped as <code>.webp</code> with <code>.jpg</code> fallback. <code>og-image</code> in both formats. Cache header: <code>max-age=31536000, immutable</code>.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Service worker</h4>
+      <p>Precache app shell (HTML, CSS, JS, manifest, fonts, offline page). Stale-while-revalidate for runtime GETs. Bypass Supabase + Cloudflare Insights so APIs stay fresh.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Caching tiers</h4>
+      <p>HTML: 1 hour, must-revalidate. Versioned JS/CSS: 24 hours. Fonts/images: 1 year, immutable. Admin pages: <code>no-store</code>.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Bundle size</h4>
+      <p>Static site: ~0 framework JS. Admin app: 6 production deps (Next, React, Supabase, Stripe, Tailwind, Framer Motion). No bloat.</p>
+    </div>
+  </div>
+
+  <h3>Top recommendations</h3>
+  <ol>
+    <li>Add <code>&lt;picture&gt;</code> with <code>.webp</code> sources to every <code>&lt;img&gt;</code> still using JPEG.</li>
+    <li>Bump the service-worker <code>CACHE_NAME</code> in lockstep with deploys (avoid stale shells).</li>
+    <li>Trial AVIF for slide hero (extra 25–35% saving).</li>
+    <li>Add a <code>preconnect</code> hint to the Supabase REST host on pages that read live data.</li>
+    <li>Run a Lighthouse CI workflow on every push.</li>
+  </ol>
+</section>
+
+<!-- ============================================================ -->
+<!--  I. UI / UX REVIEW                                            -->
+<!-- ============================================================ -->
+<section id="uiux" class="section-break">
+  <div class="section-num">I · UI / UX Review</div>
+  <h2>Apple-clean, deliberately quiet.</h2>
+
+  <div class="grid grid--2">
+    <div class="card">
+      <h4 class="mt-0">Design language</h4>
+      <p>White-first, tight type, generous spacing, soft shadows, no emojis, no italics. Premium feel from the absence of noise.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Theme system</h4>
+      <p><code>[data-theme="light|dark"]</code> on <code>&lt;html&gt;</code>. Light is the default for first-time visitors. Preference persists in <code>localStorage</code> under <code>th_theme</code>. A migration flag (<code>th_theme_default_v3</code>) one-time-resets legacy forced-dark users.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Responsiveness</h4>
+      <p>Breakpoints at 960px (footer), 768px (nav collapse), 680px. Tested down to 320px. Mobile featured-hadith uses a 40px-threshold horizontal swipe; desktop gets prev/next buttons.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Accessibility</h4>
+      <p>Skip link, ARIA on nav/buttons/pagination, semantic <code>&lt;main&gt;</code>/<code>&lt;nav&gt;</code>/<code>&lt;article&gt;</code>, focus-visible outlines. Gap: no <code>prefers-reduced-motion</code> handling yet.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Bookmarks</h4>
+      <p>Stored client-side under <code>th_bookmarks</code>. The nav shows a rounded pill counter that hides at 0 and caps at <code>99+</code>.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Kid-friendly explanation</h4>
+      <p>Clean = like a tidy bedroom. You find what you want immediately, nothing yells, and the colours change at night-time so your eyes don't hurt.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!--  J. DATABASE & DATA FLOW                                      -->
+<!-- ============================================================ -->
+<section id="db" class="section-break">
+  <div class="section-num">J · Database &amp; Data Flow</div>
+  <h2>Where the hadiths actually live.</h2>
+
+  <h3>Tables (key columns only)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Table</th><th>Purpose</th><th>Key columns</th></tr></thead>
+      <tbody>
+        <tr><td><code>documents</code></td><td>Source-text metadata (Bukhari, etc.)</td><td>id, source, language, total_chunks</td></tr>
+        <tr><td><code>document_chunks</code></td><td>Individual hadiths with embeddings</td><td>id, document_id, chapter, hadith_number, text, language, embedding (vector 1536)</td></tr>
+        <tr><td><code>shop_products</code></td><td>Storefront catalogue</td><td>id, slug, title, description, price, badge, is_active</td></tr>
+        <tr><td><code>shop_categories</code></td><td>Product categories</td><td>id, slug, name</td></tr>
+        <tr><td><code>shop_orders</code></td><td>Stripe-backed orders</td><td>id, order_number, customer_email, status, total</td></tr>
+        <tr><td><code>shop_reviews</code></td><td>User reviews (moderated)</td><td>id, product_id, rating, body, is_approved</td></tr>
+        <tr><td><code>seo_audits</code></td><td>SEO crawler runs</td><td>id, site_id, status, started_at, finished_at</td></tr>
+        <tr><td><code>seo_audit_issues</code></td><td>Findings per audit</td><td>id, audit_id, page, severity, message</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Indexes that earn their keep</h3>
+  <ul>
+    <li><code>chunks_embedding_hnsw_idx</code> — HNSW vector index, <code>vector_cosine_ops</code>, m=16, ef_construction=64.</li>
+    <li><code>idx_products_fts</code> — GiST <code>tsvector</code> over <code>title || ' ' || description</code>.</li>
+    <li><code>shop_products(category_id, slug, is_active, badge)</code> — common filters.</li>
+    <li><code>shop_reviews(product_id, is_approved)</code> — public feed.</li>
+  </ul>
+
+  <h3>Read flow</h3>
+  <div class="arch">
+    <div class="arch__row">
+      <div class="arch__node arch__node--user"><span class="icon">&#x1F50D;</span><span class="name">User asks a question</span><span class="meta">/ai-search input</span></div>
+      <div class="arch__node arch__node--app"><span class="icon">&#x2192;</span><span class="name">/api/ai-search proxy</span><span class="meta">Pages function</span></div>
+      <div class="arch__node arch__node--ai"><span class="icon">&#x26A1;</span><span class="name">Worker</span><span class="meta">embed + match_chunks</span></div>
+    </div>
+    <div class="arch__arrow">&darr;</div>
+    <div class="arch__row">
+      <div class="arch__node arch__node--db"><span class="icon">&#x1F5C4;</span><span class="name">Supabase</span><span class="meta">vector + FTS hybrid</span></div>
+      <div class="arch__node arch__node--ai"><span class="icon">&#x1F4AC;</span><span class="name">OpenAI</span><span class="meta">grounded answer</span></div>
+      <div class="arch__node arch__node--user"><span class="icon">&#x1F4D6;</span><span class="name">User sees citations</span><span class="meta">id · narrator · source</span></div>
+    </div>
+  </div>
+
+  <h3>Write flow</h3>
+  <p>All writes funnel through the admin app, which authenticates with the <code>ADMIN_SECRET</code> HMAC session and uses the Supabase <em>service-role</em> client server-side (never in the browser). Stripe writes are protected by webhook signature verification.</p>
+</section>
+
+<!-- ============================================================ -->
+<!--  K. DEPLOYMENT METHODOLOGY                                    -->
+<!-- ============================================================ -->
+<section id="deploy" class="section-break">
+  <div class="section-num">K · Deployment Methodology</div>
+  <h2>Push to <code>main</code>, the rest is automatic.</h2>
+
+  <h3>Local development</h3>
+  <pre><code># Static site
+npx serve .
+
+# Admin app
+cd admin-app
+npm install
+npm run dev   # http://localhost:3000
+
+# Worker (optional)
+cd ../worker
+npm install
+wrangler dev</code></pre>
+
+  <h3>GitHub flow</h3>
+  <ol>
+    <li>Branch off <code>main</code>: <code>git checkout -b feat/short-description</code>.</li>
+    <li>Commit using conventional style: <code>feat(scope): summary</code>, <code>fix(scope): ...</code>, <code>docs: ...</code>, <code>chore: ...</code>.</li>
+    <li>Open a PR. CI workflow <code>.github/workflows/pages.yml</code> validates that the seven core HTML files exist.</li>
+    <li>Merge to <code>main</code>.</li>
+  </ol>
+
+  <h3>Cloudflare Pages</h3>
+  <p>Two Pages projects are connected to the same repo:</p>
+  <ul>
+    <li><strong>Main site</strong> — root output dir <code>.</code> (no build step). Auto-deploys on push to <code>main</code>.</li>
+    <li><strong>Admin app</strong> — build command <code>npx @cloudflare/next-on-pages</code>, output <code>admin-app/.vercel/output/static</code>.</li>
+  </ul>
+  <p>The Worker is deployed separately with <code>wrangler deploy</code> and lives at <code>timeless-hadith-worker.ehsaasradio.workers.dev</code>.</p>
+
+  <h3>Environment variables</h3>
+  <p>Set in the Cloudflare dashboard, never in code:</p>
+  <ul>
+    <li><strong>Public:</strong> <code>NEXT_PUBLIC_SUPABASE_URL</code>, <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code>, <code>NEXT_PUBLIC_SITE_URL</code>.</li>
+    <li><strong>Server-only:</strong> <code>SUPABASE_SERVICE_ROLE_KEY</code>, <code>ADMIN_SECRET</code>, <code>STRIPE_SECRET_KEY</code>, <code>STRIPE_WEBHOOK_SECRET</code>, <code>RESEND_API_KEY</code>, <code>OPENAI_API_KEY</code>, <code>EMAIL_FROM</code>, <code>ADMIN_EMAIL</code>.</li>
+  </ul>
+
+  <h3>Production checklist</h3>
+  <ul class="checklist">
+    <li>Custom domain points at Cloudflare (orange cloud on)</li>
+    <li>"Always Use HTTPS" enabled</li>
+    <li>HSTS preload</li>
+    <li>Apex + <code>www</code> 301 redirect agreed</li>
+    <li>All env vars set in <em>both</em> Pages projects</li>
+    <li>Sitemap submitted to Google Search Console</li>
+    <li>Cloudflare Pages "auto-deploy on push" verified</li>
+    <li>Service worker version bumped</li>
+  </ul>
+
+  <h3>Rollback plan</h3>
+  <p>Cloudflare Pages keeps every deployment. To roll back: open the project in the dashboard, find the previous good deployment, click <em>"Rollback to this deployment"</em>. For the database, every meaningful schema change has a corresponding migration file in <code>sql/</code>; reverse migrations should be written before any destructive change ships.</p>
+</section>
+
+<!-- ============================================================ -->
+<!--  L. FINAL CHECKLISTS                                          -->
+<!-- ============================================================ -->
+<section id="checklists" class="section-break">
+  <div class="section-num">L · Final Checklists</div>
+  <h2>The list you read before pushing the button.</h2>
+
+  <div class="grid grid--2">
+    <div class="card">
+      <h4 class="mt-0">Security</h4>
+      <ul class="checklist">
+        <li>No <code>.env</code> committed</li>
+        <li>Service-role key only in Cloudflare secrets</li>
+        <li>HSTS + X-Frame-Options + X-Content-Type-Options</li>
+        <li>Stripe webhook signature verified</li>
+        <li class="todo">RLS policies finalised on document_chunks</li>
+        <li class="todo">Zod validation on admin POST routes</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">SEO</h4>
+      <ul class="checklist">
+        <li>Title + description on every public page</li>
+        <li>Canonical URLs</li>
+        <li>JSON-LD on homepage</li>
+        <li>sitemap.xml + robots.txt</li>
+        <li class="todo">blog.html / prayer-times.html metadata</li>
+        <li class="todo">Twitter cards on every indexable page</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">Performance</h4>
+      <ul class="checklist">
+        <li>Self-hosted fonts with <code>font-display: swap</code></li>
+        <li>Service worker registered</li>
+        <li>Cache headers set per type</li>
+        <li>Images shipped as .webp where possible</li>
+        <li class="todo">AVIF trial</li>
+        <li class="todo">Lighthouse CI</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">UI / UX</h4>
+      <ul class="checklist">
+        <li>Light theme default; toggle persists</li>
+        <li>Bookmark counter live</li>
+        <li>Mobile featured-hadith swipe</li>
+        <li>Skip link + ARIA labels</li>
+        <li class="todo"><code>prefers-reduced-motion</code> handling</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">Database</h4>
+      <ul class="checklist">
+        <li>Migrations idempotent</li>
+        <li>Indexes on hot paths</li>
+        <li>HNSW vector index in place</li>
+        <li class="partial">RLS enabled (policies pending)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">Deployment</h4>
+      <ul class="checklist">
+        <li>Two Pages projects connected</li>
+        <li>Worker deployed independently</li>
+        <li>Env vars set in dashboard</li>
+        <li>Auto-deploy on push verified</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">Testing</h4>
+      <ul class="checklist">
+        <li>Manual mobile / tablet / desktop pass</li>
+        <li>Offline page loads after SW caches</li>
+        <li>Stripe sandbox checkout works end-to-end</li>
+        <li class="todo">Headless smoke test in CI</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">Backup &amp; rollback</h4>
+      <ul class="checklist">
+        <li>Git bundle snapshot before major releases</li>
+        <li>Cloudflare Pages keeps previous deployments</li>
+        <li>Reverse migrations written before destructive changes</li>
+        <li class="todo">Scheduled Supabase DB export to off-platform storage</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!--  M. LEARNING GUIDE FOR KIDS                                   -->
+<!-- ============================================================ -->
+<section id="learn" class="section-break">
+  <div class="section-num">M · Learning Guide for Kids</div>
+  <h2>Build this website like a 12-year-old can understand.</h2>
+  <p class="lead">No jargon, no condescension. Just the real ideas, in plain words.</p>
+
+  <div class="grid grid--2">
+    <div class="card">
+      <h4 class="mt-0">HTML</h4>
+      <p><strong>What it is:</strong> the bricks of a webpage. Each tag is a labelled brick. <code>&lt;h1&gt;</code> is a big sign, <code>&lt;p&gt;</code> is a paragraph, <code>&lt;img&gt;</code> is a picture, <code>&lt;a&gt;</code> is a door to another page.</p>
+      <p><strong>Analogy:</strong> Lego pieces. They click together to make a shape.</p>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">CSS</h4>
+      <p><strong>What it is:</strong> the paint and furniture. CSS picks colour, size, spacing, and where each brick sits. Same Lego shape, different paint job.</p>
+      <p><strong>Analogy:</strong> the outfit your Lego figure is wearing.</p>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">JavaScript / TypeScript</h4>
+      <p><strong>What it is:</strong> the brain of the page. JavaScript makes things <em>do</em> things — click a button, save a bookmark, fade in an animation. TypeScript is JavaScript that wears a name-tag, so the computer can shout when you spell something wrong.</p>
+      <p><strong>Analogy:</strong> the remote control for your Lego car.</p>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">Next.js</h4>
+      <p><strong>What it is:</strong> a kit that turns React (a way of writing JavaScript) into a full website with pages, folders, and an API. We used it for the admin panel.</p>
+      <p><strong>Analogy:</strong> a Lego instruction booklet that comes with a battery pack already included.</p>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">A database</h4>
+      <p><strong>What it is:</strong> a giant filing cabinet. You ask a question, it gives back a row of information. The hadiths live in a database called Postgres.</p>
+      <p><strong>Analogy:</strong> the index card box at the back of a library.</p>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">Supabase</h4>
+      <p><strong>What it is:</strong> a service that gives you a database, a way to log in, and a place to store files — without you having to set up a server.</p>
+      <p><strong>Analogy:</strong> renting a fully-furnished study, instead of buying chairs.</p>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">Cloudflare</h4>
+      <p><strong>What it is:</strong> the world's fastest postman. When someone in Tokyo asks for our webpage, Cloudflare hands them a copy from Tokyo, not from London.</p>
+      <p><strong>Analogy:</strong> the same lemonade stand in 200 cities.</p>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">GitHub</h4>
+      <p><strong>What it is:</strong> a memory book for code. Every time you save, GitHub remembers exactly what changed and who changed it. If you break something, you can rewind.</p>
+      <p><strong>Analogy:</strong> a time machine for your homework.</p>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">Deployment</h4>
+      <p><strong>What it is:</strong> the moment your website goes from your laptop to the internet, where everyone in the world can see it.</p>
+      <p><strong>Analogy:</strong> moving the school art project from your room to the hallway wall.</p>
+    </div>
+
+    <div class="card">
+      <h4 class="mt-0">How it all flows</h4>
+      <p>You type a web address. Cloudflare gives your browser the HTML page from the closest city. Your browser reads the HTML, paints it with CSS, runs the JavaScript, and the JavaScript asks Supabase for hadiths. Supabase looks them up and sends them back. The browser shows them to you. All under two seconds.</p>
+    </div>
+  </div>
+
+  <div class="callout callout--child mt-l">
+    <div class="callout__icon">&#x1F600;</div>
+    <div><strong>Big idea:</strong> a website is just a polite conversation between a browser, a delivery service (Cloudflare), a thinking helper (the server), and a memory box (the database). Each one has a small job and trusts the others.</div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!--  N. FUTURE IMPROVEMENTS                                       -->
+<!-- ============================================================ -->
+<section id="future" class="section-break">
+  <div class="section-num">N · Future Improvements</div>
+  <h2>Phase 2 — what we'd build next.</h2>
+
+  <div class="grid grid--3">
+    <div class="card">
+      <h4 class="mt-0">AI search v2</h4>
+      <p>Hybrid retrieval (BM25 + dense vectors), per-language re-ranking, scholarly source filter, "explain this hadith" mode with grounded citations.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Admin polish</h4>
+      <p>Full Supabase Auth migration. Per-user audit log. Visual schedule for posts. Drag-and-drop image uploader to Supabase Storage.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Security dashboard</h4>
+      <p>Live RLS-policy inspector. Recent auth events. CSP-violation reporting. Rate-limit graphs.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">SEO dashboard</h4>
+      <p>Crawl diff between deployments. Schema health. Sitemap freshness. Indexed-vs-submitted gap.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Analytics</h4>
+      <p>Privacy-respecting Cloudflare Web Analytics + a server-side aggregator that never sees IPs.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Monitoring</h4>
+      <p>Lighthouse CI on every PR. Synthetic uptime check (every 5 min). Slack/email alerts on deploy errors.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Backup</h4>
+      <p>Nightly Supabase dump → encrypted R2 bucket. Quarterly verified-restore drill.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Multilingual</h4>
+      <p>Finish Urdu translations from <code>urdu_chunks/</code>, add Indonesian, add hreflang. Per-language vector index.</p>
+    </div>
+    <div class="card">
+      <h4 class="mt-0">Shop</h4>
+      <p>Take the noindex off when product photography and inventory tracking are real. Add discount-code engine. Email receipts via Resend.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!--  O. APPENDIX & GLOSSARY                                       -->
+<!-- ============================================================ -->
+<section id="appendix" class="section-break">
+  <div class="section-num">O · Appendix &amp; Glossary</div>
+  <h2>Useful commands, paths and terms.</h2>
+
+  <h3>Important commands</h3>
+  <pre><code># Clone + install
+git clone https://github.com/ehsaasradio-bot/timeless-hadith.git
+cd timeless-hadith
+
+# Static site preview
+npx serve .
+
+# Admin app
+cd admin-app && npm install && npm run dev
+
+# Build admin for Cloudflare Pages
+npx @cloudflare/next-on-pages
+
+# Worker (RAG search)
+cd ../worker && npm install
+wrangler dev          # local
+wrangler deploy       # production
+
+# Apply a migration manually
+psql $SUPABASE_DB_URL -f sql/001_schema.sql
+
+# Generate a secure admin secret
+openssl rand -base64 32</code></pre>
+
+  <h3>Folder structure (key files)</h3>
+  <pre><code>timeless-hadith/
+├─ index.html · about.html · blog.html · categories.html · category.html
+├─ prayer-times.html · privacy.html · terms.html · bookmarks.html
+├─ admin.html · 404.html · offline.html
+├─ css/styles.css
+├─ js/
+│  ├─ theme-init.js · app.js · page-chrome.js
+│  ├─ supabase-auth.js · supabase-data.js · data.js
+│  ├─ bookmarks-wire.js · ai-search.js · urdu-toggle.js
+│  └─ index-wire.js · category-wire.js · categories-wire.js
+├─ sw.js · manifest.json · _headers · robots.txt · sitemap.xml
+├─ wrangler.toml
+├─ functions/api/ai-search.js
+├─ admin-app/                 # Next.js 15 admin + shop
+│  ├─ app/                    # routes (App Router)
+│  ├─ lib/                    # supabase-server.ts, admin-auth.ts
+│  ├─ public/_headers · public/_redirects
+│  ├─ supabase/migrations/    # idempotent SQL
+│  └─ wrangler.toml · next.config.ts · tsconfig.json
+├─ worker/                    # Cloudflare Worker (RAG)
+├─ sql/                       # 001_schema · 001_shop_schema · 003_seo_schema
+├─ scripts/                   # ingestion utilities
+├─ seo-blog-system/           # editorial workflow
+├─ reports/                   # historical audits
+└─ docs/project-methodology-report/  # this whitepaper</code></pre>
+
+  <h3>Environment variable names (no values)</h3>
+  <ul>
+    <li><strong>Public (browser-safe):</strong> <code>NEXT_PUBLIC_SUPABASE_URL</code>, <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code>, <code>NEXT_PUBLIC_SITE_URL</code></li>
+    <li><strong>Supabase server:</strong> <code>SUPABASE_URL</code>, <code>SUPABASE_SERVICE_ROLE_KEY</code></li>
+    <li><strong>Admin:</strong> <code>ADMIN_SECRET</code>, <code>ADMIN_EMAIL</code></li>
+    <li><strong>Stripe:</strong> <code>STRIPE_SECRET_KEY</code>, <code>STRIPE_WEBHOOK_SECRET</code></li>
+    <li><strong>Email:</strong> <code>RESEND_API_KEY</code>, <code>EMAIL_FROM</code></li>
+    <li><strong>OpenAI:</strong> <code>OPENAI_API_KEY</code>, <code>OPENAI_MODEL</code>, <code>OPENAI_EMBEDDING_MODEL</code></li>
+  </ul>
+  <p class="muted">All real values are <code>[REDACTED]</code> in this document and live only in Cloudflare's encrypted secret store.</p>
+
+  <h3>Troubleshooting commands</h3>
+  <pre><code># What changed since main?
+git status
+git diff --stat main..HEAD
+
+# Find merge conflict markers
+grep -rn "&lt;&lt;&lt;&lt;&lt;&lt;&lt;" .
+
+# Make sure no secrets are tracked
+git ls-files | grep -iE '\.(env|key|pem)$|secrets|credentials'
+
+# Inspect Cloudflare Pages logs
+wrangler pages deployment tail --project-name=timeless-hadith
+
+# Tail the Worker
+wrangler tail timeless-hadith-worker</code></pre>
+
+  <h3>Glossary</h3>
+  <div class="grid grid--2">
+    <div>
+      <p><strong>RLS</strong> — Row-Level Security: a Postgres feature that decides, on every row, whether the caller is allowed to see/edit it.</p>
+      <p><strong>HMAC</strong> — Hash-based Message Authentication Code: a signature you make with a secret key. We use it to mint admin sessions.</p>
+      <p><strong>Service worker</strong> — a tiny script that lives in the browser and can serve cached pages even when the network is gone.</p>
+      <p><strong>PWA</strong> — Progressive Web App: a website that can be "installed" on a phone home screen.</p>
+      <p><strong>JSON-LD</strong> — a JSON dialect for telling search engines what your page is <em>about</em>.</p>
+      <p><strong>Edge runtime</strong> — code that runs on Cloudflare's globally-distributed network, close to the user.</p>
+    </div>
+    <div>
+      <p><strong>Embedding</strong> — a list of 1,536 numbers that represents the meaning of a piece of text.</p>
+      <p><strong>HNSW</strong> — a graph data-structure that finds the most similar embeddings really fast.</p>
+      <p><strong>RAG</strong> — Retrieval-Augmented Generation: ask the database first, then ask the AI to write an answer using only what was found.</p>
+      <p><strong>Conventional commit</strong> — a commit message that starts with a type and scope, e.g. <code>fix(seo): correct canonical</code>.</p>
+      <p><strong>Idempotent migration</strong> — a SQL script you can run twice and the second run does nothing.</p>
+      <p><strong>Stale-while-revalidate</strong> — serve the cached copy now; quietly fetch a fresh one for next time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!--  P. REBUILD WITH CLAUDE CO-WORKER                             -->
+<!-- ============================================================ -->
+<section id="rebuild" class="section-break">
+  <div class="section-num">P · Rebuild Guide with Claude Co-worker</div>
+  <h2>How my son can rebuild this from zero.</h2>
+  <p class="lead">Copy a prompt, paste it into Claude, follow the output. Repeat. The whole site is reachable in about 10–14 prompts.</p>
+
+  <h3>1 · Beginner setup</h3>
+  <div class="card">
+    <h4 class="mt-0">What you need before you start</h4>
+    <ul>
+      <li><strong>A laptop</strong> (Mac, Windows, or Linux — all fine).</li>
+      <li><strong>VS Code</strong> (free): <a href="https://code.visualstudio.com/">code.visualstudio.com</a></li>
+      <li><strong>A browser</strong> (Chrome or Edge or Firefox).</li>
+      <li><strong>A GitHub account</strong> (free): <a href="https://github.com">github.com</a></li>
+      <li><strong>Node.js (LTS)</strong>: <a href="https://nodejs.org">nodejs.org</a></li>
+      <li><strong>Claude desktop app</strong> with Cowork mode (this is what you're reading).</li>
+      <li><strong>Free accounts</strong> on Cloudflare and Supabase.</li>
+    </ul>
+    <p><strong>Open Claude Co-worker:</strong> launch the Claude app, switch to Cowork mode, and select a folder on your computer where the project will live. That folder is your "project home" — Claude will create files there.</p>
+  </div>
+
+  <h3>2 · The exact Claude workflow</h3>
+  <p>Tell Claude one thing at a time. Always wait for it to finish before giving the next instruction. If Claude breaks something, ask it to undo before moving on.</p>
+
+  <h3>3 · Copy-paste prompts</h3>
+
+  <div class="prompt">
+    <div class="prompt__head"><span>Prompt 1 — Project discovery</span><span class="tag">Start here</span></div>
+    <div class="prompt__body">I want to build a fast, Apple-clean website called "Timeless Hadith" that shows authentic hadiths in English and Arabic. The site must be free to host (Cloudflare Pages + Supabase free tier), mobile-first, and SEO-friendly. Before writing any code, ask me 5 short multiple-choice questions about: (1) target audience, (2) primary language, (3) whether I want a shop, (4) whether I want AI search, (5) preferred theme (light default? dark default? both?). Then give me a one-page plan.</div>
+  </div>
+  <p><strong>What Claude should produce:</strong> 5 clarifying questions and a tight project plan.<br><strong>Verify:</strong> the plan mentions Supabase, Cloudflare Pages, and a static-first site.<br><strong>If it fails:</strong> say "you skipped the questions — ask them first".</p>
+
+  <div class="prompt">
+    <div class="prompt__head"><span>Prompt 2 — Create the empty project</span><span class="tag">Setup</span></div>
+    <div class="prompt__body">Create the folder structure for Timeless Hadith inside this project folder. Make: index.html (with a basic Apple-clean hero), css/styles.css (with light/dark theme tokens), js/theme-init.js (early flash-prevent script), manifest.json, robots.txt, sitemap.xml (with one entry, the homepage), and _headers (HSTS, X-Frame-Options DENY, X-Content-Type-Options nosniff). Add a tiny README.md and a .gitignore that ignores .env, node_modules, .next, and .wrangler. Initialize git and make the first commit "chore: initial skeleton".</div>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt__head"><span>Prompt 3 — Tailwind &amp; layout</span><span class="tag">Style</span></div>
+    <div class="prompt__body">Inside the static site (no framework yet), build a clean responsive nav bar, a hero section with title + tagline, a "featured hadiths" carousel placeholder, and a footer. Use only vanilla CSS (no Tailwind for the static site). Add CSS variables --bg, --ink, --accent and a [data-theme="dark"] override. Light is the default. The theme toggle should persist in localStorage under "th_theme".</div>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt__head"><span>Prompt 4 — Add real pages</span><span class="tag">Pages</span></div>
+    <div class="prompt__body">Create about.html, categories.html, category.html, blog.html, bookmarks.html, privacy.html, terms.html, 404.html, offline.html. Each should reuse the same nav and footer, link styles.css and js/theme-init.js, and include a unique &lt;title&gt;, &lt;meta name="description"&gt;, &lt;link rel="canonical"&gt;, and Open Graph tags. Mark privacy/terms/bookmarks as &lt;meta name="robots" content="noindex,follow"&gt;.</div>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt__head"><span>Prompt 5 — Supabase database</span><span class="tag">Data</span></div>
+    <div class="prompt__body">Help me set up a Supabase project. Walk me through (a) creating it in the dashboard, (b) writing a migration file at sql/001_schema.sql with two tables — documents and document_chunks (with a vector(1536) column and an HNSW cosine index) — and a match_chunks RPC. Use IF NOT EXISTS everywhere so it's safe to re-run. Tell me which buttons to click in the Supabase SQL editor. Do NOT print my keys; tell me where to put them in environment variables.</div>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt__head"><span>Prompt 6 — Connect Supabase to the site</span><span class="tag">Wire</span></div>
+    <div class="prompt__body">Create js/supabase-data.js that uses the Supabase JS client (loaded via &lt;script&gt; from the official CDN) to fetch categories and hadiths using the *anon* key only. Read the URL and anon key from window.SUPABASE_CONFIG (set in a separate config.js the user creates from a template). Expose window.TH = { getCat, getHadiths, findHadith }. Add a tiny test in js/supabase-test.js I can run from the browser console.</div>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt__head"><span>Prompt 7 — Components &amp; bookmarks</span><span class="tag">UX</span></div>
+    <div class="prompt__body">Add a bookmark button to each hadiths card. Bookmarks should be stored as an array of IDs in localStorage under "th_bookmarks". Add a rounded counter pill to the nav that shows the current count, hides at 0, and caps at "99+". On bookmarks.html, render the saved hadiths using TH.findHadith(id).</div>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt__head"><span>Prompt 8 — Admin app (Next.js)</span><span class="tag">Admin</span></div>
+    <div class="prompt__body">In a sibling folder admin-app/, scaffold a Next.js 15 App Router TypeScript project with Tailwind. Add an /admin/login route that POSTs a password to /api/admin/login. The API should derive an HMAC-SHA256 token from process.env.ADMIN_SECRET and set it as an httpOnly secure sameSite=strict cookie. Add a requireAdmin() helper that all /api/admin/* routes call. Mark all routes as "edge" runtime so it works on Cloudflare Pages via @cloudflare/next-on-pages.</div>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt__head"><span>Prompt 9 — SEO &amp; sitemap</span><span class="tag">SEO</span></div>
+    <div class="prompt__body">Audit every page in the static site. For each page output a table of: title, description, canonical, OG tags, Twitter card, JSON-LD presence, robots directive. Then generate a sitemap.xml that lists every public page with sensible priority and changefreq, and update robots.txt to allow all and reference the sitemap. Do not modify any tag values without explaining why.</div>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt__head"><span>Prompt 10 — Security pass</span><span class="tag">Security</span></div>
+    <div class="prompt__body">Audit the project for security issues. Specifically: (a) scan for any committed secrets, (b) verify .gitignore excludes .env and .next, (c) propose a Content-Security-Policy that allows our specific origins (Supabase, Cloudflare Insights, fonts) and no wildcards, (d) confirm the admin cookie is httpOnly + secure + sameSite=strict, (e) check Stripe webhook signature verification if present. Output a single security checklist and tell me which items are PASS / PARTIAL / FAIL — do not fix yet.</div>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt__head"><span>Prompt 11 — Performance pass</span><span class="tag">Speed</span></div>
+    <div class="prompt__body">Improve performance without breaking anything. Concretely: convert every reference to .jpg in the static HTML to a &lt;picture&gt; with a .webp source and .jpg fallback (only if the .webp file already exists next to it). Add font-display:swap to every @font-face. Defer every &lt;script&gt; that isn't theme-init.js. Show me a diff before applying.</div>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt__head"><span>Prompt 12 — Deploy to Cloudflare</span><span class="tag">Deploy</span></div>
+    <div class="prompt__body">Walk me through deploying both the static site and the admin-app to Cloudflare Pages without breaking production. Tell me: which buttons to click in the Cloudflare dashboard, what build command and output directory to set for each, where to put environment variables (NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, ADMIN_SECRET, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, RESEND_API_KEY, OPENAI_API_KEY). Do not print my values.</div>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt__head"><span>Prompt 13 — Test the website</span><span class="tag">Verify</span></div>
+    <div class="prompt__body">Open the live URL in a headless browser. Check that the homepage loads under 2 seconds, the bookmark counter increments, the theme toggle persists across reloads, the offline page shows when network is off, and the sitemap returns a 200. Report PASS/FAIL for each check.</div>
+  </div>
+
+  <h3>4 · Child-friendly build path</h3>
+  <ol>
+    <li><strong>Make the empty house.</strong> (Prompt 2)</li>
+    <li><strong>Paint the house.</strong> (Prompt 3)</li>
+    <li><strong>Add rooms.</strong> (Prompt 4)</li>
+    <li><strong>Add the storage room.</strong> (Prompts 5–6)</li>
+    <li><strong>Add the bookmark wall.</strong> (Prompt 7)</li>
+    <li><strong>Add the back-office.</strong> (Prompt 8)</li>
+    <li><strong>Put a label on every door.</strong> (Prompt 9)</li>
+    <li><strong>Lock the doors.</strong> (Prompt 10)</li>
+    <li><strong>Make it run fast.</strong> (Prompt 11)</li>
+    <li><strong>Move the house onto the internet.</strong> (Prompt 12)</li>
+    <li><strong>Test that the doorbell works.</strong> (Prompt 13)</li>
+  </ol>
+
+  <h3>5 · Error-recovery playbook</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Error</th><th>What it usually means</th><th>What to ask Claude</th></tr></thead>
+      <tbody>
+        <tr><td><code>npm install</code> fails</td><td>Wrong Node version or corrupt cache</td><td>"Print my Node version. If it isn't 20+, tell me how to upgrade. Then delete <code>node_modules</code> and <code>package-lock.json</code> and reinstall."</td></tr>
+        <tr><td><code>next: command not found</code></td><td>Dependencies not installed in this folder</td><td>"You're in the wrong folder. Run <code>cd admin-app</code> and <code>npm install</code> first."</td></tr>
+        <tr><td>Broken <code>package.json</code></td><td>Hand-edit gone wrong</td><td>"Restore <code>package.json</code> from the last good git commit and reinstall."</td></tr>
+        <tr><td>TypeScript errors after upgrade</td><td>Library types changed</td><td>"Read the changelog for the package and tell me the migration path. Apply only the smallest fix."</td></tr>
+        <tr><td>Cloudflare build fails</td><td>Output dir or build command mismatch</td><td>"Open <code>wrangler.toml</code> and the Pages dashboard build settings. Make them match. Show me a diff first."</td></tr>
+        <tr><td>Supabase connection refused</td><td>Env vars missing or wrong project</td><td>"List the env var names you expect (no values). Tell me what each one should look like (anon JWT vs URL)."</td></tr>
+        <tr><td><code>git push</code> rejected</td><td>Remote moved ahead</td><td>"Pull with rebase and re-push. Show me any conflicts."</td></tr>
+        <tr><td>Merge conflicts</td><td>Two branches edited the same lines</td><td>"Open the conflicted files and walk me through each one — explain each side before keeping it."</td></tr>
+        <tr><td>Env var not found at runtime</td><td>Variable set in wrong project</td><td>"Open the Cloudflare dashboard, find the project that's failing, and confirm every variable in the production environment."</td></tr>
+        <tr><td>Page loads without styles</td><td>CSS path wrong or file missing</td><td>"Open DevTools Network tab and tell me what 404s. Fix the path; do not regenerate the file."</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>6 · "Ask Claude this" troubleshooting library</h3>
+  <ul>
+    <li><strong>"Claude, inspect the project and explain why <code>npm run build</code> is failing. Don't fix anything yet."</strong></li>
+    <li><strong>"Claude, check <code>package.json</code> and fix dependency errors safely — show me the diff first."</strong></li>
+    <li><strong>"Claude, verify Supabase environment variables without exposing secrets — only print names."</strong></li>
+    <li><strong>"Claude, audit SEO across every public page and create a fix plan ranked by impact."</strong></li>
+    <li><strong>"Claude, check mobile responsiveness at 320px, 375px, and 768px and fix spacing only."</strong></li>
+    <li><strong>"Claude, prepare a safe deployment to Cloudflare Pages without breaking production — list the steps before you do anything."</strong></li>
+    <li><strong>"Claude, scan the repo for any committed secrets and tell me how to scrub them from history."</strong></li>
+    <li><strong>"Claude, review the last 20 commits and summarise what's risky."</strong></li>
+    <li><strong>"Claude, generate a one-page rollback plan for tonight's deployment."</strong></li>
+  </ul>
+
+  <h3>7 · Final rebuild checklist</h3>
+  <ul class="checklist">
+    <li>Local website runs (<code>npx serve .</code> opens it)</li>
+    <li>All public pages reachable from the nav</li>
+    <li>Database has at least one document and one chunk</li>
+    <li>Search returns at least one result</li>
+    <li>Admin login works with <code>ADMIN_SECRET</code></li>
+    <li>Sitemap.xml and robots.txt return 200</li>
+    <li>HSTS, X-Frame-Options, X-Content-Type-Options headers present</li>
+    <li>Mobile view at 375px has no horizontal scroll</li>
+    <li>Cloudflare Pages auto-deploys on push to <code>main</code></li>
+    <li>This methodology PDF is generated and saved alongside the project</li>
+  </ul>
+</section>
+
+<!-- ============================================================ -->
+<!--  FOOTER                                                       -->
+<!-- ============================================================ -->
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <h4>Timeless Hadith — Methodology Whitepaper</h4>
+      <p>Internal engineering document. Honest by design. No secrets included — every key is <code>[REDACTED]</code>.</p>
+      <small>Prepared April 2026 · Version 1.0 · Apple-clean by intention</small>
+    </div>
+    <div>
+      <h4>Quick links</h4>
+      <p>
+        <a href="#exec">Executive Summary</a> &middot;
+        <a href="#arch">Architecture</a> &middot;
+        <a href="#mistakes">Mistakes</a> &middot;
+        <a href="#rebuild">Rebuild Guide</a>
+      </p>
+      <p>Live site: <a href="https://timelesshadith.com">timelesshadith.com</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

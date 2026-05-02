@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Urdu Translation — Style Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cairo+Play:wght@300;400;500&display=swap"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Inter", sans-serif;
+    background: #0d1629;
+    color: #f0f0f0;
+    min-height: 100vh;
+    padding: 40px 20px 120px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #fff;
+  }
+  .subtitle {
+    text-align: center;
+    color: #7a8aaa;
+    font-size: 14px;
+    margin-bottom: 48px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #4f72f8;
+    margin-bottom: 12px;
+  }
+
+  .option-block {
+    max-width: 560px;
+    margin: 0 auto 64px;
+  }
+
+  /* ── Hadith Card Base ── */
+  .hadith-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 20px;
+    padding: 24px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .hadith-meta {
+    font-size: 11px;
+    color: #5a6a8a;
+    margin-bottom: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .hadith-english {
+    font-size: 15px;
+    line-height: 1.75;
+    color: #dce4f0;
+    margin-bottom: 18px;
+  }
+
+  .hadith-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .urdu-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    background: rgba(79,114,248,0.15);
+    border: 1px solid rgba(79,114,248,0.35);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #7a9aff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+  .urdu-btn:hover {
+    background: rgba(79,114,248,0.25);
+    border-color: rgba(79,114,248,0.6);
+    color: #a0b8ff;
+  }
+
+  .card-icons {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    color: #4a5a78;
+    font-size: 13px;
+  }
+  .card-icons span { cursor: pointer; transition: color 0.2s; }
+  .card-icons span:hover { color: #7a9aff; }
+
+
+  /* ══════════════════════════════════
+     OPTION 1 — Inline Accordion Expand
+     ══════════════════════════════════ */
+  .urdu-inline {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s ease,
+                margin-top 0.3s ease;
+    opacity: 0;
+    margin-top: 0;
+  }
+  .urdu-inline.open {
+    max-height: 200px;
+    opacity: 1;
+    margin-top: 18px;
+  }
+  .urdu-inline-inner {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 16px;
+  }
+  .urdu-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #4f72f8;
+    margin-bottom: 8px;
+  }
+  .urdu-text {
+    font-family: "Noto Kufi Arabic", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 2;
+    color: #c8d8f0;
+    direction: rtl;
+    text-align: right;
+  }
+
+
+  /* ══════════════════════════════════
+     OPTION 2 — Glass Floating Popover
+     ══════════════════════════════════ */
+  .popover-wrap { position: relative; }
+
+  .glass-popover {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 0; right: 0;
+    background: rgba(18, 28, 52, 0.82);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(79,114,248,0.1);
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 10;
+  }
+  .glass-popover.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+  }
+  /* arrow */
+  .glass-popover::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 28px;
+    width: 13px; height: 13px;
+    background: rgba(18, 28, 52, 0.82);
+    border-right: 1px solid rgba(255,255,255,0.13);
+    border-bottom: 1px solid rgba(255,255,255,0.13);
+    transform: rotate(45deg);
+  }
+  .popover-close {
+    position: absolute;
+    top: 12px; right: 14px;
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: #7a8aaa;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+  }
+  .popover-close:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+
+  /* ══════════════════════════════════
+     OPTION 3 — Bottom Sheet Slide-up
+     ══════════════════════════════════ */
+  .sheet-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .sheet-overlay.open { opacity: 1; pointer-events: all; }
+
+  .bottom-sheet {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(160deg, rgba(22,34,65,0.98) 0%, rgba(13,22,41,0.99) 100%);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    border-radius: 28px 28px 0 0;
+    padding: 16px 28px 48px;
+    z-index: 101;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .bottom-sheet.open { transform: translateY(0); }
+
+  .sheet-handle {
+    width: 40px; height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 100px;
+    margin: 0 auto 20px;
+  }
+  .sheet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .sheet-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4f72f8;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .sheet-close {
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: #7a8aaa;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+  }
+  .sheet-close:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+  .sheet-hadith-ref {
+    font-size: 12px;
+    color: #5a6a8a;
+    margin-bottom: 16px;
+  }
+
+  .sheet-urdu {
+    font-family: "Noto Kufi Arabic", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 2.1;
+    color: #dce8ff;
+    direction: rtl;
+    text-align: right;
+    border-right: 3px solid rgba(79,114,248,0.4);
+    padding-right: 16px;
+  }
+
+  /* option labels */
+  .option-tag {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+  .tag-1 { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+  .tag-2 { background: rgba(139,92,246,0.15); color: #a78bfa; border: 1px solid rgba(139,92,246,0.3); }
+  .tag-3 { background: rgba(249,115,22,0.15); color: #fb923c; border: 1px solid rgba(249,115,22,0.3); }
+
+  .note {
+    text-align: center;
+    font-size: 12px;
+    color: #4a5a78;
+    margin-top: -44px;
+    margin-bottom: 48px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Urdu Translation — Display Options</h1>
+<p class="subtitle">Click "اردو ترجمہ" on each card to preview the style</p>
+
+
+<!-- ═══════════ OPTION 1: Inline Expand ═══════════ -->
+<div class="option-block">
+  <div class="section-label">Option 1</div>
+  <span class="option-tag tag-1">Inline Accordion — Clean &amp; Minimal</span>
+  <div class="hadith-card">
+    <div class="hadith-meta">Sahih al-Bukhari · Book 8 · Hadith 393</div>
+    <p class="hadith-english">"The Prophet (ﷺ) used to invoke Allah in his prayer, 'O Allah! Save ʿAiyash bin Abi Rabiʿa and Salama bin Hisham and Al-Walid bin Al-Walid; O Allah! Save the weak among the believers...'"</p>
+    <div class="hadith-actions">
+      <button class="urdu-btn" onclick="toggleInline('opt1')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        اردو ترجمہ
+      </button>
+      <div class="card-icons">
+        <span>♡ 9</span>
+        <span>🔖</span>
+        <span>↗</span>
+      </div>
+    </div>
+    <div class="urdu-inline" id="opt1">
+      <div class="urdu-inline-inner">
+        <div class="urdu-label">اردو ترجمہ</div>
+        <p class="urdu-text">نبی کریم ﷺ اپنی نماز میں دعا فرماتے تھے: اے اللہ! عیاش بن ابی ربیعہ اور سلمہ بن ہشام اور ولید بن ولید کو نجات دے، اے اللہ! کمزور مسلمانوں کو نجات دے۔</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════ OPTION 2: Glass Popover ═══════════ -->
+<div class="option-block">
+  <div class="section-label">Option 2</div>
+  <span class="option-tag tag-2">Glass Floating Popover — Modern &amp; Sleek</span>
+  <div class="hadith-card">
+    <div class="hadith-meta">Sahih al-Bukhari · Book 8 · Hadith 393</div>
+    <p class="hadith-english">"The Prophet (ﷺ) used to invoke Allah in his prayer, 'O Allah! Save ʿAiyash bin Abi Rabiʿa and Salama bin Hisham and Al-Walid bin Al-Walid; O Allah! Save the weak among the believers...'"</p>
+    <div class="hadith-actions popover-wrap">
+      <button class="urdu-btn" onclick="togglePopover('opt2')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        اردو ترجمہ
+      </button>
+      <div class="card-icons">
+        <span>♡ 9</span>
+        <span>🔖</span>
+        <span>↗</span>
+      </div>
+      <div class="glass-popover" id="opt2">
+        <button class="popover-close" onclick="closePopover('opt2')">✕</button>
+        <div class="urdu-label" style="margin-bottom:10px">اردو ترجمہ</div>
+        <p class="urdu-text">نبی کریم ﷺ اپنی نماز میں دعا فرماتے تھے: اے اللہ! عیاش بن ابی ربیعہ اور سلمہ بن ہشام اور ولید بن ولید کو نجات دے، اے اللہ! کمزور مسلمانوں کو نجات دے۔</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════ OPTION 3: Bottom Sheet ═══════════ -->
+<div class="option-block">
+  <div class="section-label">Option 3</div>
+  <span class="option-tag tag-3">Bottom Sheet Slide-up — Trendy &amp; Immersive</span>
+  <div class="hadith-card">
+    <div class="hadith-meta">Sahih al-Bukhari · Book 8 · Hadith 393</div>
+    <p class="hadith-english">"The Prophet (ﷺ) used to invoke Allah in his prayer, 'O Allah! Save ʿAiyash bin Abi Rabiʿa and Salama bin Hisham and Al-Walid bin Al-Walid; O Allah! Save the weak among the believers...'"</p>
+    <div class="hadith-actions">
+      <button class="urdu-btn" onclick="openSheet()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        اردو ترجمہ
+      </button>
+      <div class="card-icons">
+        <span>♡ 9</span>
+        <span>🔖</span>
+        <span>↗</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="note">Tap outside or press ✕ to close</p>
+
+
+<!-- Bottom Sheet Overlay -->
+<div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()"></div>
+<div class="bottom-sheet" id="bottomSheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <span class="sheet-title">اردو ترجمہ</span>
+    <button class="sheet-close" onclick="closeSheet()">✕</button>
+  </div>
+  <div class="sheet-hadith-ref">Sahih al-Bukhari · Book 8 · Hadith 393</div>
+  <p class="sheet-urdu">نبی کریم ﷺ اپنی نماز میں دعا فرماتے تھے: اے اللہ! عیاش بن ابی ربیعہ اور سلمہ بن ہشام اور ولید بن ولید کو نجات دے، اے اللہ! کمزور مسلمانوں کو نجات دے، اے اللہ! قبیلہ مضر پر سختی فرما اور ان پر یوسف علیہ السلام کے زمانے جیسے قحط کے سال مسلط فرما۔</p>
+</div>
+
+<script>
+  // Option 1 — Inline toggle
+  function toggleInline(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('open');
+    const btn = el.previousElementSibling.querySelector('.urdu-btn');
+    btn.style.background = el.classList.contains('open')
+      ? 'rgba(79,114,248,0.28)' : '';
+  }
+
+  // Option 2 — Popover
+  function togglePopover(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('open');
+  }
+  function closePopover(id) {
+    document.getElementById(id).classList.remove('open');
+  }
+  document.addEventListener('click', function(e) {
+    const pop = document.getElementById('opt2');
+    if (pop && pop.classList.contains('open')) {
+      if (!pop.contains(e.target) && !e.target.closest('.urdu-btn')) {
+        pop.classList.remove('open');
+      }
+    }
+  });
+
+  // Option 3 — Bottom sheet
+  function openSheet() {
+    document.getElementById('sheetOverlay').classList.add('open');
+    document.getElementById('bottomSheet').classList.add('open');
+  }
+  function closeSheet() {
+    document.getElementById('sheetOverlay').classList.remove('open');
+    document.getElementById('bottomSheet').classList.remove('open');
+  }
+</script>
+</body>
+</html>

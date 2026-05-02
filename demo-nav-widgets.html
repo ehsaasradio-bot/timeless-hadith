@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nav Widgets Demo — Timeless Hadith</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --font: "Inter",-apple-system,sans-serif;
+  --font-arabic: "Noto Kufi Arabic","Segoe UI Arabic",sans-serif;
+  --bg: #ffffff;
+  --surface: #f5f5f7;
+  --border: #e0e0e0;
+  --ink: #1d1d1f;
+  --muted: #6e6e73;
+  --nav-bg: rgba(255,255,255,0.85);
+  --accent: #4f72f8;
+  --radius: 16px;
+}
+[data-theme="dark"] {
+  --bg: #060c1a;
+  --surface: #0d1629;
+  --border: rgba(255,255,255,0.10);
+  --ink: #f0f4ff;
+  --muted: #9aa9c7;
+  --nav-bg: rgba(6,12,26,0.88);
+  --accent: #6b8bff;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  padding-top: 64px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+[data-theme="light"] body {
+  background: linear-gradient(150deg,#eef2ff 0%,#f8f8ff 45%,#f3eeff 100%) fixed;
+}
+[data-theme="dark"] body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image: linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),
+                    linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);
+  background-size: 52px 52px;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:200;
+  height: 64px;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.nav-logo {
+  font-size: 16px; font-weight: 700; color: var(--ink);
+  text-decoration: none; letter-spacing: -0.03em;
+  display: flex; align-items: center; gap: 8px;
+}
+.nav-logo-dot { width:8px; height:8px; border-radius:50%; background: var(--accent); }
+
+.nav-links {
+  display: flex; align-items: center; gap: 28px; list-style: none;
+}
+.nav-links a {
+  font-size:14px; font-weight:400; color:var(--muted);
+  text-decoration:none; transition:color 0.2s;
+}
+.nav-links a:hover { color:var(--ink); }
+
+/* ── WIDGET CLUSTER ── */
+.nav-right {
+  display: flex; align-items: center; gap: 10px;
+}
+
+/* Widget pill */
+.nav-widget {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px;
+  background: rgba(79,114,248,0.07);
+  border: 1px solid rgba(79,114,248,0.16);
+  border-radius: 100px;
+  font-size: 12px; font-weight: 500; color: var(--muted);
+  white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: default;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+[data-theme="dark"] .nav-widget {
+  background: rgba(79,114,248,0.10);
+  border-color: rgba(100,140,255,0.22);
+}
+.nav-widget svg { flex-shrink:0; opacity:0.7; }
+.nav-widget strong { color: var(--ink); font-weight:600; }
+
+/* Prayer widget gets accent color for the prayer name */
+.nav-widget .prayer-name { color: var(--accent); font-weight:700; }
+.nav-widget .prayer-time { color: var(--ink); font-weight:600; }
+
+/* Separator dot */
+.nav-sep {
+  width:3px; height:3px; border-radius:50%;
+  background: var(--border); flex-shrink:0;
+}
+
+/* Theme toggle */
+.theme-toggle {
+  width:42px; height:24px; border-radius:100px;
+  background: var(--surface); border: 1px solid var(--border);
+  cursor:pointer; position:relative; transition:background 0.3s, border-color 0.3s;
+  flex-shrink:0;
+}
+.theme-toggle::after {
+  content:''; position:absolute; top:3px; left:3px;
+  width:16px; height:16px; border-radius:50%;
+  background: var(--ink); transition:transform 0.3s ease, background 0.3s;
+}
+[data-theme="dark"] .theme-toggle::after { transform: translateX(18px); background:#f0f4ff; }
+
+/* Divider between widgets and toggle */
+.nav-divider {
+  width:1px; height:22px; background:var(--border); margin:0 4px;
+}
+
+/* ── DEMO CONTENT ── */
+.demo-body {
+  max-width:900px; margin:60px auto; padding:0 24px; position:relative; z-index:1;
+}
+.demo-label {
+  font-size:11px; font-weight:700; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:12px;
+}
+.demo-title {
+  font-size:32px; font-weight:800; letter-spacing:-0.04em; color:var(--ink);
+  margin-bottom:10px; line-height:1.2;
+}
+.demo-sub {
+  font-size:15px; color:var(--muted); line-height:1.7; max-width:560px;
+}
+.feature-list {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px; margin-top:40px;
+}
+.feature-card {
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.85);
+  border-radius: 18px; padding:24px;
+  box-shadow: 0 2px 16px rgba(79,114,248,0.06);
+}
+[data-theme="dark"] .feature-card {
+  background: rgba(13,22,41,0.75);
+  border-color: rgba(255,255,255,0.08);
+}
+.feature-icon {
+  font-size:24px; margin-bottom:12px; display:block;
+}
+.feature-title {
+  font-size:15px; font-weight:700; color:var(--ink); margin-bottom:6px;
+}
+.feature-desc { font-size:13px; color:var(--muted); line-height:1.6; }
+.badge {
+  display:inline-block; padding:2px 9px; border-radius:100px;
+  font-size:11px; font-weight:600; background:rgba(79,114,248,0.1);
+  color:var(--accent); margin-top:10px; border:1px solid rgba(79,114,248,0.2);
+}
+
+/* Status bar */
+.status-bar {
+  display:flex; align-items:center; gap:8px; margin-bottom:32px;
+  font-size:12px; color:var(--muted);
+}
+.status-dot { width:7px;height:7px;border-radius:50%;background:#34c759;animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+
+@media (max-width:640px) {
+  nav { padding:0 16px; }
+  .nav-links { display:none; }
+  .nav-widget.weather, .nav-widget.prayer { display:none; }
+  .demo-title { font-size:24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <!-- Logo -->
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-dot"></span>
+    Timeless Hadith
+  </a>
+
+  <!-- Links -->
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Browse</a></li>
+    <li><a href="#">Blog</a></li>
+    <li><a href="#">Prayer Times</a></li>
+    <li><a href="#">Bookmarks</a></li>
+  </ul>
+
+  <!-- RIGHT: Widgets + Toggle -->
+  <div class="nav-right">
+
+    <!-- Makkah Time -->
+    <div class="nav-widget" id="widget-time" title="Current time in Makkah al-Mukarramah">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <strong id="makkah-time">--:-- --</strong>
+    </div>
+
+    <span class="nav-sep"></span>
+
+    <!-- Weather (geolocation) -->
+    <div class="nav-widget weather" id="widget-weather" title="Local weather">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+      <span id="weather-val">Locating…</span>
+    </div>
+
+    <span class="nav-sep"></span>
+
+    <!-- Next Prayer -->
+    <div class="nav-widget prayer" id="widget-prayer" title="Next prayer time (your location)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      <span class="prayer-name" id="prayer-name">—</span>
+      <span class="prayer-time" id="prayer-time">—</span>
+    </div>
+
+    <div class="nav-divider"></div>
+
+    <!-- Theme toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark"></button>
+  </div>
+</nav>
+
+<!-- ══ DEMO BODY ══ -->
+<div class="demo-body">
+  <div class="status-bar">
+    <span class="status-dot"></span>
+    Live demo — widgets are fully functional
+  </div>
+
+  <div class="demo-label">Nav Widgets Demo</div>
+  <h1 class="demo-title">Three live widgets, one compact nav bar</h1>
+  <p class="demo-sub">Makkah time updates every second. Weather fetches from your GPS via Open-Meteo (free, no key). Next prayer uses your coordinates via Aladhan API with the Umm al-Qura calculation method.</p>
+
+  <div class="feature-list">
+    <div class="feature-card">
+      <span class="feature-icon">🕐</span>
+      <div class="feature-title">Makkah Time</div>
+      <div class="feature-desc">Live clock using the Asia/Riyadh timezone. Updates every second. Zero API calls — pure browser Intl API.</div>
+      <span class="badge">No API needed</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌤</span>
+      <div class="feature-title">Local Weather</div>
+      <div class="feature-desc">Requests GPS permission, then fetches current temperature in °C from Open-Meteo. Free, no key, privacy-safe.</div>
+      <span class="badge">Open-Meteo API</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🕌</span>
+      <div class="feature-title">Next Prayer</div>
+      <div class="feature-desc">Fetches all 5 prayer times for your coordinates using Aladhan.com with the Umm al-Qura calculation method, then shows the next upcoming salah.</div>
+      <span class="badge">Aladhan + Umm al-Qura</span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Theme ── */
+var html = document.documentElement;
+function setTheme(t) { html.setAttribute('data-theme', t); localStorage.setItem('th_theme', t); }
+var saved = localStorage.getItem('th_theme') || 'light';
+setTheme(saved);
+document.getElementById('themeToggle').addEventListener('click', function(){
+  setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+/* ── 1. Makkah Time — updates every second ── */
+function updateMakkahTime() {
+  var now = new Date();
+  var t = now.toLocaleTimeString('en-US', {
+    timeZone: 'Asia/Riyadh',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+    hour12: true
+  });
+  document.getElementById('makkah-time').textContent = t;
+}
+updateMakkahTime();
+setInterval(updateMakkahTime, 1000);
+
+/* ── 2. Weather via Open-Meteo (geolocation) ── */
+var weatherIcons = {
+  0:'☀️', 1:'🌤', 2:'⛅', 3:'☁️',
+  45:'🌫', 48:'🌫',
+  51:'🌦', 53:'🌦', 55:'🌧',
+  61:'🌧', 63:'🌧', 65:'🌧',
+  71:'🌨', 73:'🌨', 75:'🌨',
+  80:'🌦', 81:'🌧', 82:'⛈',
+  95:'⛈', 96:'⛈', 99:'⛈'
+};
+
+function fetchWeather(lat, lon) {
+  var url = 'https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+
+            '&current_weather=true&temperature_unit=celsius';
+  fetch(url)
+    .then(function(r){ return r.json(); })
+    .then(function(d) {
+      var t = Math.round(d.current_weather.temperature);
+      var code = d.current_weather.weathercode;
+      var icon = weatherIcons[code] || '🌡';
+      document.getElementById('weather-val').innerHTML =
+        icon + ' <strong>' + t + '°C</strong>';
+    })
+    .catch(function(){ document.getElementById('weather-val').textContent = '— °C'; });
+}
+
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    function(pos) { fetchWeather(pos.coords.latitude, pos.coords.longitude); },
+    function()    {
+      /* Fallback: use Makkah coords */
+      document.getElementById('weather-val').innerHTML = '📍 <strong>Allow location</strong>';
+      fetchWeather(21.3891, 39.8579); /* Makkah */
+    },
+    { timeout: 8000 }
+  );
+} else {
+  document.getElementById('weather-val').textContent = '—';
+}
+
+/* ── 3. Prayer Times via Aladhan + Umm al-Qura ── */
+var PRAYERS = ['Fajr','Sunrise','Dhuhr','Asr','Maghrib','Isha'];
+var PRAYER_DISPLAY = {Fajr:'Fajr', Sunrise:'Sunrise', Dhuhr:'Dhuhr', Asr:'Asr', Maghrib:'Maghrib', Isha:'Isha'};
+
+function timeToMins(str) {
+  /* str like "05:23" or "05:23 (AST)" */
+  var m = str.match(/(\d+):(\d+)/);
+  if (!m) return 0;
+  return parseInt(m[1]) * 60 + parseInt(m[2]);
+}
+
+function fetchPrayers(lat, lon) {
+  var today = new Date();
+  var d = today.getDate(), mo = today.getMonth()+1, y = today.getFullYear();
+  /* Method 4 = Umm al-Qura, School 0 */
+  var url = 'https://api.aladhan.com/v1/timings/'+d+'-'+mo+'-'+y+
+            '?latitude='+lat+'&longitude='+lon+'&method=4';
+  fetch(url)
+    .then(function(r){ return r.json(); })
+    .then(function(data) {
+      var t = data.data.timings;
+      /* Get current local minutes */
+      var now = new Date();
+      var nowMins = now.getHours()*60 + now.getMinutes();
+      var next = null, nextTime = null;
+      for (var i=0; i<PRAYERS.length; i++) {
+        var p = PRAYERS[i];
+        if (t[p]) {
+          var mins = timeToMins(t[p]);
+          if (mins > nowMins) { next = p; nextTime = t[p].substring(0,5); break; }
+        }
+      }
+      if (!next) { next = 'Fajr'; nextTime = t['Fajr'].substring(0,5); } /* wrap to next day */
+      document.getElementById('prayer-name').textContent = next;
+      document.getElementById('prayer-time').textContent = nextTime;
+    })
+    .catch(function(){
+      document.getElementById('prayer-name').textContent = '—';
+      document.getElementById('prayer-time').textContent = '';
+    });
+}
+
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    function(pos) { fetchPrayers(pos.coords.latitude, pos.coords.longitude); },
+    function()    { fetchPrayers(21.3891, 39.8579); }, /* Makkah fallback */
+    { timeout: 8000 }
+  );
+} else {
+  fetchPrayers(21.3891, 39.8579);
+}
+</script>
+</body>
+</html>

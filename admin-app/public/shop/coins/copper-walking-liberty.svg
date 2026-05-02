@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img"
+     aria-labelledby="t-copper-walking-liberty d-copper-walking-liberty">
+  <title id="t-copper-walking-liberty">Walking Liberty</title>
+  <desc id="d-copper-walking-liberty">Copper Round · 1 oz — Timeless Hadith Coin Shop placeholder</desc>
+  <defs>
+    <linearGradient id="g-copper-walking-liberty" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"  stop-color="#F8E3D2"/>
+      <stop offset="100%" stop-color="#E8B895"/>
+    </linearGradient>
+    <radialGradient id="r-copper-walking-liberty" cx="50%" cy="42%" r="55%">
+      <stop offset="0%"   stop-color="#F2C99F" stop-opacity="0.95"/>
+      <stop offset="60%"  stop-color="#C68A5D"   stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#7A4220" stop-opacity="0.85"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#g-copper-walking-liberty)"/>
+  <!-- decorative ring pattern -->
+  <g fill="none" stroke="#C68A5D" stroke-opacity="0.18">
+    <circle cx="400" cy="400" r="380"/>
+    <circle cx="400" cy="400" r="340"/>
+    <circle cx="400" cy="400" r="300"/>
+  </g>
+  <!-- coin body -->
+  <g>
+    <circle cx="400" cy="400" r="240" fill="url(#r-copper-walking-liberty)"/>
+    <circle cx="400" cy="400" r="240" fill="none" stroke="#7A4220" stroke-width="6" stroke-opacity="0.85"/>
+    <circle cx="400" cy="400" r="210" fill="none" stroke="#7A4220" stroke-width="2" stroke-opacity="0.55"/>
+    <circle cx="400" cy="400" r="170" fill="none" stroke="#7A4220" stroke-width="1.5" stroke-opacity="0.4"/>
+  </g>
+  <!-- coin face text -->
+  <g font-family="Inter, system-ui, sans-serif" text-anchor="middle" fill="#3A1E0A">
+    <text x="400" y="395" font-size="44" font-weight="700" letter-spacing="0.04em">
+      WALKING LIBERTY
+    </text>
+    <text x="400" y="440" font-size="22" font-weight="500" opacity="0.85">
+      Copper Round · 1 oz
+    </text>
+  </g>
+  <!-- watermark -->
+  <text x="400" y="760" font-family="Inter, system-ui, sans-serif" text-anchor="middle"
+        fill="#7A4220" fill-opacity="0.55" font-size="14" letter-spacing="0.18em">
+    TIMELESS HADITH · PLACEHOLDER · REPLACE WITH REAL PHOTOGRAPHY
+  </text>
+</svg>
