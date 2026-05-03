@@ -1,29 +1,16 @@
-/**
- * Design tokens for the Hadith Reader Dashboard.
- *
- * Brand-aligned with timelesshadith.com — indigo-blue + purple palette,
- * Cairo font, glassmorphism cards. Most live values are CSS variables
- * (defined in app/globals.css) and read via Tailwind tokens like
- * `text-ink`, `bg-accent`. The objects below cover composite class
- * strings (cards, status chips, gradients) that benefit from one canonical
- * place to edit.
- */
-
 export const colors = {
-  // Brand: indigo-blue (primary) and purple (secondary)
   brand: {
     50:  "#eef2ff",
     100: "#dbe3ff",
     200: "#bccafd",
     300: "#a0baff",
     400: "#7891fb",
-    500: "#4f72f8", // primary accent
+    500: "#4f72f8",
     600: "#3a5ce0",
     700: "#2d4ac0",
     800: "#23399c",
     900: "#1a2a78",
   },
-  // Secondary: purple
   brand2: {
     50:  "#f4efff",
     100: "#e7dcff",
@@ -64,13 +51,13 @@ export const colors = {
 } as const;
 
 export const spacing = {
-  xs:   "0.5rem",
-  sm:   "0.75rem",
-  md:   "1rem",
-  lg:   "1.5rem",
-  xl:   "2rem",
-  "2xl":"3rem",
-  "3xl":"4rem",
+  xs:    "0.5rem",
+  sm:    "0.75rem",
+  md:    "1rem",
+  lg:    "1.5rem",
+  xl:    "2rem",
+  "2xl": "3rem",
+  "3xl": "4rem",
 } as const;
 
 export const radius = {
@@ -90,46 +77,24 @@ export const shadows = {
 } as const;
 
 export const gradients = {
-  brand:
-    "bg-gradient-to-br from-[#4f72f8] via-[#5a6cf2] to-[#7c5ce6]",
-  brandSoft:
-    "bg-gradient-to-br from-[#eef2ff] via-[#f3eeff] to-[#e7dcff]",
-  surface:
-    "bg-gradient-to-b from-[var(--bg)] to-[var(--surface)]",
-  glassLight:
-    "bg-gradient-to-br from-white/80 via-white/60 to-white/40",
-  glassDark:
-    "bg-gradient-to-br from-white/[0.06] via-white/[0.04] to-white/[0.02]",
+  brand:      "bg-gradient-to-br from-[#4f72f8] via-[#5a6cf2] to-[#7c5ce6]",
+  brandSoft:  "bg-gradient-to-br from-[#eef2ff] via-[#f3eeff] to-[#e7dcff]",
+  surface:    "bg-gradient-to-b from-[var(--bg)] to-[var(--surface)]",
+  glassLight: "bg-gradient-to-br from-white/80 via-white/60 to-white/40",
+  glassDark:  "bg-gradient-to-br from-white/[0.06] via-white/[0.04] to-white/[0.02]",
 } as const;
 
-/**
- * Glass card recipe — uses the .th-glass utility defined in globals.css
- * (which has the proper backdrop-filter + theme-aware borders).
- * Combine with rounded-2xl/rounded-3xl plus a shadow if extra needed.
- */
 export const glass = {
   base:  "th-glass",
   inset: "ring-1 ring-inset ring-white/[0.4] dark:ring-white/[0.04]",
 } as const;
 
-/**
- * Convenience composite — drop into a div for an instant brand glass card.
- */
 export const card = {
-  default: ["rounded-2xl", glass.base, "p-5 sm:p-6"].join(" "),
-  large:   ["rounded-3xl", glass.base, "p-6 sm:p-8"].join(" "),
-  flat:    [
-    "rounded-2xl",
-    "bg-[var(--bg)] border border-[var(--border)]",
-    "p-5 sm:p-6",
-  ].join(" "),
+  default: "rounded-2xl th-glass p-5 sm:p-6",
+  large:   "rounded-3xl th-glass p-6 sm:p-8",
+  flat:    "rounded-2xl bg-[var(--bg)] border border-[var(--border)] p-5 sm:p-6",
 } as const;
 
-/**
- * Status accent backgrounds (for stat-card icon chips).
- * Indigo / purple / periwinkle — all live in the brand family so the
- * stat row reads as a coherent palette rather than rainbow.
- */
 export const statusBg = {
   brand:  "bg-[#eef2ff] text-[#3a5ce0] dark:bg-[#3a5ce0]/30 dark:text-[#a0baff]",
   blue:   "bg-[#dbe3ff] text-[#23399c] dark:bg-[#23399c]/30 dark:text-[#bccafd]",

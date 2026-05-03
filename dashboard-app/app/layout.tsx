@@ -1,22 +1,16 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Timeless Hadith — Reader",
-  description:
-    "Your personal Hadith reading dashboard — track progress, bookmarks, notes, and personalised recommendations.",
+  title: "Timeless Hadith - Reader",
+  description: "Your personal Hadith reading dashboard.",
 };
 
-/**
- * Inline pre-paint script that restores the user's theme choice from
- * localStorage before React hydrates — prevents the light-then-dark flash.
- * Mirrors the same strategy used on timelesshadith.com.
- */
 const themeBootstrap = `
 (function () {
   try {
     var saved = localStorage.getItem('th-theme');
-    var theme = saved === 'dark' || saved === 'light'
+    var theme = (saved === 'dark' || saved === 'light')
       ? saved
       : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', theme);

@@ -8,9 +8,6 @@ export default function TopBar({
 }: {
   onMenuClick?: () => void;
 }) {
-  // Initialise to "light" so SSR markup matches layout.tsx default.
-  // After mount, read the actual theme from <html> (set by the
-  // pre-paint bootstrap script).
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
@@ -27,7 +24,7 @@ export default function TopBar({
       try {
         localStorage.setItem("th-theme", next);
       } catch {
-        /* ignore quota / privacy mode */
+        /* ignore */
       }
     }
   };
@@ -41,7 +38,6 @@ export default function TopBar({
       ].join(" ")}
     >
       <div className="flex items-center gap-3 px-4 sm:px-6 lg:px-8 py-3.5">
-        {/* Mobile menu */}
         <button
           type="button"
           onClick={onMenuClick}
@@ -53,7 +49,6 @@ export default function TopBar({
           </svg>
         </button>
 
-        {/* Search */}
         <div className="flex-1 max-w-2xl">
           <label className="relative block">
             <span className="sr-only">Search</span>
@@ -65,26 +60,15 @@ export default function TopBar({
             <input
               type="search"
               placeholder="Search hadith, collections, scholars..."
-              className={[
-                "w-full rounded-xl",
-                "bg-black/[0.03] dark:bg-white/[0.04]",
-                "border border-black/[0.06] dark:border-white/[0.06]",
-                "pl-10 pr-16 py-2.5 text-sm",
-                "text-black/80 dark:text-white/80",
-                "placeholder:text-black/40 dark:placeholder:text-white/40",
-                "focus:outline-none focus:ring-2 focus:ring-[#4f72f8]/40 focus:border-[#4f72f8]/40",
-                "transition-shadow",
-              ].join(" ")}
+              className="w-full rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] pl-10 pr-16 py-2.5 text-sm text-black/80 dark:text-white/80 placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#4f72f8]/40 focus:border-[#4f72f8]/40 transition-shadow"
             />
             <kbd className="hidden sm:inline-flex absolute right-3 top-1/2 -translate-y-1/2 items-center gap-1 rounded-md border border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-white/[0.04] px-1.5 py-0.5 text-[10px] font-mono text-black/50 dark:text-white/50">
-              ⌘ K
+              CMD K
             </kbd>
           </label>
         </div>
 
-        {/* Right actions */}
         <div className="ml-auto flex items-center gap-2">
-          {/* Theme toggle */}
           <button
             type="button"
             onClick={toggleTheme}
@@ -103,7 +87,6 @@ export default function TopBar({
             )}
           </button>
 
-          {/* Notifications */}
           <button
             type="button"
             aria-label="Notifications"
@@ -117,11 +100,10 @@ export default function TopBar({
             </span>
           </button>
 
-          {/* Profile */}
           <div className="hidden sm:flex items-center gap-2.5 pl-2 ml-1">
             <div
               aria-hidden="true"
-              className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-[#4f72f8] to-[#3a5ce0] text-white text-sm font-semibold"
+              className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-[#4f72f8] to-[#7c5ce6] text-white text-sm font-semibold"
             >
               {userProfile.initials}
             </div>
@@ -130,4 +112,21 @@ export default function TopBar({
                 {userProfile.name}
               </p>
               <p className="text-xs text-black/50 dark:text-white/50">
-                {userProfile.em
+                {userProfile.email}
+              </p>
+            </div>
+            <button
+              type="button"
+              aria-label="Account menu"
+              className="text-black/40 dark:text-white/40 px-1"
+            >
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}
