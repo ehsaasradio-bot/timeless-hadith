@@ -1,35 +1,20 @@
-﻿"use client";
+import type { Metadata } from "next";
+import "./globals.css";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { glass } from "@/src/lib/design/tokens";
-
-type NavItem = {
-  href: string;
-  label: string;
-  icon: React.ReactNode;
-  group: "menu" | "discover" | "settings";
+export const metadata: Metadata = {
+  title: "Timeless Hadith — Reader",
+  description:
+    "Your personal Hadith reading dashboard — track progress, bookmarks, notes, and personalised recommendations.",
 };
 
-function Icon({ d, fill = false }: { d: string; fill?: boolean }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      width="18"
-      height="18"
-      fill={fill ? "currentColor" : "none"}
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d={d} />
-    </svg>
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased">{children}</body>
+    </html>
   );
 }
-
-const NAV: NavItem[] = [
-  // Menu
-  {
