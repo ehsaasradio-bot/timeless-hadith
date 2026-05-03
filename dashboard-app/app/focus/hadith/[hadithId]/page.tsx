@@ -1,3 +1,4 @@
+export const runtime = "edge";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import FocusReader from "@/src/components/reader/FocusReader";

@@ -1,3 +1,4 @@
+export const runtime = "edge";
 import type { Metadata } from "next";
 import ReaderShell from "@/src/components/reader/ReaderShell";
 import SearchFilters from "@/src/components/search/SearchFilters";
