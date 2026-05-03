@@ -117,7 +117,7 @@ const NAV: NavItem[] = [
 function Logo({ collapsed }: { collapsed: boolean }) {
   return (
     <div className="flex items-center gap-2.5 px-2">
-      <div className="relative h-9 w-9 shrink-0 rounded-xl bg-gradient-to-br from-[#3a9e5e] to-[#1f5132] grid place-items-center shadow-sm">
+      <div className="relative h-9 w-9 shrink-0 rounded-xl bg-gradient-to-br from-[#4f72f8] to-[#3a5ce0] grid place-items-center shadow-sm">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M5 11V8a7 7 0 0114 0v3" />
           <path d="M3 11h18v9H3z" />
@@ -125,7 +125,7 @@ function Logo({ collapsed }: { collapsed: boolean }) {
         </svg>
       </div>
       {!collapsed && (
-        <span className="font-semibold tracking-tight text-[15px] text-ink-900 dark:text-white">
+        <span className="font-semibold tracking-tight text-[15px] text-ink">
           HadithHub
         </span>
       )}
@@ -161,7 +161,7 @@ function NavLink({
       className={[
         "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors",
         active
-          ? "bg-[#dcf2e1] text-[#1f5132] dark:bg-[#1f5132]/30 dark:text-[#bce5c8] font-medium"
+          ? "bg-[#eef2ff] text-[#3a5ce0] dark:bg-[#3a5ce0]/30 dark:text-[#a0baff] font-medium"
           : "text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.04]",
       ].join(" ")}
     >
@@ -212,7 +212,7 @@ export default function Sidebar({
           "w-[280px]",
           mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
           "transition-[transform,width] duration-200",
-          "bg-white/85 dark:bg-[#0f1318]/85 backdrop-blur-xl",
+          "bg-[var(--nav-bg)] backdrop-blur-xl",
           "border-r border-black/[0.06] dark:border-white/[0.06]",
           "flex flex-col",
         ].join(" ")}
@@ -270,7 +270,7 @@ export default function Sidebar({
             <div
               className={[
                 "rounded-2xl p-4",
-                "bg-gradient-to-br from-[#1f5132] to-[#0f1318] text-white",
+                "bg-gradient-to-br from-[#4f72f8] via-[#5a4cd9] to-[#7c5ce6] text-white",
                 glass.inset,
               ].join(" ")}
             >
@@ -283,7 +283,7 @@ export default function Sidebar({
               </p>
               <button
                 type="button"
-                className="mt-3 w-full rounded-xl bg-white text-[#1f5132] text-sm font-medium py-2 hover:bg-white/90 transition-colors"
+                className="mt-3 w-full rounded-xl bg-white text-[#3a5ce0] text-sm font-medium py-2 hover:bg-white/90 transition-colors"
               >
                 Upgrade Now
               </button>

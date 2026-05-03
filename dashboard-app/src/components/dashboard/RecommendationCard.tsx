@@ -13,7 +13,7 @@ export default function RecommendationCard({
     >
       <header className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs font-medium text-[#1f5132] dark:text-[#bce5c8]">
+          <p className="text-xs font-medium text-[#3a5ce0] dark:text-[#a0baff]">
             {rec.collection}
           </p>
           <p className="mt-0.5 text-xs text-black/55 dark:text-white/55">
@@ -22,7 +22,7 @@ export default function RecommendationCard({
         </div>
         <span
           aria-label={`Match score ${rec.score}`}
-          className="shrink-0 inline-flex items-center gap-1 rounded-full bg-[#dcf2e1] dark:bg-[#1f5132]/30 text-[#1f5132] dark:text-[#bce5c8] text-[11px] font-medium px-2.5 py-1"
+          className="shrink-0 inline-flex items-center gap-1 rounded-full bg-[#eef2ff] dark:bg-[#3a5ce0]/30 text-[#3a5ce0] dark:text-[#a0baff] text-[11px] font-medium px-2.5 py-1"
         >
           <svg viewBox="0 0 24 24" width="10" height="10" fill="currentColor" aria-hidden="true">
             <path d="M12 2l2.6 6.5H22l-5.4 4 2 6.5L12 15l-6.6 4 2-6.5L2 8.5h7.4z" />
@@ -35,7 +35,7 @@ export default function RecommendationCard({
         <p
           dir="rtl"
           lang="ar"
-          className="text-base leading-relaxed text-ink-900 dark:text-white font-medium line-clamp-2"
+          className="text-base leading-relaxed text-ink font-medium line-clamp-2"
         >
           {rec.arabic}
         </p>
@@ -51,7 +51,7 @@ export default function RecommendationCard({
       <footer className="mt-auto flex items-center gap-2">
         <button
           type="button"
-          className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#1f5132] hover:bg-[#25653c] text-white text-xs font-medium py-2 transition-colors"
+          className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#3a5ce0] hover:bg-[#3a5ce0] text-white text-xs font-medium py-2 transition-colors"
         >
           Read Hadith
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

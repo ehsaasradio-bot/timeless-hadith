@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { userProfile } from "@/src/lib/dashboard/mock-data";
 
 export default function TopBar({
@@ -8,13 +8,27 @@ export default function TopBar({
 }: {
   onMenuClick?: () => void;
 }) {
+  // Initialise to "light" so SSR markup matches layout.tsx default.
+  // After mount, read the actual theme from <html> (set by the
+  // pre-paint bootstrap script).
   const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const current = document.documentElement.getAttribute("data-theme");
+    if (current === "dark" || current === "light") setTheme(current);
+  }, []);
 
   const toggleTheme = () => {
     const next = theme === "light" ? "dark" : "light";
     setTheme(next);
     if (typeof document !== "undefined") {
-      document.documentElement.classList.toggle("dark", next === "dark");
+      document.documentElement.setAttribute("data-theme", next);
+      try {
+        localStorage.setItem("th-theme", next);
+      } catch {
+        /* ignore quota / privacy mode */
+      }
     }
   };
 
@@ -22,7 +36,7 @@ export default function TopBar({
     <header
       className={[
         "sticky top-0 z-20",
-        "bg-white/80 dark:bg-[#0f1318]/80 backdrop-blur-xl",
+        "bg-[var(--nav-bg)] backdrop-blur-xl",
         "border-b border-black/[0.06] dark:border-white/[0.06]",
       ].join(" ")}
     >
@@ -58,7 +72,7 @@ export default function TopBar({
                 "pl-10 pr-16 py-2.5 text-sm",
                 "text-black/80 dark:text-white/80",
                 "placeholder:text-black/40 dark:placeholder:text-white/40",
-                "focus:outline-none focus:ring-2 focus:ring-[#3a9e5e]/40 focus:border-[#3a9e5e]/40",
+                "focus:outline-none focus:ring-2 focus:ring-[#4f72f8]/40 focus:border-[#4f72f8]/40",
                 "transition-shadow",
               ].join(" ")}
             />
@@ -98,7 +112,7 @@ export default function TopBar({
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M6 8a6 6 0 1112 0c0 7 3 7 3 9H3c0-2 3-2 3-9z M10 21a2 2 0 004 0" />
             </svg>
-            <span className="absolute top-1.5 right-1.5 grid h-4 min-w-[16px] place-items-center rounded-full bg-[#3a9e5e] text-white text-[10px] font-medium px-1">
+            <span className="absolute top-1.5 right-1.5 grid h-4 min-w-[16px] place-items-center rounded-full bg-[#4f72f8] text-white text-[10px] font-medium px-1">
               3
             </span>
           </button>
@@ -107,7 +121,7 @@ export default function TopBar({
           <div className="hidden sm:flex items-center gap-2.5 pl-2 ml-1">
             <div
               aria-hidden="true"
-              className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-[#3a9e5e] to-[#1f5132] text-white text-sm font-semibold"
+              className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-[#4f72f8] to-[#3a5ce0] text-white text-sm font-semibold"
             >
               {userProfile.initials}
             </div>
@@ -116,21 +130,4 @@ export default function TopBar({
                 {userProfile.name}
               </p>
               <p className="text-xs text-black/50 dark:text-white/50">
-                {userProfile.email}
-              </p>
-            </div>
-            <button
-              type="button"
-              aria-label="Account menu"
-              className="text-black/40 dark:text-white/40 px-1"
-            >
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
-  );
-}
+                {userProfile.em

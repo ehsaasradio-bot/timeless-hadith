@@ -12,7 +12,7 @@ export default function DashboardShell({
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="min-h-dvh bg-[#f7f8f9] dark:bg-[#0f1318] text-ink-900 dark:text-white">
+    <div className="min-h-dvh text-ink">
       <div className="flex">
         <Sidebar
           mobileOpen={mobileOpen}

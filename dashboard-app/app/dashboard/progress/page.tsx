@@ -23,7 +23,7 @@ export default function ProgressPage() {
   return (
     <DashboardShell>
       <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-ink-900 dark:text-white">
+        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-ink">
           Reading Progress
         </h1>
         <p className="mt-1 text-sm text-black/55 dark:text-white/55">
@@ -56,7 +56,7 @@ export default function ProgressPage() {
         <ReadingTime />
         <section className={[card.default, "lg:col-span-2"].join(" ")} aria-label="Collections progress">
           <header className="flex items-center justify-between">
-            <h2 className="text-base font-semibold tracking-tight text-ink-900 dark:text-white">
+            <h2 className="text-base font-semibold tracking-tight text-ink">
               Collections
             </h2>
             <span className="text-xs text-black/55 dark:text-white/55">
@@ -67,7 +67,7 @@ export default function ProgressPage() {
             {collectionsProgress.map((c) => (
               <li key={c.name} className="flex flex-col gap-1.5">
                 <div className="flex items-center justify-between gap-3 text-sm">
-                  <span className="font-medium text-ink-900 dark:text-white truncate">
+                  <span className="font-medium text-ink truncate">
                     {c.name}
                   </span>
                   <span className="text-xs text-black/55 dark:text-white/55 tabular-nums">
@@ -77,7 +77,7 @@ export default function ProgressPage() {
                 </div>
                 <div className="h-1.5 w-full rounded-full bg-black/[0.06] dark:bg-white/[0.06] overflow-hidden">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-[#3a9e5e] to-[#5cb87d]"
+                    className="h-full rounded-full bg-gradient-to-r from-[#4f72f8] to-[#7c5ce6]"
                     style={{ width: `${c.pct}%` }}
                     aria-hidden="true"
                   />

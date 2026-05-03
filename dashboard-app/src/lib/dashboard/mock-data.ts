@@ -126,7 +126,7 @@ export const continueReading: ContinueReadingItem = {
   englishSnippet:
     "Narrated 'Umar ibn al-Khattab: I heard the Messenger of Allah say…",
   progressPct: 65,
-  coverHue: "#1f5132",
+  coverHue: "#3a5ce0",
 };
 
 export const topNarrators: Narrator[] = [
@@ -136,7 +136,7 @@ export const topNarrators: Narrator[] = [
     honorific: "raḍiyallāhu ʿanhu",
     hadithCount: 1142,
     initials: "AH",
-    hue: "#3a9e5e",
+    hue: "#4f72f8",
   },
   {
     id: "anas-bin-malik",
@@ -144,7 +144,7 @@ export const topNarrators: Narrator[] = [
     honorific: "raḍiyallāhu ʿanhu",
     hadithCount: 982,
     initials: "AM",
-    hue: "#2c7f4a",
+    hue: "#3a5ce0",
   },
   {
     id: "abdullah-bin-umar",
@@ -152,7 +152,7 @@ export const topNarrators: Narrator[] = [
     honorific: "raḍiyallāhu ʿanhumā",
     hadithCount: 856,
     initials: "AU",
-    hue: "#25653c",
+    hue: "#3a5ce0",
   },
 ];
 

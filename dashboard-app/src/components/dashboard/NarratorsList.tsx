@@ -5,12 +5,12 @@ export default function NarratorsList() {
   return (
     <section className={card.default} aria-label="Top narrators">
       <header className="flex items-center justify-between">
-        <h2 className="text-base font-semibold tracking-tight text-ink-900 dark:text-white">
+        <h2 className="text-base font-semibold tracking-tight text-ink">
           Top Narrators
         </h2>
         <button
           type="button"
-          className="text-xs text-[#1f5132] dark:text-[#bce5c8] hover:underline"
+          className="text-xs text-[#3a5ce0] dark:text-[#a0baff] hover:underline"
         >
           View All
         </button>
@@ -29,13 +29,13 @@ export default function NarratorsList() {
               aria-hidden="true"
               className="shrink-0 grid h-10 w-10 place-items-center rounded-full text-white text-sm font-semibold"
               style={{
-                background: `linear-gradient(135deg, ${n.hue} 0%, #1f5132 100%)`,
+                background: `linear-gradient(135deg, ${n.hue} 0%, #3a5ce0 100%)`,
               }}
             >
               {n.initials}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium text-ink-900 dark:text-white truncate">
+              <p className="text-sm font-medium text-ink truncate">
                 {n.name}
               </p>
               <p
@@ -46,7 +46,7 @@ export default function NarratorsList() {
                 ({n.honorific === "raḍiyallāhu ʿanhumā" ? "رضي الله عنهما" : "رضي الله عنه"})
               </p>
             </div>
-            <span className="shrink-0 inline-flex items-center gap-1 rounded-full bg-[#dcf2e1] dark:bg-[#1f5132]/30 text-[#1f5132] dark:text-[#bce5c8] text-[11px] font-medium px-2.5 py-1 tabular-nums">
+            <span className="shrink-0 inline-flex items-center gap-1 rounded-full bg-[#eef2ff] dark:bg-[#3a5ce0]/30 text-[#3a5ce0] dark:text-[#a0baff] text-[11px] font-medium px-2.5 py-1 tabular-nums">
               {n.hadithCount.toLocaleString()} Hadith
             </span>
             <button

@@ -16,7 +16,7 @@ export default function ReadingAnalytics({
   return (
     <section className={card.default} aria-label={title}>
       <header className="flex items-center justify-between gap-3">
-        <h2 className="text-base font-semibold tracking-tight text-ink-900 dark:text-white">
+        <h2 className="text-base font-semibold tracking-tight text-ink">
           {title}
         </h2>
         <div className="flex items-center gap-2">
@@ -74,7 +74,7 @@ export default function ReadingAnalytics({
                   <div
                     role="img"
                     aria-label={`${d.day}: ${d.count} hadith`}
-                    className="w-full rounded-t-xl bg-gradient-to-t from-[#5cb87d] to-[#bce5c8] dark:from-[#3a9e5e] dark:to-[#2c7f4a]"
+                    className="w-full rounded-t-xl bg-gradient-to-t from-[#7c5ce6] to-[#a0baff] dark:from-[#4f72f8] dark:to-[#3a5ce0]"
                     style={{ height: `${h}%` }}
                   />
                 </li>

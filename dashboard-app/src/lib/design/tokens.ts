@@ -1,86 +1,101 @@
 /**
- * Apple-style design tokens for the Hadith Reader Dashboard.
+ * Design tokens for the Hadith Reader Dashboard.
  *
- * These tokens are intentionally framework-agnostic strings (Tailwind class
- * names + CSS values) so they can be consumed by both server and client
- * components without any runtime overhead.
+ * Brand-aligned with timelesshadith.com — indigo-blue + purple palette,
+ * Cairo font, glassmorphism cards. Most live values are CSS variables
+ * (defined in app/globals.css) and read via Tailwind tokens like
+ * `text-ink`, `bg-accent`. The objects below cover composite class
+ * strings (cards, status chips, gradients) that benefit from one canonical
+ * place to edit.
  */
 
 export const colors = {
-  // Soft Islamic green palette
+  // Brand: indigo-blue (primary) and purple (secondary)
   brand: {
-    50: "#f0faf3",
-    100: "#dcf2e1",
-    200: "#bce5c8",
-    300: "#8dd1a3",
-    400: "#5cb87d",
-    500: "#3a9e5e", // primary
-    600: "#2c7f4a",
-    700: "#25653c",
-    800: "#1f5132",
-    900: "#1a432b",
+    50:  "#eef2ff",
+    100: "#dbe3ff",
+    200: "#bccafd",
+    300: "#a0baff",
+    400: "#7891fb",
+    500: "#4f72f8", // primary accent
+    600: "#3a5ce0",
+    700: "#2d4ac0",
+    800: "#23399c",
+    900: "#1a2a78",
+  },
+  // Secondary: purple
+  brand2: {
+    50:  "#f4efff",
+    100: "#e7dcff",
+    200: "#d0bdff",
+    300: "#b89bf0",
+    400: "#9c7aeb",
+    500: "#7c5ce6",
+    600: "#6a48d8",
+    700: "#553aae",
+    800: "#402c83",
+    900: "#2a1d59",
   },
   ink: {
-    50: "#f7f8f9",
-    100: "#eef0f2",
-    200: "#dde1e6",
-    300: "#b9c0c8",
-    400: "#7e8a96",
-    500: "#56616d",
-    600: "#3a444f",
-    700: "#293039",
-    800: "#1a1f26",
-    900: "#0f1318",
+    50:  "#f5f5f7",
+    100: "#ebebeb",
+    200: "#e0e0e0",
+    300: "#c4c4c8",
+    400: "#9a9a9f",
+    500: "#6e6e73",
+    600: "#46464a",
+    700: "#2f2f33",
+    800: "#1d1d1f",
+    900: "#0a0a0a",
   },
   status: {
     success: "#16a34a",
     warning: "#d97706",
-    danger: "#dc2626",
-    info: "#0284c7",
+    danger:  "#dc2626",
+    info:    "#0284c7",
     neutral: "#64748b",
   },
   surface: {
-    light: "#ffffff",
-    lightMuted: "#f7f8f9",
-    dark: "#0f1318",
-    darkMuted: "#1a1f26",
+    light:      "#ffffff",
+    lightMuted: "#f5f5f7",
+    dark:       "#060c1a",
+    darkMuted:  "#0d1629",
   },
 } as const;
 
 export const spacing = {
-  xs: "0.5rem",
-  sm: "0.75rem",
-  md: "1rem",
-  lg: "1.5rem",
-  xl: "2rem",
-  "2xl": "3rem",
-  "3xl": "4rem",
+  xs:   "0.5rem",
+  sm:   "0.75rem",
+  md:   "1rem",
+  lg:   "1.5rem",
+  xl:   "2rem",
+  "2xl":"3rem",
+  "3xl":"4rem",
 } as const;
 
 export const radius = {
-  sm: "rounded-lg",
-  md: "rounded-xl",
-  lg: "rounded-2xl",
-  xl: "rounded-3xl",
+  sm:   "rounded-lg",
+  md:   "rounded-xl",
+  lg:   "rounded-2xl",
+  xl:   "rounded-3xl",
   full: "rounded-full",
 } as const;
 
 export const shadows = {
-  none: "shadow-none",
-  soft: "shadow-[0_1px_2px_rgba(15,19,24,0.04),0_1px_2px_rgba(15,19,24,0.06)]",
-  card: "shadow-[0_1px_2px_rgba(15,19,24,0.04),0_8px_24px_-12px_rgba(15,19,24,0.08)]",
-  lifted:
-    "shadow-[0_4px_8px_-2px_rgba(15,19,24,0.06),0_16px_32px_-12px_rgba(15,19,24,0.10)]",
-  glow: "shadow-[0_0_0_1px_rgba(58,158,94,0.15),0_8px_24px_-12px_rgba(58,158,94,0.25)]",
+  none:   "shadow-none",
+  soft:   "shadow-[0_1px_2px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.06)]",
+  card:   "shadow-[0_2px_12px_rgba(0,0,0,0.06)]",
+  lifted: "shadow-[0_16px_48px_rgba(0,0,0,0.14)]",
+  glow:   "shadow-[0_0_0_1px_rgba(79,114,248,0.15),0_8px_24px_-12px_rgba(79,114,248,0.30)]",
 } as const;
 
 export const gradients = {
   brand:
-    "bg-gradient-to-br from-[#3a9e5e] via-[#2c7f4a] to-[#1f5132]",
+    "bg-gradient-to-br from-[#4f72f8] via-[#5a6cf2] to-[#7c5ce6]",
   brandSoft:
-    "bg-gradient-to-br from-[#f0faf3] via-[#dcf2e1] to-[#bce5c8]",
+    "bg-gradient-to-br from-[#eef2ff] via-[#f3eeff] to-[#e7dcff]",
   surface:
-    "bg-gradient-to-b from-white to-[#f7f8f9] dark:from-[#1a1f26] dark:to-[#0f1318]",
+    "bg-gradient-to-b from-[var(--bg)] to-[var(--surface)]",
   glassLight:
     "bg-gradient-to-br from-white/80 via-white/60 to-white/40",
   glassDark:
@@ -88,58 +103,39 @@ export const gradients = {
 } as const;
 
 /**
- * Premium glass-card class string. Combine with rounded-2xl/rounded-3xl
- * and a shadow token for a complete card.
+ * Glass card recipe — uses the .th-glass utility defined in globals.css
+ * (which has the proper backdrop-filter + theme-aware borders).
+ * Combine with rounded-2xl/rounded-3xl plus a shadow if extra needed.
  */
 export const glass = {
-  // Light/dark adaptive translucent surface
-  base:
-    "backdrop-blur-xl bg-white/70 dark:bg-white/[0.04] " +
-    "border border-black/[0.06] dark:border-white/[0.06]",
-  // Subtle hover state
-  hover:
-    "transition-all duration-200 hover:bg-white/85 dark:hover:bg-white/[0.06]",
-  // Inset highlight for premium feel
-  inset:
-    "ring-1 ring-inset ring-white/[0.4] dark:ring-white/[0.04]",
+  base:  "th-glass",
+  inset: "ring-1 ring-inset ring-white/[0.4] dark:ring-white/[0.04]",
 } as const;
 
 /**
- * Convenience composite — drop into a div for an instant Apple-style card.
+ * Convenience composite — drop into a div for an instant brand glass card.
  */
 export const card = {
-  default: [
+  default: ["rounded-2xl", glass.base, "p-5 sm:p-6"].join(" "),
+  large:   ["rounded-3xl", glass.base, "p-6 sm:p-8"].join(" "),
+  flat:    [
     "rounded-2xl",
-    glass.base,
-    glass.inset,
-    shadows.card,
-    "p-5 sm:p-6",
-  ].join(" "),
-  large: [
-    "rounded-3xl",
-    glass.base,
-    glass.inset,
-    shadows.lifted,
-    "p-6 sm:p-8",
-  ].join(" "),
-  flat: [
-    "rounded-2xl",
-    "bg-white dark:bg-[#1a1f26]",
-    "border border-black/[0.06] dark:border-white/[0.06]",
+    "bg-[var(--bg)] border border-[var(--border)]",
     "p-5 sm:p-6",
   ].join(" "),
 } as const;
 
 /**
- * Status accent backgrounds (subtle, used for stat-card icon chips).
+ * Status accent backgrounds (for stat-card icon chips).
+ * Indigo / purple / periwinkle — all live in the brand family so the
+ * stat row reads as a coherent palette rather than rainbow.
  */
 export const statusBg = {
-  brand: "bg-[#dcf2e1] text-[#1f5132] dark:bg-[#1f5132]/30 dark:text-[#8dd1a3]",
-  blue: "bg-[#dbeafe] text-[#1e3a8a] dark:bg-[#1e3a8a]/30 dark:text-[#93c5fd]",
-  amber: "bg-[#fef3c7] text-[#92400e] dark:bg-[#92400e]/30 dark:text-[#fde68a]",
-  violet:
-    "bg-[#ede9fe] text-[#5b21b6] dark:bg-[#5b21b6]/30 dark:text-[#c4b5fd]",
-  rose: "bg-[#ffe4e6] text-[#9f1239] dark:bg-[#9f1239]/30 dark:text-[#fda4af]",
+  brand:  "bg-[#eef2ff] text-[#3a5ce0] dark:bg-[#3a5ce0]/30 dark:text-[#a0baff]",
+  blue:   "bg-[#dbe3ff] text-[#23399c] dark:bg-[#23399c]/30 dark:text-[#bccafd]",
+  amber:  "bg-[#fef3c7] text-[#92400e] dark:bg-[#92400e]/30 dark:text-[#fde68a]",
+  violet: "bg-[#f4efff] text-[#553aae] dark:bg-[#553aae]/30 dark:text-[#d0bdff]",
+  rose:   "bg-[#ffe4e6] text-[#9f1239] dark:bg-[#9f1239]/30 dark:text-[#fda4af]",
 } as const;
 
 export type StatusAccent = keyof typeof statusBg;

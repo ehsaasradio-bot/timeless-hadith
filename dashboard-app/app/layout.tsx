@@ -7,14 +7,36 @@ export const metadata: Metadata = {
     "Your personal Hadith reading dashboard — track progress, bookmarks, notes, and personalised recommendations.",
 };
 
+/**
+ * Inline pre-paint script that restores the user's theme choice from
+ * localStorage before React hydrates — prevents the light-then-dark flash.
+ * Mirrors the same strategy used on timelesshadith.com.
+ */
+const themeBootstrap = `
+(function () {
+  try {
+    var saved = localStorage.getItem('th-theme');
+    var theme = saved === 'dark' || saved === 'light'
+      ? saved
+      : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+`;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="antialiased">{children}</body>
+    <html lang="en" data-theme="light" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
+      </head>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }

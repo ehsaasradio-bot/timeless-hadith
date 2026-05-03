@@ -19,7 +19,7 @@ export default function ReadingTime({
   return (
     <section className={card.default} aria-label="Reading time">
       <header className="flex items-start justify-between gap-3">
-        <h2 className="text-base font-semibold tracking-tight text-ink-900 dark:text-white">
+        <h2 className="text-base font-semibold tracking-tight text-ink">
           Reading Time
         </h2>
         <button
@@ -36,7 +36,7 @@ export default function ReadingTime({
       <div className="mt-3 flex items-center gap-3">
         <div
           aria-hidden="true"
-          className="grid h-12 w-12 place-items-center rounded-2xl bg-[#dcf2e1] dark:bg-[#1f5132]/30 text-[#1f5132] dark:text-[#bce5c8]"
+          className="grid h-12 w-12 place-items-center rounded-2xl bg-[#eef2ff] dark:bg-[#3a5ce0]/30 text-[#3a5ce0] dark:text-[#a0baff]"
         >
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="9" />
@@ -44,7 +44,7 @@ export default function ReadingTime({
           </svg>
         </div>
         <div>
-          <p className="text-2xl font-semibold tracking-tight text-ink-900 dark:text-white tabular-nums">
+          <p className="text-2xl font-semibold tracking-tight text-ink tabular-nums">
             {total}
           </p>
           <p className="text-xs text-black/55 dark:text-white/55">
@@ -70,7 +70,7 @@ export default function ReadingTime({
               <div
                 role="img"
                 aria-label={`${d.day}: ${d.label}`}
-                className="w-full rounded-md bg-gradient-to-t from-[#5cb87d] to-[#bce5c8] dark:from-[#3a9e5e] dark:to-[#2c7f4a]"
+                className="w-full rounded-md bg-gradient-to-t from-[#7c5ce6] to-[#a0baff] dark:from-[#4f72f8] dark:to-[#3a5ce0]"
                 style={{ height: `${h}%` }}
               />
             </li>

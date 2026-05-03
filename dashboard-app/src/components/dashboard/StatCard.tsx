@@ -55,7 +55,7 @@ export default function StatCard({
           <p className="text-sm text-black/55 dark:text-white/55 truncate">
             {label}
           </p>
-          <p className="mt-2 text-3xl sm:text-[34px] font-semibold tracking-tight text-ink-900 dark:text-white tabular-nums">
+          <p className="mt-2 text-3xl sm:text-[34px] font-semibold tracking-tight text-ink tabular-nums">
             {value}
           </p>
         </div>

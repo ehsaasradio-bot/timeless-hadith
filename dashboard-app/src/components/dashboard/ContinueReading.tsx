@@ -7,12 +7,12 @@ export default function ContinueReading() {
   return (
     <section className={card.default} aria-label="Continue reading">
       <header className="flex items-center justify-between">
-        <h2 className="text-base font-semibold tracking-tight text-ink-900 dark:text-white">
+        <h2 className="text-base font-semibold tracking-tight text-ink">
           Continue Reading
         </h2>
         <button
           type="button"
-          className="text-xs text-[#1f5132] dark:text-[#bce5c8] hover:underline"
+          className="text-xs text-[#3a5ce0] dark:text-[#a0baff] hover:underline"
         >
           View All
         </button>
@@ -24,7 +24,7 @@ export default function ContinueReading() {
           className="shrink-0 h-[88px] w-[68px] rounded-xl grid place-items-center text-white text-[22px] font-serif"
           style={{
             background:
-              "linear-gradient(135deg, #1f5132 0%, #25653c 60%, #2c7f4a 100%)",
+              "linear-gradient(135deg, #3a5ce0 0%, #3a5ce0 60%, #3a5ce0 100%)",
             boxShadow:
               "inset 0 0 0 1px rgba(255,255,255,0.08), 0 4px 12px rgba(0,0,0,0.25)",
           }}
@@ -33,7 +33,7 @@ export default function ContinueReading() {
         </div>
 
         <div className="min-w-0 flex-1">
-          <p className="text-[15px] font-medium text-ink-900 dark:text-white truncate">
+          <p className="text-[15px] font-medium text-ink truncate">
             {c.collection}
           </p>
           <p className="mt-0.5 text-xs text-black/55 dark:text-white/55 truncate">
@@ -59,7 +59,7 @@ export default function ContinueReading() {
         </div>
         <div className="mt-1.5 h-1.5 w-full rounded-full bg-black/[0.06] dark:bg-white/[0.06] overflow-hidden">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-[#3a9e5e] to-[#5cb87d]"
+            className="h-full rounded-full bg-gradient-to-r from-[#4f72f8] to-[#7c5ce6]"
             style={{ width: `${c.progressPct}%` }}
             aria-hidden="true"
           />
@@ -69,7 +69,7 @@ export default function ContinueReading() {
       <div className="mt-4 flex items-center gap-2">
         <button
           type="button"
-          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#1f5132] hover:bg-[#25653c] text-white text-sm font-medium py-2.5 transition-colors"
+          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#3a5ce0] hover:bg-[#3a5ce0] text-white text-sm font-medium py-2.5 transition-colors"
         >
           <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
             <path d="M8 5v14l11-7z" />

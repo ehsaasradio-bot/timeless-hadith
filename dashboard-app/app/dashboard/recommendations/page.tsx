@@ -30,7 +30,7 @@ export default async function RecommendationsPage() {
     <DashboardShell>
       <div className="mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-ink-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-ink">
             Recommendations
           </h1>
           <p className="mt-1 text-sm text-black/55 dark:text-white/55">
@@ -38,8 +38,8 @@ export default async function RecommendationsPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#dcf2e1] dark:bg-[#1f5132]/30 text-[#1f5132] dark:text-[#bce5c8] text-xs font-medium px-3 py-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#3a9e5e] animate-pulse" />
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#eef2ff] dark:bg-[#3a5ce0]/30 text-[#3a5ce0] dark:text-[#a0baff] text-xs font-medium px-3 py-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#4f72f8] animate-pulse" />
             AI-assisted
           </span>
         </div>
@@ -49,24 +49,24 @@ export default async function RecommendationsPage() {
         className={[card.default, "mb-5"].join(" ")}
         aria-label="Why these recommendations"
       >
-        <h2 className="text-sm font-semibold text-ink-900 dark:text-white">
+        <h2 className="text-sm font-semibold text-ink">
           Why these were picked
         </h2>
         <ul className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-black/65 dark:text-white/65">
           <li className="flex items-start gap-2">
-            <span className="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-[#3a9e5e]" />
+            <span className="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-[#4f72f8]" />
             Same topic family as your current reading
           </li>
           <li className="flex items-start gap-2">
-            <span className="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-[#5cb87d]" />
+            <span className="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-[#7c5ce6]" />
             Continues a collection you have unfinished
           </li>
           <li className="flex items-start gap-2">
-            <span className="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-[#8dd1a3]" />
+            <span className="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-[#a0baff]" />
             Connects to topics you have bookmarked
           </li>
           <li className="flex items-start gap-2">
-            <span className="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-[#bce5c8]" />
+            <span className="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-[#a0baff]" />
             Introduces a new narrator
           </li>
         </ul>

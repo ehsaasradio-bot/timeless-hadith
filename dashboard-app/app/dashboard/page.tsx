@@ -21,7 +21,7 @@ export default function DashboardHome() {
       {/* Greeting */}
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-ink-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-ink">
             Assalamu alaikum, {userProfile.name.split(" ")[0]}
           </h1>
           <p className="mt-1 text-sm text-black/55 dark:text-white/55">
@@ -31,7 +31,7 @@ export default function DashboardHome() {
         <div className="flex items-center gap-2">
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-xl bg-[#1f5132] hover:bg-[#25653c] text-white text-sm font-medium px-4 py-2.5 transition-colors"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#3a5ce0] hover:bg-[#3a5ce0] text-white text-sm font-medium px-4 py-2.5 transition-colors"
           >
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M12 5v14M5 12h14" />
@@ -40,7 +40,7 @@ export default function DashboardHome() {
           </button>
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-xl border border-black/[0.08] dark:border-white/[0.08] text-ink-900 dark:text-white text-sm font-medium px-4 py-2.5 hover:bg-black/[0.03] dark:hover:bg-white/[0.04] transition-colors"
+            className="inline-flex items-center gap-2 rounded-xl border border-black/[0.08] dark:border-white/[0.08] text-ink text-sm font-medium px-4 py-2.5 hover:bg-black/[0.03] dark:hover:bg-white/[0.04] transition-colors"
           >
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4 M17 8l-5-5-5 5 M12 3v12" />
