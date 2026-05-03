@@ -33,9 +33,3 @@ function Icon({ d, fill = false }: { d: string; fill?: boolean }) {
 const NAV: NavItem[] = [
   // Menu
   {
-    href: "/dashboard",
-    label: "Dashboard",
-    group: "menu",
-    icon: <Icon d="M4 11l8-7 8 7v9a1 1 0 01-1 1h-5v-6h-4v6H5a1 1 0 01-1-1z" />,
-  },
-  {

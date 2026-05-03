@@ -94,22 +94,18 @@ export async function fetchByCollectionAndNumber(
   collectionSlug: string,
   hadithIdOrNumber: string,
 ): Promise<Hadith | null> {
+  // 1. Direct id lookup — wins regardless of collection slug.
+  //    Slug is purely cosmetic / SEO; we never reject a valid id match.
   const direct = await fetchHadithById(hadithIdOrNumber);
-  if (direct) {
-    const expectedNames = collectionNamesForSlug(collectionSlug);
-    if (
-      expectedNames.length === 0 ||
-      expectedNames.some(
-        (n) => n.toLowerCase() === direct.collection.toLowerCase(),
-      )
-    ) {
-      return direct;
-    }
-  }
+  if (direct) return direct;
+
+  // 2. If id lookup missed, try (collection, hadith_number).
   const supabase = getSupabase();
   const numHadith = Number(hadithIdOrNumber);
+  if (!Number.isFinite(numHadith)) return null;
+
   const names = collectionNamesForSlug(collectionSlug);
-  if (Number.isFinite(numHadith) && names.length > 0) {
+  if (names.length > 0) {
     const { data } = await supabase
       .from("hadiths")
       .select(SELECT)
@@ -119,5 +115,15 @@ export async function fetchByCollectionAndNumber(
       .maybeSingle();
     if (data) return mapHadith(data as unknown as HadithRow);
   }
-  return direct;
+
+  // 3. Last resort — any collection with that hadith_number.
+  const { data: any1 } = await supabase
+    .from("hadiths")
+    .select(SELECT)
+    .eq("hadith_number", numHadith)
+    .limit(1)
+    .maybeSingle();
+  if (any1) return mapHadith(any1 as unknown as HadithRow);
+
+  return null;
 }
