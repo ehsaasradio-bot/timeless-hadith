@@ -294,3 +294,19 @@ export default function Sidebar({
     </>
   );
 }
+ton"
+                className="mt-3 w-full rounded-xl bg-white text-[#3a5ce0] text-sm font-medium py-2 hover:bg-white/90 transition-colors"
+              >
+                Upgrade Now
+              </button>
+            </div>
+          </div>
+        )}
+      </aside>
+    </>
+  );
+}
+>
+  );
+}
+}

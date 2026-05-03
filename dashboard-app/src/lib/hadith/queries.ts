@@ -1,0 +1,123 @@
+import { getSupabase } from "@/src/lib/supabase/server";
+import { mapHadith, collectionNamesForSlug } from "./mapHadith";
+import type { Hadith, HadithRow } from "./types";
+
+const SELECT =
+  "id,book_number,book_name_en,book_name_ar,chapter_en,hadith_number,in_book_ref,narrator,text_ar,text_en,urdu,quick_read";
+
+export async function fetchHadithById(id: string): Promise<Hadith | null> {
+  const supabase = getSupabase();
+  const numId = Number(id);
+  if (!Number.isFinite(numId)) return null;
+  const { data, error } = await supabase
+    .from("hadiths")
+    .select(SELECT)
+    .eq("id", numId)
+    .maybeSingle();
+  if (error || !data) return null;
+  return mapHadith(data as unknown as HadithRow);
+}
+
+export async function fetchAdjacentHadiths(
+  hadith: Hadith,
+): Promise<{ prev: Hadith | null; next: Hadith | null; total: number }> {
+  const supabase = getSupabase();
+  const id = Number(hadith.id);
+  const bookNumber = hadith.bookNumber;
+
+  let total = 0;
+  if (bookNumber != null) {
+    const { count } = await supabase
+      .from("hadiths")
+      .select("id", { count: "exact", head: true })
+      .eq("book_number", bookNumber);
+    total = count ?? 0;
+  }
+
+  const prevPromise = supabase
+    .from("hadiths")
+    .select(SELECT)
+    .lt("id", id)
+    .order("id", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const nextPromise = supabase
+    .from("hadiths")
+    .select(SELECT)
+    .gt("id", id)
+    .order("id", { ascending: true })
+    .limit(1)
+    .maybeSingle();
+
+  const [prevRes, nextRes] = await Promise.all([prevPromise, nextPromise]);
+  return {
+    prev: prevRes.data ? mapHadith(prevRes.data as unknown as HadithRow) : null,
+    next: nextRes.data ? mapHadith(nextRes.data as unknown as HadithRow) : null,
+    total,
+  };
+}
+
+export async function fetchRelatedByChapter(
+  hadith: Hadith,
+  limit = 4,
+): Promise<Hadith[]> {
+  if (!hadith.chapter) return [];
+  const supabase = getSupabase();
+  const { data } = await supabase
+    .from("hadiths")
+    .select(SELECT)
+    .eq("chapter_en", hadith.chapter)
+    .neq("id", Number(hadith.id))
+    .limit(limit);
+  return (data ?? []).map((r) => mapHadith(r as unknown as HadithRow));
+}
+
+export async function searchHadiths(
+  query: string,
+  limit = 30,
+): Promise<Hadith[]> {
+  const q = query.trim();
+  if (!q) return [];
+  const supabase = getSupabase();
+  const escaped = q.replace(/[%_]/g, "\\$&");
+  const { data } = await supabase
+    .from("hadiths")
+    .select(SELECT)
+    .or(
+      `text_en.ilike.%${escaped}%,narrator.ilike.%${escaped}%,chapter_en.ilike.%${escaped}%`,
+    )
+    .limit(limit);
+  return (data ?? []).map((r) => mapHadith(r as unknown as HadithRow));
+}
+
+export async function fetchByCollectionAndNumber(
+  collectionSlug: string,
+  hadithIdOrNumber: string,
+): Promise<Hadith | null> {
+  const direct = await fetchHadithById(hadithIdOrNumber);
+  if (direct) {
+    const expectedNames = collectionNamesForSlug(collectionSlug);
+    if (
+      expectedNames.length === 0 ||
+      expectedNames.some(
+        (n) => n.toLowerCase() === direct.collection.toLowerCase(),
+      )
+    ) {
+      return direct;
+    }
+  }
+  const supabase = getSupabase();
+  const numHadith = Number(hadithIdOrNumber);
+  const names = collectionNamesForSlug(collectionSlug);
+  if (Number.isFinite(numHadith) && names.length > 0) {
+    const { data } = await supabase
+      .from("hadiths")
+      .select(SELECT)
+      .in("book_name_en", names)
+      .eq("hadith_number", numHadith)
+      .limit(1)
+      .maybeSingle();
+    if (data) return mapHadith(data as unknown as HadithRow);
+  }
+  return direct;
+}
