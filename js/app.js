@@ -202,6 +202,12 @@ const TH_AUTH = (() => {
     const avatarImg = document.getElementById('nav-avatar-img');
     const avatarInitial = document.getElementById('nav-avatar-initial');
 
+    // Show/hide nav items that should only appear for signed-in users
+    // (e.g. "My Reader" → app.timelesshadith.com/dashboard)
+    document.querySelectorAll('.nav-authed-only').forEach(function (el) {
+      el.hidden = !user;
+    });
+
     if (user) {
       // Hide sign-in button, show avatar
       if (btnLogin)  btnLogin.style.display  = 'none';
