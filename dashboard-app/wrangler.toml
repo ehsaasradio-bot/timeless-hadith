@@ -1,0 +1,9 @@
+name = "timeless-hadith-dashboard"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+[vars]
+NEXT_PUBLIC_SUPABASE_URL = "https://dwcsledifvnyrunxejzd.supabase.co"
+# Secrets (NEXT_PUBLIC_SUPABASE_ANON_KEY, OPENAI_API_KEY) go in
+# Cloudflare Dashboard -> Settings -> Environment variables.
