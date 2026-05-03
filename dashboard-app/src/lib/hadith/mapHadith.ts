@@ -1,5 +1,11 @@
 import type { Hadith, HadithRow } from "./types";
 
+// User's DB currently holds Sahih al-Bukhari only.
+// `book_name_en` is the book / chapter within Bukhari (e.g. "Revelation"),
+// not the collection name. Default the collection accordingly.
+const DEFAULT_COLLECTION = "Sahih al-Bukhari";
+const DEFAULT_COLLECTION_AR = "صحيح البخاري";
+
 export function slugifyCollection(name: string): string {
   return name
     .toLowerCase()
@@ -21,16 +27,22 @@ export function inferGrade(collection: string): string {
 }
 
 export function mapHadith(row: HadithRow): Hadith {
-  const collection = row.book_name_en || "Sahih al-Bukhari";
+  // Collection: hardcoded to Bukhari for the current dataset.
+  const collection = DEFAULT_COLLECTION;
+  const collectionAr = DEFAULT_COLLECTION_AR;
+  // Chapter / book within the collection — that's what book_name_en stores.
+  const chapter = row.book_name_en || row.chapter_en || "";
   const number =
-    row.hadith_number != null ? String(row.hadith_number) : row.in_book_ref || "";
+    row.hadith_number != null
+      ? String(row.hadith_number)
+      : row.in_book_ref || "";
   return {
     id: String(row.id),
     bookNumber: row.book_number,
     collection,
-    collectionAr: row.book_name_ar || "",
+    collectionAr,
     collectionSlug: slugifyCollection(collection),
-    chapter: row.chapter_en || "",
+    chapter,
     hadithNumber: number,
     narrator: row.narrator || "",
     arabic: row.text_ar || "",
