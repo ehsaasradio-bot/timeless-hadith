@@ -334,13 +334,90 @@
       }).join('');
     }
 
+    // ── Compat fetchers ──
+    // Prefer the new ProgressAPI.db.* methods (Supabase REST against the
+    // user_leaderboard / company_leaderboard views and dashboardSummary
+    // composite). Translate the Supabase view shape to the legacy worker
+    // shape so the render functions below stay unchanged. If the Supabase
+    // call fails, fall back to the existing worker /api/competition/*
+    // endpoints for graceful degradation.
+    async function fetchLbCompat(){
+      if(window.ProgressAPI&&window.ProgressAPI.db&&window.ProgressAPI.db.leaderboard){
+        try{
+          var rows=await window.ProgressAPI.db.leaderboard({limit:100});
+          return{
+            leaderboard:(rows||[]).map(function(r){return{
+              rank:r.rank,
+              user_id:r.user_id,
+              display_name:r.display_name,
+              company_name:r.company||'',
+              total_hadith_read:r.hadiths_read||0,
+              total_points:r.points||0,
+              current_streak:r.streak_days||0,
+              current_level:r.level||1,
+              trophies_count:r.trophies||0
+            };}),
+            myUserId:uid()
+          };
+        }catch(e){/* fall through to worker */}
+      }
+      return window.ProgressAPI.getLeaderboard();
+    }
+    async function fetchClbCompat(){
+      if(window.ProgressAPI&&window.ProgressAPI.db&&window.ProgressAPI.db.companyLeaderboard){
+        try{
+          var rows=await window.ProgressAPI.db.companyLeaderboard({limit:100});
+          // myCompany is not directly available from the view — leave null;
+          // renderCompany handles null gracefully (no 'Yours' badge highlight).
+          return{
+            companyLeaderboard:(rows||[]).map(function(r){return{
+              rank:r.rank,
+              company_name:r.company,
+              total_users:r.members||0,
+              total_hadith_read:r.total_hadiths||0,
+              total_points:r.total_points||0,
+              trophies_count:r.total_trophies||0
+            };}),
+            myCompany:null
+          };
+        }catch(e){/* fall through */}
+      }
+      return window.ProgressAPI.getCompanyLeaderboard();
+    }
+    async function fetchSumCompat(){
+      if(window.ProgressAPI&&window.ProgressAPI.db&&window.ProgressAPI.db.dashboardSummary){
+        try{
+          var s=await window.ProgressAPI.db.dashboardSummary({recentLimit:5,activityDays:30});
+          var sup=(s&&s.stats)||{};
+          return{
+            stats:{
+              total_hadith_read:sup.hadiths_read||0,
+              total_points:sup.points||0,
+              longest_streak:sup.streak_days||0,
+              current_streak:sup.streak_days||0,
+              current_level:sup.level||1,
+              trophies_count:sup.trophies||0
+            },
+            // ALL_BADGES uses badge_key matching; map our unlocked Supabase
+            // achievements to {badge_key} entries. The Supabase achievement
+            // ids match the badge keys in ALL_BADGES (first_step, ten_hadith,
+            // hundred_hadith, five_hundred_hadith, thousand_hadith,
+            // seven_day_streak, thirty_day_streak — full overlap).
+            achievements:((s&&s.achievements)||[]).filter(function(a){return a.unlocked;})
+                                                   .map(function(a){return{badge_key:a.id};})
+          };
+        }catch(e){/* fall through */}
+      }
+      return window.ProgressAPI.getDashboardSummary();
+    }
+
     // ── Load ──
     async function load(){
       try{
         var[lbRes,clbRes,sumRes]=await Promise.allSettled([
-          window.ProgressAPI.getLeaderboard(),
-          window.ProgressAPI.getCompanyLeaderboard(),
-          window.ProgressAPI.getDashboardSummary(),
+          fetchLbCompat(),
+          fetchClbCompat(),
+          fetchSumCompat()
         ]);
         document.getElementById('skeletonLoader').style.display='none';
         document.getElementById('compContent').style.display='';
