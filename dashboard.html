@@ -1,37 +1,684 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="utf-8" />
-  <title>Redirecting to My Reader · Timeless Hadith</title>
-  <meta name="robots" content="noindex,follow" />
-  <meta http-equiv="refresh" content="0; url=https://app.timelesshadith.com/dashboard" />
-  <link rel="canonical" href="https://app.timelesshadith.com/dashboard" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard — Timeless Hadith</title>
+  <meta name="description" content="Your reading dashboard: streak, points, achievements, and progress across the hadith collections." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://timelesshadith.com/dashboard" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Cairo:wght@300..900&display=swap" rel="stylesheet" />
+
+  <script>(function(){try{var s=localStorage.getItem('th_theme');document.documentElement.setAttribute('data-theme',s||'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+
+  <style>
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root, [data-theme="light"] {
+      --font:        "Cairo", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display:"Crimson Pro", Georgia, serif;
+      --bg:          #ffffff;
+      --surface:     #f6f8f7;
+      --surface-2:   #ffffff;
+      --border:      #e6e8eb;
+      --ink:         #14202b;
+      --muted:       #5f6b78;
+      --green:       #0f5132;
+      --green-soft:  #1d6b4a;
+      --green-tint:  #e6f0ec;
+      --green-faint: #f3f8f5;
+      --gold:        #c9a84c;
+      --shadow-sm:   0 1px 2px rgba(20,32,43,0.04);
+      --shadow-md:   0 4px 14px rgba(20,32,43,0.06);
+    }
+    [data-theme="dark"] {
+      --bg:          #060c1a;
+      --surface:     #0d1629;
+      --surface-2:   #11192e;
+      --border:      rgba(255,255,255,0.08);
+      --ink:         #f0f4ff;
+      --muted:       #9aa9c7;
+      --green:       #4ade80;
+      --green-soft:  #34c46a;
+      --green-tint:  rgba(74,222,128,0.12);
+      --green-faint: rgba(74,222,128,0.05);
+      --shadow-sm:   0 1px 2px rgba(0,0,0,0.3);
+      --shadow-md:   0 4px 14px rgba(0,0,0,0.35);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      transition: background 0.35s, color 0.35s;
+    }
+
+    a { color: var(--green); text-decoration: none; }
+    a:hover { color: var(--green-soft); }
+
+    /* ── Header ───────────────────────────────────────────── */
+    .dash-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="dark"] .dash-header { background: rgba(6,12,26,0.90); }
+    .header-row {
+      display: flex; align-items: center; gap: 16px;
+      max-width: 1280px; margin: 0 auto;
+      padding: 14px 24px;
+    }
+    .header-brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--ink);
+      font-family: var(--font-display); font-weight: 600; font-size: 19px;
+      letter-spacing: -0.01em;
+    }
+    .brand-mark {
+      width: 36px; height: 36px; border-radius: 9px;
+      display: grid; place-items: center;
+      background: var(--green); color: #fff; font-weight: 700; font-size: 14px;
+      flex-shrink: 0;
+    }
+    .header-nav { display: flex; gap: 4px; flex: 1; justify-content: flex-end; }
+    .header-nav a {
+      color: var(--ink); font-size: 14px; font-weight: 500;
+      padding: 8px 14px; border-radius: 9px;
+      transition: background 0.18s, color 0.18s;
+    }
+    .header-nav a:hover { background: var(--green-faint); color: var(--green); }
+    @media(max-width:720px) { .header-nav a:not(.primary) { display: none; } }
+    .header-nav a.primary {
+      background: var(--green); color: #fff;
+    }
+    .header-nav a.primary:hover { background: var(--green-soft); color: #fff; }
+
+    /* ── Layout ───────────────────────────────────────────── */
+    .dash-wrap {
+      max-width: 1280px; margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+
+    /* ── Signed-out state ─────────────────────────────────── */
+    .signedout-card {
+      background: linear-gradient(135deg, var(--green-tint) 0%, var(--green-faint) 100%);
+      border: 1px solid var(--border); border-radius: 24px;
+      padding: 64px 40px; text-align: center;
+      max-width: 720px; margin: 40px auto;
+    }
+    .signedout-card h1 {
+      font-family: var(--font-display); font-size: 38px; font-weight: 600;
+      color: var(--ink); margin-bottom: 12px; letter-spacing: -0.02em;
+    }
+    .signedout-card .lede { color: var(--muted); font-size: 17px; margin-bottom: 28px; }
+    .btn-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 28px; border-radius: 12px;
+      background: var(--green); color: #fff; font-weight: 600; font-size: 15px;
+      border: none; cursor: pointer;
+      transition: transform 0.18s, background 0.18s;
+    }
+    .btn-cta:hover { background: var(--green-soft); transform: translateY(-1px); }
+    .value-list {
+      list-style: none; margin-top: 32px;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+      text-align: left; max-width: 520px; margin-inline: auto;
+    }
+    @media(max-width:560px) { .value-list { grid-template-columns: 1fr; } }
+    .value-list li {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 14px; color: var(--ink);
+    }
+    .value-list .check {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--green); color: #fff;
+      display: grid; place-items: center;
+      font-size: 12px; flex-shrink: 0;
+    }
+
+    /* ── Cards (shared) ───────────────────────────────────── */
+    .dash-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .dash-card h2 {
+      font-family: var(--font-display); font-size: 18px; font-weight: 600;
+      color: var(--ink); margin-bottom: 16px; letter-spacing: -0.005em;
+    }
+
+    /* ── Hero card ────────────────────────────────────────── */
+    .hero {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-soft) 100%);
+      color: #fff;
+      border-radius: 22px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-md);
+    }
+    .hero .welcome { opacity: 0.85; font-size: 15px; margin-bottom: 4px; }
+    .hero h1 {
+      font-family: var(--font-display); font-size: 36px; font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .hero h1 .accent { color: var(--gold); }
+    .hero .level-pill {
+      display: inline-flex; flex-direction: column; align-items: center;
+      padding: 14px 22px; border-radius: 14px;
+      background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
+      min-width: 88px;
+    }
+    .hero .level-pill .label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; }
+    .hero .level-pill .num { font-family: var(--font-display); font-size: 32px; font-weight: 600; line-height: 1; margin-top: 4px; }
+    @media(max-width:560px) {
+      .hero { grid-template-columns: 1fr; padding: 24px; }
+      .hero h1 { font-size: 28px; }
+    }
+
+    /* ── Stats grid ───────────────────────────────────────── */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media(max-width:720px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    .stat-card {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+    .stat-card .label {
+      font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 6px;
+    }
+    .stat-card .num {
+      font-family: var(--font-display); font-size: 30px; font-weight: 600;
+      color: var(--ink); letter-spacing: -0.02em; line-height: 1;
+    }
+
+    /* ── Heat strip (daily activity) ──────────────────────── */
+    .heat-strip {
+      display: grid; grid-template-columns: repeat(30, 1fr); gap: 4px;
+    }
+    .heat-cell {
+      aspect-ratio: 1; border-radius: 4px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      transition: transform 0.18s;
+    }
+    .heat-cell:hover { transform: scale(1.3); z-index: 1; }
+    .heat-cell.l1 { background: var(--green-tint); border-color: var(--green-tint); }
+    .heat-cell.l2 { background: var(--green-soft); border-color: var(--green-soft); opacity: 0.65; }
+    .heat-cell.l3 { background: var(--green-soft); border-color: var(--green-soft); opacity: 0.85; }
+    .heat-cell.l4 { background: var(--green); border-color: var(--green); }
+
+    /* ── Continue reading ─────────────────────────────────── */
+    .continue-card {
+      background: var(--green-faint);
+      border-color: var(--green-tint);
+      display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;
+    }
+    .continue-card .body p { color: var(--muted); font-size: 14px; margin-top: 4px; }
+    .btn-go {
+      padding: 12px 22px; border-radius: 10px;
+      background: var(--green); color: #fff; font-weight: 600;
+      transition: background 0.18s;
+    }
+    .btn-go:hover { background: var(--green-soft); color: #fff; }
+
+    /* ── Two-column rows ──────────────────────────────────── */
+    .two-col {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media(max-width:900px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Recent reads ─────────────────────────────────────── */
+    .recent-list { list-style: none; }
+    .recent-list li {
+      padding: 12px 0; border-bottom: 1px solid var(--border);
+    }
+    .recent-list li:last-child { border-bottom: none; }
+    .recent-list a { display: block; color: var(--ink); }
+    .recent-list a:hover { color: var(--green); }
+    .recent-list .head { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+    .recent-list strong { font-weight: 600; font-size: 14px; }
+    .recent-list .meta { color: var(--muted); font-size: 12px; }
+    .recent-list .snippet { color: var(--muted); font-size: 13px; margin-top: 4px; }
+    .empty { color: var(--muted); font-style: italic; padding: 12px 0; }
+
+    /* ── Collection progress ──────────────────────────────── */
+    .collection-list { list-style: none; }
+    .collection-list li { padding: 10px 0; }
+    .collection-list .row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 8px; margin-bottom: 6px;
+    }
+    .collection-list .name { font-weight: 500; font-size: 14px; }
+    .collection-list .count { color: var(--muted); font-size: 12px; }
+    .progress-bar {
+      height: 6px; border-radius: 999px;
+      background: var(--surface); border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; background: var(--green);
+      transition: width 0.4s ease;
+    }
+
+    /* ── Achievements grid ────────────────────────────────── */
+    .ach-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    }
+    @media(max-width:720px) { .ach-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media(max-width:480px) { .ach-grid { grid-template-columns: 1fr; } }
+    .ach {
+      padding: 16px; border: 1px solid var(--border); border-radius: 12px;
+      background: var(--surface);
+      opacity: 0.55;
+      transition: opacity 0.18s, transform 0.18s, border-color 0.18s;
+    }
+    .ach.unlocked {
+      opacity: 1; border-color: var(--green-tint); background: var(--green-faint);
+    }
+    .ach .ach-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--surface); color: var(--muted);
+      font-size: 18px; margin-bottom: 10px;
+      border: 1px solid var(--border);
+    }
+    .ach.unlocked .ach-icon { background: var(--green); color: #fff; border-color: var(--green); }
+    .ach .ach-name { font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 4px; }
+    .ach .ach-desc { font-size: 12px; color: var(--muted); }
+
+    /* ── Leaderboard ──────────────────────────────────────── */
+    .lb-rank-banner {
+      background: var(--green-faint); border: 1px solid var(--green-tint);
+      border-radius: 10px; padding: 12px 16px; margin-bottom: 14px;
+      font-size: 14px; color: var(--ink);
+    }
+    .lb-rank-banner strong { color: var(--green); font-family: var(--font-display); font-size: 16px; }
+    .lb-list { list-style: none; }
+    .lb-list li {
+      display: grid; grid-template-columns: 36px 1fr auto; gap: 12px; align-items: center;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+    }
+    .lb-list li:last-child { border-bottom: none; }
+    .lb-list .rank {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--surface); color: var(--muted);
+      font-weight: 600; font-size: 13px;
+    }
+    .lb-list li.top1 .rank { background: var(--gold); color: #fff; }
+    .lb-list li.top2 .rank { background: #b0b8be; color: #fff; }
+    .lb-list li.top3 .rank { background: #c08552; color: #fff; }
+    .lb-list .name { font-weight: 500; font-size: 14px; }
+    .lb-list .meta { font-size: 12px; color: var(--muted); }
+    .lb-list .pts { font-family: var(--font-display); font-weight: 600; color: var(--green); font-size: 14px; }
+
+    .view-all {
+      display: inline-block; margin-top: 14px;
+      font-size: 13px; font-weight: 500; color: var(--green);
+    }
+
+    /* ── Loading ──────────────────────────────────────────── */
+    .skel {
+      background: linear-gradient(90deg, var(--surface) 0%, var(--green-faint) 50%, var(--surface) 100%);
+      background-size: 200% 100%;
+      animation: skel 1.4s ease-in-out infinite;
+      border-radius: 8px; height: 16px;
+    }
+    @keyframes skel { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    .footer-note {
+      text-align: center; color: var(--muted); font-size: 13px;
+      padding: 32px 0 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Header ── -->
+  <header class="dash-header">
+    <div class="header-row">
+      <a href="index.html" class="header-brand">
+        <div class="brand-mark">TH</div>
+        <span>Timeless Hadith</span>
+      </a>
+      <nav class="header-nav">
+        <a href="categories.html">Browse</a>
+        <a href="competition.html">Compete</a>
+        <a href="reader.html" class="primary">Open Reader →</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dash-wrap">
+
+    <!-- ── Signed-out state ── -->
+    <section id="signedOutState" hidden>
+      <div class="signedout-card">
+        <h1>Your reading journey starts here</h1>
+        <p class="lede">Sign in with Google to track progress across the hadith collections, build a daily streak, and unlock achievements.</p>
+        <button class="btn-cta" id="ctaSignIn" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 12.23c0-.74-.06-1.45-.2-2.13H12v4.03h5.39c-.23 1.24-.94 2.29-2.01 2.99v2.49h3.25c1.9-1.75 3-4.34 3-7.38z"/><path d="M12 22c2.7 0 4.97-.9 6.62-2.42l-3.25-2.49c-.9.6-2.05.96-3.37.96-2.6 0-4.8-1.76-5.59-4.12H3.07v2.59A10 10 0 0 0 12 22z"/><path d="M6.41 13.93a6.02 6.02 0 0 1 0-3.84V7.5H3.07a10 10 0 0 0 0 9l3.34-2.57z"/><path d="M12 5.94c1.47 0 2.79.5 3.83 1.5l2.88-2.88A9.97 9.97 0 0 0 12 2 10 10 0 0 0 3.07 7.5l3.34 2.6c.79-2.37 2.99-4.16 5.59-4.16z"/></svg>
+          Sign in with Google
+        </button>
+        <ul class="value-list">
+          <li><span class="check">✓</span><span>Resume from where you left off, automatically.</span></li>
+          <li><span class="check">✓</span><span>Earn points and unlock 9 achievements.</span></li>
+          <li><span class="check">✓</span><span>Build a daily reading streak.</span></li>
+          <li><span class="check">✓</span><span>See your rank on the global leaderboard.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── Signed-in dashboard ── -->
+    <section id="signedInDash" hidden>
+
+      <!-- Hero -->
+      <div class="hero">
+        <div>
+          <p class="welcome">Welcome back, <span id="displayName">Reader</span></p>
+          <h1>
+            <span id="streakDays">0</span>-day streak
+            <span class="accent" id="streakFlame" hidden>·</span>
+          </h1>
+        </div>
+        <div class="level-pill">
+          <span class="label">Level</span>
+          <span class="num" id="levelNum">1</span>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="label">Hadiths Read</div>
+          <div class="num" id="statHadiths">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Points</div>
+          <div class="num" id="statPoints">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Coins</div>
+          <div class="num" id="statCoins">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Trophies</div>
+          <div class="num" id="statTrophies">0</div>
+        </div>
+      </div>
+
+      <!-- Daily activity -->
+      <div class="dash-card" style="margin-bottom:24px">
+        <h2>Last 30 days</h2>
+        <div id="heatStrip" class="heat-strip" aria-label="Daily reading activity, last 30 days"></div>
+      </div>
+
+      <!-- Continue reading -->
+      <div class="dash-card continue-card" style="margin-bottom:24px">
+        <div class="body">
+          <h2 style="margin-bottom:4px">Continue reading</h2>
+          <p>Pick up where you left off and add to your streak.</p>
+        </div>
+        <a href="reader.html" class="btn-go">Open the Reader →</a>
+      </div>
+
+      <!-- Recent + Collection -->
+      <div class="two-col">
+        <div class="dash-card">
+          <h2>Recent reads</h2>
+          <ul class="recent-list" id="recentReads"><li class="empty">Loading…</li></ul>
+        </div>
+        <div class="dash-card">
+          <h2>Collection progress</h2>
+          <ul class="collection-list" id="collectionProgress"><li class="empty">Loading…</li></ul>
+        </div>
+      </div>
+
+      <!-- Achievements -->
+      <div class="dash-card" style="margin-bottom:24px">
+        <h2>Achievements</h2>
+        <div class="ach-grid" id="achievementsGrid"></div>
+      </div>
+
+      <!-- Leaderboard preview -->
+      <div class="dash-card">
+        <h2>Leaderboard preview</h2>
+        <div id="myRankBanner" class="lb-rank-banner" hidden></div>
+        <ol class="lb-list" id="leaderboardTop"><li class="empty">Loading…</li></ol>
+        <a href="competition.html" class="view-all">View full leaderboard →</a>
+      </div>
+
+      <p class="footer-note">All progress is private to your account. <a href="about.html">About Timeless Hadith</a></p>
+
+    </section>
+  </main>
+
+  <script src="js/supabase-auth.js?v=3" defer></script>
+  <script src="js/progress-api.js" defer></script>
+
   <script>
-    // Preserve any query string / hash when redirecting
     (function () {
-      var dest = "https://app.timelesshadith.com/dashboard";
-      try {
-        var qs = window.location.search || "";
-        var hash = window.location.hash || "";
-        window.location.replace(dest + qs + hash);
-      } catch (e) {
-        window.location.href = dest;
+      'use strict';
+
+      function $(id) { return document.getElementById(id); }
+      function esc(s) {
+        return String(s == null ? '' : s)
+          .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+          .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+      }
+      function fmt(n) { try { return Number(n||0).toLocaleString(); } catch (e) { return String(n||0); } }
+
+      function getSession() {
+        try { return JSON.parse(localStorage.getItem('th_supabase_session') || 'null'); }
+        catch (e) { return null; }
+      }
+
+      function showSignedOut() {
+        $('signedOutState').hidden = false;
+        $('signedInDash').hidden   = true;
+      }
+      function showSignedIn() {
+        $('signedOutState').hidden = true;
+        $('signedInDash').hidden   = false;
+      }
+
+      function bindSignIn() {
+        var btn = $('ctaSignIn');
+        if (!btn) return;
+        btn.addEventListener('click', function () {
+          if (window.TH_SB_AUTH && window.TH_SB_AUTH.signInWithGoogle) {
+            window.TH_SB_AUTH.signInWithGoogle();
+          } else {
+            location.href = 'index.html';
+          }
+        });
+      }
+
+      function renderHeader(session, stats) {
+        var name = 'Reader';
+        if (session && session.user) {
+          var u = session.user;
+          name = (u.user_metadata && (u.user_metadata.full_name || u.user_metadata.name)) ||
+                 (u.email ? u.email.split('@')[0] : 'Reader');
+        }
+        $('displayName').textContent = name;
+        if (stats) {
+          $('streakDays').textContent  = stats.streak_days || 0;
+          $('levelNum').textContent    = stats.level       || 1;
+          $('statHadiths').textContent = fmt(stats.hadiths_read);
+          $('statPoints').textContent  = fmt(stats.points);
+          $('statCoins').textContent   = fmt(stats.coins);
+          $('statTrophies').textContent= fmt(stats.trophies);
+          if ((stats.streak_days || 0) >= 3) $('streakFlame').hidden = false;
+        }
+      }
+
+      function renderHeat(days) {
+        var el = $('heatStrip'); if (!el) return;
+        var byDay = Object.create(null);
+        (days || []).forEach(function (d) { byDay[d.day] = d.hadiths_read; });
+        var html = '';
+        for (var i = 29; i >= 0; i--) {
+          var d = new Date();
+          d.setUTCDate(d.getUTCDate() - i);
+          var key = d.toISOString().slice(0, 10);
+          var n   = byDay[key] || 0;
+          var lvl = n === 0 ? 0 : (n < 3 ? 1 : (n < 7 ? 2 : (n < 15 ? 3 : 4)));
+          html += '<span class="heat-cell' + (lvl ? ' l' + lvl : '') +
+                  '" title="' + esc(key) + ': ' + n + ' hadith' + (n === 1 ? '' : 's') + '"></span>';
+        }
+        el.innerHTML = html;
+      }
+
+      function renderRecent(items) {
+        var ul = $('recentReads'); if (!ul) return;
+        if (!items || items.length === 0) {
+          ul.innerHTML = '<li class="empty">Nothing read yet. <a href="reader.html">Open the Reader</a> to begin.</li>';
+          return;
+        }
+        ul.innerHTML = items.map(function (r) {
+          var h = r.hadith || {};
+          var title = h.book_name_en ? esc(h.book_name_en) : 'Hadith';
+          var num   = h.hadith_number ? ' · #' + esc(h.hadith_number) : '';
+          var date  = '';
+          try { date = new Date(r.read_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); } catch (e) {}
+          var snippet = (h.text_en || '').slice(0, 110);
+          var href = h.hadith_number ? 'reader.html?id=' + esc(h.hadith_number) : 'reader.html';
+          return '<li><a href="' + href + '">' +
+                 '<div class="head"><strong>' + title + num + '</strong>' +
+                 (date ? '<span class="meta">' + esc(date) + '</span>' : '') +
+                 '</div>' +
+                 (snippet ? '<p class="snippet">' + esc(snippet) + '…</p>' : '') +
+                 '</a></li>';
+        }).join('');
+      }
+
+      function renderCollections(items) {
+        var ul = $('collectionProgress'); if (!ul) return;
+        if (!items || items.length === 0) {
+          ul.innerHTML = '<li class="empty">No collection progress yet.</li>';
+          return;
+        }
+        var top = items.slice().sort(function (a, b) {
+          return (b.percent_complete || 0) - (a.percent_complete || 0);
+        }).slice(0, 5);
+        ul.innerHTML = top.map(function (c) {
+          var pct = Math.max(0, Math.min(100, Number(c.percent_complete) || 0));
+          var name = c.book_name_en || ('Book ' + c.book_number);
+          return '<li>' +
+                 '<div class="row">' +
+                 '<span class="name">' + esc(name) + '</span>' +
+                 '<span class="count">' + fmt(c.hadiths_read) + ' / ' + fmt(c.total_in_book) + ' (' + pct.toFixed(0) + '%)</span>' +
+                 '</div>' +
+                 '<div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
+                 '</li>';
+        }).join('');
+      }
+
+      function renderAchievements(items) {
+        var grid = $('achievementsGrid'); if (!grid) return;
+        if (!items || items.length === 0) {
+          grid.innerHTML = '<p class="empty">Achievements unavailable.</p>';
+          return;
+        }
+        grid.innerHTML = items.map(function (a) {
+          var icon = a.unlocked ? '★' : '○';
+          return '<div class="ach' + (a.unlocked ? ' unlocked' : '') + '">' +
+                 '<div class="ach-icon">' + icon + '</div>' +
+                 '<div class="ach-name">' + esc(a.name) + '</div>' +
+                 '<div class="ach-desc">' + esc(a.description) + '</div>' +
+                 '</div>';
+        }).join('');
+      }
+
+      function renderLeaderboard(rows, myUserId) {
+        var ol     = $('leaderboardTop');
+        var banner = $('myRankBanner');
+        if (!rows || rows.length === 0) {
+          ol.innerHTML = '<li class="empty">Leaderboard is empty. Be the first.</li>';
+          return;
+        }
+        var top = rows.slice(0, 5);
+        ol.innerHTML = top.map(function (r) {
+          var cls = r.rank === 1 ? 'top1' : r.rank === 2 ? 'top2' : r.rank === 3 ? 'top3' : '';
+          return '<li' + (cls ? ' class="' + cls + '"' : '') + '>' +
+                 '<span class="rank">' + r.rank + '</span>' +
+                 '<div>' +
+                 '<div class="name">' + esc(r.display_name || 'Anonymous Reader') + '</div>' +
+                 (r.company ? '<div class="meta">' + esc(r.company) + '</div>' : '') +
+                 '</div>' +
+                 '<span class="pts">' + fmt(r.points) + ' pts</span>' +
+                 '</li>';
+        }).join('');
+
+        if (myUserId && banner) {
+          var mine = rows.find ? rows.find(function (r) { return r.user_id === myUserId; }) : null;
+          if (mine) {
+            banner.innerHTML = 'Your rank: <strong>#' + mine.rank + '</strong> · ' +
+                               fmt(mine.points) + ' pts · Level ' + (mine.level || 1);
+            banner.hidden = false;
+          }
+        }
+      }
+
+      async function load() {
+        bindSignIn();
+        var session = getSession();
+        var token   = session && session.access_token;
+        if (!token) { showSignedOut(); return; }
+        showSignedIn();
+
+        var myUserId = (session.user && session.user.id) || null;
+
+        if (!window.ProgressAPI || !window.ProgressAPI.db) {
+          console.error('[dashboard] ProgressAPI.db not loaded');
+          return;
+        }
+
+        try {
+          var pair = await Promise.all([
+            window.ProgressAPI.db.dashboardSummary({ recentLimit: 5, activityDays: 30 }),
+            window.ProgressAPI.db.leaderboard({ limit: 100 }).catch(function () { return []; })
+          ]);
+          var summary = pair[0] || {};
+          var board   = pair[1] || [];
+
+          renderHeader(session, summary.stats);
+          renderHeat(summary.dailyActivity);
+          renderRecent(summary.recentReads);
+          renderCollections(summary.collections);
+          renderAchievements(summary.achievements);
+          renderLeaderboard(board, myUserId);
+        } catch (e) {
+          console.error('[dashboard] load failed:', e);
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', load);
+      } else {
+        load();
       }
     })();
   </script>
-  <style>
-    body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
-         display:grid;place-items:center;min-height:100vh;margin:0;background:#f7f8f9;color:#1a1f26;}
-    .box{text-align:center;padding:24px;}
-    a{color:#1f5132;}
-  </style>
-</head>
-<body>
-  <div class="box">
-    <p>Redirecting you to your Reader…</p>
-    <p>If you are not redirected,
-      <a href="https://app.timelesshadith.com/dashboard">tap here</a>.
-    </p>
-  </div>
 </body>
 </html>
