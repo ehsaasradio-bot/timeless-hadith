@@ -801,10 +801,19 @@
       /* Jump input prefill */
       $('jumpInput').value = num;
 
-      /* Bookmark state */
+      /* Bookmark state — localStorage first (instant render), then refresh
+         from Supabase if signed in (cross-device sync). */
       var bks = getBookmarks();
       isBookmarked = bks.some(function (b) { return b.id === String(num); });
       updateBookmarkBtn();
+      if (currentHadith.id) {
+        loadSupabaseBookmarkState(currentHadith.id).then(function (sbState) {
+          if (sbState !== null && sbState !== isBookmarked) {
+            isBookmarked = sbState;
+            updateBookmarkBtn();
+          }
+        });
+      }
 
       /* Reset Mark Read */
       var btn = $('btnMarkRead');
@@ -896,6 +905,55 @@
       try { return JSON.parse(localStorage.getItem('th_bookmarks') || '[]'); } catch (e) { return []; }
     }
     function saveBookmarks(arr) { localStorage.setItem('th_bookmarks', JSON.stringify(arr)); }
+
+    /* Supabase bookmark helpers — used when signed in.
+       localStorage stays the canonical offline cache (read by bookmarks.html);
+       Supabase adds cross-device sync via public.hadith_bookmarks. */
+    function _bmAuthHeaders(token) {
+      return {
+        'apikey':        SB_ANON,
+        'Authorization': 'Bearer ' + token,
+        'Content-Type':  'application/json',
+        'Prefer':        'return=minimal'
+      };
+    }
+    async function addSupabaseBookmark(hadithIdNum) {
+      var token = getToken();
+      if (!token || !hadithIdNum) return;
+      try {
+        await fetch(SB_URL + '/rest/v1/hadith_bookmarks', {
+          method: 'POST',
+          headers: _bmAuthHeaders(token),
+          /* UNIQUE(user_id, hadith_id) on the table makes this idempotent
+             at the DB level — duplicate POST returns 409 which we ignore. */
+          body: JSON.stringify({ hadith_id: hadithIdNum })
+        });
+      } catch (e) { /* offline — localStorage was already updated */ }
+    }
+    async function removeSupabaseBookmark(hadithIdNum) {
+      var token = getToken();
+      if (!token || !hadithIdNum) return;
+      try {
+        await fetch(SB_URL + '/rest/v1/hadith_bookmarks?hadith_id=eq.' + hadithIdNum, {
+          method: 'DELETE',
+          headers: _bmAuthHeaders(token)
+        });
+      } catch (e) { /* offline */ }
+    }
+    async function loadSupabaseBookmarkState(hadithIdNum) {
+      var token = getToken();
+      if (!token || !hadithIdNum) return null;
+      try {
+        var res = await fetch(
+          SB_URL + '/rest/v1/hadith_bookmarks?hadith_id=eq.' + hadithIdNum +
+          '&select=hadith_id&limit=1',
+          { headers: { apikey: SB_ANON, Authorization: 'Bearer ' + token } }
+        );
+        if (!res.ok) return null;
+        var rows = await res.json();
+        return rows && rows.length > 0;
+      } catch (e) { return null; }
+    }
     function updateBookmarkBtn() {
       var btn = $('btnBookmark');
       if (isBookmarked) {
@@ -909,9 +967,11 @@
     $('btnBookmark').addEventListener('click', function () {
       if (!currentHadith) return;
       var bks = getBookmarks(), id = String(currentHadith.hadith_number);
+      var sbId = currentHadith.id;  /* bigint PK for Supabase */
       if (isBookmarked) {
         bks = bks.filter(function (b) { return b.id !== id; });
         isBookmarked = false;
+        if (sbId) removeSupabaseBookmark(sbId);
       } else {
         bks.push({
           id: id, arabic: currentHadith.text_ar || '',
@@ -919,6 +979,7 @@
           source: 'Sahih al-Bukhari ' + (currentHadith.hadith_number || '')
         });
         isBookmarked = true;
+        if (sbId) addSupabaseBookmark(sbId);
       }
       saveBookmarks(bks);
       updateBookmarkBtn();
