@@ -99,6 +99,43 @@
       transition: border-color 0.18s;
     }
     .header-search input:focus { border-color: var(--green); }
+
+    /* Search results dropdown (Phase 6.5) */
+    .search-results {
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+      background: #fff; border: 1px solid var(--border); border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(20,32,43,0.10);
+      max-height: 380px; overflow-y: auto;
+      z-index: 100;
+    }
+    [data-theme="dark"] .search-results { background: var(--surface); }
+    .search-result-item {
+      display: block; padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer; transition: background 0.12s;
+      text-decoration: none; color: var(--ink);
+    }
+    .search-result-item:last-child { border-bottom: none; }
+    .search-result-item:hover, .search-result-item:focus {
+      background: var(--green-faint); outline: none;
+    }
+    .search-result-item .head { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+    .search-result-item .num { font-family: var(--font-display); font-weight: 600; color: var(--green); font-size: 14px; }
+    .search-result-item .book { color: var(--muted); font-size: 12px; }
+    .search-result-item .snippet { color: var(--muted); font-size: 13px; margin-top: 4px; line-height: 1.5; }
+    .search-results .empty { padding: 16px; color: var(--muted); font-size: 13px; text-align: center; }
+
+    /* Book filter select */
+    .book-filter {
+      padding: 9px 12px; border-radius: 9px;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--ink); font-family: var(--font); font-size: 13px;
+      cursor: pointer; transition: border-color 0.18s;
+      max-width: 180px;
+    }
+    .book-filter:focus { outline: none; border-color: var(--green); }
+    @media(max-width:720px) { .book-filter { display: none; } }
+
     .header-link {
       color: var(--ink); text-decoration: none;
       font-size: 14px; font-weight: 500;
@@ -448,8 +485,12 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
-        <input type="number" id="jumpInput" placeholder="Search hadith, narrator, topic…" min="1" aria-label="Hadith number to jump to" />
+        <input type="text" inputmode="numeric" id="jumpInput" placeholder="Search hadith number, text, or narrator…" autocomplete="off" aria-label="Search hadiths or jump to a number" />
+        <div class="search-results" id="searchResults" hidden role="listbox" aria-label="Search results"></div>
       </div>
+      <select class="book-filter" id="bookFilter" aria-label="Filter by book">
+        <option value="">All books</option>
+      </select>
       <a href="dashboard.html" class="header-link">My Dashboard</a>
     </div>
   </header>
@@ -718,8 +759,132 @@
       history.pushState(null, '', '?id=' + id);
       loadHadith(id);
     }
+    /* Phase 6.5: search dropdown + book filter ────────────────── */
+    var _searchTimer = null;
+    var _searchAbort = null;
+
+    function _isPureNumeric(s) { return /^[0-9]+$/.test(String(s || '').trim()); }
+
+    async function runSearch(q) {
+      var box = $('searchResults');
+      if (!box) return;
+      var query = String(q || '').trim();
+      if (query.length < 2) { box.hidden = true; box.innerHTML = ''; return; }
+
+      /* Abort any in-flight request to keep typing snappy. */
+      if (_searchAbort) { try { _searchAbort.abort(); } catch (e) {} }
+      _searchAbort = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+
+      var bookSel = $('bookFilter');
+      var bookNum = bookSel && bookSel.value ? parseInt(bookSel.value, 10) : null;
+      var qEnc = encodeURIComponent(query);
+      var url = SB_URL + '/rest/v1/hadiths' +
+                '?or=(text_en.ilike.*' + qEnc + '*,narrator.ilike.*' + qEnc + '*)' +
+                (bookNum ? '&book_number=eq.' + bookNum : '') +
+                '&select=id,hadith_number,book_name_en,text_en,narrator&limit=10';
+
+      try {
+        var res = await fetch(url, {
+          headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON },
+          signal: _searchAbort ? _searchAbort.signal : undefined
+        });
+        if (!res.ok) throw new Error('search failed');
+        var rows = await res.json();
+        if (!rows.length) {
+          box.innerHTML = '<div class="empty">No matches for &ldquo;' + esc(query) + '&rdquo;.</div>';
+          box.hidden = false;
+          return;
+        }
+        box.innerHTML = rows.map(function (r) {
+          var snippet = (r.text_en || '').slice(0, 140);
+          var nar = r.narrator ? esc(r.narrator) + ' — ' : '';
+          return '<a href="#" class="search-result-item" role="option" data-num="' + esc(r.hadith_number) + '">' +
+                 '<div class="head">' +
+                 '<span class="num">#' + esc(r.hadith_number) + '</span>' +
+                 '<span class="book">' + esc(r.book_name_en || '') + '</span>' +
+                 '</div>' +
+                 '<div class="snippet">' + nar + esc(snippet) + (snippet.length >= 140 ? '…' : '') + '</div>' +
+                 '</a>';
+        }).join('');
+        box.hidden = false;
+      } catch (e) {
+        if (e && e.name === 'AbortError') return;
+        box.innerHTML = '<div class="empty">Search unavailable. Try again.</div>';
+        box.hidden = false;
+      }
+    }
+
+    /* Click handling on search results — single delegated listener. */
+    document.addEventListener('click', function (e) {
+      var item = e.target && e.target.closest && e.target.closest('.search-result-item');
+      if (item) {
+        e.preventDefault();
+        var num = item.getAttribute('data-num');
+        if (num) {
+          $('searchResults').hidden = true;
+          $('jumpInput').value = num;
+          jumpTo(parseInt(num, 10));
+        }
+        return;
+      }
+      /* Click outside the search box hides results. */
+      if (!e.target.closest('.header-search')) {
+        var box = $('searchResults');
+        if (box) box.hidden = true;
+      }
+    });
+
+    /* Populate the book filter once on load from distinct book_name_en values. */
+    (async function populateBookFilter() {
+      var sel = $('bookFilter');
+      if (!sel) return;
+      try {
+        var res = await fetch(
+          SB_URL + '/rest/v1/hadiths?select=book_number,book_name_en&order=book_number.asc&limit=8000',
+          { headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON } }
+        );
+        if (!res.ok) return;
+        var rows = await res.json();
+        var seen = Object.create(null);
+        var books = [];
+        rows.forEach(function (r) {
+          if (r.book_number && !seen[r.book_number]) {
+            seen[r.book_number] = true;
+            books.push({ num: r.book_number, name: r.book_name_en || ('Book ' + r.book_number) });
+          }
+        });
+        books.sort(function (a, b) { return a.num - b.num; });
+        sel.innerHTML = '<option value="">All books</option>' +
+          books.map(function (b) {
+            return '<option value="' + esc(b.num) + '">' + esc(b.name) + '</option>';
+          }).join('');
+      } catch (e) { /* leave default option */ }
+    })();
+
+    /* Re-run search when the book filter changes. */
+    var _bookSel = $('bookFilter');
+    if (_bookSel) {
+      _bookSel.addEventListener('change', function () {
+        var v = $('jumpInput').value;
+        if (v && !_isPureNumeric(v)) runSearch(v);
+      });
+    }
+
+    $('jumpInput').addEventListener('input', function () {
+      var v = this.value;
+      if (_searchTimer) clearTimeout(_searchTimer);
+      if (!v) { $('searchResults').hidden = true; return; }
+      if (_isPureNumeric(v)) { $('searchResults').hidden = true; return; }
+      _searchTimer = setTimeout(function () { runSearch(v); }, 220);
+    });
+
     $('jumpInput').addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') jumpTo(parseInt(this.value, 10));
+      if (e.key === 'Enter') {
+        if (_isPureNumeric(this.value)) { jumpTo(parseInt(this.value, 10)); return; }
+        runSearch(this.value);
+        return;
+      }
+      if (e.key === 'Escape') { $('searchResults').hidden = true; return; }
     });
 
     /* Keyboard nav */
