@@ -7,7 +7,7 @@
  *  - Fonts: self-hosted woff2 files precached with core assets
  */
 
-const VERSION = 'th-v14-2026-04-25'; // SEO: GA4 + meta tags + schema updates
+const VERSION = 'th-v15-2026-05-05'; // Reader/Dashboard rebuild + Supabase progress wiring
 const CORE_CACHE = `${VERSION}-core`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -40,7 +40,10 @@ const CORE_ASSETS = [
   '/fonts/noto-kufi-arabic.woff2',
   '/fonts/Inter-Variable.woff2',
   '/blog.html',
-  '/prayer-times.html'
+  '/prayer-times.html',
+  '/reader.html',
+  '/dashboard.html',
+  '/js/progress-api.js'
 ];
 
 self.addEventListener('install', (event) => {
