@@ -865,21 +865,21 @@
       btn.disabled = true;
       btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="animation:spin .7s linear infinite"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.09-4.43"/></svg> Saving…';
       try {
-        var result = await window.ProgressAPI.markHadithAsRead({
-          hadithId:       String(currentHadith.hadith_number),
-          collectionName: 'Sahih al-Bukhari',
-          bookName:       currentHadith.book_name_en || '',
-          chapterName:    currentHadith.chapter_en   || '',
-          hadithNumber:   String(currentHadith.hadith_number || currentHadith.in_book_ref || ''),
-        });
+        /* Phase 1 wiring: call the new Supabase RPC via ProgressAPI.db.markRead.
+           The RPC takes the bigint primary key (currentHadith.id), not the
+           text hadith_number. Source must be one of the allowlist values
+           (reader|category|dashboard|competition|import). */
+        var result = await window.ProgressAPI.db.markRead(currentHadith.id, 'reader');
         isRead = true;
         btn.classList.remove('btn-primary');
         btn.classList.add('btn-active');
         btn.disabled = false;
         btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg> Read ✓';
         var toast = $('pointsToast');
-        toast.textContent = result && !result.alreadyRead
-          ? '+' + (result.pointsEarned || 10) + ' pts — Level ' + (result.currentLevel || 1)
+        /* RPC jsonb shape: { already_read, new_points, new_coins, total_hadiths,
+           total_points, total_coins, streak_days, level, trophies, newly_unlocked } */
+        toast.textContent = result && !result.already_read
+          ? '+' + (result.new_points || 10) + ' pts — Level ' + (result.level || 1)
           : 'Already in your reading history';
         toast.classList.add('show');
         setTimeout(function () { toast.classList.remove('show'); }, 3000);
@@ -1002,7 +1002,47 @@
     updateProgressCard();
 
     /* Init */
-    if (hadithId) loadHadith(hadithId); else loadHadith(1);
+    /* Init — priority routing per UX spec:
+       A. signed-in + has progress → resume from next hadith after last-read
+       B. signed-in + no progress → first available hadith
+       C. signed-out → keep sign-in banner visible, show first hadith as
+          daily featured (banner is already in DOM, just ensure visible). */
+    async function routeDefault() {
+      var token = getToken();
+      if (!token) {
+        var banner = $('signInBanner');
+        if (banner) banner.style.display = 'flex';
+        return loadHadith(1);
+      }
+      try {
+        var lastUrl = SB_URL + '/rest/v1/hadith_progress'
+                    + '?select=hadith_id&order=read_at.desc&limit=1';
+        var lastRes = await fetch(lastUrl, {
+          headers: { apikey: SB_ANON, Authorization: 'Bearer ' + token }
+        });
+        if (lastRes.ok) {
+          var lastRows = await lastRes.json();
+          if (lastRows && lastRows.length) {
+            var lastId = lastRows[0].hadith_id;
+            var detUrl = SB_URL + '/rest/v1/hadiths?id=eq.' + lastId
+                       + '&select=hadith_number&limit=1';
+            var detRes = await fetch(detUrl, {
+              headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON }
+            });
+            if (detRes.ok) {
+              var det = await detRes.json();
+              if (det && det.length && det[0].hadith_number) {
+                var next = parseInt(det[0].hadith_number, 10) + 1;
+                if (isFinite(next) && next > 0) return loadHadith(next);
+              }
+            }
+          }
+        }
+      } catch (e) { /* fall through to B */ }
+      return loadHadith(1);
+    }
+
+    if (hadithId) loadHadith(hadithId); else routeDefault();
   })();
   </script>
 </body>
