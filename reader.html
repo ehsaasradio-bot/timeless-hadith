@@ -145,6 +145,23 @@
     .header-link:hover { background: var(--green-faint); color: var(--green); }
     @media(max-width:720px) { .header-link { display: none; } }
 
+    /* Mark-as-read button — unread (initial) state: outlined, NOT filled.
+       Differentiates from .btn-active (filled green = already read). */
+    .btn-mark-unread {
+      background: #fff;
+      color: var(--green);
+      border: 1.5px solid var(--green);
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+    }
+    [data-theme="dark"] .btn-mark-unread {
+      background: transparent; color: var(--green); border-color: var(--green);
+    }
+    .btn-mark-unread:hover {
+      background: var(--green-faint); color: var(--green);
+    }
+    .btn-mark-unread svg { color: var(--green); opacity: 0.55; }
+    .btn-mark-unread:hover svg { opacity: 0.85; }
+
     /* ── Layout ───────────────────────────────────────────── */
     .reader-wrap {
       max-width: 1280px; margin: 0 auto;
@@ -586,8 +603,8 @@
 
         <!-- Actions -->
         <div class="action-bar">
-          <button class="btn btn-primary" id="btnMarkRead">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg>
+          <button class="btn btn-mark-unread" id="btnMarkRead" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>
             Mark as read
           </button>
           <button class="btn" id="btnBookmark">
@@ -983,9 +1000,10 @@
       /* Reset Mark Read */
       var btn = $('btnMarkRead');
       btn.disabled = false;
-      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg> Mark as read';
-      btn.classList.remove('btn-active');
-      btn.classList.add('btn-primary');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg> Mark as read';
+      btn.classList.remove('btn-active', 'btn-primary');
+      btn.classList.add('btn-mark-unread');
+      isRead = false;
 
       /* Progress card — collection-wide stats from localStorage */
       updateProgressCard();
@@ -1045,10 +1063,10 @@
            (reader|category|dashboard|competition|import). */
         var result = await window.ProgressAPI.db.markRead(currentHadith.id, 'reader');
         isRead = true;
-        btn.classList.remove('btn-primary');
+        btn.classList.remove('btn-primary', 'btn-mark-unread');
         btn.classList.add('btn-active');
         btn.disabled = false;
-        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg> Read ✓';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Read ✓';
         var toast = $('pointsToast');
         /* RPC jsonb shape: { already_read, new_points, new_coins, total_hadiths,
            total_points, total_coins, streak_days, level, trophies, newly_unlocked } */
@@ -1061,7 +1079,10 @@
         updateProgressCard();
       } catch (e) {
         btn.disabled = false;
-        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg> Mark as read';
+        btn.classList.remove('btn-active', 'btn-primary');
+        btn.classList.add('btn-mark-unread');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg> Mark as read';
+        console.error('[reader] Mark Read failed:', e);
       }
     });
 
