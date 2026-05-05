@@ -363,7 +363,7 @@
       <nav class="header-nav">
         <a href="categories.html">Browse</a>
         <a href="competition.html">Compete</a>
-        <a href="reader.html" class="primary">Open Reader →</a>
+        <a href="read.html" class="primary">Open Reader →</a>
       </nav>
     </div>
   </header>
@@ -438,7 +438,7 @@
           <h2 style="margin-bottom:4px">Continue reading</h2>
           <p>Pick up where you left off and add to your streak.</p>
         </div>
-        <a href="reader.html" class="btn-go">Open the Reader →</a>
+        <a href="read.html" class="btn-go">Open the Reader →</a>
       </div>
 
       <!-- Recent + Collection -->
@@ -552,7 +552,7 @@
       function renderRecent(items) {
         var ul = $('recentReads'); if (!ul) return;
         if (!items || items.length === 0) {
-          ul.innerHTML = '<li class="empty">Nothing read yet. <a href="reader.html">Open the Reader</a> to begin.</li>';
+          ul.innerHTML = '<li class="empty">Nothing read yet. <a href="read.html">Open the Reader</a> to begin.</li>';
           return;
         }
         ul.innerHTML = items.map(function (r) {
