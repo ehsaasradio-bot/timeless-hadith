@@ -7,7 +7,7 @@
  *  - Fonts: self-hosted woff2 files precached with core assets
  */
 
-const VERSION = 'th-v15-2026-05-05'; // Reader/Dashboard rebuild + Supabase progress wiring
+const VERSION = 'th-v16-2026-05-06'; // Reader landing + /read split
 const CORE_CACHE = `${VERSION}-core`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -42,6 +42,7 @@ const CORE_ASSETS = [
   '/blog.html',
   '/prayer-times.html',
   '/reader.html',
+  '/read.html',
   '/dashboard.html',
   '/js/progress-api.js'
 ];
