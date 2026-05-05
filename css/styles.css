@@ -1,5 +1,5 @@
 /* ── Google Fonts — Cairo + Gulzar ── */
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Elms+Sans:wght@300&family=Gulzar&family=Noto+Kufi+Arabic:wght@100;200;300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Elms+Sans:wght@300&family=Google+Sans:wght@400;500;600;700&family=Google+Sans+Text:wght@400;500;700&family=Gulzar&family=Noto+Kufi+Arabic:wght@100;200;300&display=swap');
 
 /* ── Self-hosted Fonts (Legacy — disabled in favor of Cairo) ── */
 /*
@@ -74,8 +74,8 @@
 
 /* ── Tokens: Light ── */
 :root {
-  --font: "Cairo", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: "Cairo", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font: "Google Sans", "Google Sans Text", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Google Sans", "Google Sans Text", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-arabic: "Cairo", "Noto Kufi Arabic", sans-serif;
   --font-urdu: "Cairo", "Noto Nastaliq Urdu", sans-serif;
   --radius: 16px;
