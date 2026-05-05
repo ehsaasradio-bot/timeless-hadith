@@ -12,7 +12,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Crimson+Pro:ital,wght@0,300..900;1,300..900&family=Cairo:wght@300..900&family=Gulzar&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Crimson+Pro:ital,wght@0,300..900;1,300..900&family=Cairo:wght@300..900&family=Google+Sans:wght@400;500;600;700&family=Google+Sans+Text:wght@400;500;700&family=Gulzar&display=swap" rel="stylesheet" />
 
   <script>(function(){try{var s=localStorage.getItem('th_theme');document.documentElement.setAttribute('data-theme',s||'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
 
@@ -483,6 +483,188 @@
     }
     .mandala-l { left: 12px; }
     .mandala-r { right: 12px; }
+
+    /* ── Apple-style refresh (visual-only overrides; no functional change) ── */
+    :root, [data-theme="light"] {
+      --bg:           #f7f8f6;          /* soft Apple off-white */
+      --surface:      #f1f3f0;          /* slightly softer */
+      --border:       rgba(15, 23, 42, 0.08);
+      --ar-green:     #15803d;          /* calm natural green for Arabic */
+      --green-tint:   #e8f1ec;
+      --green-faint:  #f3f8f5;
+    }
+    [data-theme="dark"] {
+      --ar-green:     #4ade80;
+    }
+
+    body { background: var(--bg); }
+
+    /* Card — softer glass, more breathing room, anchor for top-right actions */
+    .reader-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 40px 44px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 8px 28px rgba(15, 23, 42, 0.04);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+    }
+    [data-theme="dark"] .reader-card {
+      background: rgba(13, 22, 41, 0.72);
+    }
+    @media(max-width:640px) {
+      .reader-card { padding: 24px 20px; border-radius: 22px; margin: 0 4px; }
+    }
+
+    /* Floating top-right circular actions (bookmark + share) */
+    .card-actions-top {
+      position: absolute;
+      top: 18px; right: 18px;
+      display: flex; gap: 8px;
+      z-index: 3;
+    }
+    .card-actions-top .btn {
+      width: 40px; height: 40px;
+      padding: 0; border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      color: #475569;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.12s;
+    }
+    .card-actions-top .btn .btn-label {
+      /* Hidden visually; preserved for screen readers via aria-label on the button */
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    .card-actions-top .btn svg { width: 17px; height: 17px; }
+    .card-actions-top .btn:hover {
+      color: var(--green); border-color: rgba(15,23,42,0.14); transform: translateY(-1px);
+    }
+    .card-actions-top .btn.btn-active {
+      background: var(--green-tint); color: var(--green); border-color: rgba(21, 128, 61, 0.18);
+    }
+    [data-theme="dark"] .card-actions-top .btn {
+      background: rgba(255,255,255,0.06); color: #c8d3e6; border-color: rgba(255,255,255,0.10);
+    }
+    @media(max-width:640px) {
+      .card-actions-top { top: 14px; right: 14px; }
+      .card-actions-top .btn { width: 36px; height: 36px; }
+    }
+
+    /* Add a touch of right-side breathing space so breadcrumb doesn't hug the icons */
+    .breadcrumb { padding-right: 96px; }
+    @media(max-width:640px) { .breadcrumb { padding-right: 88px; } }
+
+    /* Pills — softer, calmer */
+    .pill {
+      padding: 7px 13px; border-radius: 999px;
+      background: var(--green-tint); color: var(--green);
+      border: 1px solid rgba(21, 128, 61, 0.10);
+      font-size: 12.5px; font-weight: 500;
+    }
+
+    /* Arabic — natural green per design reference */
+    .arabic {
+      color: var(--ar-green);
+      font-size: var(--ar-size, 32px);
+      line-height: 2.15;
+      margin: 22px auto 30px;
+      max-width: 760px;
+    }
+    @media(max-width:640px) { .arabic { font-size: max(22px, calc(var(--ar-size, 32px) - 6px)); } }
+
+    /* Star divider — softer */
+    .star-div { color: var(--ar-green); opacity: 0.40; }
+
+    /* English — more readable, more breathing room */
+    .english-block {
+      max-width: 660px;
+      font-size: var(--en-size, 18px);
+      line-height: 1.85;
+      color: #1f2933;
+    }
+    [data-theme="dark"] .english-block { color: #e7ecf5; }
+    .english-block .narrator-intro { color: #5a6577; }
+    .english-block .narrator-intro strong { color: #1f2933; font-weight: 600; }
+    [data-theme="dark"] .english-block .narrator-intro { color: #9aa9c7; }
+
+    /* Reference line — drop italic per CLAUDE.md visual rule, keep subtle */
+    .ref-line { font-style: normal; color: #8b96a8; font-size: 12.5px; }
+
+    /* Action bar — soft, no heavy top border */
+    .action-bar {
+      gap: 8px;
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(15, 23, 42, 0.06);
+    }
+    .action-bar .btn {
+      padding: 10px 16px; border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+    .action-bar .btn:hover { background: #fff; border-color: rgba(21, 128, 61, 0.30); }
+    [data-theme="dark"] .action-bar .btn { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+
+    /* "Show all" / "اردو ترجمہ" pill style — soft blue-lavender (available for future truncation UI) */
+    .btn-show-all {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 999px;
+      background: #eef2ff; color: #4f46e5;
+      border: 1px solid #c7d2fe;
+      font-family: var(--font); font-size: 13px; font-weight: 500;
+      cursor: pointer;
+    }
+    .btn-show-all:hover { background: #e0e7ff; }
+
+    /* Aside cards — match the new card softness */
+    .aside-card {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 8px 28px rgba(15, 23, 42, 0.04);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+    }
+    [data-theme="dark"] .aside-card { background: rgba(13, 22, 41, 0.72); }
+
+    /* Header — slightly softer */
+    .reader-header { background: rgba(247, 248, 246, 0.85); border-bottom-color: var(--border); }
+    [data-theme="dark"] .reader-header { background: rgba(6, 12, 26, 0.85); }
+    .header-search input { background: rgba(255,255,255,0.78); border-color: var(--border); }
+
+    /* === Typography & sizing refresh === */
+    /* Google Sans for all English / Latin text. Falls back through Inter and
+       system fonts if Google Fonts doesn't serve Google Sans. */
+    :root, [data-theme="light"], [data-theme="dark"] {
+      --font:         "Google Sans", "Google Sans Text", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-display: "Google Sans", "Google Sans Text", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    body, .english-block, .english-block .narrator-intro,
+    .header-brand, .header-link, .breadcrumb, .pill, .btn, .ref-line,
+    .aside-title, .tool-row, .listen-btn, .audio-note,
+    .progress-pct, .progress-sub, .ways-list a,
+    .signin-banner, .btn-signin-sm, .modal-box, .points-toast,
+    .reader-footer-inner, .reader-footer-inner .attr,
+    .search-result-item, .search-result-item .num, .search-result-item .book, .search-result-item .snippet {
+      font-family: var(--font);
+    }
+
+    /* Arabic — 16px default, line-height adjusted for the smaller size */
+    .arabic {
+      font-size: 16px;
+      line-height: 1.95;
+      max-width: 720px;
+    }
+    @media(max-width:640px) { .arabic { font-size: 16px; } }
+
+    /* Urdu — 16px to match Arabic, with comfortable Urdu line-height */
+    .urdu-block {
+      font-size: 16px;
+      line-height: 2.1;
+    }
   </style>
 </head>
 <body>
@@ -551,6 +733,18 @@
       <!-- LEFT: Reader -->
       <article class="reader-card">
 
+        <!-- Floating top-right action cluster (bookmark + share moved here from action-bar; same IDs, same handlers) -->
+        <div class="card-actions-top" aria-label="Card actions">
+          <button class="btn" id="btnBookmark" type="button" aria-label="Bookmark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            <span class="btn-label">Bookmark</span>
+          </button>
+          <button class="btn" id="btnShare" type="button" aria-label="Share">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <span class="btn-label">Share</span>
+          </button>
+        </div>
+
         <!-- Breadcrumb -->
         <nav class="breadcrumb" aria-label="Breadcrumb">
           <a href="index.html" class="home" aria-label="Home">
@@ -601,23 +795,15 @@
         <div id="hadithNarrator" hidden></div>
         <p id="readingTime" hidden></p>
 
-        <!-- Actions -->
+        <!-- Actions (bookmark + share moved to top-right .card-actions-top; mark-as-read, reflect, urdu remain here — same IDs, same handlers) -->
         <div class="action-bar">
           <button class="btn btn-mark-unread" id="btnMarkRead" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>
             Mark as read
           </button>
-          <button class="btn" id="btnBookmark">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-            Bookmark
-          </button>
           <button class="btn" id="btnNote">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             Reflect
-          </button>
-          <button class="btn" id="btnShare">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-            Share
           </button>
           <button class="btn" id="urduToggle" type="button" aria-pressed="false" lang="ur">
             اردو
@@ -1251,7 +1437,6 @@
     /* Init */
     /* Init — priority routing per UX spec:
        A. signed-in + has progress → resume from next hadith after last-read
-       B. signed-in + no progress → first available hadith
        C. signed-out → keep sign-in banner visible, show first hadith as
           daily featured (banner is already in DOM, just ensure visible). */
     async function routeDefault() {
