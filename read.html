@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hadith Reader — Timeless Hadith</title>
+  <meta name="description" content="Read authentic hadith from Sahih al-Bukhari and other major collections — distraction-free, with bookmarks, notes, and progress tracking." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://timelesshadith.com/read" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Crimson+Pro:ital,wght@0,300..900;1,300..900&family=Cairo:wght@300..900&family=Google+Sans:wght@400;500;600;700&family=Google+Sans+Text:wght@400;500;700&family=Gulzar&display=swap" rel="stylesheet" />
+
+  <script>(function(){try{var s=localStorage.getItem('th_theme');document.documentElement.setAttribute('data-theme',s||'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+
+  <style>
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root, [data-theme="light"] {
+      --font:        "Cairo", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display:"Crimson Pro", Georgia, "Times New Roman", serif;
+      --font-arabic: "Amiri Quran", "Noto Naskh Arabic", "Cairo", serif;
+      --font-urdu:   "Gulzar", serif;
+      --bg:          #ffffff;
+      --surface:     #f6f8f7;
+      --border:      #e6e8eb;
+      --ink:         #14202b;
+      --muted:       #5f6b78;
+      --green:       #0f5132;
+      --green-soft:  #1d6b4a;
+      --green-tint:  #e6f0ec;
+      --green-faint: #f3f8f5;
+      --gold:        #c9a84c;
+    }
+    [data-theme="dark"] {
+      --bg:          #060c1a;
+      --surface:     #0d1629;
+      --border:      rgba(255,255,255,0.08);
+      --ink:         #f0f4ff;
+      --muted:       #9aa9c7;
+      --green:       #4ade80;
+      --green-soft:  #34c46a;
+      --green-tint:  rgba(74,222,128,0.10);
+      --green-faint: rgba(74,222,128,0.04);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      transition: background 0.35s, color 0.35s;
+    }
+
+    /* ── Header ───────────────────────────────────────────── */
+    .reader-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="dark"] .reader-header { background: rgba(6,12,26,0.90); }
+    .header-row {
+      display: flex; align-items: center; gap: 16px;
+      max-width: 1280px; margin: 0 auto;
+      padding: 14px 24px;
+    }
+    .header-brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--ink);
+      font-family: var(--font-display); font-weight: 600; font-size: 19px;
+      letter-spacing: -0.01em;
+    }
+    .brand-mark {
+      width: 36px; height: 36px; border-radius: 9px;
+      display: grid; place-items: center;
+      background: var(--green); color: #fff;
+      flex-shrink: 0;
+    }
+    .header-search {
+      flex: 1; max-width: 540px;
+      position: relative;
+    }
+    .header-search svg {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      width: 16px; height: 16px; color: var(--muted);
+    }
+    .header-search input {
+      width: 100%; padding: 10px 14px 10px 40px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 999px; color: var(--ink);
+      font-family: var(--font); font-size: 14px; outline: none;
+      transition: border-color 0.18s;
+    }
+    .header-search input:focus { border-color: var(--green); }
+
+    /* Search results dropdown (Phase 6.5) */
+    .search-results {
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+      background: #fff; border: 1px solid var(--border); border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(20,32,43,0.10);
+      max-height: 380px; overflow-y: auto;
+      z-index: 100;
+    }
+    [data-theme="dark"] .search-results { background: var(--surface); }
+    .search-result-item {
+      display: block; padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer; transition: background 0.12s;
+      text-decoration: none; color: var(--ink);
+    }
+    .search-result-item:last-child { border-bottom: none; }
+    .search-result-item:hover, .search-result-item:focus {
+      background: var(--green-faint); outline: none;
+    }
+    .search-result-item .head { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+    .search-result-item .num { font-family: var(--font-display); font-weight: 600; color: var(--green); font-size: 14px; }
+    .search-result-item .book { color: var(--muted); font-size: 12px; }
+    .search-result-item .snippet { color: var(--muted); font-size: 13px; margin-top: 4px; line-height: 1.5; }
+    .search-results .empty { padding: 16px; color: var(--muted); font-size: 13px; text-align: center; }
+
+    /* Book filter select */
+    .book-filter {
+      padding: 9px 12px; border-radius: 9px;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--ink); font-family: var(--font); font-size: 13px;
+      cursor: pointer; transition: border-color 0.18s;
+      max-width: 180px;
+    }
+    .book-filter:focus { outline: none; border-color: var(--green); }
+    @media(max-width:720px) { .book-filter { display: none; } }
+
+    .header-link {
+      color: var(--ink); text-decoration: none;
+      font-size: 14px; font-weight: 500;
+      padding: 8px 14px; border-radius: 9px;
+      transition: background 0.18s;
+    }
+    .header-link:hover { background: var(--green-faint); color: var(--green); }
+    @media(max-width:720px) { .header-link { display: none; } }
+
+    /* Mark-as-read button — unread (initial) state: outlined, NOT filled.
+       Differentiates from .btn-active (filled green = already read). */
+    .btn-mark-unread {
+      background: #fff;
+      color: var(--green);
+      border: 1.5px solid var(--green);
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+    }
+    [data-theme="dark"] .btn-mark-unread {
+      background: transparent; color: var(--green); border-color: var(--green);
+    }
+    .btn-mark-unread:hover {
+      background: var(--green-faint); color: var(--green);
+    }
+    .btn-mark-unread svg { color: var(--green); opacity: 0.55; }
+    .btn-mark-unread:hover svg { opacity: 0.85; }
+
+    /* ── Layout ───────────────────────────────────────────── */
+    .reader-wrap {
+      max-width: 1280px; margin: 0 auto;
+      padding: 28px 24px 80px;
+    }
+    .reader-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 24px;
+    }
+    @media(max-width:1000px) {
+      .reader-grid { grid-template-columns: 1fr; }
+      .reader-aside { order: 2; }
+    }
+
+    /* ── Breadcrumb ───────────────────────────────────────── */
+    .breadcrumb {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; color: var(--muted); margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .breadcrumb a {
+      color: var(--muted); text-decoration: none;
+      transition: color 0.18s;
+    }
+    .breadcrumb a:hover { color: var(--green); }
+    .breadcrumb .sep { color: var(--border); }
+    .breadcrumb .home {
+      width: 30px; height: 30px; border-radius: 8px;
+      display: inline-grid; place-items: center;
+      border: 1px solid var(--border); color: var(--muted);
+    }
+    .breadcrumb .home:hover { color: var(--green); border-color: var(--green); }
+    .breadcrumb .current {
+      color: var(--ink); font-weight: 500;
+    }
+
+    /* ── Card ─────────────────────────────────────────────── */
+    .reader-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 40px 32px;
+    }
+    [data-theme="dark"] .reader-card {
+      background: var(--surface);
+    }
+    @media(max-width:640px) { .reader-card { padding: 28px 20px; } }
+
+    /* ── Hadith N title ───────────────────────────────────── */
+    .ornament-row {
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+      color: var(--green); font-family: var(--font-display);
+      font-size: 22px; font-weight: 500;
+      margin-bottom: 22px;
+    }
+    .ornament {
+      width: 14px; height: 14px; opacity: 0.7;
+    }
+
+    /* ── Pills ────────────────────────────────────────────── */
+    .pill-row {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      justify-content: center; margin-bottom: 32px;
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: 10px;
+      background: var(--green-tint); color: var(--green);
+      font-size: 13px; font-weight: 500;
+    }
+    .pill svg { width: 12px; height: 12px; opacity: 0.7; }
+
+    /* ── Arabic ───────────────────────────────────────────── */
+    .arabic {
+      font-family: var(--font-arabic);
+      font-size: var(--ar-size, 30px);
+      direction: rtl; text-align: center;
+      line-height: 2.2;
+      color: var(--ink);
+      margin: 18px 0 28px;
+      padding: 0 6px;
+    }
+    @media(max-width:640px) { .arabic { font-size: max(22px, calc(var(--ar-size, 30px) - 4px)); } }
+
+    /* ── Star divider ─────────────────────────────────────── */
+    .star-div {
+      display: flex; align-items: center; justify-content: center;
+      margin: 18px 0 24px;
+      color: var(--green); opacity: 0.45;
+    }
+    .star-div svg { width: 18px; height: 18px; }
+
+    /* ── English ──────────────────────────────────────────── */
+    .english-block {
+      max-width: 640px; margin: 0 auto;
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: var(--en-size, 18px);
+      line-height: 1.85;
+      color: var(--ink);
+    }
+    .english-block .narrator-intro {
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-size: calc(var(--en-size, 18px) - 1px);
+    }
+    .english-block .narrator-intro strong { color: var(--ink); font-weight: 600; }
+
+    /* ── Urdu ─────────────────────────────────────────────── */
+    .urdu-block {
+      display: none;
+      font-family: var(--font-urdu);
+      font-size: calc(var(--ar-size, 30px) * 0.78);
+      direction: rtl; text-align: right;
+      line-height: 2.4; color: var(--ink);
+      margin: 22px auto 0; max-width: 720px;
+      padding: 18px 22px;
+      background: var(--green-faint);
+      border: 1px solid var(--green-tint);
+      border-radius: 14px;
+    }
+    .urdu-block.visible { display: block; }
+    .urdu-label {
+      font-family: var(--font); direction: ltr;
+      font-size: 10px; letter-spacing: 0.12em;
+      text-transform: uppercase; font-weight: 700;
+      color: var(--green); display: block;
+      text-align: left; margin-bottom: 8px;
+    }
+
+    /* ── Reference line ───────────────────────────────────── */
+    .ref-line {
+      text-align: center; margin-top: 22px;
+      font-family: var(--font-display); font-style: italic;
+      font-size: 13px; color: var(--muted);
+    }
+
+    /* ── Action bar ───────────────────────────────────────── */
+    .action-bar {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center; margin-top: 32px;
+      padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 18px; border-radius: 10px;
+      font-family: var(--font); font-size: 13.5px; font-weight: 500;
+      border: 1px solid var(--border); background: #fff; color: var(--ink);
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    [data-theme="dark"] .btn { background: var(--surface); }
+    .btn:hover { border-color: var(--green); color: var(--green); }
+    .btn svg { width: 14px; height: 14px; }
+    .btn-primary {
+      background: var(--green); color: #fff; border-color: var(--green);
+    }
+    .btn-primary:hover { background: var(--green-soft); border-color: var(--green-soft); color: #fff; }
+    .btn-active {
+      background: var(--green-tint); color: var(--green); border-color: var(--green-tint);
+    }
+
+    /* ── Sidebar ──────────────────────────────────────────── */
+    .reader-aside { display: flex; flex-direction: column; gap: 16px; }
+    .aside-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 18px; padding: 22px;
+    }
+    [data-theme="dark"] .aside-card { background: var(--surface); }
+    .aside-title {
+      font-size: 15px; font-weight: 600; color: var(--ink);
+      margin-bottom: 14px; letter-spacing: -0.01em;
+      display: flex; align-items: baseline; justify-content: space-between;
+    }
+    .aside-title small { font-size: 11px; color: var(--muted); font-weight: 400; }
+
+    .tool-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; padding: 8px 0;
+      font-size: 14px; color: var(--ink);
+    }
+    .font-grp {
+      display: inline-flex; border: 1px solid var(--border); border-radius: 9px; overflow: hidden;
+    }
+    .font-grp button {
+      width: 36px; height: 32px; border: none;
+      background: transparent; color: var(--muted);
+      font-family: var(--font); font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .font-grp button.active { background: var(--green); color: #fff; }
+    .font-grp button:hover:not(.active) { background: var(--green-faint); color: var(--green); }
+
+    .listen-btn {
+      width: 100%; padding: 12px; border-radius: 11px;
+      background: var(--green); color: #fff; border: none;
+      font-family: var(--font); font-size: 14px; font-weight: 500;
+      cursor: pointer; transition: background 0.15s;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 14px;
+    }
+    .listen-btn:hover { background: var(--green-soft); }
+
+    .audio-note {
+      font-size: 11px; color: var(--muted);
+      line-height: 1.55; margin-top: 12px;
+    }
+
+    /* ── Progress card ─────────────────────────────────────── */
+    .progress-pct {
+      font-size: 30px; font-weight: 600; color: var(--green);
+      letter-spacing: -0.02em; line-height: 1;
+    }
+    .progress-sub { font-size: 12px; color: var(--muted); margin-top: 6px; }
+    .progress-track {
+      height: 6px; border-radius: 999px;
+      background: var(--green-tint);
+      margin-top: 12px; overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%; border-radius: 999px;
+      background: var(--green); transition: width 0.4s ease;
+    }
+
+    /* ── More ways list ───────────────────────────────────── */
+    .ways-list { display: flex; flex-direction: column; gap: 10px; }
+    .ways-list a {
+      font-size: 14px; color: var(--ink); text-decoration: none;
+      padding: 8px 0; border-bottom: 1px dashed transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .ways-list a:hover { color: var(--green); border-color: var(--green-tint); }
+
+    /* ── Sign-in banner ───────────────────────────────────── */
+    .signin-banner {
+      display: none;
+      align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      margin-bottom: 20px;
+      padding: 14px 18px;
+      background: var(--green-faint);
+      border: 1px solid var(--green-tint);
+      border-radius: 14px;
+    }
+    .signin-banner span { font-size: 13.5px; color: var(--ink); }
+    .btn-signin-sm {
+      padding: 9px 18px; background: var(--green); color: #fff;
+      border: none; border-radius: 999px;
+      font-family: var(--font); font-size: 13px; font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-signin-sm:hover { background: var(--green-soft); }
+
+    /* ── Skeleton + error ─────────────────────────────────── */
+    .skeleton { background: var(--border); border-radius: 8px; animation: pulse 1.4s ease infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .error-state { padding: 60px 20px; text-align: center; }
+
+    /* ── Modal ────────────────────────────────────────────── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: var(--bg); border-radius: 18px;
+      padding: 26px; width: 100%; max-width: 480px; margin: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+    }
+    .modal-box h3 { font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 12px; }
+    .modal-box textarea {
+      width: 100%; height: 140px; padding: 12px;
+      border: 1px solid var(--border); border-radius: 10px;
+      background: var(--surface); color: var(--ink);
+      font-family: var(--font); font-size: 14px; resize: vertical; outline: none;
+    }
+    .modal-box textarea:focus { border-color: var(--green); }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 14px; }
+
+    /* ── Toast ────────────────────────────────────────────── */
+    .points-toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--green); color: #fff;
+      padding: 12px 20px; border-radius: 12px;
+      font-size: 14px; font-weight: 600;
+      box-shadow: 0 10px 30px rgba(15,81,50,0.30);
+      opacity: 0; transform: translateY(12px);
+      transition: all 0.28s ease;
+      z-index: 9999; pointer-events: none;
+    }
+    .points-toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── Footer band ─────────────────────────────────────── */
+    .reader-footer {
+      margin-top: 60px;
+      background: linear-gradient(135deg, var(--green) 0%, #0a3d24 100%);
+      color: #fff;
+      position: relative; overflow: hidden;
+    }
+    .reader-footer-inner {
+      max-width: 800px; margin: 0 auto;
+      padding: 36px 24px; text-align: center;
+      position: relative; z-index: 1;
+    }
+    .reader-footer-inner p {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 16px; line-height: 1.6;
+    }
+    .reader-footer-inner .attr {
+      font-style: normal; opacity: 0.7; margin-left: 8px;
+      font-size: 13px;
+    }
+    .reader-footer .mandala {
+      position: absolute; bottom: -30px; opacity: 0.08;
+      pointer-events: none;
+    }
+    .mandala-l { left: 12px; }
+    .mandala-r { right: 12px; }
+
+    /* ── Apple-style refresh (visual-only overrides; no functional change) ── */
+    :root, [data-theme="light"] {
+      --bg:           #f7f8f6;          /* soft Apple off-white */
+      --surface:      #f1f3f0;          /* slightly softer */
+      --border:       rgba(15, 23, 42, 0.08);
+      --ar-green:     #15803d;          /* calm natural green for Arabic */
+      --green-tint:   #e8f1ec;
+      --green-faint:  #f3f8f5;
+    }
+    [data-theme="dark"] {
+      --ar-green:     #4ade80;
+    }
+
+    body { background: var(--bg); }
+
+    /* Card — softer glass, more breathing room, anchor for top-right actions */
+    .reader-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 40px 44px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 8px 28px rgba(15, 23, 42, 0.04);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+    }
+    [data-theme="dark"] .reader-card {
+      background: rgba(13, 22, 41, 0.72);
+    }
+    @media(max-width:640px) {
+      .reader-card { padding: 24px 20px; border-radius: 22px; margin: 0 4px; }
+    }
+
+    /* Floating top-right circular actions (bookmark + share) */
+    .card-actions-top {
+      position: absolute;
+      top: 18px; right: 18px;
+      display: flex; gap: 8px;
+      z-index: 3;
+    }
+    .card-actions-top .btn {
+      width: 40px; height: 40px;
+      padding: 0; border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      color: #475569;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.12s;
+    }
+    .card-actions-top .btn .btn-label {
+      /* Hidden visually; preserved for screen readers via aria-label on the button */
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    .card-actions-top .btn svg { width: 17px; height: 17px; }
+    .card-actions-top .btn:hover {
+      color: var(--green); border-color: rgba(15,23,42,0.14); transform: translateY(-1px);
+    }
+    .card-actions-top .btn.btn-active {
+      background: var(--green-tint); color: var(--green); border-color: rgba(21, 128, 61, 0.18);
+    }
+    [data-theme="dark"] .card-actions-top .btn {
+      background: rgba(255,255,255,0.06); color: #c8d3e6; border-color: rgba(255,255,255,0.10);
+    }
+    @media(max-width:640px) {
+      .card-actions-top { top: 14px; right: 14px; }
+      .card-actions-top .btn { width: 36px; height: 36px; }
+    }
+
+    /* Add a touch of right-side breathing space so breadcrumb doesn't hug the icons */
+    .breadcrumb { padding-right: 96px; }
+    @media(max-width:640px) { .breadcrumb { padding-right: 88px; } }
+
+    /* Pills — softer, calmer */
+    .pill {
+      padding: 7px 13px; border-radius: 999px;
+      background: var(--green-tint); color: var(--green);
+      border: 1px solid rgba(21, 128, 61, 0.10);
+      font-size: 12.5px; font-weight: 500;
+    }
+
+    /* Arabic — natural green per design reference */
+    .arabic {
+      color: var(--ar-green);
+      font-size: var(--ar-size, 32px);
+      line-height: 2.15;
+      margin: 22px auto 30px;
+      max-width: 760px;
+    }
+    @media(max-width:640px) { .arabic { font-size: max(22px, calc(var(--ar-size, 32px) - 6px)); } }
+
+    /* Star divider — softer */
+    .star-div { color: var(--ar-green); opacity: 0.40; }
+
+    /* English — more readable, more breathing room */
+    .english-block {
+      max-width: 660px;
+      font-size: var(--en-size, 18px);
+      line-height: 1.85;
+      color: #1f2933;
+    }
+    [data-theme="dark"] .english-block { color: #e7ecf5; }
+    .english-block .narrator-intro { color: #5a6577; }
+    .english-block .narrator-intro strong { color: #1f2933; font-weight: 600; }
+    [data-theme="dark"] .english-block .narrator-intro { color: #9aa9c7; }
+
+    /* Reference line — drop italic per CLAUDE.md visual rule, keep subtle */
+    .ref-line { font-style: normal; color: #8b96a8; font-size: 12.5px; }
+
+    /* Action bar — soft, no heavy top border */
+    .action-bar {
+      gap: 8px;
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(15, 23, 42, 0.06);
+    }
+    .action-bar .btn {
+      padding: 10px 16px; border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+    .action-bar .btn:hover { background: #fff; border-color: rgba(21, 128, 61, 0.30); }
+    [data-theme="dark"] .action-bar .btn { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+
+    /* "Show all" / "اردو ترجمہ" pill style — soft blue-lavender (available for future truncation UI) */
+    .btn-show-all {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 999px;
+      background: #eef2ff; color: #4f46e5;
+      border: 1px solid #c7d2fe;
+      font-family: var(--font); font-size: 13px; font-weight: 500;
+      cursor: pointer;
+    }
+    .btn-show-all:hover { background: #e0e7ff; }
+
+    /* Aside cards — match the new card softness */
+    .aside-card {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 8px 28px rgba(15, 23, 42, 0.04);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+    }
+    [data-theme="dark"] .aside-card { background: rgba(13, 22, 41, 0.72); }
+
+    /* Header — slightly softer */
+    .reader-header { background: rgba(247, 248, 246, 0.85); border-bottom-color: var(--border); }
+    [data-theme="dark"] .reader-header { background: rgba(6, 12, 26, 0.85); }
+    .header-search input { background: rgba(255,255,255,0.78); border-color: var(--border); }
+
+    /* === Typography & sizing refresh === */
+    /* Google Sans for all English / Latin text. Falls back through Inter and
+       system fonts if Google Fonts doesn't serve Google Sans. */
+    :root, [data-theme="light"], [data-theme="dark"] {
+      --font:         "Google Sans", "Google Sans Text", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-display: "Google Sans", "Google Sans Text", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    body, .english-block, .english-block .narrator-intro,
+    .header-brand, .header-link, .breadcrumb, .pill, .btn, .ref-line,
+    .aside-title, .tool-row, .listen-btn, .audio-note,
+    .progress-pct, .progress-sub, .ways-list a,
+    .signin-banner, .btn-signin-sm, .modal-box, .points-toast,
+    .reader-footer-inner, .reader-footer-inner .attr,
+    .search-result-item, .search-result-item .num, .search-result-item .book, .search-result-item .snippet {
+      font-family: var(--font);
+    }
+
+    /* Arabic — 16px default, line-height adjusted for the smaller size */
+    .arabic {
+      font-size: 16px;
+      line-height: 1.95;
+      max-width: 720px;
+    }
+    @media(max-width:640px) { .arabic { font-size: 16px; } }
+
+    /* Urdu — 16px to match Arabic, with comfortable Urdu line-height */
+    .urdu-block {
+      font-size: 16px;
+      line-height: 2.1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="reader-header">
+    <div class="header-row">
+      <a href="index.html" class="header-brand" aria-label="Timeless Hadith — Home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 11V8a7 7 0 0114 0v3"/><path d="M3 11h18v9H3z"/><path d="M12 14v3"/>
+          </svg>
+        </span>
+        <span>Timeless Hadith</span>
+      </a>
+      <div class="header-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" inputmode="numeric" id="jumpInput" placeholder="Search hadith number, text, or narrator…" autocomplete="off" aria-label="Search hadiths or jump to a number" />
+        <div class="search-results" id="searchResults" hidden role="listbox" aria-label="Search results"></div>
+      </div>
+      <select class="book-filter" id="bookFilter" aria-label="Filter by book">
+        <option value="">All books</option>
+      </select>
+      <a href="dashboard.html" class="header-link">My Dashboard</a>
+    </div>
+  </header>
+
+  <!-- ── Main ── -->
+  <main class="reader-wrap">
+
+    <!-- Sign-in banner -->
+    <div class="signin-banner" id="signInBanner">
+      <span>Sign in to track reading progress, earn points &amp; save bookmarks.</span>
+      <button id="signInBannerBtn" class="btn-signin-sm" type="button">Sign in with Google</button>
+    </div>
+
+    <!-- Hidden compatibility nav (kept for existing JS to bind to) -->
+    <div id="readerNav" style="display:none">
+      <button id="btnPrev" type="button">Prev</button>
+      <span id="navTitle">Hadith Reader</span>
+      <button id="btnNext" type="button">Next</button>
+    </div>
+    <div id="readerToolbar" style="display:none">
+      <button id="jumpBtn" type="button" hidden>Go</button>
+    </div>
+
+    <!-- Skeleton -->
+    <div id="skeletonLoader" class="reader-card" style="padding:40px">
+      <div class="skeleton" style="height:14px;width:240px;margin:0 auto 22px;border-radius:100px"></div>
+      <div class="skeleton" style="height:80px;margin-bottom:22px"></div>
+      <div class="skeleton" style="height:14px;margin-bottom:8px"></div>
+      <div class="skeleton" style="height:14px;width:80%;margin:0 auto"></div>
+    </div>
+
+    <!-- Error -->
+    <div id="errorState" class="reader-card error-state" style="display:none">
+      <p style="color:var(--muted);margin-bottom:14px" id="errorMsg">Hadith not found.</p>
+      <a href="categories.html" style="color:var(--green);font-weight:600">Browse all hadiths →</a>
+    </div>
+
+    <!-- Card grid -->
+    <div id="hadithCard" class="reader-grid" style="display:none">
+
+      <!-- LEFT: Reader -->
+      <article class="reader-card">
+
+        <!-- Floating top-right action cluster (bookmark + share moved here from action-bar; same IDs, same handlers) -->
+        <div class="card-actions-top" aria-label="Card actions">
+          <button class="btn" id="btnBookmark" type="button" aria-label="Bookmark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            <span class="btn-label">Bookmark</span>
+          </button>
+          <button class="btn" id="btnShare" type="button" aria-label="Share">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <span class="btn-label">Share</span>
+          </button>
+        </div>
+
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html" class="home" aria-label="Home">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H10v7H4a1 1 0 0 1-1-1z"/></svg>
+          </a>
+          <span class="sep">/</span>
+          <a href="categories.html">Sahih al-Bukhari</a>
+          <span class="sep">/</span>
+          <a href="#" id="bcChapter">Chapter</a>
+          <span class="sep">/</span>
+          <span class="current" id="bcHadith">Hadith</span>
+        </nav>
+
+        <!-- Hadith N -->
+        <div class="ornament-row">
+          <svg class="ornament" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 L13.5 8.5 L20 7 L15.5 12 L20 17 L13.5 15.5 L12 22 L10.5 15.5 L4 17 L8.5 12 L4 7 L10.5 8.5 Z"/></svg>
+          <span id="hTitle">Hadith</span>
+          <svg class="ornament" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 L13.5 8.5 L20 7 L15.5 12 L20 17 L13.5 15.5 L12 22 L10.5 15.5 L4 17 L8.5 12 L4 7 L10.5 8.5 Z"/></svg>
+        </div>
+
+        <!-- Pills (kept ID hadithMeta for existing JS) -->
+        <div id="hadithMeta" class="pill-row"></div>
+
+        <!-- Arabic -->
+        <div id="hadithArabic" class="arabic" style="display:none"></div>
+
+        <!-- Star divider -->
+        <div class="star-div" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.5 8.5 L20 7 L15.5 12 L20 17 L13.5 15.5 L12 22 L10.5 15.5 L4 17 L8.5 12 L4 7 L10.5 8.5 Z"/></svg>
+        </div>
+
+        <!-- English (kept ID hadithEnglish; rendered as paragraph) -->
+        <div class="english-block">
+          <p class="narrator-intro" id="narratorIntro" style="display:none"></p>
+          <p id="hadithEnglish"></p>
+        </div>
+
+        <!-- Urdu -->
+        <div class="urdu-block" id="hadithUrdu">
+          <span class="urdu-label">اردو ترجمہ</span>
+          <div id="hadithUrduText"></div>
+        </div>
+
+        <!-- Reference -->
+        <p class="ref-line" id="refLine"></p>
+
+        <!-- Hidden narrator block kept for legacy JS -->
+        <div id="hadithNarrator" hidden></div>
+        <p id="readingTime" hidden></p>
+
+        <!-- Actions (bookmark + share moved to top-right .card-actions-top; mark-as-read, reflect, urdu remain here — same IDs, same handlers) -->
+        <div class="action-bar">
+          <button class="btn btn-mark-unread" id="btnMarkRead" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>
+            Mark as read
+          </button>
+          <button class="btn" id="btnNote">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Reflect
+          </button>
+          <button class="btn" id="urduToggle" type="button" aria-pressed="false" lang="ur">
+            اردو
+          </button>
+        </div>
+
+        <!-- Prev / Next inline -->
+        <div style="display:flex; justify-content:space-between; gap:12px; margin-top:22px;">
+          <button class="btn" id="btnPrevInline" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 6 9 12 15 18"/></svg>
+            Previous
+          </button>
+          <button class="btn" id="btnNextInline" type="button">
+            Next
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- RIGHT: Sidebar -->
+      <aside class="reader-aside">
+
+        <div class="aside-card">
+          <h3 class="aside-title">Reading Tools</h3>
+          <div class="tool-row">
+            <span>Font Size</span>
+            <div class="font-grp" role="group" aria-label="Font size">
+              <button id="fontDecrease" type="button" aria-label="Decrease font">A-</button>
+              <button id="fontDefault" type="button" class="active" aria-label="Default font">A</button>
+              <button id="fontIncrease" type="button" aria-label="Increase font">A+</button>
+            </div>
+          </div>
+          <button class="listen-btn" id="btnListen" type="button">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Listen
+          </button>
+          <p class="audio-note">Audio narration is being prepared. We will enable it once the audio source is integrated.</p>
+        </div>
+
+        <div class="aside-card">
+          <h3 class="aside-title">
+            Your Progress
+            <small>This collection</small>
+          </h3>
+          <p class="progress-pct"><span id="progressPct">0</span>%</p>
+          <p class="progress-sub"><span id="progressRead">0</span> of <span id="progressTotal">7</span> hadiths read</p>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-bar" id="progressBar" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="aside-card">
+          <h3 class="aside-title">More ways to read</h3>
+          <div class="ways-list">
+            <a href="#" id="linkFocus">→ Focus mode</a>
+            <a href="#" id="linkMemorize">→ Memorize</a>
+            <a href="#" id="linkPrint">→ Print &amp; PDF</a>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+
+  </main>
+
+  <!-- Notes modal -->
+  <div class="modal-overlay" id="noteModal">
+    <div class="modal-box">
+      <h3>Your Reflection</h3>
+      <textarea id="noteText" placeholder="Write your thoughts or reflection on this Hadith…"></textarea>
+      <div class="modal-actions">
+        <button class="btn" id="btnNoteCancel">Cancel</button>
+        <button class="btn btn-primary" id="btnNoteSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="points-toast" id="pointsToast" role="status" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="reader-footer">
+    <svg class="mandala mandala-l" viewBox="0 0 100 100" width="160" height="160" aria-hidden="true" fill="currentColor">
+      <g><ellipse cx="50" cy="50" rx="6" ry="36"/><ellipse cx="50" cy="50" rx="6" ry="36" transform="rotate(45 50 50)"/><ellipse cx="50" cy="50" rx="6" ry="36" transform="rotate(90 50 50)"/><ellipse cx="50" cy="50" rx="6" ry="36" transform="rotate(135 50 50)"/><circle cx="50" cy="50" r="6"/></g>
+    </svg>
+    <svg class="mandala mandala-r" viewBox="0 0 100 100" width="160" height="160" aria-hidden="true" fill="currentColor">
+      <g><ellipse cx="50" cy="50" rx="6" ry="36"/><ellipse cx="50" cy="50" rx="6" ry="36" transform="rotate(45 50 50)"/><ellipse cx="50" cy="50" rx="6" ry="36" transform="rotate(90 50 50)"/><ellipse cx="50" cy="50" rx="6" ry="36" transform="rotate(135 50 50)"/><circle cx="50" cy="50" r="6"/></g>
+    </svg>
+    <div class="reader-footer-inner">
+      <p>“The best of you are those who learn the Qur’an and teach it.”<span class="attr">— Bukhari</span></p>
+    </div>
+  </footer>
+
+  <script src="js/supabase-auth.js?v=3" defer></script>
+  <script src="js/progress-api.js" defer></script>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var SB_URL  = 'https://dwcsledifvnyrunxejzd.supabase.co';
+    var SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3Y3NsZWRpZnZueXJ1bnhlanpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTgwNzgsImV4cCI6MjA5MDUzNDA3OH0.Aww8QcExJF1tPwMPvqP5q0_avc3YJclqsFJcXptlnZo';
+
+    var currentHadith = null;
+    var isRead        = false;
+    var isBookmarked  = false;
+    var showUrdu      = false;
+
+    var params   = new URLSearchParams(location.search);
+    var hadithId = params.get('id');
+
+    function getToken() {
+      try { var s = JSON.parse(localStorage.getItem('th_supabase_session') || 'null'); return s && s.access_token ? s.access_token : null; }
+      catch (e) { return null; }
+    }
+    function $(id) { return document.getElementById(id); }
+    function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    /* Font size — 3-step (A-, A, A+) */
+    var FONT_STEPS = [
+      { en: 16, ar: 26 },
+      { en: 18, ar: 30 },
+      { en: 20, ar: 34 }
+    ];
+    var fontIdx = parseInt(localStorage.getItem('th_reader_font') || '1', 10);
+    fontIdx = Math.max(0, Math.min(2, fontIdx));
+    function applyFont() {
+      var s = FONT_STEPS[fontIdx];
+      document.documentElement.style.setProperty('--en-size', s.en + 'px');
+      document.documentElement.style.setProperty('--ar-size', s.ar + 'px');
+      ['fontDecrease','fontDefault','fontIncrease'].forEach(function (id, i) {
+        $(id).classList.toggle('active', i === fontIdx);
+      });
+      try { localStorage.setItem('th_reader_font', fontIdx); } catch(e) {}
+    }
+    applyFont();
+    $('fontDecrease').addEventListener('click', function () { fontIdx = 0; applyFont(); });
+    $('fontDefault') .addEventListener('click', function () { fontIdx = 1; applyFont(); });
+    $('fontIncrease').addEventListener('click', function () { fontIdx = 2; applyFont(); });
+
+    /* Urdu */
+    try { showUrdu = localStorage.getItem('th_reader_urdu') === '1'; } catch (e) {}
+    function applyUrdu() {
+      var el = $('hadithUrdu'), btn = $('urduToggle');
+      var hasText = ($('hadithUrduText').textContent || '').trim().length > 0;
+      el.classList.toggle('visible', showUrdu && hasText);
+      btn.classList.toggle('btn-active', showUrdu);
+      btn.setAttribute('aria-pressed', showUrdu ? 'true' : 'false');
+      try { localStorage.setItem('th_reader_urdu', showUrdu ? '1' : '0'); } catch (e) {}
+    }
+    $('urduToggle').addEventListener('click', function () { showUrdu = !showUrdu; applyUrdu(); });
+
+    /* Jump (header search input) */
+    function jumpTo(id) {
+      if (!id || isNaN(id)) return;
+      history.pushState(null, '', '?id=' + id);
+      loadHadith(id);
+    }
+    /* Phase 6.5: search dropdown + book filter ────────────────── */
+    var _searchTimer = null;
+    var _searchAbort = null;
+
+    function _isPureNumeric(s) { return /^[0-9]+$/.test(String(s || '').trim()); }
+
+    async function runSearch(q) {
+      var box = $('searchResults');
+      if (!box) return;
+      var query = String(q || '').trim();
+      if (query.length < 2) { box.hidden = true; box.innerHTML = ''; return; }
+
+      /* Abort any in-flight request to keep typing snappy. */
+      if (_searchAbort) { try { _searchAbort.abort(); } catch (e) {} }
+      _searchAbort = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+
+      var bookSel = $('bookFilter');
+      var bookNum = bookSel && bookSel.value ? parseInt(bookSel.value, 10) : null;
+      var qEnc = encodeURIComponent(query);
+      var url = SB_URL + '/rest/v1/hadiths' +
+                '?or=(text_en.ilike.*' + qEnc + '*,narrator.ilike.*' + qEnc + '*)' +
+                (bookNum ? '&book_number=eq.' + bookNum : '') +
+                '&select=id,hadith_number,book_name_en,text_en,narrator&limit=10';
+
+      try {
+        var res = await fetch(url, {
+          headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON },
+          signal: _searchAbort ? _searchAbort.signal : undefined
+        });
+        if (!res.ok) throw new Error('search failed');
+        var rows = await res.json();
+        if (!rows.length) {
+          box.innerHTML = '<div class="empty">No matches for &ldquo;' + esc(query) + '&rdquo;.</div>';
+          box.hidden = false;
+          return;
+        }
+        box.innerHTML = rows.map(function (r) {
+          var snippet = (r.text_en || '').slice(0, 140);
+          var nar = r.narrator ? esc(r.narrator) + ' — ' : '';
+          return '<a href="#" class="search-result-item" role="option" data-num="' + esc(r.hadith_number) + '">' +
+                 '<div class="head">' +
+                 '<span class="num">#' + esc(r.hadith_number) + '</span>' +
+                 '<span class="book">' + esc(r.book_name_en || '') + '</span>' +
+                 '</div>' +
+                 '<div class="snippet">' + nar + esc(snippet) + (snippet.length >= 140 ? '…' : '') + '</div>' +
+                 '</a>';
+        }).join('');
+        box.hidden = false;
+      } catch (e) {
+        if (e && e.name === 'AbortError') return;
+        box.innerHTML = '<div class="empty">Search unavailable. Try again.</div>';
+        box.hidden = false;
+      }
+    }
+
+    /* Click handling on search results — single delegated listener. */
+    document.addEventListener('click', function (e) {
+      var item = e.target && e.target.closest && e.target.closest('.search-result-item');
+      if (item) {
+        e.preventDefault();
+        var num = item.getAttribute('data-num');
+        if (num) {
+          $('searchResults').hidden = true;
+          $('jumpInput').value = num;
+          jumpTo(parseInt(num, 10));
+        }
+        return;
+      }
+      /* Click outside the search box hides results. */
+      if (!e.target.closest('.header-search')) {
+        var box = $('searchResults');
+        if (box) box.hidden = true;
+      }
+    });
+
+    /* Populate the book filter once on load from distinct book_name_en values. */
+    (async function populateBookFilter() {
+      var sel = $('bookFilter');
+      if (!sel) return;
+      try {
+        var res = await fetch(
+          SB_URL + '/rest/v1/hadiths?select=book_number,book_name_en&order=book_number.asc&limit=8000',
+          { headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON } }
+        );
+        if (!res.ok) return;
+        var rows = await res.json();
+        var seen = Object.create(null);
+        var books = [];
+        rows.forEach(function (r) {
+          if (r.book_number && !seen[r.book_number]) {
+            seen[r.book_number] = true;
+            books.push({ num: r.book_number, name: r.book_name_en || ('Book ' + r.book_number) });
+          }
+        });
+        books.sort(function (a, b) { return a.num - b.num; });
+        sel.innerHTML = '<option value="">All books</option>' +
+          books.map(function (b) {
+            return '<option value="' + esc(b.num) + '">' + esc(b.name) + '</option>';
+          }).join('');
+      } catch (e) { /* leave default option */ }
+    })();
+
+    /* Re-run search when the book filter changes. */
+    var _bookSel = $('bookFilter');
+    if (_bookSel) {
+      _bookSel.addEventListener('change', function () {
+        var v = $('jumpInput').value;
+        if (v && !_isPureNumeric(v)) runSearch(v);
+      });
+    }
+
+    $('jumpInput').addEventListener('input', function () {
+      var v = this.value;
+      if (_searchTimer) clearTimeout(_searchTimer);
+      if (!v) { $('searchResults').hidden = true; return; }
+      if (_isPureNumeric(v)) { $('searchResults').hidden = true; return; }
+      _searchTimer = setTimeout(function () { runSearch(v); }, 220);
+    });
+
+    $('jumpInput').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        if (_isPureNumeric(this.value)) { jumpTo(parseInt(this.value, 10)); return; }
+        runSearch(this.value);
+        return;
+      }
+      if (e.key === 'Escape') { $('searchResults').hidden = true; return; }
+    });
+
+    /* Keyboard nav */
+    document.addEventListener('keydown', function (e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (!currentHadith) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        var n = parseInt(currentHadith.hadith_number, 10);
+        jumpTo(e.key === 'ArrowRight' ? n + 1 : Math.max(1, n - 1));
+      }
+    });
+
+    /* Show/hide */
+    function showSkeleton() { $('skeletonLoader').style.display = ''; }
+    function hideSkeleton() { $('skeletonLoader').style.display = 'none'; }
+    function showError(msg) {
+      hideSkeleton();
+      $('errorState').style.display = '';
+      $('errorMsg').textContent = msg || 'Hadith not found.';
+      $('hadithCard').style.display = 'none';
+    }
+    function showCard() {
+      $('hadithCard').style.display = '';
+      $('errorState').style.display = 'none';
+    }
+
+    /* Render */
+    function render(h) {
+      currentHadith = h;
+      isRead = false;
+
+      var num = h.hadith_number || h.in_book_ref || '';
+      var chapter = h.chapter_en || h.book_name_en || '';
+
+      /* Breadcrumb */
+      $('bcChapter').textContent = chapter || 'Chapter';
+      $('bcHadith').textContent  = 'Hadith ' + num;
+
+      /* Hadith N */
+      $('hTitle').textContent = 'Hadith ' + num;
+
+      /* Pills */
+      var pills = [
+        { label: 'Collection', val: 'Sahih al-Bukhari' },
+        { label: 'Narrator',   val: h.narrator || '—' },
+        { label: 'Grade',      val: 'Sahih' },
+        { label: 'Chapter',    val: chapter || '—' }
+      ];
+      $('hadithMeta').innerHTML = pills.map(function (p) {
+        return '<span class="pill"><strong>' + esc(p.label) + ':</strong>&nbsp;' + esc(p.val) + '</span>';
+      }).join('');
+
+      /* Arabic */
+      var ar = $('hadithArabic');
+      if (h.text_ar && h.text_ar.trim()) {
+        ar.textContent = h.text_ar;
+        ar.style.display = '';
+      } else { ar.style.display = 'none'; }
+
+      /* English with narrator intro */
+      var intro = $('narratorIntro');
+      if (h.narrator) {
+        intro.innerHTML = '<strong>' + esc(h.narrator) + '</strong> reported:';
+        intro.style.display = '';
+      } else { intro.style.display = 'none'; }
+      $('hadithEnglish').textContent = h.text_en ? '“' + h.text_en + '”' : 'Translation not available.';
+
+      /* Urdu */
+      $('hadithUrduText').textContent = h.urdu || '';
+      applyUrdu();
+
+      /* Ref line */
+      $('refLine').textContent = 'Sahih al-Bukhari ' + num;
+
+      /* Title */
+      document.title = 'Hadith ' + num + ' — ' + (chapter || 'Sahih al-Bukhari') + ' | Timeless Hadith';
+
+      /* Jump input prefill */
+      $('jumpInput').value = num;
+
+      /* Bookmark state — localStorage first (instant render), then refresh
+         from Supabase if signed in (cross-device sync). */
+      var bks = getBookmarks();
+      isBookmarked = bks.some(function (b) { return b.id === String(num); });
+      updateBookmarkBtn();
+      if (currentHadith.id) {
+        loadSupabaseBookmarkState(currentHadith.id).then(function (sbState) {
+          if (sbState !== null && sbState !== isBookmarked) {
+            isBookmarked = sbState;
+            updateBookmarkBtn();
+          }
+        });
+      }
+
+      /* Reset Mark Read */
+      var btn = $('btnMarkRead');
+      btn.disabled = false;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg> Mark as read';
+      btn.classList.remove('btn-active', 'btn-primary');
+      btn.classList.add('btn-mark-unread');
+      isRead = false;
+
+      /* Progress card — collection-wide stats from localStorage */
+      updateProgressCard();
+
+      /* More-ways links */
+      $('linkFocus').href    = 'read.html?id=' + num + '&mode=focus';
+      $('linkMemorize').href = 'read.html?id=' + num + '&mode=memorize';
+      $('linkPrint').href    = 'read.html?id=' + num + '&mode=print';
+
+      hideSkeleton();
+      showCard();
+
+      $('signInBanner').style.display = getToken() ? 'none' : 'flex';
+    }
+
+    /* Fetch */
+    async function loadHadith(id) {
+      showSkeleton();
+      $('hadithCard').style.display = 'none';
+      $('errorState').style.display = 'none';
+      try {
+        var url = SB_URL + '/rest/v1/hadiths?hadith_number=eq.' + encodeURIComponent(id) +
+          '&select=id,hadith_number,in_book_ref,text_en,text_ar,urdu,narrator,book_name_en,chapter_en&limit=1';
+        var res  = await fetch(url, { headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON } });
+        var rows = await res.json();
+        if (!rows || !rows.length) return showError('Hadith #' + id + ' not found.');
+        render(rows[0]);
+      } catch (e) {
+        showError('Could not load. Please try again.');
+      }
+    }
+
+    /* Prev / Next */
+    $('btnPrevInline').addEventListener('click', function () {
+      if (currentHadith) jumpTo(Math.max(1, parseInt(currentHadith.hadith_number, 10) - 1));
+    });
+    $('btnNextInline').addEventListener('click', function () {
+      if (currentHadith) jumpTo(parseInt(currentHadith.hadith_number, 10) + 1);
+    });
+
+    /* Mark Read */
+    $('btnMarkRead').addEventListener('click', async function () {
+      var token = getToken();
+      if (!token) {
+        $('signInBanner').style.display = 'flex';
+        $('signInBanner').scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+      if (isRead) return;
+      var btn = this;
+      btn.disabled = true;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="animation:spin .7s linear infinite"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.09-4.43"/></svg> Saving…';
+      try {
+        /* Phase 1 wiring: call the new Supabase RPC via ProgressAPI.db.markRead.
+           The RPC takes the bigint primary key (currentHadith.id), not the
+           text hadith_number. Source must be one of the allowlist values
+           (reader|category|dashboard|competition|import). */
+        var result = await window.ProgressAPI.db.markRead(currentHadith.id, 'reader');
+        isRead = true;
+        btn.classList.remove('btn-primary', 'btn-mark-unread');
+        btn.classList.add('btn-active');
+        btn.disabled = false;
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Read ✓';
+        var toast = $('pointsToast');
+        /* RPC jsonb shape: { already_read, new_points, new_coins, total_hadiths,
+           total_points, total_coins, streak_days, level, trophies, newly_unlocked } */
+        toast.textContent = result && !result.already_read
+          ? '+' + (result.new_points || 10) + ' pts — Level ' + (result.level || 1)
+          : 'Already in your reading history';
+        toast.classList.add('show');
+        setTimeout(function () { toast.classList.remove('show'); }, 3000);
+        bumpLocalProgress(currentHadith.hadith_number);
+        updateProgressCard();
+      } catch (e) {
+        btn.disabled = false;
+        btn.classList.remove('btn-active', 'btn-primary');
+        btn.classList.add('btn-mark-unread');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg> Mark as read';
+        console.error('[reader] Mark Read failed:', e);
+      }
+    });
+
+    /* Bookmarks */
+    function getBookmarks() {
+      try { return JSON.parse(localStorage.getItem('th_bookmarks') || '[]'); } catch (e) { return []; }
+    }
+    function saveBookmarks(arr) { localStorage.setItem('th_bookmarks', JSON.stringify(arr)); }
+
+    /* Supabase bookmark helpers — used when signed in.
+       localStorage stays the canonical offline cache (read by bookmarks.html);
+       Supabase adds cross-device sync via public.hadith_bookmarks. */
+    function _bmAuthHeaders(token) {
+      return {
+        'apikey':        SB_ANON,
+        'Authorization': 'Bearer ' + token,
+        'Content-Type':  'application/json',
+        'Prefer':        'return=minimal'
+      };
+    }
+    async function addSupabaseBookmark(hadithIdNum) {
+      var token = getToken();
+      if (!token || !hadithIdNum) return;
+      try {
+        await fetch(SB_URL + '/rest/v1/hadith_bookmarks', {
+          method: 'POST',
+          headers: _bmAuthHeaders(token),
+          /* UNIQUE(user_id, hadith_id) on the table makes this idempotent
+             at the DB level — duplicate POST returns 409 which we ignore. */
+          body: JSON.stringify({ hadith_id: hadithIdNum })
+        });
+      } catch (e) { /* offline — localStorage was already updated */ }
+    }
+    async function removeSupabaseBookmark(hadithIdNum) {
+      var token = getToken();
+      if (!token || !hadithIdNum) return;
+      try {
+        await fetch(SB_URL + '/rest/v1/hadith_bookmarks?hadith_id=eq.' + hadithIdNum, {
+          method: 'DELETE',
+          headers: _bmAuthHeaders(token)
+        });
+      } catch (e) { /* offline */ }
+    }
+    async function loadSupabaseBookmarkState(hadithIdNum) {
+      var token = getToken();
+      if (!token || !hadithIdNum) return null;
+      try {
+        var res = await fetch(
+          SB_URL + '/rest/v1/hadith_bookmarks?hadith_id=eq.' + hadithIdNum +
+          '&select=hadith_id&limit=1',
+          { headers: { apikey: SB_ANON, Authorization: 'Bearer ' + token } }
+        );
+        if (!res.ok) return null;
+        var rows = await res.json();
+        return rows && rows.length > 0;
+      } catch (e) { return null; }
+    }
+    function updateBookmarkBtn() {
+      var btn = $('btnBookmark');
+      if (isBookmarked) {
+        btn.classList.add('btn-active');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Bookmarked';
+      } else {
+        btn.classList.remove('btn-active');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Bookmark';
+      }
+    }
+    $('btnBookmark').addEventListener('click', function () {
+      if (!currentHadith) return;
+      var bks = getBookmarks(), id = String(currentHadith.hadith_number);
+      var sbId = currentHadith.id;  /* bigint PK for Supabase */
+      if (isBookmarked) {
+        bks = bks.filter(function (b) { return b.id !== id; });
+        isBookmarked = false;
+        if (sbId) removeSupabaseBookmark(sbId);
+      } else {
+        bks.push({
+          id: id, arabic: currentHadith.text_ar || '',
+          text: (currentHadith.text_en || '').substring(0, 120),
+          source: 'Sahih al-Bukhari ' + (currentHadith.hadith_number || '')
+        });
+        isBookmarked = true;
+        if (sbId) addSupabaseBookmark(sbId);
+      }
+      saveBookmarks(bks);
+      updateBookmarkBtn();
+    });
+
+    /* Notes modal */
+    $('btnNote').addEventListener('click', function () {
+      $('noteModal').classList.add('open');
+      $('noteText').focus();
+    });
+    $('btnNoteCancel').addEventListener('click', function () { $('noteModal').classList.remove('open'); });
+    $('noteModal').addEventListener('click', function (e) { if (e.target === this) this.classList.remove('open'); });
+    $('btnNoteSave').addEventListener('click', function () {
+      var note = $('noteText').value.trim();
+      if (!note || !currentHadith) return;
+      var notes = JSON.parse(localStorage.getItem('th_notes') || '{}');
+      notes[String(currentHadith.hadith_number)] = note;
+      localStorage.setItem('th_notes', JSON.stringify(notes));
+      $('noteModal').classList.remove('open');
+      $('noteText').value = '';
+      var toast = $('pointsToast');
+      toast.textContent = 'Reflection saved ✓';
+      toast.classList.add('show');
+      setTimeout(function () { toast.classList.remove('show'); }, 2200);
+    });
+
+    /* Share */
+    $('btnShare').addEventListener('click', function () {
+      if (!currentHadith) return;
+      var text = '“' + (currentHadith.text_en || '').substring(0, 200) + '…”\n\n— Sahih al-Bukhari ' +
+        (currentHadith.hadith_number || '') + ' | timelesshadith.com';
+      if (navigator.share) {
+        navigator.share({ title: 'Hadith — Timeless Hadith', text: text, url: location.href });
+      } else {
+        navigator.clipboard.writeText(text).then(function () {
+          var toast = $('pointsToast');
+          toast.textContent = 'Copied ✓';
+          toast.classList.add('show');
+          setTimeout(function () { toast.classList.remove('show'); }, 2000);
+        });
+      }
+    });
+
+    /* Listen — placeholder */
+    $('btnListen').addEventListener('click', function () {
+      var toast = $('pointsToast');
+      toast.textContent = 'Audio coming soon';
+      toast.classList.add('show');
+      setTimeout(function () { toast.classList.remove('show'); }, 1800);
+    });
+
+    /* Sign-in */
+    $('signInBannerBtn').addEventListener('click', function () {
+      if (window.TH_SB_AUTH && window.TH_SB_AUTH.signInWithGoogle) {
+        window.TH_SB_AUTH.signInWithGoogle();
+      }
+    });
+
+    /* Local progress (collection-wide) — simple count of unique hadith numbers read */
+    function getReadSet() {
+      try { return new Set(JSON.parse(localStorage.getItem('th_read_local') || '[]')); }
+      catch (e) { return new Set(); }
+    }
+    function bumpLocalProgress(num) {
+      try {
+        var set = getReadSet();
+        set.add(String(num));
+        localStorage.setItem('th_read_local', JSON.stringify(Array.from(set)));
+      } catch (e) {}
+    }
+    function updateProgressCard() {
+      var set = getReadSet();
+      var total = 7563; /* full Bukhari */
+      var read = set.size;
+      var pct = total > 0 ? Math.round((read / total) * 100) : 0;
+      $('progressPct').textContent   = pct;
+      $('progressRead').textContent  = read.toLocaleString();
+      $('progressTotal').textContent = total.toLocaleString();
+      $('progressBar').style.width   = pct + '%';
+    }
+    updateProgressCard();
+
+    /* Init */
+    /* Init — priority routing per UX spec:
+       A. signed-in + has progress → resume from next hadith after last-read
+       C. signed-out → keep sign-in banner visible, show first hadith as
+          daily featured (banner is already in DOM, just ensure visible). */
+    async function routeDefault() {
+      var token = getToken();
+      if (!token) {
+        var banner = $('signInBanner');
+        if (banner) banner.style.display = 'flex';
+        return loadHadith(1);
+      }
+      try {
+        var lastUrl = SB_URL + '/rest/v1/hadith_progress'
+                    + '?select=hadith_id&order=read_at.desc&limit=1';
+        var lastRes = await fetch(lastUrl, {
+          headers: { apikey: SB_ANON, Authorization: 'Bearer ' + token }
+        });
+        if (lastRes.ok) {
+          var lastRows = await lastRes.json();
+          if (lastRows && lastRows.length) {
+            var lastId = lastRows[0].hadith_id;
+            var detUrl = SB_URL + '/rest/v1/hadiths?id=eq.' + lastId
+                       + '&select=hadith_number&limit=1';
+            var detRes = await fetch(detUrl, {
+              headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON }
+            });
+            if (detRes.ok) {
+              var det = await detRes.json();
+              if (det && det.length && det[0].hadith_number) {
+                var next = parseInt(det[0].hadith_number, 10) + 1;
+                if (isFinite(next) && next > 0) return loadHadith(next);
+              }
+            }
+          }
+        }
+      } catch (e) { /* fall through to B */ }
+      return loadHadith(1);
+    }
+
+    if (hadithId) loadHadith(hadithId); else routeDefault();
+  })();
+  </script>
+</body>
+</html>
