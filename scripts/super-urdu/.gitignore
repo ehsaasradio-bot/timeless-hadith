@@ -1,0 +1,13 @@
+# Never commit real secrets
+.env
+.env.*
+!.env.example
+
+# Working data — regenerable from Supabase / OpenAI
+data/urdu-drafts.csv
+data/urdu-approved.csv
+data/apply-log.json
+data/.stale-*
+
+# urdu-gap.csv and urdu-gap.json are kept in git as a snapshot of the
+# 305-row gap at the time of authoring — useful for review with
