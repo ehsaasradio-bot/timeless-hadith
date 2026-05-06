@@ -23,6 +23,10 @@
   Cache-Control: no-store, no-cache, must-revalidate
   X-Frame-Options: DENY
 
+/dedication.html
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /sw.js
   Cache-Control: public, max-age=0, must-revalidate
   Service-Worker-Allowed: /
@@ -54,6 +58,4 @@
 #   Header always set X-Content-Type-Options "nosniff"
 #   Header always set Referrer-Policy "strict-origin-when-cross-origin"
 #   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-#   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-#   Header always set X-XSS-Protection "1; mode=block"
-# </IfModule>
+#   Header always set Strict-Transport-Security "max-age=

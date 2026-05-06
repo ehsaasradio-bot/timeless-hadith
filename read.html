@@ -906,6 +906,29 @@
       box-shadow: var(--reader-shadow-sm);
     }
 
+    .reader-intro {
+      max-width: 760px;
+      margin: 0 auto 20px;
+      text-align: center;
+    }
+
+    .reader-intro h1 {
+      margin: 0;
+      font-family: var(--font);
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+    }
+
+    .reader-intro p {
+      max-width: 540px;
+      margin: 10px auto 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
     .reader-grid {
       grid-template-columns: minmax(0, 1fr) 300px;
       gap: 22px;
@@ -949,17 +972,54 @@
     }
 
     .ornament-row {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
       color: var(--green);
       font-weight: 700;
       font-size: 24px;
       letter-spacing: -0.01em;
-      margin-bottom: 26px;
+      margin: 0;
     }
 
     .ornament-row .ornament {
       width: 15px;
       height: 15px;
       opacity: 0.55;
+    }
+
+    .hadith-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .hadith-nav-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      display: inline-grid;
+      place-items: center;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .hadith-nav-btn:hover {
+      color: var(--green);
+      border-color: rgba(15, 118, 110, 0.28);
+      background: var(--green-faint);
+    }
+
+    .hadith-nav-btn svg {
+      width: 16px;
+      height: 16px;
+      display: block;
     }
 
     .pill-row {
@@ -997,13 +1057,39 @@
       box-sizing: border-box;
       font-family: var(--font-arabic);
       color: var(--ar-green);
-      font-size: min(var(--ar-size, 28px), 28px);
+      font-size: 20px;
       line-height: 2.15;
       text-align: center;
       max-width: 760px;
-      margin: 20px auto 30px;
+      margin: 20px auto 12px;
       overflow-wrap: normal;
       word-break: normal;
+    }
+
+    .expand-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 26px;
+      min-height: 36px;
+      padding: 8px 15px;
+      border: 1px solid rgba(15, 118, 110, 0.16);
+      border-radius: 999px;
+      background: var(--green-faint);
+      color: var(--green);
+      font: 700 12.5px/1 var(--font);
+      cursor: pointer;
+      transition: background 0.18s, border-color 0.18s, transform 0.18s;
+    }
+
+    .expand-btn:hover {
+      border-color: rgba(15, 118, 110, 0.30);
+      background: var(--green-tint);
+      transform: translateY(-1px);
+    }
+
+    .expand-btn[hidden] {
+      display: none;
     }
 
     .english-block {
@@ -1028,6 +1114,34 @@
 
     .action-bar {
       border-top-color: var(--border);
+      justify-content: flex-end;
+    }
+
+    .action-bar #urduToggle {
+      margin-left: auto;
+    }
+
+    .bottom-nav-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 22px;
+      padding-top: 4px;
+    }
+
+    .bottom-nav-row .btn {
+      min-width: 122px;
+      justify-content: center;
+      background: var(--surface);
+      border-color: rgba(15, 118, 110, 0.16);
+      color: var(--green);
+      box-shadow: 0 6px 18px rgba(15, 118, 110, 0.07);
+    }
+
+    .bottom-nav-row .btn:hover {
+      background: var(--green);
+      color: #fff;
+      border-color: var(--green);
     }
 
     .btn {
@@ -1045,12 +1159,50 @@
     }
 
     .card-actions-top .btn {
+      width: 36px;
+      height: 36px;
+      min-height: 36px;
+      padding: 0;
       font-size: 0;
       overflow: hidden;
+      display: inline-grid;
+      place-items: center;
+      line-height: 1;
+    }
+
+    .card-actions-top {
+      right: 22px;
+      top: 22px;
+      align-items: center;
+      justify-content: flex-end;
     }
 
     .card-actions-top .btn svg {
+      display: block;
+      width: 18px;
+      height: 18px;
       flex-shrink: 0;
+    }
+
+    .typing-reveal {
+      animation: typingReveal 0.28s ease both;
+    }
+
+    @keyframes typingReveal {
+      from {
+        opacity: 0.3;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .typing-reveal {
+        animation: none;
+      }
     }
 
     .btn-primary,
@@ -1106,6 +1258,72 @@
     .reader-footer-inner p {
       font-family: var(--font);
       font-size: 15px;
+    }
+
+    .site-footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 44px 40px;
+      background: transparent;
+    }
+
+    .site-footer .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .site-footer .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .site-footer .footer-logo img {
+      height: 24px;
+      width: auto;
+      display: block;
+    }
+
+    [data-theme="dark"] .site-footer .footer-logo img {
+      filter: brightness(0) invert(1);
+    }
+
+    .site-footer .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 18px 24px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .site-footer .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      white-space: nowrap;
+      transition: color 0.18s;
+    }
+
+    .site-footer .footer-links a:hover {
+      color: var(--green);
+    }
+
+    .site-footer .footer-copy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+    }
+
+    footer.reader-footer {
+      display: none;
     }
 
     @media (max-width: 1000px) {
@@ -1185,6 +1403,21 @@
         padding: 20px 14px 56px;
       }
 
+      .reader-intro {
+        margin-bottom: 16px;
+        text-align: left;
+      }
+
+      .reader-intro h1 {
+        font-size: 30px;
+      }
+
+      .reader-intro p {
+        margin-left: 0;
+        margin-right: 0;
+        font-size: 14px;
+      }
+
       .reader-card {
         border-radius: 20px;
         padding: 26px 18px;
@@ -1209,7 +1442,7 @@
       }
 
       .arabic {
-        font-size: min(var(--ar-size, 22px), 20px);
+        font-size: 20px;
         line-height: 2.05;
       }
 
@@ -1218,8 +1451,39 @@
         line-height: 1.75;
       }
 
+      .hadith-title-row {
+        gap: 10px;
+      }
+
+      .hadith-nav-btn {
+        width: 32px;
+        height: 32px;
+      }
+
+      .bottom-nav-row .btn {
+        min-width: 0;
+        flex: 1;
+      }
+
       .reader-footer {
         margin-top: 0;
+      }
+
+      .site-footer {
+        padding: 34px 18px;
+      }
+
+      .site-footer .footer-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .site-footer .footer-logo {
+        justify-content: center;
+      }
+
+      .site-footer .footer-copy {
+        text-align: center;
       }
     }
   </style>
@@ -1299,6 +1563,10 @@
   </script>
 
   <main class="reader-wrap">
+    <section class="reader-intro" aria-labelledby="readerIntroTitle">
+      <h1 id="readerIntroTitle">Focus Mode</h1>
+      <p>Read one hadith with fewer distractions so its meaning is easier to absorb.</p>
+    </section>
 
     <!-- Sign-in banner -->
     <div class="signin-banner" id="signInBanner">
@@ -1338,6 +1606,10 @@
 
         <!-- Floating top-right action cluster (bookmark + share moved here from action-bar; same IDs, same handlers) -->
         <div class="card-actions-top" aria-label="Card actions">
+          <button class="btn" id="btnMarkReadTop" type="button" aria-label="Mark as read">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.2 2.2 4.8-5"/></svg>
+            <span class="btn-label">Mark as read</span>
+          </button>
           <button class="btn" id="btnBookmark" type="button" aria-label="Bookmark">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
             <span class="btn-label">Bookmark</span>
@@ -1362,10 +1634,18 @@
         </nav>
 
         <!-- Hadith N -->
-        <div class="ornament-row">
-          <svg class="ornament" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 L13.5 8.5 L20 7 L15.5 12 L20 17 L13.5 15.5 L12 22 L10.5 15.5 L4 17 L8.5 12 L4 7 L10.5 8.5 Z"/></svg>
-          <span id="hTitle">Hadith</span>
-          <svg class="ornament" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 L13.5 8.5 L20 7 L15.5 12 L20 17 L13.5 15.5 L12 22 L10.5 15.5 L4 17 L8.5 12 L4 7 L10.5 8.5 Z"/></svg>
+        <div class="hadith-title-row">
+          <button class="hadith-nav-btn" id="btnPrevTop" type="button" aria-label="Previous hadith">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 6 9 12 15 18"/></svg>
+          </button>
+          <div class="ornament-row">
+            <svg class="ornament" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 L13.5 8.5 L20 7 L15.5 12 L20 17 L13.5 15.5 L12 22 L10.5 15.5 L4 17 L8.5 12 L4 7 L10.5 8.5 Z"/></svg>
+            <span id="hTitle">Hadith</span>
+            <svg class="ornament" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 L13.5 8.5 L20 7 L15.5 12 L20 17 L13.5 15.5 L12 22 L10.5 15.5 L4 17 L8.5 12 L4 7 L10.5 8.5 Z"/></svg>
+          </div>
+          <button class="hadith-nav-btn" id="btnNextTop" type="button" aria-label="Next hadith">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 6 15 12 9 18"/></svg>
+          </button>
         </div>
 
         <!-- Pills (kept ID hadithMeta for existing JS) -->
@@ -1373,6 +1653,7 @@
 
         <!-- Arabic -->
         <div id="hadithArabic" class="arabic" style="display:none"></div>
+        <button class="expand-btn" id="arabicExpandBtn" type="button" hidden aria-expanded="false">Show full Arabic</button>
 
         <!-- Star divider -->
         <div class="star-div" aria-hidden="true">
@@ -1383,6 +1664,7 @@
         <div class="english-block">
           <p class="narrator-intro" id="narratorIntro" style="display:none"></p>
           <p id="hadithEnglish"></p>
+          <button class="expand-btn" id="englishExpandBtn" type="button" hidden aria-expanded="false">Show full English</button>
         </div>
 
         <!-- Urdu -->
@@ -1404,17 +1686,13 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>
             Mark as read
           </button>
-          <button class="btn" id="btnNote">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-            Reflect
-          </button>
           <button class="btn" id="urduToggle" type="button" aria-pressed="false" lang="ur">
             اردو
           </button>
         </div>
 
         <!-- Prev / Next inline -->
-        <div style="display:flex; justify-content:space-between; gap:12px; margin-top:22px;">
+        <div class="bottom-nav-row">
           <button class="btn" id="btnPrevInline" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 6 9 12 15 18"/></svg>
             Previous
@@ -1488,15 +1766,24 @@
   <div class="points-toast" id="pointsToast" role="status" aria-live="polite"></div>
 
   <!-- Footer -->
-  <footer class="reader-footer">
-    <svg class="mandala mandala-l" viewBox="0 0 100 100" width="160" height="160" aria-hidden="true" fill="currentColor">
-      <g><ellipse cx="50" cy="50" rx="6" ry="36"/><ellipse cx="50" cy="50" rx="6" ry="36" transform="rotate(45 50 50)"/><ellipse cx="50" cy="50" rx="6" ry="36" transform="rotate(90 50 50)"/><ellipse cx="50" cy="50" rx="6" ry="36" transform="rotate(135 50 50)"/><circle cx="50" cy="50" r="6"/></g>
-    </svg>
-    <svg class="mandala mandala-r" viewBox="0 0 100 100" width="160" height="160" aria-hidden="true" fill="currentColor">
-      <g><ellipse cx="50" cy="50" rx="6" ry="36"/><ellipse cx="50" cy="50" rx="6" ry="36" transform="rotate(45 50 50)"/><ellipse cx="50" cy="50" rx="6" ry="36" transform="rotate(90 50 50)"/><ellipse cx="50" cy="50" rx="6" ry="36" transform="rotate(135 50 50)"/><circle cx="50" cy="50" r="6"/></g>
-    </svg>
-    <div class="reader-footer-inner">
-      <p>“The best of you are those who learn the Qur’an and teach it.”<span class="attr">— Bukhari</span></p>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo" aria-label="Timeless Hadith home">
+        <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="32" width="160" loading="lazy" decoding="async" /></picture>
+      </a>
+      <ul class="footer-links">
+        <li><a href="reader.html">Reader</a></li>
+        <li><a href="categories.html">Browse</a></li>
+        <li><a href="bookmarks.html">Bookmarks</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="prayer-times.html">Prayer Times</a></li>
+        <li><a href="dedication.html" rel="nofollow">Dedication</a></li>
+        <li><a href="https://shop.timelesshadith.com" target="_blank" rel="noopener">Shop</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Use</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 Timeless Hadith. All rights reserved.</p>
     </div>
   </footer>
 
@@ -1524,6 +1811,63 @@
     }
     function $(id) { return document.getElementById(id); }
     function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    function wordList(text) {
+      return String(text || '').trim().split(/\s+/).filter(Boolean);
+    }
+    function renderExpandableText(textEl, buttonEl, text, options) {
+      var fullText = String(text || '').trim();
+      var words = wordList(fullText);
+      var limit = options.limit || 30;
+      var expanded = false;
+      var hasMore = words.length > limit;
+
+      function setText(value) {
+        textEl.textContent = (options.prefix || '') + value + (options.suffix || '');
+      }
+
+      function animateTyping(value) {
+        var typingWords = wordList(value);
+        var index = 0;
+        var step = Math.max(1, Math.ceil(typingWords.length / 42));
+
+        if (textEl._typingTimer) window.clearInterval(textEl._typingTimer);
+        textEl.classList.add('typing-reveal');
+        setText('');
+
+        textEl._typingTimer = window.setInterval(function () {
+          index = Math.min(typingWords.length, index + step);
+          setText(typingWords.slice(0, index).join(' '));
+          if (index >= typingWords.length) {
+            window.clearInterval(textEl._typingTimer);
+            textEl._typingTimer = null;
+          }
+        }, 18);
+      }
+
+      function paint(animate) {
+        var visibleText = hasMore && !expanded
+          ? words.slice(0, limit).join(' ') + '...'
+          : fullText;
+
+        if (textEl._typingTimer) window.clearInterval(textEl._typingTimer);
+        if (animate && expanded && hasMore && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          animateTyping(visibleText);
+        } else {
+          textEl.classList.remove('typing-reveal');
+          setText(visibleText);
+        }
+        buttonEl.hidden = !hasMore;
+        buttonEl.textContent = expanded ? options.lessLabel : options.moreLabel;
+        buttonEl.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      }
+
+      buttonEl.onclick = function () {
+        expanded = !expanded;
+        paint(true);
+      };
+
+      paint(false);
+    }
 
     /* Font size — 3-step (A-, A, A+) */
     var FONT_STEPS = [
@@ -1543,542 +1887,4 @@
       try { localStorage.setItem('th_reader_font', fontIdx); } catch(e) {}
     }
     applyFont();
-    $('fontDecrease').addEventListener('click', function () { fontIdx = 0; applyFont(); });
-    $('fontDefault') .addEventListener('click', function () { fontIdx = 1; applyFont(); });
-    $('fontIncrease').addEventListener('click', function () { fontIdx = 2; applyFont(); });
-
-    /* Urdu */
-    try { showUrdu = localStorage.getItem('th_reader_urdu') === '1'; } catch (e) {}
-    function applyUrdu() {
-      var el = $('hadithUrdu'), btn = $('urduToggle');
-      var hasText = ($('hadithUrduText').textContent || '').trim().length > 0;
-      el.classList.toggle('visible', showUrdu && hasText);
-      btn.classList.toggle('btn-active', showUrdu);
-      btn.setAttribute('aria-pressed', showUrdu ? 'true' : 'false');
-      try { localStorage.setItem('th_reader_urdu', showUrdu ? '1' : '0'); } catch (e) {}
-    }
-    $('urduToggle').addEventListener('click', function () { showUrdu = !showUrdu; applyUrdu(); });
-
-    /* Jump (header search input) */
-    function jumpTo(id) {
-      if (!id || isNaN(id)) return;
-      history.pushState(null, '', '?id=' + id);
-      loadHadith(id);
-    }
-    /* Phase 6.5: search dropdown + book filter ────────────────── */
-    var _searchTimer = null;
-    var _searchAbort = null;
-
-    function _isPureNumeric(s) { return /^[0-9]+$/.test(String(s || '').trim()); }
-
-    async function runSearch(q) {
-      var box = $('searchResults');
-      if (!box) return;
-      var query = String(q || '').trim();
-      if (query.length < 2) { box.hidden = true; box.innerHTML = ''; return; }
-
-      /* Abort any in-flight request to keep typing snappy. */
-      if (_searchAbort) { try { _searchAbort.abort(); } catch (e) {} }
-      _searchAbort = (typeof AbortController !== 'undefined') ? new AbortController() : null;
-
-      var bookSel = $('bookFilter');
-      var bookNum = bookSel && bookSel.value ? parseInt(bookSel.value, 10) : null;
-      var qEnc = encodeURIComponent(query);
-      var url = SB_URL + '/rest/v1/hadiths' +
-                '?or=(text_en.ilike.*' + qEnc + '*,narrator.ilike.*' + qEnc + '*)' +
-                (bookNum ? '&book_number=eq.' + bookNum : '') +
-                '&select=id,hadith_number,book_name_en,text_en,narrator&limit=10';
-
-      try {
-        var res = await fetch(url, {
-          headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON },
-          signal: _searchAbort ? _searchAbort.signal : undefined
-        });
-        if (!res.ok) throw new Error('search failed');
-        var rows = await res.json();
-        if (!rows.length) {
-          box.innerHTML = '<div class="empty">No matches for &ldquo;' + esc(query) + '&rdquo;.</div>';
-          box.hidden = false;
-          return;
-        }
-        box.innerHTML = rows.map(function (r) {
-          var snippet = (r.text_en || '').slice(0, 140);
-          var nar = r.narrator ? esc(r.narrator) + ' — ' : '';
-          return '<a href="#" class="search-result-item" role="option" data-num="' + esc(r.hadith_number) + '">' +
-                 '<div class="head">' +
-                 '<span class="num">#' + esc(r.hadith_number) + '</span>' +
-                 '<span class="book">' + esc(r.book_name_en || '') + '</span>' +
-                 '</div>' +
-                 '<div class="snippet">' + nar + esc(snippet) + (snippet.length >= 140 ? '…' : '') + '</div>' +
-                 '</a>';
-        }).join('');
-        box.hidden = false;
-      } catch (e) {
-        if (e && e.name === 'AbortError') return;
-        box.innerHTML = '<div class="empty">Search unavailable. Try again.</div>';
-        box.hidden = false;
-      }
-    }
-
-    /* Click handling on search results — single delegated listener. */
-    document.addEventListener('click', function (e) {
-      var item = e.target && e.target.closest && e.target.closest('.search-result-item');
-      if (item) {
-        e.preventDefault();
-        var num = item.getAttribute('data-num');
-        if (num) {
-          $('searchResults').hidden = true;
-          $('jumpInput').value = num;
-          jumpTo(parseInt(num, 10));
-        }
-        return;
-      }
-      /* Click outside the search box hides results. */
-      if (!e.target.closest('.header-search')) {
-        var box = $('searchResults');
-        if (box) box.hidden = true;
-      }
-    });
-
-    /* Populate the book filter once on load from distinct book_name_en values. */
-    (async function populateBookFilter() {
-      var sel = $('bookFilter');
-      if (!sel) return;
-      try {
-        var res = await fetch(
-          SB_URL + '/rest/v1/hadiths?select=book_number,book_name_en&order=book_number.asc&limit=8000',
-          { headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON } }
-        );
-        if (!res.ok) return;
-        var rows = await res.json();
-        var seen = Object.create(null);
-        var books = [];
-        rows.forEach(function (r) {
-          if (r.book_number && !seen[r.book_number]) {
-            seen[r.book_number] = true;
-            books.push({ num: r.book_number, name: r.book_name_en || ('Book ' + r.book_number) });
-          }
-        });
-        books.sort(function (a, b) { return a.num - b.num; });
-        sel.innerHTML = '<option value="">All books</option>' +
-          books.map(function (b) {
-            return '<option value="' + esc(b.num) + '">' + esc(b.name) + '</option>';
-          }).join('');
-      } catch (e) { /* leave default option */ }
-    })();
-
-    /* Re-run search when the book filter changes. */
-    var _bookSel = $('bookFilter');
-    if (_bookSel) {
-      _bookSel.addEventListener('change', function () {
-        var v = $('jumpInput').value;
-        if (v && !_isPureNumeric(v)) runSearch(v);
-      });
-    }
-
-    $('jumpInput').addEventListener('input', function () {
-      var v = this.value;
-      if (_searchTimer) clearTimeout(_searchTimer);
-      if (!v) { $('searchResults').hidden = true; return; }
-      if (_isPureNumeric(v)) { $('searchResults').hidden = true; return; }
-      _searchTimer = setTimeout(function () { runSearch(v); }, 220);
-    });
-
-    $('jumpInput').addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        if (_isPureNumeric(this.value)) { jumpTo(parseInt(this.value, 10)); return; }
-        runSearch(this.value);
-        return;
-      }
-      if (e.key === 'Escape') { $('searchResults').hidden = true; return; }
-    });
-
-    /* Keyboard nav */
-    document.addEventListener('keydown', function (e) {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-      if (!currentHadith) return;
-      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-        e.preventDefault();
-        var n = parseInt(currentHadith.hadith_number, 10);
-        jumpTo(e.key === 'ArrowRight' ? n + 1 : Math.max(1, n - 1));
-      }
-    });
-
-    /* Show/hide */
-    function showSkeleton() { $('skeletonLoader').style.display = ''; }
-    function hideSkeleton() { $('skeletonLoader').style.display = 'none'; }
-    function showError(msg) {
-      hideSkeleton();
-      $('errorState').style.display = '';
-      $('errorMsg').textContent = msg || 'Hadith not found.';
-      $('hadithCard').style.display = 'none';
-    }
-    function showCard() {
-      $('hadithCard').style.display = '';
-      $('errorState').style.display = 'none';
-    }
-
-    /* Render */
-    function render(h) {
-      currentHadith = h;
-      isRead = false;
-
-      var num = h.hadith_number || h.in_book_ref || '';
-      var chapter = h.chapter_en || h.book_name_en || '';
-
-      /* Breadcrumb */
-      $('bcChapter').textContent = chapter || 'Chapter';
-      $('bcHadith').textContent  = 'Hadith ' + num;
-
-      /* Hadith N */
-      $('hTitle').textContent = 'Hadith ' + num;
-
-      /* Pills */
-      var pills = [
-        { label: 'Collection', val: 'Sahih al-Bukhari' },
-        { label: 'Narrator',   val: h.narrator || '—' },
-        { label: 'Grade',      val: 'Sahih' },
-        { label: 'Chapter',    val: chapter || '—' }
-      ];
-      $('hadithMeta').innerHTML = pills.map(function (p) {
-        return '<span class="pill"><strong>' + esc(p.label) + ':</strong>&nbsp;' + esc(p.val) + '</span>';
-      }).join('');
-
-      /* Arabic */
-      var ar = $('hadithArabic');
-      if (h.text_ar && h.text_ar.trim()) {
-        ar.textContent = h.text_ar;
-        ar.style.display = '';
-      } else { ar.style.display = 'none'; }
-
-      /* English with narrator intro */
-      var intro = $('narratorIntro');
-      if (h.narrator) {
-        intro.innerHTML = '<strong>' + esc(h.narrator) + '</strong> reported:';
-        intro.style.display = '';
-      } else { intro.style.display = 'none'; }
-      $('hadithEnglish').textContent = h.text_en ? '“' + h.text_en + '”' : 'Translation not available.';
-
-      /* Urdu */
-      $('hadithUrduText').textContent = h.urdu || '';
-      applyUrdu();
-
-      /* Ref line */
-      $('refLine').textContent = 'Sahih al-Bukhari ' + num;
-
-      /* Title */
-      document.title = 'Hadith ' + num + ' — ' + (chapter || 'Sahih al-Bukhari') + ' | Timeless Hadith';
-
-      /* Jump input prefill */
-      $('jumpInput').value = num;
-
-      /* Bookmark state — localStorage first (instant render), then refresh
-         from Supabase if signed in (cross-device sync). */
-      var bks = getBookmarks();
-      isBookmarked = bks.some(function (b) { return b.id === String(num); });
-      updateBookmarkBtn();
-      if (currentHadith.id) {
-        loadSupabaseBookmarkState(currentHadith.id).then(function (sbState) {
-          if (sbState !== null && sbState !== isBookmarked) {
-            isBookmarked = sbState;
-            updateBookmarkBtn();
-          }
-        });
-      }
-
-      /* Reset Mark Read */
-      var btn = $('btnMarkRead');
-      btn.disabled = false;
-      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg> Mark as read';
-      btn.classList.remove('btn-active', 'btn-primary');
-      btn.classList.add('btn-mark-unread');
-      isRead = false;
-
-      /* Progress card — collection-wide stats from localStorage */
-      updateProgressCard();
-
-      /* More-ways links */
-      $('linkFocus').href    = 'read.html?id=' + num + '&mode=focus';
-      $('linkMemorize').href = 'read.html?id=' + num + '&mode=memorize';
-      $('linkPrint').href    = 'read.html?id=' + num + '&mode=print';
-
-      hideSkeleton();
-      showCard();
-
-      $('signInBanner').style.display = getToken() ? 'none' : 'flex';
-    }
-
-    /* Fetch */
-    async function loadHadith(id) {
-      showSkeleton();
-      $('hadithCard').style.display = 'none';
-      $('errorState').style.display = 'none';
-      try {
-        var url = SB_URL + '/rest/v1/hadiths?hadith_number=eq.' + encodeURIComponent(id) +
-          '&select=id,hadith_number,in_book_ref,text_en,text_ar,urdu,narrator,book_name_en,chapter_en&limit=1';
-        var res  = await fetch(url, { headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON } });
-        var rows = await res.json();
-        if (!rows || !rows.length) return showError('Hadith #' + id + ' not found.');
-        render(rows[0]);
-      } catch (e) {
-        showError('Could not load. Please try again.');
-      }
-    }
-
-    /* Prev / Next */
-    $('btnPrevInline').addEventListener('click', function () {
-      if (currentHadith) jumpTo(Math.max(1, parseInt(currentHadith.hadith_number, 10) - 1));
-    });
-    $('btnNextInline').addEventListener('click', function () {
-      if (currentHadith) jumpTo(parseInt(currentHadith.hadith_number, 10) + 1);
-    });
-
-    /* Mark Read */
-    $('btnMarkRead').addEventListener('click', async function () {
-      var token = getToken();
-      if (!token) {
-        $('signInBanner').style.display = 'flex';
-        $('signInBanner').scrollIntoView({ behavior: 'smooth' });
-        return;
-      }
-      if (isRead) return;
-      var btn = this;
-      btn.disabled = true;
-      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="animation:spin .7s linear infinite"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.09-4.43"/></svg> Saving…';
-      try {
-        /* Phase 1 wiring: call the new Supabase RPC via ProgressAPI.db.markRead.
-           The RPC takes the bigint primary key (currentHadith.id), not the
-           text hadith_number. Source must be one of the allowlist values
-           (reader|category|dashboard|competition|import). */
-        var result = await window.ProgressAPI.db.markRead(currentHadith.id, 'reader');
-        isRead = true;
-        btn.classList.remove('btn-primary', 'btn-mark-unread');
-        btn.classList.add('btn-active');
-        btn.disabled = false;
-        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Read ✓';
-        var toast = $('pointsToast');
-        /* RPC jsonb shape: { already_read, new_points, new_coins, total_hadiths,
-           total_points, total_coins, streak_days, level, trophies, newly_unlocked } */
-        toast.textContent = result && !result.already_read
-          ? '+' + (result.new_points || 10) + ' pts — Level ' + (result.level || 1)
-          : 'Already in your reading history';
-        toast.classList.add('show');
-        setTimeout(function () { toast.classList.remove('show'); }, 3000);
-        bumpLocalProgress(currentHadith.hadith_number);
-        updateProgressCard();
-      } catch (e) {
-        btn.disabled = false;
-        btn.classList.remove('btn-active', 'btn-primary');
-        btn.classList.add('btn-mark-unread');
-        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg> Mark as read';
-        console.error('[reader] Mark Read failed:', e);
-      }
-    });
-
-    /* Bookmarks */
-    function getBookmarks() {
-      try { return JSON.parse(localStorage.getItem('th_bookmarks') || '[]'); } catch (e) { return []; }
-    }
-    function saveBookmarks(arr) { localStorage.setItem('th_bookmarks', JSON.stringify(arr)); }
-
-    /* Supabase bookmark helpers — used when signed in.
-       localStorage stays the canonical offline cache (read by bookmarks.html);
-       Supabase adds cross-device sync via public.hadith_bookmarks. */
-    function _bmAuthHeaders(token) {
-      return {
-        'apikey':        SB_ANON,
-        'Authorization': 'Bearer ' + token,
-        'Content-Type':  'application/json',
-        'Prefer':        'return=minimal'
-      };
-    }
-    async function addSupabaseBookmark(hadithIdNum) {
-      var token = getToken();
-      if (!token || !hadithIdNum) return;
-      try {
-        await fetch(SB_URL + '/rest/v1/hadith_bookmarks', {
-          method: 'POST',
-          headers: _bmAuthHeaders(token),
-          /* UNIQUE(user_id, hadith_id) on the table makes this idempotent
-             at the DB level — duplicate POST returns 409 which we ignore. */
-          body: JSON.stringify({ hadith_id: hadithIdNum })
-        });
-      } catch (e) { /* offline — localStorage was already updated */ }
-    }
-    async function removeSupabaseBookmark(hadithIdNum) {
-      var token = getToken();
-      if (!token || !hadithIdNum) return;
-      try {
-        await fetch(SB_URL + '/rest/v1/hadith_bookmarks?hadith_id=eq.' + hadithIdNum, {
-          method: 'DELETE',
-          headers: _bmAuthHeaders(token)
-        });
-      } catch (e) { /* offline */ }
-    }
-    async function loadSupabaseBookmarkState(hadithIdNum) {
-      var token = getToken();
-      if (!token || !hadithIdNum) return null;
-      try {
-        var res = await fetch(
-          SB_URL + '/rest/v1/hadith_bookmarks?hadith_id=eq.' + hadithIdNum +
-          '&select=hadith_id&limit=1',
-          { headers: { apikey: SB_ANON, Authorization: 'Bearer ' + token } }
-        );
-        if (!res.ok) return null;
-        var rows = await res.json();
-        return rows && rows.length > 0;
-      } catch (e) { return null; }
-    }
-    function updateBookmarkBtn() {
-      var btn = $('btnBookmark');
-      if (isBookmarked) {
-        btn.classList.add('btn-active');
-        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Bookmarked';
-      } else {
-        btn.classList.remove('btn-active');
-        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Bookmark';
-      }
-    }
-    $('btnBookmark').addEventListener('click', function () {
-      if (!currentHadith) return;
-      var bks = getBookmarks(), id = String(currentHadith.hadith_number);
-      var sbId = currentHadith.id;  /* bigint PK for Supabase */
-      if (isBookmarked) {
-        bks = bks.filter(function (b) { return b.id !== id; });
-        isBookmarked = false;
-        if (sbId) removeSupabaseBookmark(sbId);
-      } else {
-        bks.push({
-          id: id, arabic: currentHadith.text_ar || '',
-          text: (currentHadith.text_en || '').substring(0, 120),
-          source: 'Sahih al-Bukhari ' + (currentHadith.hadith_number || '')
-        });
-        isBookmarked = true;
-        if (sbId) addSupabaseBookmark(sbId);
-      }
-      saveBookmarks(bks);
-      updateBookmarkBtn();
-    });
-
-    /* Notes modal */
-    $('btnNote').addEventListener('click', function () {
-      $('noteModal').classList.add('open');
-      $('noteText').focus();
-    });
-    $('btnNoteCancel').addEventListener('click', function () { $('noteModal').classList.remove('open'); });
-    $('noteModal').addEventListener('click', function (e) { if (e.target === this) this.classList.remove('open'); });
-    $('btnNoteSave').addEventListener('click', function () {
-      var note = $('noteText').value.trim();
-      if (!note || !currentHadith) return;
-      var notes = JSON.parse(localStorage.getItem('th_notes') || '{}');
-      notes[String(currentHadith.hadith_number)] = note;
-      localStorage.setItem('th_notes', JSON.stringify(notes));
-      $('noteModal').classList.remove('open');
-      $('noteText').value = '';
-      var toast = $('pointsToast');
-      toast.textContent = 'Reflection saved ✓';
-      toast.classList.add('show');
-      setTimeout(function () { toast.classList.remove('show'); }, 2200);
-    });
-
-    /* Share */
-    $('btnShare').addEventListener('click', function () {
-      if (!currentHadith) return;
-      var text = '“' + (currentHadith.text_en || '').substring(0, 200) + '…”\n\n— Sahih al-Bukhari ' +
-        (currentHadith.hadith_number || '') + ' | timelesshadith.com';
-      if (navigator.share) {
-        navigator.share({ title: 'Hadith — Timeless Hadith', text: text, url: location.href });
-      } else {
-        navigator.clipboard.writeText(text).then(function () {
-          var toast = $('pointsToast');
-          toast.textContent = 'Copied ✓';
-          toast.classList.add('show');
-          setTimeout(function () { toast.classList.remove('show'); }, 2000);
-        });
-      }
-    });
-
-    /* Listen — placeholder */
-    $('btnListen').addEventListener('click', function () {
-      var toast = $('pointsToast');
-      toast.textContent = 'Audio coming soon';
-      toast.classList.add('show');
-      setTimeout(function () { toast.classList.remove('show'); }, 1800);
-    });
-
-    /* Sign-in */
-    $('signInBannerBtn').addEventListener('click', function () {
-      if (window.TH_SB_AUTH && window.TH_SB_AUTH.signInWithGoogle) {
-        window.TH_SB_AUTH.signInWithGoogle();
-      }
-    });
-
-    /* Local progress (collection-wide) — simple count of unique hadith numbers read */
-    function getReadSet() {
-      try { return new Set(JSON.parse(localStorage.getItem('th_read_local') || '[]')); }
-      catch (e) { return new Set(); }
-    }
-    function bumpLocalProgress(num) {
-      try {
-        var set = getReadSet();
-        set.add(String(num));
-        localStorage.setItem('th_read_local', JSON.stringify(Array.from(set)));
-      } catch (e) {}
-    }
-    function updateProgressCard() {
-      var set = getReadSet();
-      var total = 7563; /* full Bukhari */
-      var read = set.size;
-      var pct = total > 0 ? Math.round((read / total) * 100) : 0;
-      $('progressPct').textContent   = pct;
-      $('progressRead').textContent  = read.toLocaleString();
-      $('progressTotal').textContent = total.toLocaleString();
-      $('progressBar').style.width   = pct + '%';
-    }
-    updateProgressCard();
-
-    /* Init */
-    /* Init — priority routing per UX spec:
-       A. signed-in + has progress → resume from next hadith after last-read
-       C. signed-out → keep sign-in banner visible, show first hadith as
-          daily featured (banner is already in DOM, just ensure visible). */
-    async function routeDefault() {
-      var token = getToken();
-      if (!token) {
-        var banner = $('signInBanner');
-        if (banner) banner.style.display = 'flex';
-        return loadHadith(1);
-      }
-      try {
-        var lastUrl = SB_URL + '/rest/v1/hadith_progress'
-                    + '?select=hadith_id&order=read_at.desc&limit=1';
-        var lastRes = await fetch(lastUrl, {
-          headers: { apikey: SB_ANON, Authorization: 'Bearer ' + token }
-        });
-        if (lastRes.ok) {
-          var lastRows = await lastRes.json();
-          if (lastRows && lastRows.length) {
-            var lastId = lastRows[0].hadith_id;
-            var detUrl = SB_URL + '/rest/v1/hadiths?id=eq.' + lastId
-                       + '&select=hadith_number&limit=1';
-            var detRes = await fetch(detUrl, {
-              headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON }
-            });
-            if (detRes.ok) {
-              var det = await detRes.json();
-              if (det && det.length && det[0].hadith_number) {
-                var next = parseInt(det[0].hadith_number, 10) + 1;
-                if (isFinite(next) && next > 0) return loadHadith(next);
-              }
-            }
-          }
-        }
-      } catch (e) { /* fall through to B */ }
-      return loadHadith(1);
-    }
-
-    if (hadithId) loadHadith(hadithId); else routeDefault();
-  })();
-  </script>
-</body>
-</html>
+    $('fon
