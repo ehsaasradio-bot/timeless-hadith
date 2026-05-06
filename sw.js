@@ -7,7 +7,7 @@
  *  - Fonts: self-hosted woff2 files precached with core assets
  */
 
-const VERSION = 'th-v16-2026-05-06'; // Reader landing + /read split
+const VERSION = 'th-v17-2026-05-06'; // Repair NUL-truncated HTML pages; restore urdu-toggle wiring
 const CORE_CACHE = `${VERSION}-core`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -125,6 +125,4 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // All other cross-origin requests: let browser handle
-
-});
+  // All other cross-origin req
