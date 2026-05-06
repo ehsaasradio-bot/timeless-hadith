@@ -7,7 +7,7 @@
  *  - Fonts: self-hosted woff2 files precached with core assets
  */
 
-const VERSION = 'th-v17-2026-05-06'; // Repair NUL-truncated HTML pages; restore urdu-toggle wiring
+const VERSION = 'th-v18-2026-05-06'; // Mobile header refinement
 const CORE_CACHE = `${VERSION}-core`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
