@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dedication — Timeless Hadith</title>
+  <title>Dedication - Timeless Hadith</title>
   <meta name="description" content="A private dedication page for the family behind Timeless Hadith." />
   <meta name="robots" content="noindex, nofollow, noarchive" />
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
@@ -25,121 +25,281 @@
     }
   })();</script>
   <style>
+    :root {
+      --dedication-green: #0b6b4b;
+      --dedication-green-dark: #063b2a;
+      --dedication-gold: #d8b76a;
+      --dedication-paper: #fbfbf8;
+      --dedication-ink: #101827;
+      --dedication-soft: #eef4ef;
+      --dedication-line: rgba(16, 24, 39, 0.1);
+    }
+
+    [data-theme="dark"] {
+      --dedication-paper: #071120;
+      --dedication-ink: #f3f6fb;
+      --dedication-soft: rgba(16, 86, 62, 0.16);
+      --dedication-line: rgba(255, 255, 255, 0.12);
+    }
+
     body {
       background:
-        radial-gradient(circle at top right, rgba(var(--accent-raw), 0.08), transparent 34rem),
+        linear-gradient(180deg, rgba(11, 107, 75, 0.055), transparent 420px),
         var(--bg);
       color: var(--ink);
     }
 
-    .dedication-wrap {
-      max-width: 960px;
+    .dedication-page {
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 112px 24px 72px;
+      padding: 118px 24px 84px;
     }
 
     .dedication-hero {
-      text-align: center;
-      margin-bottom: 34px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      margin-bottom: 44px;
     }
 
-    .dedication-kicker {
-      display: inline-flex;
+    .dedication-breadcrumb {
+      display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-      padding: 7px 14px;
-      border: 1px solid rgba(var(--accent-raw), 0.18);
-      border-radius: 999px;
-      background: rgba(var(--accent-raw), 0.08);
-      color: var(--accent);
-      font-size: 12px;
+      gap: 10px;
+      margin-bottom: 28px;
+      color: var(--muted);
+      font-size: 13px;
       font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .dedication-breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .dedication-breadcrumb a:hover {
+      color: var(--dedication-green);
+    }
+
+    .dedication-breadcrumb span {
+      color: var(--dedication-green);
     }
 
     .dedication-hero h1 {
+      max-width: 930px;
+      margin: 0;
+      color: var(--dedication-ink);
+      font-family: var(--font-display);
+      font-size: 84px;
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .dedication-lede {
       max-width: 760px;
-      margin: 0 auto;
-      font-size: clamp(38px, 7vw, 68px);
-      line-height: 1.02;
-      letter-spacing: -0.045em;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 22px;
+      line-height: 1.62;
+      letter-spacing: 0;
+    }
+
+    .dedication-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .dedication-meta strong {
       color: var(--ink);
     }
 
-    .dedication-hero p {
-      max-width: 660px;
-      margin: 20px auto 0;
+    .dedication-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+
+    .dedication-layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 72px;
+      align-items: start;
+    }
+
+    .dedication-aside {
+      position: sticky;
+      top: 104px;
+      display: grid;
+      gap: 18px;
+      padding-top: 4px;
+    }
+
+    .aside-card {
+      border: 1px solid var(--dedication-line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.58);
+      box-shadow: 0 14px 42px rgba(15, 23, 42, 0.05);
+      padding: 18px;
+    }
+
+    [data-theme="dark"] .aside-card {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .aside-card h2 {
+      margin: 0 0 14px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .aside-card p,
+    .aside-card li {
       color: var(--muted);
-      font-size: 18px;
-      line-height: 1.75;
+      font-size: 14px;
+      line-height: 1.6;
     }
 
-    .dedication-card {
+    .aside-card ul {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .aside-card li {
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+    }
+
+    .aside-card li::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      flex: 0 0 5px;
+      border-radius: 50%;
+      background: var(--dedication-green);
+    }
+
+    .dedication-story {
+      max-width: 760px;
+    }
+
+    .story-block {
       position: relative;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      background: rgba(255, 255, 255, 0.76);
-      box-shadow: 0 24px 72px rgba(15, 23, 42, 0.08);
-      backdrop-filter: blur(18px) saturate(160%);
-      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr);
+      gap: 28px;
+      padding: 42px 0;
+      border-top: 1px solid var(--dedication-line);
     }
 
-    [data-theme="dark"] .dedication-card {
-      background: rgba(13, 22, 41, 0.76);
-    }
-
-    .dedication-section {
-      padding: 34px 38px;
-      border-top: 1px solid var(--border);
-    }
-
-    .dedication-section:first-child {
+    .story-block:first-child {
+      padding-top: 0;
       border-top: none;
     }
 
-    .dedication-section h2 {
-      margin: 0 0 14px;
-      color: var(--ink);
-      font-size: clamp(24px, 3.2vw, 34px);
-      line-height: 1.12;
-      letter-spacing: -0.03em;
+    .story-number {
+      color: var(--dedication-green);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0;
     }
 
-    .dedication-section p {
-      max-width: 720px;
+    .story-block h2 {
+      margin: 0 0 18px;
+      color: var(--dedication-ink);
+      font-size: 44px;
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .story-block p {
       margin: 0;
       color: var(--muted);
-      font-size: 17px;
-      line-height: 1.85;
+      font-size: 19px;
+      line-height: 1.82;
+      letter-spacing: 0;
     }
 
-    .dedication-section p + p {
+    .story-block p + p {
       margin-top: 18px;
     }
 
-    .dedication-section strong {
-      color: var(--ink);
+    .story-block strong {
+      color: var(--dedication-ink);
       font-weight: 800;
     }
 
-    .dedication-prayer {
-      background: rgba(var(--accent-raw), 0.07);
+    .arabic-word {
+      color: var(--dedication-green);
+      font-family: var(--font-arabic);
+      font-weight: 800;
     }
 
-    .dedication-final {
+    .dedication-quote {
+      margin: 8px 0 0;
+      padding: 28px;
+      border-left: 3px solid var(--dedication-green);
+      border-radius: 0 18px 18px 0;
+      background: var(--dedication-soft);
+    }
+
+    .dedication-quote p {
+      color: var(--dedication-ink);
+      font-size: 30px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    .final-card {
+      margin-top: 36px;
+      padding: 58px;
+      border: 1px solid rgba(216, 183, 106, 0.34);
+      border-radius: 28px;
+      background:
+        linear-gradient(135deg, rgba(216, 183, 106, 0.16), rgba(11, 107, 75, 0.08)),
+        rgba(255, 255, 255, 0.6);
       text-align: center;
-      background: linear-gradient(135deg, rgba(var(--accent-raw), 0.12), rgba(var(--accent-raw), 0.04));
     }
 
-    .dedication-final p {
-      margin-left: auto;
-      margin-right: auto;
-      color: var(--ink);
-      font-size: 20px;
-      line-height: 1.8;
+    [data-theme="dark"] .final-card {
+      background:
+        linear-gradient(135deg, rgba(216, 183, 106, 0.16), rgba(11, 107, 75, 0.16)),
+        rgba(255, 255, 255, 0.04);
+    }
+
+    .final-card span {
+      display: inline-flex;
+      margin-bottom: 14px;
+      color: var(--dedication-green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .final-card p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--dedication-ink);
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: 0;
     }
 
     .footer-links {
@@ -151,29 +311,94 @@
       white-space: nowrap;
     }
 
-    @media (max-width: 680px) {
-      .dedication-wrap {
-        padding: 92px 16px 54px;
+    @media (max-width: 900px) {
+      .dedication-page {
+        padding: 104px 18px 64px;
       }
 
-      .dedication-hero {
-        text-align: left;
+      .dedication-hero h1 {
+        font-size: 66px;
       }
 
-      .dedication-hero p {
-        font-size: 16px;
+      .dedication-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
       }
 
-      .dedication-card {
-        border-radius: 22px;
+      .dedication-aside {
+        position: static;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .dedication-section {
-        padding: 28px 22px;
+      .dedication-story {
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .dedication-hero h1 {
+        font-size: 58px;
       }
 
-      .dedication-section p {
-        font-size: 16px;
+      .story-block h2 {
+        font-size: 36px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .dedication-page {
+        padding: 88px 16px 54px;
+      }
+
+      .dedication-breadcrumb {
+        margin-bottom: 22px;
+      }
+
+      .dedication-hero h1 {
+        font-size: 50px;
+      }
+
+      .dedication-lede {
+        font-size: 17px;
+      }
+
+      .dedication-aside {
+        grid-template-columns: 1fr;
+      }
+
+      .story-block {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 34px 0;
+      }
+
+      .story-number {
+        letter-spacing: 0;
+      }
+
+      .story-block h2 {
+        font-size: 31px;
+      }
+
+      .story-block p {
+        font-size: 17px;
+        line-height: 1.78;
+      }
+
+      .dedication-quote {
+        padding: 22px;
+      }
+
+      .dedication-quote p {
+        font-size: 23px;
+      }
+
+      .final-card p {
+        font-size: 29px;
+      }
+
+      .final-card {
+        padding: 34px 24px;
       }
     }
   </style>
@@ -182,7 +407,7 @@
   <a class="skip-link" href="#main-content">Skip to content</a>
 
   <nav class="main-nav" aria-label="Main navigation">
-    <a href="index.html" class="nav-logo" aria-label="Timeless Hadith — Home">
+    <a href="index.html" class="nav-logo" aria-label="Timeless Hadith home">
       <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="40" width="133" fetchpriority="high" decoding="async" /></picture>
     </a>
     <ul class="nav-links">
@@ -213,57 +438,103 @@
     <a href="prayer-times.html">Prayer Times</a>
   </nav>
 
-  <main id="main-content" class="dedication-wrap">
-    <section class="dedication-hero">
-      <span class="dedication-kicker">Dedication</span>
-      <h1>This Website is Dedicated to My Parents</h1>
-      <p>This platform, which brings together the teachings of Sahih Muslim, Islamic articles, and modern technology to make knowledge more accessible, is humbly dedicated to my parents.</p>
-    </section>
+  <main id="main-content" class="dedication-page">
+    <header class="dedication-hero">
+      <div>
+        <div class="dedication-breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Timeless Hadith</a>
+          <span>/</span>
+          <span>Dedication</span>
+        </div>
+        <h1>This website is dedicated to my parents.</h1>
+        <p class="dedication-lede">A quiet page of gratitude for the people whose prayers, sacrifice, and love made this work possible.</p>
+        <div class="dedication-meta" aria-label="Dedication details">
+          <strong>A personal note</strong>
+          <span class="dedication-dot" aria-hidden="true"></span>
+          <span>Built with duas, family support, and the hope of Sadaqah Jariyah</span>
+        </div>
+      </div>
 
-    <article class="dedication-card">
-      <section class="dedication-section">
-        <h2>They Taught Me How to Live</h2>
-        <p>They did not just give me life. They taught me how to live, instilled in me the love for faith, and showed me the value of knowledge.</p>
-      </section>
+    </header>
 
-      <section class="dedication-section dedication-prayer">
-        <h2>For My Father</h2>
-        <p>Dear Father, your hard work, your prayers, and your guidance have been the foundation of my life.</p>
-        <p>If I am able to do anything meaningful today, it is because of your upbringing.</p>
-        <p>I pray that Allah accepts this effort as a <strong>Sadaqah Jariyah</strong> for you, and grants you reward for every person who benefits from it.</p>
-      </section>
+    <div class="dedication-layout">
+      <aside class="dedication-aside" aria-label="Dedication summary">
+        <section class="aside-card">
+          <h2>Dedicated to</h2>
+          <ul>
+            <li>My father</li>
+            <li>My mother</li>
+            <li>My wife and children</li>
+          </ul>
+        </section>
+        <section class="aside-card">
+          <h2>Purpose</h2>
+          <p>To make authentic Hadith easier to read, remember, and live by - one person at a time.</p>
+        </section>
+      </aside>
 
-      <section class="dedication-section">
-        <h2>For My Mother</h2>
-        <p>Dear Mother, your prayers have been with me at every step of my journey.</p>
-        <p>Your love and patience have been my greatest strength. If there is any الخير in this platform, it is a reflection of your duas.</p>
-        <p>May Allah grant you health, peace, and a long blessed life, and elevate your مقام in Jannah.</p>
-      </section>
+      <article class="dedication-story">
+        <section class="story-block">
+          <span class="story-number">01</span>
+          <div>
+            <h2>They taught me how to live.</h2>
+            <p>This platform brings together the teachings of Sahih Muslim, Islamic articles, and modern technology to make knowledge more accessible. It is humbly dedicated to my parents.</p>
+            <p>They did not just give me life. They taught me how to live, instilled in me the love for faith, and showed me the value of knowledge.</p>
+          </div>
+        </section>
 
-      <section class="dedication-section dedication-prayer">
-        <h2>To My Family</h2>
-        <p>I am deeply grateful to my wife and children.</p>
-        <p>They gave me time, supported me through my commitments, and allowed me the space to focus on building this platform.</p>
-        <p>This is not just my work. It is a shared sacrifice of our family.</p>
-      </section>
+        <section class="story-block">
+          <span class="story-number">02</span>
+          <div>
+            <h2>For my father.</h2>
+            <p>Dear Father, your hard work, your prayers, and your guidance have been the foundation of my life.</p>
+            <p>If I am able to do anything meaningful today, it is because of your upbringing.</p>
+            <div class="dedication-quote">
+              <p>I pray that Allah accepts this effort as a <strong>Sadaqah Jariyah</strong> for you, and grants you reward for every person who benefits from it.</p>
+            </div>
+          </div>
+        </section>
 
-      <section class="dedication-section">
-        <h2>My Purpose</h2>
-        <p>The purpose of this website is simple: to make the teachings of Hadith accessible to everyone.</p>
-        <p>If even one person comes closer to faith through this platform, I pray that the reward is granted to my parents.</p>
-      </section>
+        <section class="story-block">
+          <span class="story-number">03</span>
+          <div>
+            <h2>For my mother.</h2>
+            <p>Dear Mother, your prayers have been with me at every step of my journey.</p>
+            <p>Your love and patience have been my greatest strength. If there is any <span class="arabic-word" lang="ar" dir="rtl">الخير</span> in this platform, it is a reflection of your duas.</p>
+            <p>May Allah grant you health, peace, and a long blessed life, and elevate your <span class="arabic-word" lang="ar" dir="rtl">مقام</span> in Jannah.</p>
+          </div>
+        </section>
 
-      <section class="dedication-section dedication-final">
-        <h2>Final Words</h2>
-        <p>Some efforts are for this world, and some are for the hereafter.</p>
-        <p><strong>This effort is for my parents.</strong></p>
-      </section>
-    </article>
+        <section class="story-block">
+          <span class="story-number">04</span>
+          <div>
+            <h2>To my family.</h2>
+            <p>I am deeply grateful to my wife and children.</p>
+            <p>They gave me time, supported me through my commitments, and allowed me the space to focus on building this platform.</p>
+            <p>This is not just my work. It is a shared sacrifice of our family.</p>
+          </div>
+        </section>
+
+        <section class="story-block">
+          <span class="story-number">05</span>
+          <div>
+            <h2>Why this exists.</h2>
+            <p>The purpose of this website is simple: to make the teachings of Hadith accessible to everyone.</p>
+            <p>If even one person comes closer to faith through this platform, I pray that the reward is granted to my parents.</p>
+          </div>
+        </section>
+
+        <section class="final-card" aria-label="Final words">
+          <span>Final words</span>
+          <p>Some efforts are for this world, and some are for the hereafter. This effort is for my parents.</p>
+        </section>
+      </article>
+    </div>
   </main>
 
   <footer>
     <div class="footer-inner">
-      <a href="index.html" class="footer-logo">
+      <a href="index.html" class="footer-logo" aria-label="Timeless Hadith home">
         <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="32" width="160" loading="lazy" decoding="async" /></picture>
       </a>
       <ul class="footer-links">
