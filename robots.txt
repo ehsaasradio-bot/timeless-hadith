@@ -23,4 +23,4 @@ Disallow: /sample-truncate.html
 Disallow: /urdu-font-preview.html
 Disallow: /urdu-translation-demo.html
 
-Sitemap: https://time
+Sitemap: https://timelesshadith.com/sitemap.xml

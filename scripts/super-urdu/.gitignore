@@ -10,4 +10,5 @@ data/apply-log.json
 data/.stale-*
 
 # urdu-gap.csv and urdu-gap.json are kept in git as a snapshot of the
-# 305-row gap at the time of authoring — useful for review with
+# 305-row gap at the time of authoring — useful for review without
+# re-running the fetch script.

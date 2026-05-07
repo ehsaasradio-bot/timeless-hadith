@@ -1887,4 +1887,578 @@
       try { localStorage.setItem('th_reader_font', fontIdx); } catch(e) {}
     }
     applyFont();
-    $('fon
+    $('fontDecrease').addEventListener('click', function () { fontIdx = 0; applyFont(); });
+    $('fontDefault') .addEventListener('click', function () { fontIdx = 1; applyFont(); });
+    $('fontIncrease').addEventListener('click', function () { fontIdx = 2; applyFont(); });
+
+    /* Urdu */
+    try { showUrdu = localStorage.getItem('th_reader_urdu') === '1'; } catch (e) {}
+    function applyUrdu() {
+      var el = $('hadithUrdu'), btn = $('urduToggle');
+      var hasText = ($('hadithUrduText').textContent || '').trim().length > 0;
+      el.classList.toggle('visible', showUrdu && hasText);
+      btn.classList.toggle('btn-active', showUrdu);
+      btn.setAttribute('aria-pressed', showUrdu ? 'true' : 'false');
+      try { localStorage.setItem('th_reader_urdu', showUrdu ? '1' : '0'); } catch (e) {}
+    }
+    $('urduToggle').addEventListener('click', function () { showUrdu = !showUrdu; applyUrdu(); });
+
+    /* Jump (header search input) */
+    function jumpTo(id) {
+      if (!id || isNaN(id)) return;
+      history.pushState(null, '', '?id=' + id);
+      loadHadith(id);
+    }
+    /* Phase 6.5: search dropdown + book filter ────────────────── */
+    var _searchTimer = null;
+    var _searchAbort = null;
+
+    function _isPureNumeric(s) { return /^[0-9]+$/.test(String(s || '').trim()); }
+
+    async function runSearch(q) {
+      var box = $('searchResults');
+      if (!box) return;
+      var query = String(q || '').trim();
+      if (query.length < 2) { box.hidden = true; box.innerHTML = ''; return; }
+
+      /* Abort any in-flight request to keep typing snappy. */
+      if (_searchAbort) { try { _searchAbort.abort(); } catch (e) {} }
+      _searchAbort = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+
+      var bookSel = $('bookFilter');
+      var bookNum = bookSel && bookSel.value ? parseInt(bookSel.value, 10) : null;
+      var qEnc = encodeURIComponent(query);
+      var url = SB_URL + '/rest/v1/hadiths' +
+                '?or=(text_en.ilike.*' + qEnc + '*,narrator.ilike.*' + qEnc + '*)' +
+                (bookNum ? '&book_number=eq.' + bookNum : '') +
+                '&select=id,hadith_number,book_name_en,text_en,narrator&limit=10';
+
+      try {
+        var res = await fetch(url, {
+          headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON },
+          signal: _searchAbort ? _searchAbort.signal : undefined
+        });
+        if (!res.ok) throw new Error('search failed');
+        var rows = await res.json();
+        if (!rows.length) {
+          box.innerHTML = '<div class="empty">No matches for &ldquo;' + esc(query) + '&rdquo;.</div>';
+          box.hidden = false;
+          return;
+        }
+        box.innerHTML = rows.map(function (r) {
+          var snippet = (r.text_en || '').slice(0, 140);
+          var nar = r.narrator ? esc(r.narrator) + ' — ' : '';
+          return '<a href="#" class="search-result-item" role="option" data-num="' + esc(r.hadith_number) + '">' +
+                 '<div class="head">' +
+                 '<span class="num">#' + esc(r.hadith_number) + '</span>' +
+                 '<span class="book">' + esc(r.book_name_en || '') + '</span>' +
+                 '</div>' +
+                 '<div class="snippet">' + nar + esc(snippet) + (snippet.length >= 140 ? '…' : '') + '</div>' +
+                 '</a>';
+        }).join('');
+        box.hidden = false;
+      } catch (e) {
+        if (e && e.name === 'AbortError') return;
+        box.innerHTML = '<div class="empty">Search unavailable. Try again.</div>';
+        box.hidden = false;
+      }
+    }
+
+    /* Click handling on search results — single delegated listener. */
+    document.addEventListener('click', function (e) {
+      var item = e.target && e.target.closest && e.target.closest('.search-result-item');
+      if (item) {
+        e.preventDefault();
+        var num = item.getAttribute('data-num');
+        if (num) {
+          $('searchResults').hidden = true;
+          $('jumpInput').value = num;
+          jumpTo(parseInt(num, 10));
+        }
+        return;
+      }
+      /* Click outside the search box hides results. */
+      if (!e.target.closest('.header-search')) {
+        var box = $('searchResults');
+        if (box) box.hidden = true;
+      }
+    });
+
+    /* Populate the book filter once on load from distinct book_name_en values. */
+    (async function populateBookFilter() {
+      var sel = $('bookFilter');
+      if (!sel) return;
+      try {
+        var res = await fetch(
+          SB_URL + '/rest/v1/hadiths?select=book_number,book_name_en&order=book_number.asc&limit=8000',
+          { headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON } }
+        );
+        if (!res.ok) return;
+        var rows = await res.json();
+        var seen = Object.create(null);
+        var books = [];
+        rows.forEach(function (r) {
+          if (r.book_number && !seen[r.book_number]) {
+            seen[r.book_number] = true;
+            books.push({ num: r.book_number, name: r.book_name_en || ('Book ' + r.book_number) });
+          }
+        });
+        books.sort(function (a, b) { return a.num - b.num; });
+        sel.innerHTML = '<option value="">All books</option>' +
+          books.map(function (b) {
+            return '<option value="' + esc(b.num) + '">' + esc(b.name) + '</option>';
+          }).join('');
+      } catch (e) { /* leave default option */ }
+    })();
+
+    /* Re-run search when the book filter changes. */
+    var _bookSel = $('bookFilter');
+    if (_bookSel) {
+      _bookSel.addEventListener('change', function () {
+        var v = $('jumpInput').value;
+        if (v && !_isPureNumeric(v)) runSearch(v);
+      });
+    }
+
+    $('jumpInput').addEventListener('input', function () {
+      var v = this.value;
+      if (_searchTimer) clearTimeout(_searchTimer);
+      if (!v) { $('searchResults').hidden = true; return; }
+      if (_isPureNumeric(v)) { $('searchResults').hidden = true; return; }
+      _searchTimer = setTimeout(function () { runSearch(v); }, 220);
+    });
+
+    $('jumpInput').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        if (_isPureNumeric(this.value)) { jumpTo(parseInt(this.value, 10)); return; }
+        runSearch(this.value);
+        return;
+      }
+      if (e.key === 'Escape') { $('searchResults').hidden = true; return; }
+    });
+
+    /* Keyboard nav */
+    document.addEventListener('keydown', function (e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (!currentHadith) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        var n = parseInt(currentHadith.hadith_number, 10);
+        jumpTo(e.key === 'ArrowRight' ? n + 1 : Math.max(1, n - 1));
+      }
+    });
+
+    /* Show/hide */
+    function showSkeleton() { $('skeletonLoader').style.display = ''; }
+    function hideSkeleton() { $('skeletonLoader').style.display = 'none'; }
+    function showError(msg) {
+      hideSkeleton();
+      $('errorState').style.display = '';
+      $('errorMsg').textContent = msg || 'Hadith not found.';
+      $('hadithCard').style.display = 'none';
+    }
+    function showCard() {
+      $('hadithCard').style.display = '';
+      $('errorState').style.display = 'none';
+    }
+
+    /* Render */
+    function render(h) {
+      currentHadith = h;
+      isRead = false;
+
+      var num = h.hadith_number || h.in_book_ref || '';
+      var chapter = h.chapter_en || h.book_name_en || '';
+
+      /* Breadcrumb */
+      $('bcChapter').textContent = chapter || 'Chapter';
+      $('bcHadith').textContent  = 'Hadith ' + num;
+
+      /* Hadith N */
+      $('hTitle').textContent = 'Hadith ' + num;
+
+      /* Pills */
+      var pills = [
+        { label: 'Collection', val: 'Sahih al-Bukhari' },
+        { label: 'Narrator',   val: h.narrator || '—' },
+        { label: 'Grade',      val: 'Sahih' },
+        { label: 'Chapter',    val: chapter || '—' }
+      ];
+      $('hadithMeta').innerHTML = pills.map(function (p) {
+        return '<span class="pill"><strong>' + esc(p.label) + ':</strong>&nbsp;' + esc(p.val) + '</span>';
+      }).join('');
+
+      /* Arabic */
+      var ar = $('hadithArabic');
+      if (h.text_ar && h.text_ar.trim()) {
+        renderExpandableText(ar, $('arabicExpandBtn'), h.text_ar, {
+          limit: 30,
+          moreLabel: 'Show full Arabic',
+          lessLabel: 'Show less Arabic'
+        });
+        ar.style.display = '';
+      } else {
+        ar.style.display = 'none';
+        $('arabicExpandBtn').hidden = true;
+      }
+
+      /* English with narrator intro */
+      var intro = $('narratorIntro');
+      if (h.narrator) {
+        intro.innerHTML = '<strong>' + esc(h.narrator) + '</strong> reported:';
+        intro.style.display = '';
+      } else { intro.style.display = 'none'; }
+      renderExpandableText($('hadithEnglish'), $('englishExpandBtn'), h.text_en || 'Translation not available.', {
+        limit: 30,
+        prefix: h.text_en ? '"' : '',
+        suffix: h.text_en ? '"' : '',
+        moreLabel: 'Show full English',
+        lessLabel: 'Show less English'
+      });
+
+      /* Urdu */
+      $('hadithUrduText').textContent = h.urdu || '';
+      applyUrdu();
+
+      /* Ref line */
+      $('refLine').textContent = 'Sahih al-Bukhari ' + num;
+
+      /* Title */
+      document.title = 'Hadith ' + num + ' — ' + (chapter || 'Sahih al-Bukhari') + ' | Timeless Hadith';
+
+      /* Jump input prefill */
+      $('jumpInput').value = num;
+
+      /* Bookmark state — localStorage first (instant render), then refresh
+         from Supabase if signed in (cross-device sync). */
+      var bks = getBookmarks();
+      isBookmarked = bks.some(function (b) { return b.id === String(num); });
+      updateBookmarkBtn();
+      if (currentHadith.id) {
+        loadSupabaseBookmarkState(currentHadith.id).then(function (sbState) {
+          if (sbState !== null && sbState !== isBookmarked) {
+            isBookmarked = sbState;
+            updateBookmarkBtn();
+          }
+        });
+      }
+
+      /* Reset Mark Read */
+      var btn = $('btnMarkRead');
+      btn.disabled = false;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg> Mark as read';
+      btn.classList.remove('btn-active', 'btn-primary');
+      btn.classList.add('btn-mark-unread');
+      var topReadBtn = $('btnMarkReadTop');
+      topReadBtn.disabled = false;
+      topReadBtn.classList.remove('btn-active');
+      topReadBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.2 2.2 4.8-5"/></svg><span class="btn-label">Mark as read</span>';
+      isRead = false;
+
+      /* Progress card — collection-wide stats from localStorage */
+      updateProgressCard();
+
+      /* More-ways links */
+      $('linkFocus').href    = 'read.html?id=' + num + '&mode=focus';
+      $('linkMemorize').href = 'read.html?id=' + num + '&mode=memorize';
+      $('linkPrint').href    = 'read.html?id=' + num + '&mode=print';
+
+      hideSkeleton();
+      showCard();
+
+      $('signInBanner').style.display = getToken() ? 'none' : 'flex';
+    }
+
+    /* Fetch */
+    async function loadHadith(id) {
+      showSkeleton();
+      $('hadithCard').style.display = 'none';
+      $('errorState').style.display = 'none';
+      try {
+        var url = SB_URL + '/rest/v1/hadiths?hadith_number=eq.' + encodeURIComponent(id) +
+          '&select=id,hadith_number,in_book_ref,text_en,text_ar,urdu,narrator,book_name_en,chapter_en&limit=1';
+        var res  = await fetch(url, { headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON } });
+        var rows = await res.json();
+        if (!rows || !rows.length) return showError('Hadith #' + id + ' not found.');
+        render(rows[0]);
+      } catch (e) {
+        showError('Could not load. Please try again.');
+      }
+    }
+
+    /* Prev / Next */
+    $('btnPrevInline').addEventListener('click', function () {
+      if (currentHadith) jumpTo(Math.max(1, parseInt(currentHadith.hadith_number, 10) - 1));
+    });
+    $('btnNextInline').addEventListener('click', function () {
+      if (currentHadith) jumpTo(parseInt(currentHadith.hadith_number, 10) + 1);
+    });
+    $('btnPrevTop').addEventListener('click', function () {
+      if (currentHadith) jumpTo(Math.max(1, parseInt(currentHadith.hadith_number, 10) - 1));
+    });
+    $('btnNextTop').addEventListener('click', function () {
+      if (currentHadith) jumpTo(parseInt(currentHadith.hadith_number, 10) + 1);
+    });
+    $('btnMarkReadTop').addEventListener('click', function () {
+      $('btnMarkRead').click();
+    });
+
+    /* Mark Read */
+    $('btnMarkRead').addEventListener('click', async function () {
+      var token = getToken();
+      if (!token) {
+        $('signInBanner').style.display = 'flex';
+        $('signInBanner').scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+      if (isRead) return;
+      var btn = this;
+      btn.disabled = true;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="animation:spin .7s linear infinite"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.09-4.43"/></svg> Saving…';
+      try {
+        /* Phase 1 wiring: call the new Supabase RPC via ProgressAPI.db.markRead.
+           The RPC takes the bigint primary key (currentHadith.id), not the
+           text hadith_number. Source must be one of the allowlist values
+           (reader|category|dashboard|competition|import). */
+        var result = await window.ProgressAPI.db.markRead(currentHadith.id, 'reader');
+        isRead = true;
+        btn.classList.remove('btn-primary', 'btn-mark-unread');
+        btn.classList.add('btn-active');
+        btn.disabled = false;
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Read ✓';
+        var topReadBtn = $('btnMarkReadTop');
+        topReadBtn.disabled = false;
+        topReadBtn.classList.add('btn-active');
+        topReadBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span class="btn-label">Read</span>';
+        var toast = $('pointsToast');
+        /* RPC jsonb shape: { already_read, new_points, new_coins, total_hadiths,
+           total_points, total_coins, streak_days, level, trophies, newly_unlocked } */
+        toast.textContent = result && !result.already_read
+          ? '+' + (result.new_points || 10) + ' pts — Level ' + (result.level || 1)
+          : 'Already in your reading history';
+        toast.classList.add('show');
+        setTimeout(function () { toast.classList.remove('show'); }, 3000);
+        bumpLocalProgress(currentHadith.hadith_number);
+        updateProgressCard();
+      } catch (e) {
+        btn.disabled = false;
+        btn.classList.remove('btn-active', 'btn-primary');
+        btn.classList.add('btn-mark-unread');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg> Mark as read';
+        var topReadBtn = $('btnMarkReadTop');
+        topReadBtn.disabled = false;
+        topReadBtn.classList.remove('btn-active');
+        topReadBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.2 2.2 4.8-5"/></svg><span class="btn-label">Mark as read</span>';
+        console.error('[reader] Mark Read failed:', e);
+      }
+    });
+
+    /* Bookmarks */
+    function getBookmarks() {
+      try { return JSON.parse(localStorage.getItem('th_bookmarks') || '[]'); } catch (e) { return []; }
+    }
+    function saveBookmarks(arr) { localStorage.setItem('th_bookmarks', JSON.stringify(arr)); }
+
+    /* Supabase bookmark helpers — used when signed in.
+       localStorage stays the canonical offline cache (read by bookmarks.html);
+       Supabase adds cross-device sync via public.hadith_bookmarks. */
+    function _bmAuthHeaders(token) {
+      return {
+        'apikey':        SB_ANON,
+        'Authorization': 'Bearer ' + token,
+        'Content-Type':  'application/json',
+        'Prefer':        'return=minimal'
+      };
+    }
+    async function addSupabaseBookmark(hadithIdNum) {
+      var token = getToken();
+      if (!token || !hadithIdNum) return;
+      try {
+        await fetch(SB_URL + '/rest/v1/hadith_bookmarks', {
+          method: 'POST',
+          headers: _bmAuthHeaders(token),
+          /* UNIQUE(user_id, hadith_id) on the table makes this idempotent
+             at the DB level — duplicate POST returns 409 which we ignore. */
+          body: JSON.stringify({ hadith_id: hadithIdNum })
+        });
+      } catch (e) { /* offline — localStorage was already updated */ }
+    }
+    async function removeSupabaseBookmark(hadithIdNum) {
+      var token = getToken();
+      if (!token || !hadithIdNum) return;
+      try {
+        await fetch(SB_URL + '/rest/v1/hadith_bookmarks?hadith_id=eq.' + hadithIdNum, {
+          method: 'DELETE',
+          headers: _bmAuthHeaders(token)
+        });
+      } catch (e) { /* offline */ }
+    }
+    async function loadSupabaseBookmarkState(hadithIdNum) {
+      var token = getToken();
+      if (!token || !hadithIdNum) return null;
+      try {
+        var res = await fetch(
+          SB_URL + '/rest/v1/hadith_bookmarks?hadith_id=eq.' + hadithIdNum +
+          '&select=hadith_id&limit=1',
+          { headers: { apikey: SB_ANON, Authorization: 'Bearer ' + token } }
+        );
+        if (!res.ok) return null;
+        var rows = await res.json();
+        return rows && rows.length > 0;
+      } catch (e) { return null; }
+    }
+    function updateBookmarkBtn() {
+      var btn = $('btnBookmark');
+      if (isBookmarked) {
+        btn.classList.add('btn-active');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Bookmarked';
+      } else {
+        btn.classList.remove('btn-active');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Bookmark';
+      }
+    }
+    $('btnBookmark').addEventListener('click', function () {
+      if (!currentHadith) return;
+      var bks = getBookmarks(), id = String(currentHadith.hadith_number);
+      var sbId = currentHadith.id;  /* bigint PK for Supabase */
+      if (isBookmarked) {
+        bks = bks.filter(function (b) { return b.id !== id; });
+        isBookmarked = false;
+        if (sbId) removeSupabaseBookmark(sbId);
+      } else {
+        bks.push({
+          id: id, arabic: currentHadith.text_ar || '',
+          text: (currentHadith.text_en || '').substring(0, 120),
+          source: 'Sahih al-Bukhari ' + (currentHadith.hadith_number || '')
+        });
+        isBookmarked = true;
+        if (sbId) addSupabaseBookmark(sbId);
+      }
+      saveBookmarks(bks);
+      updateBookmarkBtn();
+    });
+
+    /* Notes modal */
+    if ($('btnNote')) {
+      $('btnNote').addEventListener('click', function () {
+        $('noteModal').classList.add('open');
+        $('noteText').focus();
+      });
+    }
+    $('btnNoteCancel').addEventListener('click', function () { $('noteModal').classList.remove('open'); });
+    $('noteModal').addEventListener('click', function (e) { if (e.target === this) this.classList.remove('open'); });
+    $('btnNoteSave').addEventListener('click', function () {
+      var note = $('noteText').value.trim();
+      if (!note || !currentHadith) return;
+      var notes = JSON.parse(localStorage.getItem('th_notes') || '{}');
+      notes[String(currentHadith.hadith_number)] = note;
+      localStorage.setItem('th_notes', JSON.stringify(notes));
+      $('noteModal').classList.remove('open');
+      $('noteText').value = '';
+      var toast = $('pointsToast');
+      toast.textContent = 'Reflection saved ✓';
+      toast.classList.add('show');
+      setTimeout(function () { toast.classList.remove('show'); }, 2200);
+    });
+
+    /* Share */
+    $('btnShare').addEventListener('click', function () {
+      if (!currentHadith) return;
+      var text = '“' + (currentHadith.text_en || '').substring(0, 200) + '…”\n\n— Sahih al-Bukhari ' +
+        (currentHadith.hadith_number || '') + ' | timelesshadith.com';
+      if (navigator.share) {
+        navigator.share({ title: 'Hadith — Timeless Hadith', text: text, url: location.href });
+      } else {
+        navigator.clipboard.writeText(text).then(function () {
+          var toast = $('pointsToast');
+          toast.textContent = 'Copied ✓';
+          toast.classList.add('show');
+          setTimeout(function () { toast.classList.remove('show'); }, 2000);
+        });
+      }
+    });
+
+    /* Listen — placeholder */
+    $('btnListen').addEventListener('click', function () {
+      var toast = $('pointsToast');
+      toast.textContent = 'Audio coming soon';
+      toast.classList.add('show');
+      setTimeout(function () { toast.classList.remove('show'); }, 1800);
+    });
+
+    /* Sign-in */
+    $('signInBannerBtn').addEventListener('click', function () {
+      if (window.TH_SB_AUTH && window.TH_SB_AUTH.signInWithGoogle) {
+        window.TH_SB_AUTH.signInWithGoogle();
+      }
+    });
+
+    /* Local progress (collection-wide) — simple count of unique hadith numbers read */
+    function getReadSet() {
+      try { return new Set(JSON.parse(localStorage.getItem('th_read_local') || '[]')); }
+      catch (e) { return new Set(); }
+    }
+    function bumpLocalProgress(num) {
+      try {
+        var set = getReadSet();
+        set.add(String(num));
+        localStorage.setItem('th_read_local', JSON.stringify(Array.from(set)));
+      } catch (e) {}
+    }
+    function updateProgressCard() {
+      var set = getReadSet();
+      var total = 7563; /* full Bukhari */
+      var read = set.size;
+      var pct = total > 0 ? Math.round((read / total) * 100) : 0;
+      $('progressPct').textContent   = pct;
+      $('progressRead').textContent  = read.toLocaleString();
+      $('progressTotal').textContent = total.toLocaleString();
+      $('progressBar').style.width   = pct + '%';
+    }
+    updateProgressCard();
+
+    /* Init */
+    /* Init — priority routing per UX spec:
+       A. signed-in + has progress → resume from next hadith after last-read
+       C. signed-out → keep sign-in banner visible, show first hadith as
+          daily featured (banner is already in DOM, just ensure visible). */
+    async function routeDefault() {
+      var token = getToken();
+      if (!token) {
+        var banner = $('signInBanner');
+        if (banner) banner.style.display = 'flex';
+        return loadHadith(1);
+      }
+      try {
+        var lastUrl = SB_URL + '/rest/v1/hadith_progress'
+                    + '?select=hadith_id&order=read_at.desc&limit=1';
+        var lastRes = await fetch(lastUrl, {
+          headers: { apikey: SB_ANON, Authorization: 'Bearer ' + token }
+        });
+        if (lastRes.ok) {
+          var lastRows = await lastRes.json();
+          if (lastRows && lastRows.length) {
+            var lastId = lastRows[0].hadith_id;
+            var detUrl = SB_URL + '/rest/v1/hadiths?id=eq.' + lastId
+                       + '&select=hadith_number&limit=1';
+            var detRes = await fetch(detUrl, {
+              headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON }
+            });
+            if (detRes.ok) {
+              var det = await detRes.json();
+              if (det && det.length && det[0].hadith_number) {
+                var next = parseInt(det[0].hadith_number, 10) + 1;
+                if (isFinite(next) && next > 0) return loadHadith(next);
+              }
+            }
+          }
+        }
+      } catch (e) { /* fall through to B */ }
+      return loadHadith(1);
+    }
+
+    if (hadithId) loadHadith(hadithId); else routeDefault();
+  })();
+  </script>
+</body>
+</html>
