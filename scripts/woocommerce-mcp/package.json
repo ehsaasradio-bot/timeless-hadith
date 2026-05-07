@@ -1,0 +1,18 @@
+{
+  "name": "timeless-woocommerce-mcp",
+  "version": "0.1.0",
+  "description": "Local MCP server for Timeless Hadith Shop (WooCommerce) — orders, products, customers.",
+  "private": true,
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node --check index.js && echo 'syntax OK'"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

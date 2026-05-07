@@ -1,0 +1,12 @@
+# Never commit real secrets
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Build / scratch
+dist/
+*.log
