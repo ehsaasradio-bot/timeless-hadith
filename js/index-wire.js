@@ -454,7 +454,7 @@
 
     // Brand mark
     ctx.fillStyle = isDark ? '#4f72f8' : '#4f72f8';
-    ctx.font      = 'bold 14px -apple-system, Helvetica, Arial, sans-serif';
+    ctx.font      = '700 14px "Space Grotesk", "Open Sans", sans-serif';
     ctx.textAlign = 'left';
     ctx.fillText('TIMELESS HADITH', 64, 60);
 
@@ -464,23 +464,23 @@
     roundRect(ctx, 64, 80, badgeW, 28, 14);
     ctx.fill();
     ctx.fillStyle = isDark ? '#4f72f8' : '#4f72f8';
-    ctx.font      = '500 13px -apple-system, Helvetica, Arial, sans-serif';
+    ctx.font      = '500 13px "Space Grotesk", "Open Sans", sans-serif';
     ctx.fillText(hadith.category, 80, 99);
 
     // Arabic text (RTL)
     ctx.fillStyle = isDark ? '#f5f5f7' : '#1d1d1f';
-    ctx.font      = 'bold 32px serif';
+    ctx.font      = '700 32px "Noto Nastaliq Urdu", serif';
     ctx.textAlign = 'right';
-    const arabicLines = wrapText(ctx, hadith.arabic, W - 120, 'bold 32px serif');
+    const arabicLines = wrapText(ctx, hadith.arabic, W - 120, '700 32px "Noto Nastaliq Urdu", serif');
     arabicLines.forEach((line, i) => {
       ctx.fillText(line, W - 64, 160 + i * 50);
     });
 
     // English text
     ctx.fillStyle = isDark ? '#e0e0e0' : '#3d3d3f';
-    ctx.font      = 'normal 24px -apple-system, Helvetica, Arial, sans-serif';
+    ctx.font      = '400 24px "Space Grotesk", "Open Sans", sans-serif';
     ctx.textAlign = 'left';
-    const textLines = wrapText(ctx, hadith.text, W - 128, 'normal 24px -apple-system, Helvetica, Arial, sans-serif');
+    const textLines = wrapText(ctx, hadith.text, W - 128, '400 24px "Space Grotesk", "Open Sans", sans-serif');
     const startY    = 160 + arabicLines.length * 50 + 40;
     textLines.forEach((line, i) => {
       ctx.fillText(line, 64, startY + i * 40);
@@ -488,7 +488,7 @@
 
     // Source
     ctx.fillStyle = isDark ? '#98989d' : '#6e6e73';
-    ctx.font      = '500 17px -apple-system, Helvetica, Arial, sans-serif';
+    ctx.font      = '500 17px "Space Grotesk", "Open Sans", sans-serif';
     ctx.textAlign = 'left';
     ctx.fillText(hadith.meta + hadith.source, 64, H - 80);
 
@@ -496,7 +496,7 @@
     ctx.fillStyle = isDark ? '#3a3a3c' : '#d2d2d7';
     ctx.fillRect(64, H - 56, W - 128, 1);
     ctx.fillStyle = isDark ? '#6e6e73' : '#8a8a8e';
-    ctx.font      = '13px -apple-system, Helvetica, Arial, sans-serif';
+    ctx.font      = '400 13px "Space Grotesk", "Open Sans", sans-serif';
     ctx.fillText('timelesshadith.com', 64, H - 32);
 
     // Download
