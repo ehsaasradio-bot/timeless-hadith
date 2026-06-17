@@ -12,7 +12,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Scheherazade+New:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <script>(function(){try{var s=localStorage.getItem('th_theme');document.documentElement.setAttribute('data-theme',s||'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
 
@@ -22,7 +22,8 @@
     :root, [data-theme="light"] {
       --font:        "Space Grotesk", "Open Sans", sans-serif;
       --font-display:"Space Grotesk", "Open Sans", sans-serif;
-      --font-arabic: "Noto Nastaliq Urdu", serif;
+      --font-arabic: "Amiri Quran", "Scheherazade New", serif;
+      --font-arabic-ui: "Noto Sans Arabic", sans-serif;
       --font-urdu:   "Noto Nastaliq Urdu", serif;
       --bg:          #ffffff;
       --surface:     #f6f8f7;
@@ -238,14 +239,14 @@
     /* ── Arabic ───────────────────────────────────────────── */
     .arabic {
       font-family: var(--font-arabic);
-      font-size: var(--ar-size, 30px);
+      font-size: var(--ar-size, 36px);
       direction: rtl; text-align: center;
-      line-height: 2.2;
+      line-height: 1.95;
       color: var(--ink);
       margin: 18px 0 28px;
       padding: 0 6px;
     }
-    @media(max-width:640px) { .arabic { font-size: max(22px, calc(var(--ar-size, 30px) - 4px)); } }
+    @media(max-width:640px) { .arabic { font-size: clamp(28px, calc(var(--ar-size, 38px) * 0.84), 37px); line-height: 1.85; } }
 
     /* ── Star divider ─────────────────────────────────────── */
     .star-div {
@@ -275,9 +276,9 @@
     .urdu-block {
       display: none;
       font-family: var(--font-urdu);
-      font-size: calc(var(--ar-size, 30px) * 0.78);
+      font-size: clamp(18px, 2.5vw, 23px);
       direction: rtl; text-align: right;
-      line-height: 2.4; color: var(--ink);
+      line-height: 2.55; color: var(--ink);
       margin: 22px auto 0; max-width: 720px;
       padding: 18px 22px;
       background: var(--green-faint);
@@ -568,12 +569,12 @@
     /* Arabic — natural green per design reference */
     .arabic {
       color: var(--ar-green);
-      font-size: var(--ar-size, 32px);
-      line-height: 2.15;
+      font-size: var(--ar-size, 38px);
+      line-height: 1.95;
       margin: 22px auto 30px;
       max-width: 760px;
     }
-    @media(max-width:640px) { .arabic { font-size: max(22px, calc(var(--ar-size, 32px) - 6px)); } }
+    @media(max-width:640px) { .arabic { font-size: clamp(28px, calc(var(--ar-size, 38px) * 0.84), 37px); line-height: 1.85; } }
 
     /* Star divider — softer */
     .star-div { color: var(--ar-green); opacity: 0.40; }
@@ -651,18 +652,18 @@
       font-family: var(--font);
     }
 
-    /* Arabic — 16px default, line-height adjusted for the smaller size */
+    /* Arabic — Alhudah-style display sizing, controlled by reader font buttons. */
     .arabic {
-      font-size: 16px;
-      line-height: 1.95;
+      font-size: var(--ar-size, 38px);
+      line-height: 1.9;
       max-width: 720px;
     }
-    @media(max-width:640px) { .arabic { font-size: 16px; } }
+    @media(max-width:640px) { .arabic { font-size: clamp(28px, calc(var(--ar-size, 38px) * 0.84), 37px); line-height: 1.85; } }
 
     /* Urdu — 16px to match Arabic, with comfortable Urdu line-height */
     .urdu-block {
-      font-size: 16px;
-      line-height: 2.1;
+      font-size: clamp(18px, 2.5vw, 23px);
+      line-height: 2.55;
     }
 
     /* /reader theme alignment preview */
@@ -670,7 +671,8 @@
     [data-theme="light"] {
       --font: "Space Grotesk", "Open Sans", sans-serif;
       --font-display: "Space Grotesk", "Open Sans", sans-serif;
-      --font-arabic: "Noto Nastaliq Urdu", serif;
+      --font-arabic: "Amiri Quran", "Scheherazade New", serif;
+      --font-arabic-ui: "Noto Sans Arabic", sans-serif;
       --font-urdu: "Noto Nastaliq Urdu", serif;
       --bg: #f4f7f6;
       --surface: #ffffff;
@@ -1056,8 +1058,8 @@
       box-sizing: border-box;
       font-family: var(--font-arabic);
       color: var(--ar-green);
-      font-size: 20px;
-      line-height: 2.15;
+      font-size: var(--ar-size, 38px);
+      line-height: 1.9;
       text-align: center;
       max-width: 760px;
       margin: 20px auto 12px;
@@ -1441,8 +1443,8 @@
       }
 
       .arabic {
-        font-size: 20px;
-        line-height: 2.05;
+        font-size: clamp(28px, calc(var(--ar-size, 38px) * 0.84), 37px);
+        line-height: 1.85;
       }
 
       .english-block {
@@ -1865,9 +1867,9 @@
 
     /* Font size — 3-step (A-, A, A+) */
     var FONT_STEPS = [
-      { en: 16, ar: 26 },
-      { en: 18, ar: 30 },
-      { en: 20, ar: 34 }
+      { en: 16, ar: 34 },
+      { en: 18, ar: 38 },
+      { en: 20, ar: 42 }
     ];
     var fontIdx = parseInt(localStorage.getItem('th_reader_font') || '1', 10);
     fontIdx = Math.max(0, Math.min(2, fontIdx));

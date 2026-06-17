@@ -561,7 +561,7 @@ const TH_SHARE = (() => {
     const PAD   = 80;
     const INNER = W - PAD * 2;
     const FONT_UI = '"Space Grotesk", "Open Sans", sans-serif';
-    const FONT_ARABIC = '"Noto Nastaliq Urdu", serif';
+    const FONT_ARABIC = '"Amiri Quran", "Scheherazade New", serif';
 
     // ── Background ──
     ctx.fillStyle = BG;
@@ -611,7 +611,7 @@ const TH_SHARE = (() => {
       ctx.direction = 'rtl';
       ctx.textAlign = 'center';
       ctx.fillStyle = TEXT1;
-      ctx.font = `500 38px ${FONT_ARABIC}`;
+      ctx.font = `400 42px ${FONT_ARABIC}`;
       const arabicLines = _wrapArabic(ctx, hadith.arabic, W / 2, y, INNER, 62);
       y += arabicLines * 62 + 40;
       ctx.direction = 'ltr';

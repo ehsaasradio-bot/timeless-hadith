@@ -469,11 +469,11 @@
 
     // Arabic text (RTL)
     ctx.fillStyle = isDark ? '#f5f5f7' : '#1d1d1f';
-    ctx.font      = '700 32px "Noto Nastaliq Urdu", serif';
+    ctx.font      = '400 38px "Amiri Quran", "Scheherazade New", serif';
     ctx.textAlign = 'right';
-    const arabicLines = wrapText(ctx, hadith.arabic, W - 120, '700 32px "Noto Nastaliq Urdu", serif');
+    const arabicLines = wrapText(ctx, hadith.arabic, W - 120, '400 38px "Amiri Quran", "Scheherazade New", serif');
     arabicLines.forEach((line, i) => {
-      ctx.fillText(line, W - 64, 160 + i * 50);
+      ctx.fillText(line, W - 64, 160 + i * 58);
     });
 
     // English text
@@ -481,7 +481,7 @@
     ctx.font      = '400 24px "Space Grotesk", "Open Sans", sans-serif';
     ctx.textAlign = 'left';
     const textLines = wrapText(ctx, hadith.text, W - 128, '400 24px "Space Grotesk", "Open Sans", sans-serif');
-    const startY    = 160 + arabicLines.length * 50 + 40;
+    const startY    = 160 + arabicLines.length * 58 + 40;
     textLines.forEach((line, i) => {
       ctx.fillText(line, 64, startY + i * 40);
     });
