@@ -19,7 +19,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700;800&family=Google+Sans+Text:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script>(function(){try{var s=localStorage.getItem('th_theme');document.documentElement.setAttribute('data-theme',s||'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
 
@@ -54,7 +54,7 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
-    font-family: "Space Grotesk", "Open Sans", sans-serif;
+    font-family: "Google Sans", "Google Sans Text", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     color: var(--ink);
     background: var(--bg);
     line-height: 1.55;
@@ -112,7 +112,7 @@
 
   .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; padding: 56px 0 80px; }
   .hero-text h1 {
-    font-family: "Space Grotesk", "Open Sans", sans-serif;
+    font-family: "Google Sans", "Inter", sans-serif;
     font-size: clamp(40px, 5.6vw, 68px);
     font-weight: 700; line-height: 1.05; letter-spacing: -0.025em;
     margin: 0 0 24px; color: var(--ink);
@@ -124,7 +124,7 @@
     display: inline-flex; align-items: center; gap: 8px;
     background: var(--teal); color: #fff;
     border: none; padding: 14px 24px; border-radius: 10px;
-    font: 500 15px/1 "Space Grotesk", "Open Sans", sans-serif;
+    font: 500 15px/1 "Google Sans", sans-serif;
     text-decoration: none; cursor: pointer;
     box-shadow: 0 4px 14px rgba(15, 118, 110, 0.20);
     transition: background 0.15s, transform 0.12s;
@@ -135,7 +135,7 @@
     display: inline-flex; align-items: center; gap: 8px;
     background: var(--bg-alt); color: var(--ink);
     border: 1px solid var(--line); padding: 14px 22px; border-radius: 10px;
-    font: 500 15px/1 "Space Grotesk", "Open Sans", sans-serif;
+    font: 500 15px/1 "Google Sans", sans-serif;
     text-decoration: none; cursor: pointer;
     transition: border-color 0.15s, background 0.15s;
   }
@@ -205,7 +205,7 @@
   .col-item .name { color: var(--ink); font-weight: 500; white-space: nowrap; }
   .col-item .pct { color: var(--ink-muted); font-size: 8px; }
   .col-item .bar { height: 4px; border-radius: 999px; background: var(--bg); overflow: hidden; }
-  .col-item .bar span { display: block; height: 100%; background: var(--teal); border-radius: 999px; }
+  .col-item .bar i { display: block; height: 100%; background: var(--teal); border-radius: 999px; }
 
   .phone {
     position: absolute; top: 16%; right: -36px; width: 165px;
@@ -243,7 +243,7 @@
   section { margin-top: 80px; position: relative; z-index: 1; scroll-margin-top: 24px; }
   .section-head { text-align: center; margin-bottom: 40px; }
   .section-eyebrow { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--teal); background: var(--teal-soft); padding: 6px 12px; border-radius: 999px; margin-bottom: 16px; }
-  .section-head h2 { font-family: "Space Grotesk", "Open Sans", sans-serif; font-size: clamp(28px, 3.6vw, 40px); font-weight: 700; margin: 0 0 12px; letter-spacing: -0.02em; color: var(--ink); }
+  .section-head h2 { font-family: "Google Sans", "Inter", sans-serif; font-size: clamp(28px, 3.6vw, 40px); font-weight: 700; margin: 0 0 12px; letter-spacing: -0.02em; color: var(--ink); }
   .section-head p { color: var(--ink-soft); margin: 0 auto; font-size: 16px; max-width: 560px; }
 
   .modes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
@@ -261,7 +261,7 @@
 
   .why-card, .progress-card { background: var(--bg-alt); border: 1px solid var(--line); border-radius: 18px; padding: 40px; }
   .why { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: center; }
-  .why-text h2 { font-family: "Space Grotesk", "Open Sans", sans-serif; font-size: 28px; margin: 0 0 14px; font-weight: 700; letter-spacing: -0.01em; }
+  .why-text h2 { font-family: "Google Sans", "Inter", sans-serif; font-size: 28px; margin: 0 0 14px; font-weight: 700; letter-spacing: -0.01em; }
   .why-text p { color: var(--ink-soft); font-size: 15px; margin: 0; line-height: 1.65; }
   .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .why-item { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
@@ -291,9 +291,9 @@
   .cta { background: var(--ink); border-radius: 20px; padding: 48px 56px; color: #fff; display: flex; align-items: center; justify-content: space-between; gap: 24px; position: relative; overflow: hidden; }
   .cta::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(45deg, rgba(20,184,166,0.06) 25%, transparent 25%, transparent 75%, rgba(20,184,166,0.06) 75%); background-size: 60px 60px; opacity: 0.7; pointer-events: none; }
   .cta-text { position: relative; z-index: 1; }
-  .cta-text h3 { font-family: "Space Grotesk", "Open Sans", sans-serif; font-size: 28px; margin: 0 0 8px; font-weight: 700; letter-spacing: -0.01em; color: #fff; }
+  .cta-text h3 { font-family: "Google Sans", "Inter", sans-serif; font-size: 28px; margin: 0 0 8px; font-weight: 700; letter-spacing: -0.01em; color: #fff; }
   .cta-text p { color: #aab8d0; margin: 0; font-size: 14px; }
-  .cta-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--teal-2); color: var(--ink); border: none; padding: 14px 26px; border-radius: 10px; font: 600 15px/1 "Space Grotesk", "Open Sans", sans-serif; text-decoration: none; cursor: pointer; box-shadow: 0 8px 20px rgba(20, 184, 166, 0.30); transition: background 0.15s, transform 0.12s; position: relative; z-index: 1; white-space: nowrap; }
+  .cta-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--teal-2); color: var(--ink); border: none; padding: 14px 26px; border-radius: 10px; font: 600 15px/1 "Google Sans", sans-serif; text-decoration: none; cursor: pointer; box-shadow: 0 8px 20px rgba(20, 184, 166, 0.30); transition: background 0.15s, transform 0.12s; position: relative; z-index: 1; white-space: nowrap; }
   .cta-btn:hover { background: #0fc1a7; transform: translateY(-1px); }
   .cta-btn svg { width: 14px; height: 14px; }
 
@@ -423,10 +423,10 @@
             <div class="panel">
               <h4>Collections Progress</h4>
               <div class="collections-list">
-                <div class="col-item"><span class="name">Sahih Bukhari</span><div class="bar"><span style="width:75%"></span></div><span class="pct">75%</span></div>
-                <div class="col-item"><span class="name">Sahih Muslim</span><div class="bar"><span style="width:48%"></span></div><span class="pct">48%</span></div>
-                <div class="col-item"><span class="name">Abu Dawud</span><div class="bar"><span style="width:32%"></span></div><span class="pct">32%</span></div>
-                <div class="col-item"><span class="name">at-Tirmidhi</span><div class="bar"><span style="width:18%"></span></div><span class="pct">18%</span></div>
+                <div class="col-item"><span class="name">Sahih Bukhari</span><div class="bar"><i style="width:75%"></i></div><span class="pct">75%</span></div>
+                <div class="col-item"><span class="name">Sahih Muslim</span><div class="bar"><i style="width:48%"></i></div><span class="pct">48%</span></div>
+                <div class="col-item"><span class="name">Abu Dawud</span><div class="bar"><i style="width:32%"></i></div><span class="pct">32%</span></div>
+                <div class="col-item"><span class="name">at-Tirmidhi</span><div class="bar"><i style="width:18%"></i></div><span class="pct">18%</span></div>
               </div>
             </div>
           </div>

@@ -1,904 +1,1254 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<!-- Deployment check: Mac -> GitHub -> Cloudflare Pages -->
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Early theme: prevents flash of wrong theme on load -->
+  <script>(function () {
+  try {
+    var MIGRATION_KEY = 'th_theme_default_v3';
+    var migrated = localStorage.getItem(MIGRATION_KEY);
+    if (!migrated) {
+      // One-time: clear any forced dark preference from the previous era.
+      try { localStorage.removeItem('th_theme'); } catch (_) {}
+      localStorage.setItem(MIGRATION_KEY, '1');
+    }
+    var saved = localStorage.getItem('th_theme');
+    document.documentElement.setAttribute('data-theme', saved || 'light');
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();</script>
   <title>Timeless Hadith — Prophetic Guidance for Every Heart</title>
   <meta name="description" content="Authentic, searchable hadiths from Prophet Muhammad (PBUH). Explore timeless guidance by topic, beautifully organised." />
   <link rel="canonical" href="https://timelesshadith.com/" />
-  <meta name="theme-color" content="#131313" />
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --surface: #131313;
-      --surface-deep: #000;
-      --surface-lowest: #0e0e0e;
-      --surface-low: #1b1b1b;
-      --surface-card: rgba(28, 28, 28, 0.72);
-      --surface-card-solid: #1c1c1c;
-      --surface-border: #2e2e2e;
-      --surface-border-soft: rgba(46, 46, 46, 0.78);
-      --text: #e5e2e1;
-      --text-bright: #fff;
-      --muted: #bbcabe;
-      --muted-soft: rgba(237, 237, 237, 0.58);
-      --primary: #3ecf8e;
-      --primary-bright: #60eca8;
-      --on-primary: #003822;
-      --tertiary: #ffc7ae;
-      --grid: rgba(46, 46, 46, 0.68);
-      --font-display: "Space Grotesk", "Open Sans", sans-serif;
-      --font-body: "Space Grotesk", "Open Sans", sans-serif;
-      --font-code: "Space Grotesk", "Open Sans", sans-serif;
-      --font-arabic: "Noto Nastaliq Urdu", serif;
-      --container: 1184px;
-      --margin-desktop: 48px;
-      --margin-mobile: 16px;
-      --gutter: 24px;
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#060c1a" media="(prefers-color-scheme: dark)" />
+  <meta name="color-scheme" content="light dark" />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://timelesshadith.com/" />
+  <meta property="og:title"       content="Timeless Hadith — Prophetic Guidance for Every Heart" />
+  <meta property="og:description" content="Authentic, searchable hadiths from Prophet Muhammad (PBUH). Explore timeless guidance by topic, beautifully organised." />
+  <meta property="og:image"       content="https://timelesshadith.com/og-image.png" />
+  <meta property="og:site_name"   content="Timeless Hadith" />
+  <meta property="og:locale"      content="en_US" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Timeless Hadith — Prophetic Guidance for Every Heart" />
+  <meta name="twitter:description" content="Authentic, searchable hadiths from Prophet Muhammad (PBUH). Explore timeless guidance by topic, beautifully organised." />
+  <meta name="twitter:image"       content="https://timelesshadith.com/og-image.png" />
+  <meta name="twitter:site"        content="@TimelessHadith" />
+  <meta name="author"              content="Timeless Hadith" />
+  <link rel="icon"             type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon"             type="image/png" sizes="16x16" href="favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180"              href="apple-touch-icon.png" />
+  <link rel="manifest"         href="manifest.json" />
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="css/styles.min.css" />
+  <!-- Fonts: self-hosted (Inter + Noto Kufi Arabic) via @font-face in styles.css -->
+  <link rel="preconnect" href="https://dwcsledifvnyrunxejzd.supabase.co" crossorigin />
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <link rel="dns-prefetch" href="https://timeless-hadith-worker.ehsaasradio.workers.dev" />
+  <!-- Preload critical fonts for faster LCP -->
+  <link rel="preload" as="font" href="fonts/inter-latin.woff2" type="font/woff2" crossorigin />
+  <link rel="preload" as="font" href="fonts/noto-kufi-arabic.woff2" type="font/woff2" crossorigin />
+  <!-- CSP is enforced via _headers file on Cloudflare Pages (removed meta tag to avoid double-enforcement conflicts) -->
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Timeless Hadith",
+      "url": "https://timelesshadith.com/",
+      "dateModified": "2026-04-25",
+      "description": "Authentic, searchable hadiths from Prophet Muhammad (PBUH).",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://timelesshadith.com/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Timeless Hadith",
+      "url": "https://timelesshadith.com/",
+      "logo": "https://timelesshadith.com/timelesshadith-logo.png",
+      "description": "A free Islamic reference platform offering authentic, searchable hadiths from Prophet Muhammad (peace be upon him).",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "availableLanguage": ["English", "Arabic"]
+      },
+      "sameAs": ["https://timelesshadith.com/", "https://timelesshadith.com/about.html"]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Timeless Hadith?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Timeless Hadith is a free Islamic reference platform providing thousands of authentic hadiths — prophetic sayings of Prophet Muhammad (peace be upon him) — organised by topic and searchable in English and Arabic."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are the hadiths on Timeless Hadith authentic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. All hadiths on Timeless Hadith are sourced from the six major hadith collections (Kutub al-Sittah) including Sahih al-Bukhari, Sahih Muslim, Sunan Abu Dawud, Jami at-Tirmidhi, Sunan an-Nasa'i, and Sunan Ibn Majah."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I search hadiths by topic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Timeless Hadith allows you to browse and search hadiths by topic, category, and keyword — in both English and Arabic — making it easy to find relevant prophetic guidance on any subject."
+          }
+        }
+      ]
     }
+  ]
+  </script>
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--text);
-      background-color: var(--surface);
-      background-image:
-        linear-gradient(to right, var(--grid) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
-      background-size: 40px 40px;
-      background-attachment: fixed;
-      font-family: var(--font-body);
-      font-size: 16px;
-      line-height: 1.5;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
+  <!-- Page styles moved to css/styles.css for cacheability -->
+  <style>/* Page styles in css/styles.css for cacheability — this block intentionally left empty */
+    .hero { text-align: center; padding-top: 92px; }
+    .hero h1 {
+      font-size: clamp(28px, 4.5vw, 52px);
+      font-weight: 700; line-height: 1.08;
+      letter-spacing: -0.04em; color: var(--ink);
+      max-width: 860px; margin: 0 auto 14px;
     }
-
-    :lang(ar),
-    [lang="ar"],
-    [dir="rtl"],
-    .arabic,
-    .arabic-text,
-    .hadith-arabic,
-    [data-arabic] {
-      font-family: var(--font-arabic) !important;
-      line-height: 2.35;
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero .hero-sub {
+      font-size: clamp(15px, 1.6vw, 18px);
+      font-weight: 400; color: var(--muted);
+      max-width: 540px; line-height: 1.6;
+      letter-spacing: -0.01em; margin: 0 auto 28px;
     }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background:
-        radial-gradient(circle at 50% 14%, rgba(62, 207, 142, 0.13), transparent 18rem),
-        linear-gradient(180deg, rgba(0,0,0,0.08), #131313 42%, #000 100%);
-      pointer-events: none;
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background: linear-gradient(180deg, rgba(19,19,19,0.94) 0 40%, rgba(19,19,19,0.54) 60%, #000 100%);
-      pointer-events: none;
-    }
-
-    a { color: inherit; text-decoration: none; }
-    button, input { font: inherit; }
-    button { border: 0; cursor: pointer; }
-    svg, .material-symbols-outlined { display: block; }
-    .material-symbols-outlined {
-      font-family: "Material Symbols Outlined";
-      font-weight: normal;
-      font-style: normal;
-      line-height: 1;
-      letter-spacing: normal;
-      text-transform: none;
-      white-space: nowrap;
-      word-wrap: normal;
-      direction: ltr;
-      font-feature-settings: "liga";
-      -webkit-font-feature-settings: "liga";
-      -webkit-font-smoothing: antialiased;
-      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-    }
-
-    .skip-link {
-      position: absolute;
-      left: 18px;
-      top: -80px;
-      z-index: 100;
-      padding: 10px 14px;
-      border-radius: 0 0 4px 4px;
-      background: var(--primary);
-      color: var(--on-primary);
-      font-weight: 700;
-    }
-    .skip-link:focus { top: 0; }
-
-    .shell {
-      max-width: calc(var(--container) + var(--margin-desktop) * 2);
-      margin: 0 auto;
-      padding-inline: var(--margin-desktop);
-    }
-
-    .topbar {
-      position: fixed;
-      inset: 0 0 auto;
-      z-index: 50;
-      height: 70px;
-      border-bottom: 1px solid var(--surface-border);
-      background: rgba(19, 19, 19, 0.82);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    .topbar-inner {
-      height: 100%;
-      max-width: var(--container);
-      margin: 0 auto;
-      padding: 0 var(--margin-desktop);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 28px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-width: 214px;
-      font-family: var(--font-display);
-      font-size: 30px;
-      line-height: 1;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--text-bright);
-    }
-
-    .brand .material-symbols-outlined {
-      color: var(--primary);
-      font-size: 22px;
-      font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 34px;
-      flex: 1;
-    }
-
-    .nav-links a,
-    .nav-action {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 20px;
-      transition: color 180ms ease;
-    }
-    .nav-links a:hover,
-    .nav-action:hover { color: var(--primary-bright); }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 16px;
-      min-width: 230px;
-    }
-
-    .nav-action {
-      background: transparent;
-      padding: 0;
-    }
-
-    .nav-cta {
-      min-height: 38px;
-      padding: 0 22px;
-      border-radius: 4px;
-      background: var(--primary);
-      color: var(--on-primary);
-      font-size: 14px;
-      font-weight: 700;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
-      transition: opacity 180ms ease, transform 180ms ease;
-    }
-    .nav-cta:hover { opacity: .92; transform: translateY(-1px); }
-
-    .hero {
-      position: relative;
-      max-width: var(--container);
-      margin: 0 auto;
-      padding: 168px var(--margin-desktop) 0;
-      overflow: hidden;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 780px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    h1 {
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: 60px;
-      line-height: 72px;
-      font-weight: 800;
-      letter-spacing: -0.035em;
-      color: var(--text-bright);
-      text-wrap: balance;
-    }
-
-    h1 .accent { color: var(--primary); }
-    .mobile-break { display: none; }
-
-    .hero-sub {
-      max-width: 640px;
-      margin: 26px auto 0;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 28px;
-    }
-
     .hero-actions {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 16px;
-      margin-top: 44px;
+      display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 28px;
     }
-
-    .btn {
-      min-height: 58px;
-      padding: 0 32px;
-      border-radius: 6px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-size: 17px;
-      line-height: 24px;
-      font-weight: 700;
-      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease, opacity 180ms ease;
-    }
-
-    .btn .material-symbols-outlined { font-size: 20px; }
     .btn-primary {
-      background: var(--primary);
-      color: var(--on-primary);
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 26px; background: var(--accent); color: #fff;
+      border-radius: 100px; font-size: 15px; font-weight: 500;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
     }
-    .btn-primary:hover { opacity: .92; transform: translateY(-1px); }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
     .btn-secondary {
-      background: var(--surface-lowest);
-      color: var(--text);
-      border: 1px solid var(--surface-border);
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 26px; background: var(--surface); color: var(--ink);
+      border-radius: 100px; font-size: 15px; font-weight: 500;
+      text-decoration: none; border: 1px solid var(--border); cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
     }
-    .btn-secondary:hover {
-      background: var(--surface-low);
-      border-color: rgba(62, 207, 142, .55);
+    .btn-secondary:hover { background: var(--surface2); border-color: var(--ink); transform: translateY(-1px); }
+
+    /* Dark mode: unify hero action buttons.
+       Browse Topics (btn-primary) should match Daily Hadith (btn-secondary)
+       visually in dark mode — subtle surface + border, no solid accent fill. */
+    [data-theme="dark"] .hero-actions .btn-primary {
+      background: var(--surface);
+      color: var(--ink);
+      border: 1px solid var(--border);
+    }
+    [data-theme="dark"] .hero-actions .btn-primary:hover {
+      background: var(--surface2);
+      border-color: var(--ink);
       transform: translateY(-1px);
     }
 
-    .source-rail {
-      max-width: var(--container);
-      margin: 92px auto 0;
-      padding: 28px var(--margin-desktop);
-      border-top: 1px solid var(--surface-border);
-      border-bottom: 1px solid var(--surface-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 54px;
-      color: rgba(229, 226, 225, .48);
-      filter: grayscale(1);
+    /* ── Search ── */
+    .search-wrap {
+      position: relative; width: 100%;
+      max-width: 580px; margin-top: 0;
+    }
+    .search-bar {
+      display: flex; align-items: center;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 100px; padding: 6px 6px 6px 20px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.35s ease;
+    }
+    .search-bar:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(var(--accent-raw),0.12);
+    }
+    [data-theme="dark"] .search-bar:focus-within {
+      box-shadow: 0 0 0 3px rgba(var(--accent-raw),0.18);
+    }
+    .search-icon {
+      flex-shrink: 0; width: 16px; height: 16px;
+      stroke: var(--muted); fill: none; stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
+      margin-right: 10px; transition: stroke 0.2s ease;
+    }
+    .search-bar:focus-within .search-icon { stroke: var(--accent); }
+    .search-input {
+      flex: 1; border: none; background: transparent;
+      font-family: var(--font); font-size: 14px; font-weight: 400;
+      color: var(--ink); letter-spacing: -0.1px; outline: none; min-width: 0; padding: 6px 0;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-btn {
+      flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 18px; background: var(--accent); color: #fff;
+      border: none; border-radius: 100px; font-family: var(--font);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      letter-spacing: -0.1px; transition: opacity 0.2s ease, background 0.35s ease, color 0.35s ease;
+      min-height: 40px;
+    }
+    .search-btn:hover { opacity: 0.75; }
+    .search-btn svg {
+      width: 13px; height: 13px; stroke: #fff; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.35s ease;
+    }
+    /* Search dropdown */
+    .search-dropdown {
+      position: absolute; top: calc(100% + 8px);
+      left: 0; right: 0; background: var(--bg);
+      border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      display: none; z-index: 50;
+      transition: background 0.35s ease, border-color 0.35s ease;
+    }
+    .search-dropdown.open { display: block; }
+    .dropdown-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 13px 16px; font-size: 13px; font-weight: 400;
+      color: var(--muted); cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+      border: none; background: transparent; width: 100%;
+      text-align: left; font-family: var(--font); letter-spacing: -0.1px; min-height: 44px;
+    }
+    .dropdown-item:hover, .dropdown-item.active { background: var(--surface); color: var(--ink); }
+    .dropdown-item svg {
+      width: 13px; height: 13px; stroke: var(--muted); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0;
+    }
+    .dropdown-item:hover svg, .dropdown-item.active svg { stroke: var(--accent); }
+    .dropdown-empty { padding: 14px 16px; font-size: 13px; color: var(--muted); text-align: center; }
+
+    /* ── Topics Section (formerly inline "Most Viewed") ── */
+    .topics-section {
+      max-width: 1100px; margin: 56px auto 0; padding: 0 40px;
+    }
+    .topics-section .section-label { margin-bottom: 16px; text-align: left; }
+    .most-viewed {
+      display: flex; align-items: center; gap: 8px;
+      width: 100%;
+    }
+    .mv-arrow {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      border: 1px solid var(--border); background: var(--bg); color: var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+    }
+    .mv-arrow:hover { background: var(--surface); border-color: var(--ink); }
+    .mv-arrow:disabled { opacity: 0.3; cursor: default; }
+    .mv-arrow svg { width: 12px; height: 12px; stroke: var(--ink); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.35s ease; }
+    .most-viewed-tags {
+      display: flex; flex-wrap: nowrap; gap: 6px;
+      overflow-x: auto; scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .most-viewed-tags::-webkit-scrollbar { display: none; }
+    .tag {
+      display: inline-flex; align-items: center; white-space: nowrap;
+      flex-shrink: 0; padding: 7px 14px; min-height: 36px;
+      background: transparent; border: 1px solid var(--border);
+      border-radius: 100px; font-size: 13px; font-weight: 400;
+      color: var(--muted); text-decoration: none; letter-spacing: -0.1px;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+    .tag:hover { border-color: var(--ink); color: var(--ink); background: var(--surface); }
+    .tag.active { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-raw),0.06); }
+    [data-theme="dark"] .tag.active { background: rgba(var(--accent-raw),0.1); }
+
+    /* ── Section Divider ── */
+    .section-divider {
+      width: 100%; max-width: 1100px;
+      margin: 0 auto; height: 1px;
+      background: var(--border); transition: background 0.35s ease;
     }
 
-    .source-logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      font-size: 20px;
-      line-height: 28px;
-      font-weight: 700;
-      white-space: nowrap;
+    /* ── Featured Hadith Section — Two-Card Glass Layout ── */
+    .featured-section {
+      max-width: 1100px; margin: 56px auto;
+      padding: 0 40px;
     }
-    .source-logo .material-symbols-outlined { font-size: 22px; }
-
-    .feature-section {
-      max-width: var(--container);
-      margin: 170px auto 0;
-      padding: 0 var(--margin-desktop);
+    .section-label {
+      font-size: 12px; font-weight: 600; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 24px;
     }
-
-    .bento {
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 24px;
-    }
-
-    .glass-panel {
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-      border: 1px solid var(--surface-border);
-      background: var(--surface-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
-    }
-
-    .glass-panel::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      pointer-events: none;
-      background: radial-gradient(420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(62,207,142,.12), transparent 42%);
-      transition: opacity 180ms ease;
-    }
-
-    .glass-panel:hover {
-      border-color: rgba(62, 207, 142, 0.74);
-      box-shadow: 0 0 15px rgba(62, 207, 142, 0.10);
-    }
-    .glass-panel:hover::before { opacity: 1; }
-
-    .card-large {
-      grid-column: span 8;
-      min-height: 332px;
-      padding: 36px 32px;
-    }
-    .card-side,
-    .card-small {
-      grid-column: span 4;
-      padding: 36px 32px;
-    }
-    .card-small { min-height: 286px; }
-    .card-stack {
-      grid-column: span 4;
-      display: grid;
-      grid-template-rows: 1fr 1fr;
-      gap: 24px;
-    }
-    .mini-card {
-      min-height: 130px;
-      padding: 25px 24px;
-    }
-
-    .card-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 25px;
-      color: var(--primary-bright);
-      font-family: var(--font-code);
-      font-size: 12px;
-      line-height: 16px;
-      font-weight: 700;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-    }
-    .card-label .material-symbols-outlined { font-size: 20px; }
-
-    .card-title {
-      margin: 0 0 18px;
-      font-family: var(--font-display);
-      font-size: 32px;
-      line-height: 40px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: var(--text-bright);
-    }
-
-    .card-copy {
-      max-width: 460px;
-      margin: 0;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 24px;
-    }
-
-    .checks {
+    .featured-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 18px 28px;
-      max-width: 520px;
-      margin-top: 52px;
+      gap: 24px;
     }
-    .check {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--text);
-      font-size: 14px;
-      line-height: 20px;
-    }
-    .check .material-symbols-outlined {
-      color: var(--primary-bright);
-      font-size: 16px;
-      font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 20;
-    }
-
-    .card-watermark {
-      position: absolute;
-      right: 38px;
-      bottom: 30px;
-      color: rgba(229, 226, 225, .085);
-      font-size: 150px;
-      line-height: 1;
-      font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 48;
-    }
-
-    .field-stack {
-      display: grid;
-      gap: 11px;
-      margin-top: 34px;
-    }
-    .fake-input {
-      height: 48px;
-      display: flex;
-      align-items: center;
-      padding: 0 18px;
-      border: 1px solid var(--surface-border);
-      background: rgba(32, 32, 31, 0.88);
-      color: var(--text);
-      font-family: var(--font-code);
-      font-size: 14px;
-    }
-
-    .code-block {
-      margin-top: 38px;
-      min-height: 48px;
-      display: flex;
-      align-items: center;
-      padding: 0 18px;
-      border: 1px solid var(--surface-border);
-      border-radius: 4px;
-      background: var(--surface-deep);
-      color: var(--primary-bright);
-      font-family: var(--font-code);
-      font-size: 13px;
-      line-height: 20px;
-      white-space: nowrap;
+    /* Glass card base */
+    .glass-card {
+      position: relative;
+      border-radius: 24px;
+      padding: 32px 28px 28px;
       overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: rgba(var(--accent-raw), 0.03);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
+      border: 1px solid rgba(var(--accent-raw), 0.10);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.05);
     }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 11px;
-      margin-top: 38px;
+    [data-theme="dark"] .glass-card {
+      background: rgba(13,22,41,0.60);
+      border: 1px solid rgba(var(--accent-raw), 0.16);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.04);
     }
-    .tag {
-      min-height: 32px;
-      display: inline-flex;
-      align-items: center;
-      padding: 0 14px;
-      border: 1px solid var(--surface-border);
-      border-radius: 3px;
-      background: rgba(32, 32, 31, .86);
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 800;
+    .glass-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(var(--accent-raw), 0.10), inset 0 1px 0 rgba(255,255,255,0.05);
     }
-
-    .framework-section {
-      margin-top: -40px;
-      padding: 150px var(--margin-desktop) 104px;
-      background: var(--surface-lowest);
-      border-top: 1px solid var(--surface-border);
-      border-bottom: 1px solid var(--surface-border);
+    [data-theme="dark"] .glass-card:hover {
+      box-shadow: 0 16px 48px rgba(var(--accent-raw), 0.14), inset 0 1px 0 rgba(255,255,255,0.04);
     }
-    .framework-inner {
-      max-width: var(--container);
-      margin: 0 auto;
-      text-align: center;
+    /* Decorative glow orb */
+    .glass-card::before {
+      content: "";
+      position: absolute; width: 180px; height: 180px;
+      border-radius: 50%; filter: blur(72px);
+      opacity: 0.13; pointer-events: none; z-index: 0;
     }
-    .framework-inner h2 {
-      margin: 0 0 55px;
-      font-family: var(--font-display);
-      font-size: 32px;
-      line-height: 40px;
-      font-weight: 800;
-      color: var(--text-bright);
-      letter-spacing: -0.02em;
+    .glass-card.card-daily::before  { top: -50px; left: -30px; background: var(--accent); }
+    .glass-card.card-popular::before { bottom: -50px; right: -30px; background: var(--accent-2); }
+    /* Quotation watermark */
+    .glass-card::after {
+      content: "\201C";
+      position: absolute; top: -14px; left: 18px;
+      font-size: 100px; font-weight: 700; line-height: 1;
+      color: var(--accent); opacity: 0.07;
+      font-family: Georgia, serif; pointer-events: none; z-index: 0;
     }
-    .path-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 62px;
-      opacity: .58;
+    /* Shimmer top edge */
+    .glass-shimmer {
+      position: absolute; top: 0; left: 0; right: 0; height: 1px; z-index: 2;
+      background: linear-gradient(90deg,
+        transparent 0%, rgba(var(--accent-raw),.28) 25%,
+        rgba(var(--accent-2-raw),.36) 50%,
+        rgba(var(--accent-raw),.28) 75%, transparent 100%);
+      background-size: 200% 100%;
+      animation: fh-shimmer 4s ease-in-out infinite;
     }
-    .path-item {
-      display: grid;
-      justify-items: center;
-      gap: 14px;
-      min-width: 74px;
-      color: var(--text);
+    @keyframes fh-shimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position:  200% 0; }
     }
-    .path-item .material-symbols-outlined { font-size: 32px; }
-    .path-item span:last-child {
-      font-family: var(--font-code);
-      font-size: 14px;
-      line-height: 20px;
+    /* Card header row */
+    .fc-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px; position: relative; z-index: 1;
     }
-
-    .footer {
-      padding: 86px var(--margin-desktop) 42px;
-      background: var(--surface-deep);
-      border-top: 1px solid var(--surface-border);
-    }
-    .footer-inner {
-      max-width: var(--container);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 2fr repeat(4, 1fr);
-      gap: 58px;
-    }
-    .footer-brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 25px;
-      font-family: var(--font-display);
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--text-bright);
-    }
-    .footer-brand .material-symbols-outlined { color: var(--primary); font-size: 21px; }
-    .footer-copy {
-      max-width: 290px;
-      margin: 0 0 32px;
-      color: var(--text);
-      font-size: 14px;
-      line-height: 20px;
-    }
-    .socials {
-      display: flex;
-      gap: 16px;
-      color: var(--text);
-    }
-    .socials .material-symbols-outlined {
-      font-size: 20px;
-      transition: color 180ms ease;
-    }
-    .socials .material-symbols-outlined:hover { color: var(--primary); }
-    .footer h3 {
-      margin: 0 0 25px;
-      font-family: var(--font-code);
-      color: var(--text);
-      font-size: 12px;
-      line-height: 16px;
-      letter-spacing: .13em;
+    .fc-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 13px; border-radius: 100px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
       text-transform: uppercase;
     }
-    .footer ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    .fc-badge svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .card-daily .fc-badge {
+      background: rgba(var(--accent-raw),.10); color: var(--accent);
+      border: 1px solid rgba(var(--accent-raw),.18);
+    }
+    .card-popular .fc-badge {
+      background: rgba(var(--accent-2-raw),.10); color: var(--accent-2);
+      border: 1px solid rgba(var(--accent-2-raw),.18);
+    }
+    .fc-date { font-size: 11px; color: var(--muted); font-weight: 500; opacity: .75; }
+    /* Read-count balloon */
+    .fc-reads {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      color: #fff; padding: 5px 13px; border-radius: 100px;
+      font-size: 12px; font-weight: 700;
+      box-shadow: 0 4px 14px rgba(var(--accent-2-raw),.32);
+      animation: fc-pulse 2.6s ease-in-out infinite;
+    }
+    .fc-reads svg { width: 12px; height: 12px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    @keyframes fc-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+    /* Title */
+    .fc-title {
+      font-size: 15px; font-weight: 700; color: var(--ink);
+      margin-bottom: 12px; position: relative; z-index: 1; line-height: 1.45;
+    }
+    /* English text */
+    .fc-text {
+      font-size: 17px; font-weight: 400; color: var(--ink);
+      line-height: 1.7; letter-spacing: -.01em;
+      margin-bottom: 14px; position: relative; z-index: 1; opacity: .92;
+    }
+    /* Arabic */
+    .fc-arabic {
+      font-family: var(--font-arabic, 'Noto Kufi Arabic'), sans-serif;
+      font-size: 1.15rem; font-weight: 600; color: var(--ink);
+      direction: rtl; text-align: right;
+      line-height: 2.1; margin-bottom: 14px;
+      position: relative; z-index: 1; opacity: .88;
+    }
+    /* Meta row */
+    .fc-meta {
+      font-size: 12.5px; color: var(--muted); font-weight: 500; line-height: 1.5;
+      position: relative; z-index: 1;
+      border-top: 1px solid rgba(var(--accent-raw),.08); padding-top: 14px;
+    }
+    .fc-meta .fc-source { color: var(--accent); font-weight: 600; }
+    .fc-cat {
+      display: inline-block; margin-top: 7px;
+      padding: 3px 10px; border-radius: 100px;
+      font-size: 11px; font-weight: 600; letter-spacing: .3px;
+      background: rgba(var(--accent-raw),.08); color: var(--accent);
+    }
+    /* Share buttons (kept for modal integration) */
+    .hadith-share-btns { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .share-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 18px; border-radius: 100px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      transition: all 0.2s ease; font-family: var(--font); letter-spacing: -0.1px;
+      border: 1px solid var(--border); background: var(--bg); color: var(--ink);
+    }
+    .share-btn:hover { background: var(--surface2); border-color: var(--ink); transform: translateY(-1px); }
+    .share-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .share-btn.as-image { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .share-btn.as-image:hover { opacity: 0.8; }
+    [data-theme="dark"] .share-btn.as-image { background: var(--accent); color: #fff; }
+    /* Mobile: stack vertically */
+    @media (max-width: 680px) {
+      .featured-grid { grid-template-columns: 1fr; gap: 18px; }
+      .featured-section { padding: 0 20px; }
+      .glass-card { padding: 26px 22px 24px; }
+    }
+
+    /* ── Categories Section ── */
+    .cards-section {
+      padding: 48px 40px 80px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .categories-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .category-filters {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .filter-pill {
+      display: inline-flex; align-items: center;
+      padding: 6px 14px; border-radius: 100px;
+      font-size: 13px; font-weight: 400;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--muted); cursor: pointer; font-family: var(--font);
+      transition: all 0.2s ease;
+    }
+    .filter-pill:hover, .filter-pill.active { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-raw),0.06); }
+    [data-theme="dark"] .filter-pill.active { background: rgba(var(--accent-raw),0.1); }
+
+    /* ── Cards Grid ── */
+    .carousel-wrap { position: relative; }
+    .cards-track {
       display: grid;
-      gap: 16px;
-      color: var(--muted-soft);
-      font-size: 14px;
-      line-height: 20px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px; transition: opacity 0.3s ease;
+      align-items: stretch;
     }
-    .footer a { transition: color 180ms ease; }
-    .footer a:hover { color: var(--primary); }
-    .subscribe {
-      height: 48px;
+    .cards-track.fading { opacity: 0; }
+
+    /* ── Category cards — glassmorphism (matches categories page) ── */
+    .card {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.32s cubic-bezier(0.34,1.3,0.64,1), box-shadow 0.32s ease;
+      animation: fadeUp 0.45s ease both;
+    }
+    .card:hover {
+      transform: translateY(-7px) scale(1.01);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 24px 64px rgba(0,0,0,0.12);
+    }
+    .card::before {
+      content: ''; position: absolute; inset: 0; border-radius: 22px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(var(--accent-raw),0.10) 0%, transparent 70%);
+      opacity: 0; transition: opacity 0.35s ease; pointer-events: none; z-index: 0;
+    }
+    .card:hover::before { opacity: 1; }
+
+    /* Inner layout */
+    .card-inner {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; flex: 1;
+      padding: 22px 22px 20px; gap: 0;
+    }
+    .card-top {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .card-count-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 11px; border-radius: 100px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.2px;
+      color: var(--accent);
+      background: rgba(var(--accent-raw), 0.09);
+      border: 1px solid rgba(var(--accent-raw), 0.18);
+    }
+    .card-count-pill svg {
+      width: 9px; height: 9px; stroke: var(--accent); fill: none;
+      stroke-width: 2.2; stroke-linecap: round;
+    }
+    .card-arabic {
+      font-size: 12px; color: var(--muted); opacity: 0.55;
+      direction: rtl; max-width: 110px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .card h3 {
+      font-size: 17px; font-weight: 700; letter-spacing: -0.4px;
+      color: var(--ink); line-height: 1.22; margin: 0 0 8px;
+      transition: color 0.25s ease;
+    }
+    .card:hover h3 { color: var(--accent); }
+    .card .card-desc {
+      font-size: 13px; line-height: 1.60; color: var(--muted);
+      margin: 0; flex: 1;
+    }
+    .card-footer {
+      margin-top: 16px; padding-top: 13px;
+      border-top: 1px solid rgba(0,0,0,0.07);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    [data-theme="dark"] .card-footer { border-top-color: rgba(255,255,255,0.06); }
+    .card-explore {
+      font-size: 12px; font-weight: 600; color: var(--muted);
+      transition: color 0.2s ease;
+    }
+    .card:hover .card-explore { color: var(--accent); }
+    .card-arrow {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(var(--accent-raw), 0.10);
+      border: 1px solid rgba(var(--accent-raw), 0.20);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+    .card-arrow svg {
+      width: 11px; height: 11px; stroke: var(--accent); fill: none;
+      stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+      transition: transform 0.2s ease;
+    }
+    .card:hover .card-arrow { background: var(--accent); border-color: var(--accent); }
+    .card:hover .card-arrow svg { stroke: #fff; transform: translateX(2px); }
+    /* Subcategories */
+    .subcategories {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;
+    }
+    .subcat {
+      display: inline-flex; align-items: center;
+      padding: 4px 10px; border-radius: 100px;
+      font-size: 11px; font-weight: 500;
+      background: var(--surface2); color: var(--muted);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease; white-space: nowrap;
+    }
+    .subcat:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    [data-theme="dark"] .subcat:hover { background: var(--accent); }
+
+    /* .card-plus removed — replaced by .card-arrow */
+
+    /* Carousel nav */
+    .carousel-nav {
+      display: flex; align-items: center; justify-content: space-between; margin-top: 28px;
+    }
+    .carousel-dots { display: flex; gap: 6px; }
+    .carousel-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--border); transition: background 0.2s ease, transform 0.2s ease; cursor: pointer;
+    }
+    .carousel-dot.active { background: var(--accent); transform: scale(1.3); }
+    .carousel-btns { display: flex; gap: 8px; }
+    .carousel-btn {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1px solid var(--border); background: var(--bg); color: var(--ink);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease; font-family: var(--font);
+    }
+    .carousel-btn:hover:not(:disabled) { background: var(--surface); border-color: var(--ink); }
+    .carousel-btn:disabled { opacity: 0.3; cursor: default; }
+    .carousel-btn svg {
+      width: 16px; height: 16px; stroke: var(--ink); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.35s ease;
+    }
+
+    /* ── Share Modal ── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--bg); border-radius: 24px;
+      padding: 36px; max-width: 540px; width: 100%;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.25);
+      transform: scale(0.95) translateY(12px);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), background 0.35s ease;
+    }
+    .modal-overlay.open .modal { transform: scale(1) translateY(0); }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .modal-title {
+      font-size: 17px; font-weight: 600; color: var(--ink); letter-spacing: -0.3px;
+    }
+    .modal-close {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--surface); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .modal-close:hover { background: var(--surface2); transform: rotate(90deg); }
+    .modal-close svg { width: 14px; height: 14px; stroke: var(--muted); fill: none; stroke-width: 2.5; stroke-linecap: round; }
+
+    .modal-hadith-preview {
+      background: var(--surface); border-radius: 16px;
+      padding: 24px; margin-bottom: 24px;
+      transition: background 0.35s ease;
+    }
+    .modal-hadith-arabic {
+      font-size: 18px; font-weight: 600; color: var(--ink);
+      direction: rtl; text-align: right; line-height: 1.8;
+      margin-bottom: 12px;
+    }
+    .modal-hadith-text {
+      font-size: 17px; color: var(--ink); line-height: 1.65; font-style: normal;
+      margin-bottom: 8px;
+    }
+    .modal-hadith-meta {
+      font-size: 12px; color: var(--muted); font-weight: 500;
+    }
+    .modal-share-options {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .share-option {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px; padding: 20px 16px; border-radius: 16px;
+      background: var(--surface); border: 1.5px solid var(--border);
+      cursor: pointer; transition: all 0.2s ease;
+      font-family: var(--font); font-size: 14px; font-weight: 500;
+      color: var(--ink);
+    }
+    .share-option:hover { border-color: var(--accent); background: var(--surface2); transform: translateY(-2px); }
+    .share-option svg { width: 24px; height: 24px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .share-option span { font-size: 12px; color: var(--muted); font-weight: 400; text-align: center; }
+
+    /* canvas for image generation */
+    #shareCanvas { display: none; }
+
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .cards-track { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 680px) {
+      .hero { padding: 88px 20px 48px; text-align: center; }
+      .hero h1 { letter-spacing: -0.03em; }
+      .search-btn-label { display: none; }
+      .cards-section { padding: 0 20px 56px; }
+      .topics-section { padding: 0 20px; margin: 40px auto 0; }
+      .featured-section { padding: 0 20px; margin: 40px auto; }
+      .cards-track { grid-template-columns: 1fr; }
+      .section-divider { margin: 0 20px; width: auto; }
+      .modal-share-options { grid-template-columns: 1fr 1fr; }
+      .featured-hadith-card { padding: 28px 24px; }
+      .hero-actions { flex-direction: column; width: 100%; }
+      .ai-search-card { padding: 18px 16px 20px; }
+      .ai-search-input { font-size: 15px; }
+      .ai-send-btn { width: 40px; height: 40px; }
+      .ai-examples { gap: 8px; }
+      .ai-example { font-size: 12.5px; padding: 9px 14px; }
+      .hero-mark img { width: 48px; height: 48px; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       Animated Hero Mark (favicon above title)
+       ═══════════════════════════════════════════════════════════════ */
+    .hero-mark {
+      display: flex; justify-content: center; align-items: center;
+      margin-bottom: 22px;
+      filter: drop-shadow(0 6px 24px rgba(var(--accent-raw), 0.35));
+    }
+    .hero-mark img {
+      width: 56px; height: 56px;
+      animation:
+        hero-mark-float 3.6s ease-in-out infinite,
+        hero-mark-glow  3.6s ease-in-out infinite;
+      transform-origin: center;
+      will-change: transform, filter;
+    }
+    @keyframes hero-mark-float {
+      0%, 100% { transform: translateY(0) rotate(-0.5deg); }
+      50%      { transform: translateY(-7px) rotate(0.5deg); }
+    }
+    @keyframes hero-mark-glow {
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(var(--accent-raw), 0.28)); }
+      50%      { filter: drop-shadow(0 0 22px rgba(var(--accent-raw), 0.55)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-mark img { animation: none; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       AI Search Card (replaces keyword search)
+       ═══════════════════════════════════════════════════════════════ */
+    .ai-search-card {
       width: 100%;
-      border: 1px solid var(--surface-border);
-      border-radius: 4px;
-      background: var(--surface-low);
-      color: var(--text);
-      padding: 0 15px;
-      font-size: 14px;
+      max-width: 720px;
+      margin: 6px auto 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 22px 22px 26px;
+      box-shadow: var(--card-shadow);
+      transition:
+        background 0.35s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.2s ease;
+    }
+    .ai-search-card:focus-within {
+      border-color: rgba(var(--accent-raw), 0.45);
+      box-shadow:
+        0 0 0 4px rgba(var(--accent-raw), 0.12),
+        0 18px 48px -16px rgba(var(--accent-raw), 0.35);
+      transform: translateY(-1px);
+    }
+    .ai-search-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 6px 4px 6px 6px;
+    }
+    .ai-sparkle {
+      flex-shrink: 0;
+      width: 22px; height: 22px;
+      overflow: visible;
+      filter: drop-shadow(0 0 8px rgba(var(--accent-raw), 0.35));
+      animation: ai-sparkle-pulse 2.8s ease-in-out infinite;
+    }
+    .ai-sparkle path,
+    .ai-sparkle circle {
+      fill: url(#aiSparkleGradient);
+    }
+    @keyframes ai-sparkle-pulse {
+      0%, 100% { opacity: 0.9; transform: scale(1); }
+      50%      { opacity: 1;   transform: scale(1.08); }
+    }
+    .ai-search-input {
+      flex: 1;
+      border: none; background: transparent;
+      font-family: var(--font);
+      font-size: 16px; font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -0.1px;
       outline: none;
+      min-width: 0;
+      padding: 14px 0;
     }
-    .subscribe:focus { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
-    .footer-bottom {
-      max-width: var(--container);
-      margin: 65px auto 0;
-      padding-top: 30px;
-      border-top: 1px solid var(--surface-border);
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
-      color: var(--muted-soft);
-      font-size: 14px;
-      line-height: 20px;
+    .ai-search-input::placeholder { color: var(--muted); }
+    .ai-send-btn {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      border: none; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+      color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 18px -4px rgba(var(--accent-raw), 0.55);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     }
-    .footer-badges {
-      display: flex;
-      gap: 22px;
+    .ai-send-btn:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 12px 28px -6px rgba(var(--accent-raw), 0.65);
+    }
+    .ai-send-btn:active { transform: translateY(0) scale(0.98); }
+    .ai-send-btn svg {
+      width: 18px; height: 18px;
+      stroke: #fff; fill: none;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .ai-examples-label {
+      display: block;
+      margin: 26px 0 12px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: left;
+    }
+    .ai-examples {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+    .ai-example {
+      text-align: left;
+      padding: 14px 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-family: var(--font);
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.1px;
+      line-height: 1.4;
+      cursor: pointer;
+      transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+    }
+    .ai-example:hover {
+      background: rgba(var(--accent-raw), 0.06);
+      border-color: rgba(var(--accent-raw), 0.5);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+    [data-theme="dark"] .ai-example:hover {
+      background: rgba(var(--accent-raw), 0.12);
     }
 
-    @media (max-width: 980px) {
-      .topbar-inner { padding-inline: 24px; }
-      .brand { min-width: auto; font-size: 24px; }
-      .nav-links { display: none; }
-      .nav-actions { min-width: auto; }
-      .nav-action { display: none; }
-      h1 { font-size: 44px; line-height: 52px; }
-      .source-rail { gap: 24px; flex-wrap: wrap; }
-      .card-large,
-      .card-side,
-      .card-small,
-      .card-stack { grid-column: span 12; }
-      .footer-inner { grid-template-columns: 1fr 1fr; }
+    /* Inline toast shown on submit (AI backend not yet wired) */
+    .ai-toast {
+      display: none;
+      margin: 14px auto 0;
+      padding: 10px 18px;
+      max-width: 720px;
+      background: rgba(var(--accent-raw), 0.08);
+      border: 1px solid rgba(var(--accent-raw), 0.35);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      text-align: center;
+      letter-spacing: -0.1px;
+    }
+    .ai-toast.visible {
+      display: block;
+      animation: ai-toast-fade 0.35s ease-out;
+    }
+    @keyframes ai-toast-fade {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 640px) {
-      .topbar { height: 64px; }
-      .topbar-inner { padding-inline: var(--margin-mobile); }
-      .brand span:last-child { display: none; }
-      .nav-actions {
-        gap: 0;
-        min-width: auto;
-      }
-      .nav-cta {
-        min-width: 128px;
-        padding-inline: 14px;
-        text-align: center;
-      }
-      .hero {
-        padding: 120px var(--margin-mobile) 0;
-      }
-      .hero-content {
-        max-width: 100%;
-        overflow: hidden;
-      }
-      h1 {
-        max-width: 100%;
-        font-size: 32px;
-        line-height: 40px;
-        letter-spacing: -0.025em;
-        overflow-wrap: normal;
-      }
-      .mobile-break { display: block; }
-      .hero-sub {
-        margin-top: 20px;
-        font-size: 16px;
-        line-height: 25px;
-      }
-      .hero-actions {
-        flex-direction: column;
-        align-items: stretch;
-        margin-top: 34px;
-      }
-      .btn { width: 100%; min-height: 54px; }
-      .source-rail {
-        margin-top: 62px;
-        padding: 22px var(--margin-mobile);
-        justify-content: flex-start;
-        gap: 18px 26px;
-      }
-      .source-logo { font-size: 15px; line-height: 22px; }
-      .feature-section {
-        margin-top: 72px;
-        padding-inline: var(--margin-mobile);
-      }
-      .bento { gap: 16px; }
-      .card-large,
-      .card-side,
-      .card-small,
-      .mini-card {
-        padding: 24px 20px;
-        min-height: auto;
-      }
-      .card-title {
-        font-size: 27px;
-        line-height: 34px;
-      }
-      .checks { grid-template-columns: 1fr; margin-top: 34px; }
-      .card-watermark { display: none; }
-      .framework-section {
-        margin-top: 64px;
-        padding: 82px var(--margin-mobile) 72px;
-      }
-      .path-grid { gap: 30px; }
-      .footer {
-        padding: 62px var(--margin-mobile) 34px;
-      }
-      .footer-inner {
-        grid-template-columns: 1fr;
-        gap: 36px;
-      }
-      .footer-bottom {
-        flex-direction: column;
-        margin-top: 46px;
-      }
-      .footer-badges { flex-wrap: wrap; }
-    }
+    /* Hide legacy keyword search — replaced by AI search card */
+    .search-wrap { display: none !important; }
   </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6JL045YKG3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6JL045YKG3');
+    window.gaEvent = function(e, p){ gtag('event', e, p || {}); };
+  </script>
 </head>
 <body>
+
+  <!-- Skip Nav -->
   <a class="skip-link" href="#main-content">Skip to content</a>
 
-  <header class="topbar" aria-label="Main navigation">
-    <div class="topbar-inner">
-      <a class="brand" href="index.html" aria-label="Timeless Hadith home">
-        <span class="material-symbols-outlined" aria-hidden="true">database</span>
-        <span>Timeless Hadith</span>
-      </a>
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="categories.html">Browse</a>
-        <a href="reader.html">Reader</a>
-        <a href="blog.html">Resources</a>
-        <a href="about.html">About</a>
-      </nav>
-      <div class="nav-actions">
-        <button class="nav-action" type="button">Sign in</button>
-        <a class="nav-cta" href="reader.html">Open reader</a>
+  <!-- ── Navigation ── -->
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Timeless Hadith — Home">
+      <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="40" width="133" fetchpriority="high" decoding="async" /></picture>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="reader.html">Reader</a></li>
+      <li><a href="categories.html" >Browse</a></li>
+      <li><a href="bookmarks.html" >Bookmarks<span class="bm-badge" id="nav-bm-badge" data-count="0" aria-label="bookmarks count"></span></a></li>
+      <li><a href="about.html" >About</a></li>
+      <li><a href="blog.html" >Blog</a></li>
+      <li><a href="prayer-times.html" >Prayer&nbsp;Times</a></li>
+      <li><a href="https://shop.timelesshadith.com" target="_blank" rel="noopener">Shop</a></li>
+      <li class="nav-authed-only" hidden><a href="read.html">My Reader</a></li>
+      <li class="nav-authed-only" hidden><a href="dashboard.html">My Dashboard</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="nav-widgets" aria-label="Live updates">
+        <div class="nav-widget" id="widget-time" title="Current time in Makkah al-Mukarramah">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <strong id="makkah-time">--:--</strong>
+        </div>
+        <span class="nav-sep" aria-hidden="true"></span>
+        <div class="nav-widget" id="widget-weather" title="Local weather">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          <span id="weather-val">…</span>
+        </div>
+        <span class="nav-sep" aria-hidden="true"></span>
+        <div class="nav-widget" id="widget-prayer" title="Next prayer (your location)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span class="prayer-name" id="prayer-name">—</span>
+          <span class="prayer-time" id="prayer-time">—</span>
+        </div>
+      </div>
+
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+
+      <div class="nav-auth" id="nav-auth-item">
+        <button id="btn-login">Sign in</button>
+        <button id="btn-logout" onclick="localStorage.removeItem('th_supabase_session');localStorage.removeItem('th_auth_user');window.location.href='/index.html';">Sign out</button>
+        <div id="nav-avatar-wrap" role="button" tabindex="0" aria-label="User account">
+          <div class="nav-avatar">
+            <img id="nav-avatar-img" src="" alt="" />
+            <span id="nav-avatar-initial"></span>
+          </div>
+        </div>
       </div>
     </div>
-  </header>
 
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <nav class="nav-drawer" id="navDrawer" aria-label="Mobile navigation">
+    <a href="index.html" class="active" aria-current="page">Home</a>
+    <a href="reader.html">Reader</a>
+    <a href="categories.html">Browse Categories</a>
+    <a href="bookmarks.html">My Bookmarks</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Blog</a>
+    <a href="prayer-times.html">Prayer Times</a>
+    <a href="https://shop.timelesshadith.com" target="_blank" rel="noopener">Shop</a>
+    <a href="read.html" class="nav-authed-only" hidden>My Reader</a>
+    <a href="dashboard.html" class="nav-authed-only" hidden>My Dashboard</a>
+    <!-- Drawer auth — shown only at ≤1024px where nav hides the sign-in button -->
+    <div id="drawerAuthRow" style="display:flex;align-items:center;gap:10px;margin-top:4px;padding:12px 8px 4px;border-top:1px solid var(--border);">
+      <button id="drawerBtnLogin" onclick="typeof TH_SB_AUTH!=='undefined'&&TH_SB_AUTH.signInWithGoogle()" type="button"
+        style="flex:1;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:12px;
+               font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;letter-spacing:-0.1px;">
+        Sign in with Google
+      </button>
+    </div>
+    <div id="drawerUserRow" style="display:none;align-items:center;gap:10px;margin-top:4px;padding:12px 8px 4px;border-top:1px solid var(--border);">
+      <span id="drawerUserName" style="flex:1;font-size:14px;font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+      <button onclick="typeof TH_SB_AUTH!=='undefined'&&TH_SB_AUTH.signOut()" type="button"
+        style="padding:8px 14px;border:1px solid var(--border);border-radius:100px;font-size:12px;font-weight:500;
+               font-family:inherit;background:transparent;color:var(--muted);cursor:pointer;">
+        Sign out
+      </button>
+    </div>
+    <button class="theme-toggle" id="themeToggleDrawer" aria-label="Toggle dark mode" style="margin-top:8px;align-self:flex-start;">
+      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </nav>
+
+  <!-- ── Share Modal ── -->
+  <div class="modal-overlay" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Share Hadith</h3>
+        <button class="modal-close" id="modalClose" aria-label="Close modal">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-hadith-preview">
+        <p class="modal-hadith-arabic" id="modalArabic"></p>
+        <p class="modal-hadith-text" id="modalText"></p>
+        <p class="modal-hadith-meta" id="modalMeta"></p>
+      </div>
+      <div class="modal-share-options">
+        <button class="share-option" id="shareAsText">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Share as Text
+          <span>Copy to clipboard</span>
+        </button>
+        <button class="share-option" id="shareAsImage">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Share as Image
+          <span>Download card</span>
+        </button>
+      </div>
+      <canvas id="shareCanvas" width="1200" height="630"></canvas>
+    </div>
+  </div>
+
+  <!-- ── Main Content ── -->
   <main id="main-content">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-content">
-        <h1 id="hero-title">Guidance from the <br class="mobile-break">Prophet ﷺ<br><span class="accent">Timeless,<br class="mobile-break"> Authentic Hadiths</span></h1>
-        <p class="hero-sub">Explore the words of Prophet Muhammad (PBUH) — searchable, beautifully organised, and always close to your heart.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="reader.html">
-            Open the reader
-            <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
-          </a>
-          <a class="btn btn-secondary" href="categories.html">Browse topics</a>
-        </div>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <!-- SVG gradient defs for sparkle icon -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <linearGradient id="aiSparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"  stop-color="#4f72f8" />
+          <stop offset="100%" stop-color="#7c5ce6" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="hero-mark" aria-hidden="true">
+      <picture><source srcset="icon-192.webp?v=2" type="image/webp" /><img src="icon-192.png?v=2" alt="" width="56" height="56" decoding="async" /></picture>
+    </div>
+    <div class="hero-eyebrow">
+      <span aria-hidden="true"></span>
+      Prophetic Wisdom
+    </div>
+    <h1>Guidance from the Prophet ﷺ<br>Timeless, Authentic Hadiths</h1>
+    <p class="hero-sub">
+      Explore the words of Prophet Muhammad (PBUH) — searchable, beautifully organised, and always close to your heart.
+    </p>
+    <!-- ── AI Search Card ── -->
+    <div class="ai-search-card" role="search">
+      <div class="ai-search-input-wrap">
+        <svg class="ai-sparkle" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2 L13.8 9.2 L21 11 L13.8 12.8 L12 20 L10.2 12.8 L3 11 L10.2 9.2 Z"/>
+          <circle cx="19" cy="5" r="1.2" />
+          <circle cx="5" cy="19" r="1" />
+        </svg>
+        <label for="aiSearchInput" class="sr-only">Ask AI a question about hadiths</label>
+        <input id="aiSearchInput"
+               class="ai-search-input"
+               type="text"
+               placeholder="Ask AI about any hadith, topic, or prophetic teaching…"
+               autocomplete="off" />
+        <button class="ai-send-btn" id="aiSendBtn" type="button" aria-label="Ask">
+          <svg viewBox="0 0 24 24">
+            <line x1="12" y1="19" x2="12" y2="5"/>
+            <polyline points="5 12 12 5 19 12"/>
+          </svg>
+        </button>
       </div>
-    </section>
-
-    <section class="source-rail" aria-label="Hadith collections">
-      <span class="source-logo"><span class="material-symbols-outlined" aria-hidden="true">token</span>Bukhari</span>
-      <span class="source-logo"><span class="material-symbols-outlined" aria-hidden="true">account_balance</span>Muslim</span>
-      <span class="source-logo"><span class="material-symbols-outlined" aria-hidden="true">architecture</span>Abu Dawud</span>
-      <span class="source-logo"><span class="material-symbols-outlined" aria-hidden="true">group</span>Tirmidhi</span>
-      <span class="source-logo"><span class="material-symbols-outlined" aria-hidden="true">audio_file</span>Nasa'i</span>
-    </section>
-
-    <section class="feature-section" aria-labelledby="features-title">
-      <div class="bento">
-        <article class="glass-panel card-large">
-          <div>
-            <span class="card-label"><span class="material-symbols-outlined" aria-hidden="true">database</span>Database</span>
-            <h2 class="card-title" id="features-title">Authentic Hadith Library</h2>
-            <p class="card-copy">Search, read, and reflect on 7,277 authentic hadiths organised for focused study, quick discovery, and daily guidance.</p>
-          </div>
-          <div class="checks">
-            <span class="check"><span class="material-symbols-outlined" aria-hidden="true">check_circle</span>7,277 hadiths</span>
-            <span class="check"><span class="material-symbols-outlined" aria-hidden="true">check_circle</span>Topic browsing</span>
-            <span class="check"><span class="material-symbols-outlined" aria-hidden="true">check_circle</span>Source citations</span>
-          </div>
-          <span class="material-symbols-outlined card-watermark" aria-hidden="true">auto_stories</span>
-        </article>
-
-        <article class="glass-panel card-side">
-          <span class="card-label"><span class="material-symbols-outlined" aria-hidden="true">lock</span>Reader</span>
-          <h2 class="card-title">Personal Reading</h2>
-          <p class="card-copy">Build a calm study routine with bookmarks, progress, and a reader that keeps your place.</p>
-          <div class="field-stack" aria-hidden="true">
-            <div class="fake-input">Sahih al-Bukhari 1</div>
-            <div class="fake-input">Intentions & Actions</div>
-          </div>
-        </article>
-
-        <article class="glass-panel card-small">
-          <span class="card-label"><span class="material-symbols-outlined" aria-hidden="true">code</span>AI Search</span>
-          <h2 class="card-title">Ask with sources</h2>
-          <p class="card-copy">Ask plain-language questions and keep answers grounded in hadith references.</p>
-          <div class="code-block">$ ask "What does Islam say about patience?"</div>
-        </article>
-
-        <div class="card-stack">
-          <article class="glass-panel mini-card">
-            <span class="card-label"><span class="material-symbols-outlined" aria-hidden="true">folder</span>Topics</span>
-            <p class="card-copy">Browse faith, prayer, character, family, gratitude, and more.</p>
-          </article>
-          <article class="glass-panel mini-card">
-            <span class="card-label"><span class="material-symbols-outlined" aria-hidden="true">bolt</span>Daily</span>
-            <p class="card-copy">Return to one focused hadith and reflection prompt every day.</p>
-          </article>
-        </div>
-
-        <article class="glass-panel card-small">
-          <span class="card-label"><span class="material-symbols-outlined" aria-hidden="true">hub</span>Reflect</span>
-          <h2 class="card-title">A study system</h2>
-          <p class="card-copy">Move from discovery to reading, memorisation, bookmarks, and reflection without losing context.</p>
-          <div class="tag-row">
-            <span class="tag">Bookmarks</span>
-            <span class="tag">Progress</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="framework-section" aria-labelledby="paths-title">
-      <div class="framework-inner">
-        <h2 id="paths-title">Use Timeless Hadith from every path</h2>
-        <div class="path-grid">
-          <a class="path-item" href="reader.html"><span class="material-symbols-outlined" aria-hidden="true">javascript</span><span>Reader</span></a>
-          <a class="path-item" href="categories.html"><span class="material-symbols-outlined" aria-hidden="true">terminal</span><span>Topics</span></a>
-          <a class="path-item" href="bookmarks.html"><span class="material-symbols-outlined" aria-hidden="true">deployed_code</span><span>Bookmarks</span></a>
-          <a class="path-item" href="blog.html"><span class="material-symbols-outlined" aria-hidden="true">schema</span><span>Articles</span></a>
-          <a class="path-item" href="prayer-times.html"><span class="material-symbols-outlined" aria-hidden="true">web_asset</span><span>Prayer</span></a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-      <div>
-        <a class="footer-brand" href="index.html">
-          <span class="material-symbols-outlined" aria-hidden="true">database</span>
-          <span>Timeless Hadith</span>
-        </a>
-        <p class="footer-copy">Authentic, searchable hadiths from Prophet Muhammad (PBUH) — beautifully organised for everyday reflection.</p>
-        <div class="socials" aria-label="Social links">
-          <span class="material-symbols-outlined" aria-hidden="true">public</span>
-          <span class="material-symbols-outlined" aria-hidden="true">code</span>
-          <span class="material-symbols-outlined" aria-hidden="true">chat</span>
-        </div>
-      </div>
-      <nav aria-label="Product links">
-        <h3>Product</h3>
-        <ul>
-          <li><a href="reader.html">Reader</a></li>
-          <li><a href="categories.html">Browse</a></li>
-          <li><a href="bookmarks.html">Bookmarks</a></li>
-          <li><a href="prayer-times.html">Prayer Times</a></li>
-        </ul>
-      </nav>
-      <nav aria-label="Resources links">
-        <h3>Resources</h3>
-        <ul>
-          <li><a href="blog.html">Articles</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="dedication.html">Dedication</a></li>
-          <li><a href="sitemap.xml">Sitemap</a></li>
-        </ul>
-      </nav>
-      <nav aria-label="Company links">
-        <h3>Company</h3>
-        <ul>
-          <li><a href="about.html">Mission</a></li>
-          <li><a href="terms.html">Terms</a></li>
-          <li><a href="privacy.html">Privacy</a></li>
-          <li><a href="mailto:hello@timelesshadith.com">Contact</a></li>
-        </ul>
-      </nav>
-      <div>
-        <h3>Subscribe</h3>
-        <input class="subscribe" type="email" placeholder="Email address" aria-label="Email address" />
+      <span class="ai-examples-label">Get started with an example</span>
+      <div class="ai-examples">
+        <button class="ai-example" type="button">What does Islam say about patience?</button>
+        <button class="ai-example" type="button">Hadiths about kindness to parents</button>
+        <button class="ai-example" type="button">The morning and evening adhkar</button>
+        <button class="ai-example" type="button">The Prophet's teachings on gratitude</button>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Timeless Hadith.</span>
-      <div class="footer-badges">
-        <span>Authentic Sources</span>
-        <span>Privacy Conscious</span>
+    <div class="ai-toast" id="aiToast" role="status" aria-live="polite"></div>
+
+    <!-- Legacy keyword search (hidden; retained for JS compatibility) -->
+    <div class="search-wrap">
+      <div class="search-bar">
+        <label for="searchInput" class="sr-only">Search hadiths, topics, or categories</label>
+        <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="search-input" id="searchInput" type="search" placeholder="Search hadiths, topics, or categories…" autocomplete="off" aria-label="Search hadiths" />
+        <button class="search-btn" id="searchBtn" aria-label="Search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span class="search-btn-label">Search</span>
+        </button>
       </div>
+      <div class="search-dropdown" id="searchDropdown" role="listbox" aria-label="Search suggestions"></div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Featured Hadiths — Two-Card Glass ── -->
+  <section class="featured-section" id="featured" aria-labelledby="featured-heading">
+    <h2 class="section-label" id="featured-heading">Featured Hadiths</h2>
+    <div class="featured-grid">
+
+      <!-- Card 1: Hadith of the Day -->
+      <article class="glass-card card-daily" aria-label="Hadith of the Day">
+        <div class="glass-shimmer"></div>
+        <div class="fc-header">
+          <span class="fc-badge">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            Hadith of the Day
+          </span>
+          <span class="fc-date" id="fcDailyDate"></span>
+        </div>
+        <p class="fc-title" id="fcDailyTitle"></p>
+        <p class="fc-text" id="fcDailyText"></p>
+        <p class="fc-arabic" id="fcDailyArabic"></p>
+        <div class="fc-meta">
+          <span id="fcDailyMeta"></span><span class="fc-source" id="fcDailySource"></span>
+          <br><span class="fc-cat" id="fcDailyCat"></span>
+        </div>
+      </article>
+
+      <!-- Card 2: Most Read Hadith -->
+      <article class="glass-card card-popular" aria-label="Most Read Hadith">
+        <div class="glass-shimmer"></div>
+        <div class="fc-header">
+          <span class="fc-badge">
+            <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            Most Read Hadith
+          </span>
+          <span class="fc-reads">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span id="fcReadsNum">0</span> reads
+          </span>
+        </div>
+        <p class="fc-text" id="fcPopularText"></p>
+        <p class="fc-arabic" id="fcPopularArabic"></p>
+        <div class="fc-meta">
+          <span id="fcPopularMeta"></span><span class="fc-source" id="fcPopularSource"></span>
+          <br><span class="fc-cat" id="fcPopularCat"></span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Topics (formerly "Most Viewed") ── -->
+  <section class="topics-section" id="topics" aria-labelledby="topics-heading">
+    <h2 class="section-label" id="topics-heading">Topics</h2>
+    <div class="most-viewed">
+      <button class="mv-arrow" id="mvPrev" aria-label="Scroll left" disabled>
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="most-viewed-tags" id="mvTags">
+        <!-- Safe fallback pills using book-N slugs (resolvable against live
+             Supabase data via TH.getCat's book-number fallback). These are
+             replaced at runtime with the full real category list from
+             TH.categories once TH.init() resolves. -->
+        <a href="category.html?cat=book-2"  class="tag" data-book="2">Belief</a>
+        <a href="category.html?cat=book-3"  class="tag" data-book="3">Knowledge</a>
+        <a href="category.html?cat=book-8"  class="tag" data-book="8">Prayers</a>
+        <a href="category.html?cat=book-30" class="tag" data-book="30">Fasting</a>
+        <a href="category.html?cat=book-78" class="tag" data-book="78">Good Manners</a>
+        <a href="category.html?cat=tawheed" class="tag" data-book="97">Oneness of Allah</a>
+      </div>
+      <button class="mv-arrow" id="mvNext" aria-label="Scroll right">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Categories / Cards Section ── -->
+  <section class="cards-section" id="categories" aria-labelledby="cards-heading">
+    <div class="categories-header">
+      <h2 class="section-label" id="cards-heading">Explore by Topic</h2>
+    </div>
+
+    <div class="carousel-wrap">
+      <div class="cards-track" id="cardsTrack">
+        <p style="color:var(--muted);text-align:center;padding:40px 0;grid-column:1/-1" id="cards-loading">Loading categories…</p>
+      </div><!-- /cards-track -->
+      </div><!-- /cards-track -->
+    </div><!-- /carousel-wrap -->
+
+    <!-- Carousel Nav -->
+    <div class="carousel-nav">
+      <div class="carousel-dots" id="carouselDots"></div>
+      <div class="carousel-btns">
+        <button class="carousel-btn" id="prevBtn" aria-label="Previous page" disabled>
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="carousel-btn" id="nextBtn" aria-label="Next page">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">
+        <picture><source srcset="timelesshadith-logo.webp?v=2" type="image/webp" /><img src="timelesshadith-logo.png?v=2" alt="Timeless Hadith" height="32" width="160" loading="lazy" decoding="async" /></picture>
+      </a>
+      <ul class="footer-links">
+        <li><a href="about.html">About</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="dedication.html" rel="nofollow">Dedication</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Use</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 Timeless Hadith. All rights reserved.</p>
     </div>
   </footer>
 
-  <script defer src="js/index-wire.js"></script>
+  </main><!-- /#main-content -->
+
+  <noscript>
+    <p style="text-align:center;padding:40px;font-family:sans-serif;">
+      This site works best with JavaScript enabled.
+      <a href="index.html">Return to homepage</a>.
+    </p>
+  </noscript>
+
+  <script defer src="js/supabase-data.js?v=2"></script>
+  <script defer src="js/app.js?v=2"></script>
+  <script defer src="js/supabase-auth.js?v=3"></script>
+  <script defer src="js/index-wire.js?v=4"></script>
+  <script defer src="js/ai-search.js"></script>
+
+  <!-- Service worker registration (stale-while-revalidate + offline fallback) -->
+  <script defer src="js/sw-register.js"></script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script async src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7138d14062674e5ebc7be74fe94970ad"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+
+
+
+<script defer src="js/urdu-toggle.js"></script>
+    <script src="js/nav-widgets.js" defer></script>
+
+  <!-- Sync drawer auth row with login state -->
+  <script>
+  (function(){
+    function syncDrawerAuth(user){
+      var loginRow = document.getElementById('drawerAuthRow');
+      var userRow  = document.getElementById('drawerUserRow');
+      var nameEl   = document.getElementById('drawerUserName');
+      if(!loginRow || !userRow) return;
+      if(user){
+        loginRow.style.display = 'none';
+        userRow.style.display  = 'flex';
+        if(nameEl) nameEl.textContent = user.name || user.email || '';
+      } else {
+        loginRow.style.display = 'flex';
+        userRow.style.display  = 'none';
+      }
+    }
+    document.addEventListener('th:login', function(e){ syncDrawerAuth(e.detail); });
+    document.addEventListener('th:logout', function(){ syncDrawerAuth(null); });
+  })();
+  </script>
 </body>
-</html>
+                                                                                                               

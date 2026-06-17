@@ -560,8 +560,6 @@ const TH_SHARE = (() => {
     const ACCENT= '#0071e3';
     const PAD   = 80;
     const INNER = W - PAD * 2;
-    const FONT_UI = '"Space Grotesk", "Open Sans", sans-serif';
-    const FONT_ARABIC = '"Noto Nastaliq Urdu", serif';
 
     // ── Background ──
     ctx.fillStyle = BG;
@@ -582,7 +580,7 @@ const TH_SHARE = (() => {
 
     // ── Logo / Brand ──
     ctx.fillStyle = ACCENT;
-    ctx.font = `700 36px ${FONT_UI}`;
+    ctx.font = 'bold 36px -apple-system, SF Pro Display, Helvetica Neue, sans-serif';
     ctx.textAlign = 'center';
     ctx.direction = 'ltr';
     ctx.fillText('Timeless Hadith', W / 2, y);
@@ -591,7 +589,7 @@ const TH_SHARE = (() => {
     // ── Category badge ──
     if (_cat) {
       const badgeText = _cat.toUpperCase();
-      ctx.font = `500 22px ${FONT_UI}`;
+      ctx.font = '500 22px -apple-system, SF Pro Display, Helvetica Neue, sans-serif';
       ctx.fillStyle = TEXT2;
       ctx.fillText(badgeText, W / 2, y);
       y += 38;
@@ -611,7 +609,7 @@ const TH_SHARE = (() => {
       ctx.direction = 'rtl';
       ctx.textAlign = 'center';
       ctx.fillStyle = TEXT1;
-      ctx.font = `500 38px ${FONT_ARABIC}`;
+      ctx.font = '500 38px "Noto Kufi Arabic", serif';
       const arabicLines = _wrapArabic(ctx, hadith.arabic, W / 2, y, INNER, 62);
       y += arabicLines * 62 + 40;
       ctx.direction = 'ltr';
@@ -629,13 +627,13 @@ const TH_SHARE = (() => {
     ctx.textAlign = 'center';
     ctx.direction = 'ltr';
     ctx.fillStyle = TEXT1;
-    ctx.font = `400 30px ${FONT_UI}`;
+    ctx.font = '400 30px -apple-system, SF Pro Display, Georgia, serif';
     const engLines = _wrapText(ctx, `"${hadith.english}"`, W / 2, y, INNER, 48);
     y += engLines * 48 + 44;
 
     // ── Reference pill ──
     const refText = `${hadith.narrator || ''} · ${hadith.source || ''}`.trim().replace(/^·\s*/, '').replace(/\s*·\s*$/, '');
-    ctx.font = `500 24px ${FONT_UI}`;
+    ctx.font = '500 24px -apple-system, SF Pro Display, Helvetica Neue, sans-serif';
     const refW = ctx.measureText(refText).width + 48;
     const refX = (W - refW) / 2;
     const refY = y;
@@ -654,7 +652,7 @@ const TH_SHARE = (() => {
     if (hadith.authenticity) {
       const auth = hadith.authenticity;
       const authColor = auth === 'Sahih' ? '#30d158' : auth === 'Hasan' ? '#ffd60a' : TEXT2;
-      ctx.font = `500 22px ${FONT_UI}`;
+      ctx.font = '500 22px -apple-system, SF Pro Display, Helvetica Neue, sans-serif';
       ctx.fillStyle = authColor;
       ctx.fillText(auth, W / 2, y);
       y += 36;
@@ -665,7 +663,7 @@ const TH_SHARE = (() => {
     ctx.fillStyle = isDark ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.06)';
     ctx.fillRect(0, footerY - 32, W, 1);
 
-    ctx.font = `400 20px ${FONT_UI}`;
+    ctx.font = '400 20px -apple-system, SF Pro Display, Helvetica Neue, sans-serif';
     ctx.fillStyle = TEXT2;
     ctx.textAlign = 'center';
     ctx.fillText('ehsaasradio-bot.github.io/timeless-hadith', W / 2, footerY);

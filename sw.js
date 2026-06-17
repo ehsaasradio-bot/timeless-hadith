@@ -4,10 +4,10 @@
  *  - Precache: core shell (HTML, CSS, manifest, icons, offline page)
  *  - Runtime: stale-while-revalidate for same-origin GETs
  *  - Skip: Supabase API calls, Cloudflare Insights (let browser handle)
- *  - Fonts: loaded through CSS; no stale self-hosted font precache
+ *  - Fonts: self-hosted woff2 files precached with core assets
  */
 
-const VERSION = 'th-v19-2026-06-17'; // Typography refresh
+const VERSION = 'th-v18-2026-05-06'; // Mobile header refinement
 const CORE_CACHE = `${VERSION}-core`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -33,6 +33,12 @@ const CORE_ASSETS = [
   '/icon-512.png',
   '/timelesshadith-logo.png',
   '/og-image.png',
+  '/fonts/inter-latin.woff2',
+  '/fonts/inter-latin-ext.woff2',
+  '/fonts/gulzar-arabic.woff2',
+  '/fonts/gulzar-latin.woff2',
+  '/fonts/noto-kufi-arabic.woff2',
+  '/fonts/Inter-Variable.woff2',
   '/blog.html',
   '/prayer-times.html',
   '/reader.html',

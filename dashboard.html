@@ -12,7 +12,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Cairo:wght@300..900&display=swap" rel="stylesheet" />
 
   <script>(function(){try{var s=localStorage.getItem('th_theme');document.documentElement.setAttribute('data-theme',s||'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
 
@@ -20,9 +20,8 @@
     *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root, [data-theme="light"] {
-      --font:        "Space Grotesk", "Open Sans", sans-serif;
-      --font-display:"Space Grotesk", "Open Sans", sans-serif;
-      --font-arabic: "Noto Nastaliq Urdu", serif;
+      --font:        "Cairo", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display:"Crimson Pro", Georgia, serif;
       --bg:          #ffffff;
       --surface:     #f6f8f7;
       --surface-2:   #ffffff;
@@ -258,7 +257,7 @@
     .recent-list strong { font-weight: 600; font-size: 14px; }
     .recent-list .meta { color: var(--muted); font-size: 12px; }
     .recent-list .snippet { color: var(--muted); font-size: 13px; margin-top: 4px; }
-    .empty { color: var(--muted); padding: 12px 0; }
+    .empty { color: var(--muted); font-style: italic; padding: 12px 0; }
 
     /* ── Collection progress ──────────────────────────────── */
     .collection-list { list-style: none; }

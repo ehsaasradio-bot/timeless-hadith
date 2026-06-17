@@ -7,15 +7,14 @@
 <link rel="canonical" href="https://timelesshadith.com/blog.html" />
 <meta name="robots" content="index, follow" />
 <meta name="description" content="Explore the Timeless Hadith blog — articles on Islamic lifestyle, Quran, Seerah, Fiqh, and spirituality. Authentic, human-written Islamic content." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="preload" as="font" href="fonts/inter-latin.woff2" type="font/woff2" crossorigin />
+<link rel="preload" as="font" href="fonts/noto-kufi-arabic.woff2" type="font/woff2" crossorigin />
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root {
-  --font:"Space Grotesk","Open Sans",sans-serif;
-  --font-arabic:"Noto Nastaliq Urdu",serif;
+  --font:"Inter",-apple-system,sans-serif;
+  --font-arabic:"Noto Kufi Arabic","Segoe UI Arabic",sans-serif;
   --bg:#fff; --surface:#f5f5f7; --border:#e0e0e0;
   --ink:#1d1d1f; --muted:#6e6e73; --nav-bg:rgba(255,255,255,0.85);
   --accent:#4f72f8; --accent2:#7c5ce6;
@@ -178,7 +177,7 @@ nav {
   margin-top:auto;
 }
 .post-slug {
-  font-family:var(--font); font-size:10px; color:rgba(79,114,248,0.6);
+  font-family:monospace; font-size:10px; color:rgba(79,114,248,0.6);
   background:rgba(79,114,248,0.06); border-radius:4px; padding:2px 6px;
 }
 .post-read { font-weight:600; }
