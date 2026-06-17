@@ -31,6 +31,9 @@
 
   <!-- Preload logo for fast nav render -->
   <link rel="preload" as="image" href="timelesshadith-logo.webp?v=2" type="image/webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -74,8 +77,9 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --font: "Inter", -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-      --font-display: "Inter", -apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+      --font: "Space Grotesk", "Open Sans", sans-serif;
+      --font-display: "Space Grotesk", "Open Sans", sans-serif;
+      --font-arabic: "Noto Nastaliq Urdu", serif;
       --radius-sm: 12px;
       --radius: 18px;
       --radius-lg: 28px;
