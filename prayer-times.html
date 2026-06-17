@@ -7,14 +7,15 @@
 <meta name="description" content="Get accurate daily prayer times for your location and calculate your Zakat with our easy-to-use calculator. A free tool from Timeless Hadith." />
 <link rel="canonical" href="https://timelesshadith.com/prayer-times.html" />
 <meta name="robots" content="index, follow" />
-<link rel="preload" as="font" href="fonts/inter-latin.woff2" type="font/woff2" crossorigin />
-<link rel="preload" as="font" href="fonts/noto-kufi-arabic.woff2" type="font/woff2" crossorigin />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root {
-  --font:"Inter",-apple-system,sans-serif;
-  --font-arabic:"Noto Kufi Arabic","Segoe UI Arabic",sans-serif;
+  --font:"Space Grotesk","Open Sans",sans-serif;
+  --font-arabic:"Noto Nastaliq Urdu",serif;
   --bg:#ffffff;
   --surface:#f5f5f7;
   --border:#e0e0e0;
@@ -117,8 +118,8 @@ body {
   font-size:13.5px; line-height:1.75; color:var(--ink);
   flex:1; font-style:normal; margin-bottom:12px;
 }
-.sc-english em { color:var(--accent); font-style:normal; font-weight:600; }
-.quran .sc-english em { color:var(--accent2); }
+.sc-english .accent-word { color:var(--accent); font-weight:600; }
+.quran .sc-english .accent-word { color:var(--accent2); }
 
 .sc-ref {
   font-size:11px; font-weight:600; color:var(--muted);
@@ -603,7 +604,7 @@ input[type=range]::-moz-range-thumb {
       </div>
       <div class="sc-arabic">إِنَّ اللَّهَ فَرَضَ عَلَيْهِمْ صَدَقَةً تُؤْخَذُ مِنْ أَغْنِيَائِهِمْ وَتُرَدُّ عَلَى فُقَرَائِهِمْ</div>
       <div class="sc-english">
-        "Indeed, Allah has made Zakat obligatory upon them. It is to be taken from their <em>wealthy</em> and returned to their <em>poor</em>."
+        "Indeed, Allah has made Zakat obligatory upon them. It is to be taken from their <span class="accent-word">wealthy</span> and returned to their <span class="accent-word">poor</span>."
       </div>
       <div class="sc-ref">Sahih al-Bukhari 1395 · Narrated by Ibn Abbas (RA)</div>
     </div>
@@ -616,7 +617,7 @@ input[type=range]::-moz-range-thumb {
       </div>
       <div class="sc-arabic">وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَمَا تُقَدِّمُوا لِأَنفُسِكُم مِّنْ خَيْرٍ تَجِدُوهُ عِندَ اللَّهِ</div>
       <div class="sc-english">
-        "And establish prayer and give <em>Zakat</em>, and whatever good you put forward for yourselves — you will find it with <em>Allah</em>."
+        "And establish prayer and give <span class="accent-word">Zakat</span>, and whatever good you put forward for yourselves — you will find it with <span class="accent-word">Allah</span>."
       </div>
       <div class="sc-ref">Surah Al-Baqarah · Quran 2:110</div>
     </div>
